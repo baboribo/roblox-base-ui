@@ -26,7 +26,22 @@ function subscribeViewport(notify: () => void) {
 }
 const getMobile = () => window.matchMedia(mobileQuery).matches;
 const getServerMobile = () => false;
-const SidebarContext = createContext({ mobile: false });
+type SidebarContextValue = {
+  mobile: boolean;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  handle: ReturnType<typeof Dialog.createHandle>;
+  actionsRef: React.RefObject<Dialog.Root.Actions | null>;
+};
+const SidebarContext = createContext<SidebarContextValue | null>(null);
+function useSidebar() {
+  const context = useContext(SidebarContext);
+  if (!context)
+    throw new Error(
+      "Sidebar.Panel/Trigger는 Sidebar.Provider 안에 배치하세요.",
+    );
+  return context;
+}
 
 type ProviderProps = {
   children: ReactNode;
@@ -48,6 +63,7 @@ function SidebarProvider({
   );
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const dialogActions = useRef<Dialog.Root.Actions>(null);
+  const [handle] = useState(() => Dialog.createHandle());
   const isOpen = open ?? internalOpen;
   const setOpen = (next: boolean) => {
     setInternalOpen(next);
@@ -66,14 +82,17 @@ function SidebarProvider({
     }
   }, [mobile, isOpen, onOpenChange]);
   return (
-    <SidebarContext.Provider value={{ mobile }}>
-      <Dialog.Root
-        actionsRef={dialogActions}
-        open={mobile && isOpen}
-        onOpenChange={setOpen}
-      >
-        {children}
-      </Dialog.Root>
+    <SidebarContext.Provider
+      value={{
+        mobile,
+        open: mobile && isOpen,
+        setOpen,
+        handle,
+        actionsRef: dialogActions,
+      }}
+    >
+      {/* Dialog.Root는 Panel에만 둡니다. 앱 전체를 감싸면 다른 모달의 Backdrop이 생략됩니다. */}
+      {children}
     </SidebarContext.Provider>
   );
 }
@@ -88,45 +107,57 @@ function SidebarPanel({
   className,
   ...props
 }: ComponentProps<"aside"> & { title: string; closeLabel?: string }) {
-  const { mobile } = useContext(SidebarContext);
-  if (!mobile)
-    return (
-      <SidebarRoot aria-label={title} {...props} className={className}>
-        {children}
-      </SidebarRoot>
-    );
+  const { mobile, open, setOpen, handle, actionsRef } = useSidebar();
   return (
-    <Dialog.Portal>
-      <Dialog.Backdrop className="rbx-sidebar-backdrop" />
-      <Dialog.Popup className="rbx-sidebar-popup" aria-describedby={undefined}>
-        <div className="rbx-sidebar-mobile-heading">
-          <Dialog.Title className="rbx-sidebar-mobile-title">
-            {title}
-          </Dialog.Title>
-          <Dialog.Close
-            render={
-              <IconButton
-                icon="icon-regular-x"
-                size="sm"
-                variant="utility"
-                aria-label={closeLabel}
-              />
-            }
-          />
-        </div>
-        <SidebarRoot {...props} className={className}>
+    <Dialog.Root
+      open={open}
+      onOpenChange={setOpen}
+      handle={handle}
+      actionsRef={actionsRef}
+    >
+      {!mobile ? (
+        <SidebarRoot aria-label={title} {...props} className={className}>
           {children}
         </SidebarRoot>
-      </Dialog.Popup>
-    </Dialog.Portal>
+      ) : (
+        <Dialog.Portal>
+          <Dialog.Backdrop className="rbx-sidebar-backdrop" />
+          <Dialog.Popup
+            className="rbx-sidebar-popup"
+            aria-describedby={undefined}
+          >
+            <div className="rbx-sidebar-mobile-heading">
+              <Dialog.Title className="rbx-sidebar-mobile-title">
+                {title}
+              </Dialog.Title>
+              <Dialog.Close
+                render={
+                  <IconButton
+                    icon="icon-regular-x"
+                    size="sm"
+                    variant="utility"
+                    aria-label={closeLabel}
+                  />
+                }
+              />
+            </div>
+            <SidebarRoot {...props} className={className}>
+              {children}
+            </SidebarRoot>
+          </Dialog.Popup>
+        </Dialog.Portal>
+      )}
+    </Dialog.Root>
   );
 }
 function SidebarTrigger({
   className,
   ...props
 }: ComponentProps<typeof Dialog.Trigger>) {
+  const { handle } = useSidebar();
   return (
     <Dialog.Trigger
+      handle={handle}
       {...props}
       className={withClassName("rbx-sidebar-trigger", className)}
     />
