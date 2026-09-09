@@ -1,0 +1,20 @@
+@import "./button.css";
+/* Drawer: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+.rbx-drawer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 101;
+  max-height: 85dvh;
+  overflow: auto;
+  background: var(--rbx-color-surface-100);
+  color: var(--rbx-color-content-emphasis);
+  border-radius: 16px 16px 0 0;
+  padding: 32px;
+  transform: translateY(var(--drawer-swipe-movement-y, 0));
+}
+.rbx-drawer-content {
+  max-width: 600px;
+  margin: auto;
+}

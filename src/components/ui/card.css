@@ -1,0 +1,24 @@
+/* card — semantic HTML composition. */
+.rbx-card {
+  border: 1px solid var(--rbx-color-stroke-default);
+  border-radius: var(--rbx-radius-large);
+  background: var(--rbx-color-surface-100);
+  overflow: hidden;
+}
+.rbx-card-header,
+.rbx-card-content,
+.rbx-card-footer {
+  padding: 24px;
+}
+.rbx-card-header + .rbx-card-content {
+  padding-top: 0;
+}
+.rbx-card-title {
+  font: 700 1.125rem/1.4 var(--rbx-font-heading);
+  margin: 0;
+}
+.rbx-card-footer {
+  border-top: 1px solid var(--rbx-color-stroke-default);
+  display: flex;
+  gap: 12px;
+}

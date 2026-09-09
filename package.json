@@ -1,0 +1,35 @@
+{
+  "dependencies": {
+    "@base-ui/react": "^1.8.0",
+    "lucide-react": "^1.43.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.5.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "postcss": "^8.5.28",
+    "prettier": "^3.9.6",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
+  },
+  "name": "roblox-base-ui-local",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "node scripts/build-registry.mjs && tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "registry:build": "node scripts/build-registry.mjs",
+    "ui": "node scripts/add.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:ui": "playwright test",
+    "format": "prettier --write src scripts docs tests *.json *.ts README.md",
+    "tokens:build": "node scripts/build-tokens.mjs"
+  }
+}

@@ -1,0 +1,40 @@
+/* Slider: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+.rbx-slider {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+}
+.rbx-slider-control {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  touch-action: none;
+}
+.rbx-slider-track {
+  position: relative;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--rbx-color-shift-300);
+  width: 100%;
+}
+.rbx-slider-indicator {
+  position: absolute;
+  border-radius: inherit;
+  background: var(--rbx-color-system-emphasis);
+}
+.rbx-slider-thumb {
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--rbx-color-system-emphasis);
+  border-radius: 50%;
+  background: var(--rbx-color-extended-white-100);
+}
+.rbx-slider[data-orientation="vertical"] .rbx-slider-control {
+  width: 28px;
+  height: 180px;
+  justify-content: center;
+}
+.rbx-slider[data-orientation="vertical"] .rbx-slider-track {
+  width: 6px;
+  height: 100%;
+}

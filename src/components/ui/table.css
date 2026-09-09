@@ -1,0 +1,21 @@
+/* table — semantic HTML composition. */
+.rbx-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.rbx-table-head,
+.rbx-table-cell {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--rbx-color-stroke-default);
+}
+.rbx-table-head {
+  color: var(--rbx-color-content-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.rbx-table-caption {
+  padding: 12px;
+  color: var(--rbx-color-content-default);
+  font-size: 0.875rem;
+}

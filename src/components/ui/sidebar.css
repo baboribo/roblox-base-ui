@@ -1,0 +1,113 @@
+/* Navigation.css: 288px content + 1px separator. Height/position belong to the host layout. */
+.rbx-sidebar {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: var(--rbx-sidebar-width, 289px);
+  max-width: 100%;
+  min-height: 0;
+  background: var(--rbx-color-surface-0);
+  color: var(--rbx-color-content-emphasis);
+  border-inline-end: 1px solid var(--rbx-color-stroke-default);
+}
+.rbx-sidebar-scroll {
+  flex: 1;
+  min-height: 0;
+}
+.rbx-sidebar-viewport {
+  box-sizing: border-box;
+  padding: 12px 16px;
+}
+.rbx-sidebar-header,
+.rbx-sidebar-footer {
+  padding: 12px 16px;
+  flex-shrink: 0;
+}
+.rbx-sidebar-footer {
+  color: var(--rbx-color-content-muted);
+  font-size: 12px;
+}
+.rbx-sidebar-group + .rbx-sidebar-group {
+  margin-top: 24px;
+}
+.rbx-sidebar-group-label {
+  margin: 0 0 12px;
+  padding-inline: 12px;
+  color: var(--rbx-color-content-muted);
+  font: 600 12px/1.4 var(--rbx-font-body);
+}
+.rbx-sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rbx-sidebar-item {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+}
+/* Base UI modal behavior is a kit adaptation; original source supplies the slide timing. */
+.rbx-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgb(0 0 0 / 0.5);
+  transition: opacity 100ms;
+}
+.rbx-sidebar-popup {
+  box-sizing: border-box;
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: 51;
+  display: flex;
+  flex-direction: column;
+  width: var(--rbx-sidebar-width, 289px);
+  max-width: calc(100vw - 40px);
+  background: var(--rbx-color-surface-0);
+  color: var(--rbx-color-content-emphasis);
+  transition: transform 100ms cubic-bezier(0.2, 0, 0, 1);
+  outline: none;
+  padding-block: env(safe-area-inset-top) env(safe-area-inset-bottom);
+}
+.rbx-sidebar-popup > .rbx-sidebar {
+  flex: 1;
+  width: 100%;
+}
+.rbx-sidebar-popup[data-starting-style],
+.rbx-sidebar-popup[data-ending-style] {
+  transform: translateX(-100%);
+}
+.rbx-sidebar-popup:dir(rtl)[data-starting-style],
+.rbx-sidebar-popup:dir(rtl)[data-ending-style] {
+  transform: translateX(100%);
+}
+.rbx-sidebar-backdrop[data-starting-style],
+.rbx-sidebar-backdrop[data-ending-style] {
+  opacity: 0;
+}
+.rbx-sidebar-mobile-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+}
+.rbx-sidebar-mobile-title {
+  margin: 0;
+  font: 700 16px/1.4 var(--rbx-font-body);
+}
+@media (min-width: 1141px) {
+  .rbx-sidebar-trigger {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rbx-sidebar-popup,
+  .rbx-sidebar-backdrop {
+    transition: none;
+  }
+}

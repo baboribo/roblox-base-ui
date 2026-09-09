@@ -1,0 +1,57 @@
+.rbx-carousel {
+  width: 100%;
+  min-width: 0;
+  padding-bottom: 4px;
+}
+.rbx-carousel-viewport {
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+}
+.rbx-carousel-content {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+}
+.rbx-carousel-item {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 8px;
+  width: 280px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--rbx-color-content-emphasis);
+  text-align: start;
+  scroll-snap-align: start;
+  cursor: pointer;
+}
+.rbx-carousel-media {
+  width: 100%;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--rbx-color-shift-200);
+}
+.rbx-carousel-copy {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.rbx-carousel-title {
+  font: var(--rbx-typography-title-medium-font);
+}
+.rbx-carousel-description {
+  font: var(--rbx-typography-body-medium-font);
+  color: var(--rbx-color-content-default);
+}
+.rbx-carousel-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}

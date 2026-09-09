@@ -1,0 +1,30 @@
+@import "./button.css";
+/* Toast: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+.rbx-toast-viewport {
+  position: fixed;
+  z-index: var(--rbx-layer-toast);
+  right: 24px;
+  bottom: 24px;
+  width: min(360px, calc(100vw - 32px));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.rbx-toast {
+  position: relative;
+  padding: 20px;
+  border: 1px solid var(--rbx-color-stroke-emphasis);
+  border-radius: 12px;
+  background: var(--rbx-color-surface-200);
+  color: var(--rbx-color-content-emphasis);
+  box-shadow: 0 8px 32px var(--rbx-color-common-shadow);
+}
+.rbx-toast-title {
+  font-weight: 700;
+}
+.rbx-toast .rbx-icon-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+}

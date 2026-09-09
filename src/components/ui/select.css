@@ -1,0 +1,41 @@
+/* Browser preferences: transparent input shell, 1px contrast-alpha stroke. */
+.rbx-select-trigger {
+  justify-content: space-between;
+  width: 100%;
+  height: 48px;
+  min-height: 48px;
+  padding: 1px 16px;
+  border: 1px solid var(--rbx-color-stroke-contrast-alpha);
+  background: transparent;
+  color: var(--rbx-color-content-default);
+  font: var(--rbx-typography-body-large-font);
+}
+.rbx-select-trigger[data-size="md"] {
+  height: 40px;
+  min-height: 40px;
+  padding-inline: 12px;
+  font: var(--rbx-typography-body-medium-font);
+}
+.rbx-select-trigger[data-size="sm"] {
+  height: 32px;
+  min-height: 32px;
+  padding-inline: 12px;
+  font: var(--rbx-typography-body-small-font);
+}
+.rbx-select-trigger[data-size="xs"] {
+  height: 24px;
+  min-height: 24px;
+  padding-inline: 8px;
+  border-radius: 4px;
+  font: var(--rbx-typography-body-small-font);
+}
+.rbx-select-trigger:focus-visible {
+  outline: none;
+  border-color: var(--rbx-color-system-emphasis);
+  box-shadow: inset 0 0 0 1px var(--rbx-color-system-emphasis);
+}
+.rbx-scroll-arrow {
+  padding: 4px;
+  text-align: center;
+  background: var(--rbx-color-surface-100);
+}

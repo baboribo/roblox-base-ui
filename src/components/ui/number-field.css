@@ -1,0 +1,9 @@
+/* NumberField: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+.rbx-number-group {
+  display: flex;
+  gap: 4px;
+}
+.rbx-number-group .rbx-input {
+  text-align: center;
+  min-width: 0;
+}

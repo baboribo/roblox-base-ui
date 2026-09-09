@@ -1,0 +1,15 @@
+/* OTPField: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+.rbx-otp {
+  display: flex;
+  gap: 8px;
+}
+.rbx-otp-input {
+  width: 40px;
+  height: 48px;
+  border: 1px solid var(--rbx-color-stroke-default);
+  background: var(--rbx-color-surface-0);
+  color: var(--rbx-color-content-emphasis);
+  text-align: center;
+  border-radius: 8px;
+  font-size: 1.25rem;
+}

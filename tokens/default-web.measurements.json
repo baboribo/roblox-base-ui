@@ -1,0 +1,327 @@
+{
+  "capturedAt": "2026-09-09",
+  "theme": "Default / dark",
+  "method": "Read-only rendered DOM/computed style, plus public delivered CSS/JS; no account values or private messages stored.",
+  "pages": [
+    "https://www.roblox.com/my/account#!/browser-preferences",
+    "https://www.roblox.com/my/account#!/info",
+    "https://www.roblox.com/my/account#!/security",
+    "https://www.roblox.com/users/profile",
+    "https://www.roblox.com/communities",
+    "https://www.roblox.com/plus",
+    "https://www.roblox.com/upgrades/robux",
+    "https://www.roblox.com/help-safety",
+    "https://www.roblox.com/safety-dashboard",
+    "https://en.help.roblox.com/hc/en-us",
+    "https://www.roblox.com/home"
+  ],
+  "sources": [
+    {
+      "name": "ReactChat.css",
+      "url": "https://css.rbxcdn.com/55329e3c435d6cd367171adae4c862957f79c6122fe72cae13e541a64890a8d6-ReactChat.css",
+      "sha256": "07275052f91dab215aee94cb36e21a24c18adc94520464de2b184d968531d2b9",
+      "bytes": 38297
+    },
+    {
+      "name": "FoundationWeb.css",
+      "url": "https://css.rbxcdn.com/d5a3728b78be729b693aadf79a1f45f0fa49c15fe863a0d7dd631b75f9e82207.css",
+      "sha256": "2ccd7eaf7c0888ceb1e968925904718ef6371d7e00bcb60bf9a9a2044104a4b2",
+      "bytes": 85
+    },
+    {
+      "name": "UserSettings.css",
+      "url": "https://css.rbxcdn.com/2567c61b9e1c1550dd66e146e031caa61ecfa7b524257085fcc90869721201d3-UserSettings.css",
+      "sha256": "a38fab44fd363d53fb798937a984f495b9c75a6a265f27e5aed1c6a6edd1a3d0",
+      "bytes": 174231
+    },
+    {
+      "name": "Navigation.css",
+      "url": "https://css.rbxcdn.com/27324f2fa09a8185b796880208f5b326a290359c9b283f888b842d8c19fe4bb3-Navigation.css",
+      "sha256": "069d664d6669d0af10b3774b8827d0637aed2b11d68497483aa978e1ad33be93",
+      "bytes": 212093
+    },
+    {
+      "name": "FoundationCss.css",
+      "url": "https://css.rbxcdn.com/d706fa7361f26569ce9481ec468f9f0da29aa7a0623e0da9d19a772490192ed1-FoundationCss.css",
+      "sha256": "6fc7d74b6ff8f5ad4c648a551ca845eba91e8d9e641def053915d7bcaa70113e",
+      "bytes": 201542
+    },
+    {
+      "name": "ReactChat.js",
+      "url": "https://js.rbxcdn.com/38719637cdf99cc8be6f31a5d77751085fd53b0427420edd514c96b20eb9c612-ReactChat.js",
+      "sha256": "5cdf12a0c957e8c58947ef6169154faf5dde8495f3140de24a4fbc2fc39c8659",
+      "bytes": 629554
+    },
+    {
+      "name": "ReactStyleGuide.js",
+      "url": "https://js.rbxcdn.com/a38d4c0c0d2b4a9be634a64b8ef355a663a50d604f887dcbbfda6bdb1b46a1e1-ReactStyleGuide.js",
+      "sha256": "c5c9fdd31527ea20500069adc17dc6aa5fed8d3924e0b14a4a598806a65a1971",
+      "bytes": 485119
+    },
+    {
+      "name": "Catalog.css",
+      "url": "https://css.rbxcdn.com/ef7b4a88bb8dea337dc67c44b54b50346417efd21f02ff747b4544f923beeaae-Catalog.css",
+      "sha256": "43b88c641096fe2af324e980e44a8af310afbecd07a5da1c14c7e52153e72a15",
+      "bytes": 157337
+    },
+    {
+      "name": "RobuxRedesign.css",
+      "url": "https://css.rbxcdn.com/70410c15381b7c1cdec93286700f952526084115182e9e5eb8068bc0fcef781f-RobuxRedesign.css",
+      "sha256": "1bedee0479e4398472220db461e90718425eac4e7868ca4a68dfaf6fcea833c5",
+      "bytes": 78105
+    },
+    {
+      "name": "RobuxRedesign.js",
+      "url": "https://js.rbxcdn.com/3088e935d5fb30aaf0b1cc8b9aa2e1ff5020c26db139e44e852c1bb76bfb8a5e-RobuxRedesign.js",
+      "sha256": "ee06d15e88dd1c907d1419e24a557f44a8e9622b278372e1407344b124b6240b",
+      "bytes": 782361
+    },
+    {
+      "name": "Builder.css",
+      "url": "https://css.rbxcdn.com/835ad8483ecae12366bf4b80701ee78af7c5b58cdb95a529e061851cf7bc1c7f-Builder.css",
+      "sha256": "de3c955521473676ca7478b455acd950800647ee2fcce18eeed8f5f6e322cc6b",
+      "bytes": 24872
+    },
+    {
+      "name": "SafetyDashboard.css",
+      "url": "https://css.rbxcdn.com/b8e6dbd572b70b3d16f31154b132aa22389b886f4b62deb37b76399b2e16ae20-SafetyDashboard.css",
+      "sha256": "dbbfd19541ab4de688ab83f1296b20fc1e8c397992acd529344c048950b70ca6",
+      "bytes": 36760
+    },
+    {
+      "name": "SafetyDashboard.js",
+      "url": "https://js.rbxcdn.com/5f79fdb45fbc4e588cd089e45b48d0230dead6215a5447853b44deac8d640c3d-SafetyDashboard.js",
+      "sha256": "4473f3de1cafb3729b07cbf4819df0014dc91ce0c2b71544cdf4a7a568570ef6",
+      "bytes": 657750
+    },
+    {
+      "name": "ConfigurePrivateServer.css",
+      "url": "https://css.rbxcdn.com/26cbc06b72c8a97b34eab8b6f72e233db5f71aff2aff3daa7e1b4fa10e280c87-ConfigurePrivateServer.css",
+      "sha256": "2f14b0877d1afb704c91492d86478b598a1ed07034b9955b7e9fd2daf759f41c",
+      "bytes": 8473
+    },
+    {
+      "name": "ConfigurePrivateServer.js",
+      "url": "https://js.rbxcdn.com/39e6f1ef72f0d7b2126fb61a9c9c5a0e16a4aadbb1b8359daded7aeacace9c49-ConfigurePrivateServer.js",
+      "sha256": "705c8934902779d850250acc7e1830f73a96080218845aac4adb11cce249e015",
+      "bytes": 157193
+    },
+    {
+      "name": "Navigation.js",
+      "url": "https://js.rbxcdn.com/bfdae6a3641edbda2c4f7f2f162f9fda2e72c7e80c1dcb3c8d2bd6d2fe0896b2-Navigation.js",
+      "sha256": "072600760e771daedc90f4383eea05feeb09f8d12d49e1df3018d714b00e4627",
+      "bytes": 1356465
+    }
+  ],
+  "samples": [
+    {
+      "component": "Chat dock",
+      "localSelector": ".rbx-chat-panel",
+      "css": {
+        "width": "286px",
+        "height": "360px",
+        "border-radius": "16px 16px 0px 0px",
+        "border-color": "rgba(208, 217, 251, 0.08)",
+        "background-color": "rgb(25, 26, 31)"
+      },
+      "evidence": "live computed style"
+    },
+    {
+      "component": "Chat group",
+      "localSelector": ".rbx-chat-group",
+      "css": {
+        "width": "260px",
+        "height": "360px",
+        "border-radius": "16px 16px 0px 0px"
+      },
+      "evidence": "live computed style"
+    },
+    {
+      "component": "Chat header",
+      "localSelector": ".rbx-chat-header",
+      "css": {
+        "height": "48px",
+        "padding": "8px",
+        "gap": "8px"
+      },
+      "evidence": "live computed style"
+    },
+    {
+      "component": "Chat search",
+      "localSelector": ".rbx-chat-search .rbx-input-group",
+      "css": {
+        "height": "32px",
+        "border-radius": "8px",
+        "padding": "0px 12px",
+        "font-size": "12px",
+        "line-height": "16.8px",
+        "border-color": "rgba(208, 217, 251, 0.4)"
+      },
+      "evidence": "live computed style"
+    },
+    {
+      "component": "Chat small button",
+      "localSelector": ".rbx-chat-footer .rbx-button",
+      "css": {
+        "height": "32px",
+        "width": "113px",
+        "padding": "0px 8px",
+        "font-size": "12px",
+        "font-weight": "600",
+        "line-height": "12px"
+      },
+      "evidence": "live computed style"
+    },
+    {
+      "component": "Disabled Create",
+      "localSelector": ".rbx-chat-footer .rbx-button:disabled",
+      "css": {
+        "opacity": "0.5",
+        "background-color": "rgba(208, 217, 251, 0.12)"
+      },
+      "evidence": "live computed style"
+    },
+    {
+      "component": "Preferences select",
+      "localSelector": ".rbx-select-trigger",
+      "css": {
+        "height": "48px",
+        "padding": "1px 16px",
+        "font-size": "16px",
+        "border-radius": "8px",
+        "background-color": "rgba(0, 0, 0, 0)"
+      },
+      "evidence": "live computed style"
+    },
+    {
+      "component": "Account info radio",
+      "localSelector": ".rbx-radio",
+      "css": {
+        "width": "24px",
+        "height": "24px",
+        "border-color": "rgba(208, 217, 251, 0.4)"
+      },
+      "evidence": "live computed style"
+    },
+    {
+      "component": "Account info checked radio",
+      "localSelector": ".rbx-radio[data-checked]",
+      "css": {
+        "background-color": "rgb(247, 247, 248)"
+      },
+      "evidence": "live computed style"
+    },
+    {
+      "component": "Account info radio indicator",
+      "localSelector": ".rbx-radio-indicator",
+      "css": {
+        "width": "10px",
+        "height": "10px",
+        "background-color": "rgb(32, 34, 39)"
+      },
+      "evidence": "live computed style"
+    }
+  ],
+  "limitations": [
+    "Light mode is derived from shipped Default tokens, not an account theme change.",
+    "MUI price fields and legacy Charts pills are excluded from the Foundation defaults.",
+    "Corporate and Plus display typography is reference only.",
+    "Default theme thumbnail, synthetic avatars, and unmeasured components are independently composed."
+  ],
+  "faq": {
+    "implementation": "Robux page-specific composition using Foundation tokens and Icon; not a detected Foundation Accordion export",
+    "item": {
+      "borderRadius": "8px",
+      "border": "1px stroke-default",
+      "padding": "8px 12px"
+    },
+    "trigger": {
+      "height": "40px",
+      "font": "700 14px/19.6px Builder Sans",
+      "color": "content-default"
+    },
+    "panel": {
+      "paddingBottom": "12px",
+      "font": "400 14px/19.6px Builder Sans"
+    },
+    "icon": "20px up/down glyphs",
+    "spacing": "12px below 1141px, 16px at >=1141px (confirmed shipped media query)",
+    "motion": "Conditional panel mount, no height animation in delivered source; no invented transition"
+  },
+  "statusPatterns": {
+    "card": {
+      "surface": "surface-100",
+      "padding": 24,
+      "gap": 20,
+      "radius": 16,
+      "border": 0
+    },
+    "segmentedMeter": {
+      "segments": 4,
+      "height": 8,
+      "gap": 2,
+      "edgeRadius": 4,
+      "labelGap": 4
+    },
+    "collection": {
+      "itemWidth": 280,
+      "mediaHeight": 160,
+      "mediaRadius": 8,
+      "gap": 12,
+      "bottomPadding": 4
+    },
+    "helpCenter": "Redirect verified to en.help.roblox.com/hc/en-us, zdassets/Zendesk theme CSS, Source Sans Pro, no Foundation Web elements. Excluded."
+  },
+  "switch": {
+    "page": "Private server configuration (account-specific URL omitted)",
+    "liveOnState": {
+      "width": 40,
+      "height": 24,
+      "padding": 2,
+      "radius": 9999,
+      "track": "system-contrast",
+      "thumbSize": 20,
+      "thumbBackground": "inverse-content-emphasis",
+      "glyph": "icon-filled-check, size20"
+    },
+    "offStateEvidence": "Delivered data-state CSS classes; current server switches not changed",
+    "offState": {
+      "track": "action-standard-background",
+      "thumbBackground": "content-emphasis",
+      "checkOpacity": 0
+    },
+    "motion": {
+      "spacers": "flex-grow 300ms ease-standard-out, motion-safe",
+      "color": "100ms linear",
+      "check": "opacity 100ms; on delay50ms"
+    }
+  },
+  "sidebar": {
+    "capturedAt": "2026-09-10",
+    "width": 289,
+    "innerWidth": 288,
+    "contentPadding": "12px 16px",
+    "rowWidth": 256,
+    "rowHeight": 40,
+    "rowGap": 8,
+    "rowPadding": "0px 2px 0px 4px",
+    "iconSlot": 40,
+    "icon": 24,
+    "radius": 8,
+    "font": "Builder Sans 700 16px / 22.4px",
+    "selected": "shift-200",
+    "hover": "state-hover overlay",
+    "press": "state-press overlay",
+    "desktopMinWidth": 1141,
+    "sourceHeaderOffset": {
+      "below991": 74,
+      "from991": 40
+    },
+    "transition": "100ms cubic-bezier(0.2, 0, 0, 1), reduced motion disabled",
+    "adaptations": [
+      "BLOCK/UI retains its 80px header",
+      "Sticky search, section groups, text-only catalog rows are BLOCK/UI extensions",
+      "Base UI modal focus handling, backdrop, Escape and close button are accessibility adaptations; original sidebar uses visibility and translation"
+    ]
+  }
+}

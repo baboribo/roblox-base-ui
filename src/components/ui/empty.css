@@ -1,0 +1,8 @@
+/* empty — semantic HTML composition. */
+.rbx-empty {
+  text-align: center;
+  padding: 48px 24px;
+  border: 1px dashed var(--rbx-color-stroke-emphasis);
+  border-radius: 16px;
+  color: var(--rbx-color-content-default);
+}

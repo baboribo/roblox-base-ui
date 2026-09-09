@@ -1,0 +1,23 @@
+/* Radio: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+.rbx-radio {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--rbx-color-stroke-contrast-alpha);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.rbx-radio[data-checked] {
+  background: var(--rbx-color-action-sub-emphasis-background);
+}
+.rbx-radio-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--rbx-inverse-action-sub-emphasis-background);
+}

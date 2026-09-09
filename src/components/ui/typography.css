@@ -1,0 +1,17 @@
+/* typography — semantic HTML composition. */
+.rbx-heading {
+  font: var(--rbx-typography-heading-medium-font);
+  letter-spacing: var(--rbx-typography-heading-medium-letter-spacing);
+}
+.rbx-text {
+  color: var(--rbx-color-content-default);
+  font: var(--rbx-typography-body-large-font);
+}
+.rbx-code {
+  font:
+    0.875rem/1.6 ui-monospace,
+    monospace;
+  padding: 2px 6px;
+  background: var(--rbx-color-shift-200);
+  border-radius: 4px;
+}

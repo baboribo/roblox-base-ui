@@ -1,0 +1,129 @@
+/* Optional remote fonts, taken from the verified current Roblox web Builder.css.
+Source: https://css.rbxcdn.com/835ad8483ecae12366bf4b80701ee78af7c5b58cdb95a529e061851cf7bc1c7f-Builder.css
+Font binaries are loaded from Roblox CDN; not bundled. */
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/751845fb13435230.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/6a0f34f41a26b66e.woff) format("woff");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/4f1026e53496b1d3.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/b4872f02f108cdab.woff) format("woff");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/9a0cad3cab3175e0.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/65a6fb4faaf36f36.woff) format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/46d5aa6758bddd3e.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/1aaf6d6423b57891.woff) format("woff");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/5f8b8d5d1962b747.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/a65216302c08dda8.woff) format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/622196842d3c64c2.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/348cff8a779b1813.woff) format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/7f3ddcb5a3796526.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/2a2531d511d57934.woff) format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/4f9472a07e64b815.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/410528d6d85fefed.woff) format("woff");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/77cbcd18c888e0f1.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/59280cfefe63a569.woff) format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/4c70c58728d4c988.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/1fed58db0025ed4f.woff) format("woff");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/3e19a797e2ce0522.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/ab14aff12bcddc27.woff) format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/a29e1d8162e123a2.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/794cfc49734a16e2.woff) format("woff");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/be234b98e1d313a5.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/b075e642010b513b.woff) format("woff");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Builder Sans;
+  src:
+    url(https://css.rbxcdn.com/7c55f039ae2704c7.woff2) format("woff2"),
+    url(https://css.rbxcdn.com/9e1e6f3d60c5013c.woff) format("woff");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}

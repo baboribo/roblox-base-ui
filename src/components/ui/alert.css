@@ -1,0 +1,7 @@
+/* alert — semantic HTML composition. */
+.rbx-alert {
+  border: 1px solid var(--rbx-color-stroke-emphasis);
+  border-radius: 8px;
+  padding: 16px;
+  background: var(--rbx-color-surface-100);
+}

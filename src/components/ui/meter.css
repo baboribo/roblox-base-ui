@@ -1,0 +1,7 @@
+@import "./progress.css";
+/* Meter: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+.rbx-meter {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+}

@@ -1,0 +1,92 @@
+/* Roblox의 action 토큰을 variant에 직접 연결합니다. */
+.rbx-button[data-variant="emphasis"] {
+  background-color: var(--rbx-color-action-emphasis-background);
+  color: var(--rbx-color-action-emphasis-foreground);
+  border-color: var(--rbx-color-action-emphasis-border);
+}
+.rbx-button[data-variant="standard"] {
+  background-color: var(--rbx-color-action-standard-background);
+  color: var(--rbx-color-action-standard-foreground);
+  border-color: var(--rbx-color-action-standard-border);
+}
+.rbx-button[data-variant="soft-emphasis"] {
+  background-color: var(--rbx-color-action-soft-emphasis-background);
+  color: var(--rbx-color-action-soft-emphasis-foreground);
+  border-color: var(--rbx-color-action-soft-emphasis-border);
+}
+.rbx-button[data-variant="sub-emphasis"] {
+  background-color: var(--rbx-color-action-sub-emphasis-background);
+  color: var(--rbx-color-action-sub-emphasis-foreground);
+  border-color: var(--rbx-color-action-sub-emphasis-border);
+}
+.rbx-button[data-variant="subtle"] {
+  background-color: var(--rbx-color-action-subtle-background);
+  color: var(--rbx-color-action-subtle-foreground);
+  border-color: var(--rbx-color-action-subtle-border);
+}
+.rbx-button[data-variant="utility"] {
+  background-color: var(--rbx-color-action-utility-background);
+  color: var(--rbx-color-action-utility-foreground);
+  border-color: var(--rbx-color-action-utility-border);
+}
+.rbx-button[data-variant="over-media"] {
+  background-color: var(--rbx-color-action-over-media-background);
+  color: var(--rbx-color-action-over-media-foreground);
+  border-color: var(--rbx-color-action-over-media-border);
+}
+.rbx-button[data-variant="alert"] {
+  background-color: var(--rbx-color-action-alert-background);
+  color: var(--rbx-color-action-alert-foreground);
+  border-color: var(--rbx-color-action-alert-border);
+}
+.rbx-button[data-variant="link"] {
+  background-color: var(--rbx-color-action-link-background);
+  color: var(--rbx-color-action-link-foreground);
+  border-color: var(--rbx-color-action-link-border);
+}
+/* Foundation Web size map: label line-height is 100%, not body text's 140%. */
+.rbx-button {
+  height: 48px;
+  min-height: 48px;
+  padding: 0 12px;
+  font: var(--rbx-typography-label-large-font);
+  white-space: nowrap;
+}
+.rbx-button[data-size="md"] {
+  height: 40px;
+  min-height: 40px;
+  font: var(--rbx-typography-label-medium-font);
+}
+.rbx-button[data-size="sm"] {
+  height: 32px;
+  min-height: 32px;
+  padding: 0 8px;
+  gap: 4px;
+  font: var(--rbx-typography-label-small-font);
+}
+.rbx-button[data-size="xs"] {
+  height: 24px;
+  min-height: 24px;
+  padding: 0 8px;
+  gap: 4px;
+  font: var(--rbx-typography-label-small-font);
+  border-radius: 4px;
+}
+.rbx-button[data-variant="utility"] {
+  background-color: var(--rbx-color-action-subtle-background);
+  color: var(--rbx-color-action-standard-foreground);
+}
+.rbx-button[data-variant="link"] {
+  text-decoration: none;
+  color: var(--rbx-color-system-emphasis);
+}
+/* 원본은 비활성 강조 버튼을 standard 역할로 바꾼 뒤 opacity 0.5를 적용합니다. */
+.rbx-button:is(:disabled, [data-disabled]):is(
+    [data-variant="emphasis"],
+    [data-variant="standard"],
+    [data-variant="soft-emphasis"],
+    [data-variant="alert"]
+  ) {
+  background-color: var(--rbx-color-action-standard-background);
+  color: var(--rbx-color-action-standard-foreground);
+}

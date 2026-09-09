@@ -1,0 +1,12 @@
+/* skeleton — semantic HTML composition. */
+.rbx-skeleton {
+  border-radius: 8px;
+  background: var(--rbx-color-common-shimmer);
+  min-height: 16px;
+  animation: rbx-pulse 1.5s ease-in-out infinite alternate;
+}
+@keyframes rbx-pulse {
+  to {
+    opacity: 0.45;
+  }
+}

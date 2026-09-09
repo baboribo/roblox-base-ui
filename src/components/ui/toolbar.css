@@ -1,0 +1,9 @@
+@import "./button.css";
+/* Toolbar: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+.rbx-toolbar {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--rbx-color-stroke-default);
+  border-radius: 8px;
+}

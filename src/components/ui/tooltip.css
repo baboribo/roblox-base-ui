@@ -1,0 +1,11 @@
+@import "./button.css";
+/* Tooltip: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+.rbx-tooltip {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--rbx-color-content-emphasis);
+  color: var(--rbx-color-surface-0);
+  font-size: 0.875rem;
+  box-shadow: 0 4px 16px var(--rbx-color-common-shadow);
+  max-width: 280px;
+}

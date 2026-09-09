@@ -1,0 +1,13 @@
+/* Fieldset: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+.rbx-fieldset {
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.rbx-legend {
+  padding: 0;
+  margin-bottom: 16px;
+  font-weight: 700;
+}

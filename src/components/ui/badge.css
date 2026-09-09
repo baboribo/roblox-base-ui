@@ -1,0 +1,52 @@
+.rbx-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  background: var(--rbx-color-shift-200);
+  color: var(--rbx-color-content-emphasis);
+  font: var(--rbx-typography-label-small-font);
+  white-space: nowrap;
+}
+.rbx-badge[data-size="xs"] {
+  height: 16px;
+  padding: 0 4px;
+  font: var(--rbx-typography-caption-small-font);
+}
+.rbx-badge[data-shape="box"] {
+  border-radius: 4px;
+}
+.rbx-badge[data-variant="contrast"] {
+  background: var(--rbx-color-system-contrast);
+  color: var(--rbx-inverse-content-emphasis);
+}
+.rbx-badge[data-variant="emphasis"] {
+  background: var(--rbx-color-system-emphasis);
+  color: var(--rbx-dark-mode-content-emphasis);
+}
+.rbx-badge[data-variant="success"] {
+  background: color-mix(
+    in srgb,
+    var(--rbx-color-system-success) 20%,
+    transparent
+  );
+}
+.rbx-badge[data-variant="warning"] {
+  background: color-mix(
+    in srgb,
+    var(--rbx-color-system-warning) 20%,
+    transparent
+  );
+}
+.rbx-badge[data-variant="alert"] {
+  background: color-mix(
+    in srgb,
+    var(--rbx-color-system-alert) 20%,
+    transparent
+  );
+}
+.rbx-badge[data-variant="over-media"] {
+  background: var(--rbx-color-over-media-0);
+}

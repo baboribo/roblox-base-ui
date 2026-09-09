@@ -1,0 +1,222 @@
+[
+  {
+    "name": "accordion",
+    "type": "base-ui"
+  },
+  {
+    "name": "alert",
+    "type": "html"
+  },
+  {
+    "name": "alert-dialog",
+    "type": "base-ui"
+  },
+  {
+    "name": "autocomplete",
+    "type": "base-ui"
+  },
+  {
+    "name": "avatar",
+    "type": "base-ui"
+  },
+  {
+    "name": "badge",
+    "type": "html"
+  },
+  {
+    "name": "breadcrumb",
+    "type": "html"
+  },
+  {
+    "name": "button",
+    "type": "base-ui"
+  },
+  {
+    "name": "card",
+    "type": "html"
+  },
+  {
+    "name": "carousel",
+    "type": "base-ui"
+  },
+  {
+    "name": "chat",
+    "type": "base-ui"
+  },
+  {
+    "name": "checkbox",
+    "type": "base-ui"
+  },
+  {
+    "name": "checkbox-group",
+    "type": "base-ui"
+  },
+  {
+    "name": "collapsible",
+    "type": "base-ui"
+  },
+  {
+    "name": "combobox",
+    "type": "base-ui"
+  },
+  {
+    "name": "context-menu",
+    "type": "base-ui"
+  },
+  {
+    "name": "dialog",
+    "type": "base-ui"
+  },
+  {
+    "name": "drawer",
+    "type": "base-ui"
+  },
+  {
+    "name": "empty",
+    "type": "html"
+  },
+  {
+    "name": "field",
+    "type": "base-ui"
+  },
+  {
+    "name": "fieldset",
+    "type": "base-ui"
+  },
+  {
+    "name": "form",
+    "type": "base-ui"
+  },
+  {
+    "name": "icon",
+    "type": "html"
+  },
+  {
+    "name": "icon-button",
+    "type": "base-ui"
+  },
+  {
+    "name": "input",
+    "type": "base-ui"
+  },
+  {
+    "name": "list",
+    "type": "base-ui"
+  },
+  {
+    "name": "menu",
+    "type": "base-ui"
+  },
+  {
+    "name": "menubar",
+    "type": "base-ui"
+  },
+  {
+    "name": "meter",
+    "type": "base-ui"
+  },
+  {
+    "name": "navigation-menu",
+    "type": "base-ui"
+  },
+  {
+    "name": "number-field",
+    "type": "base-ui"
+  },
+  {
+    "name": "otp-field",
+    "type": "base-ui"
+  },
+  {
+    "name": "popover",
+    "type": "base-ui"
+  },
+  {
+    "name": "preview-card",
+    "type": "base-ui"
+  },
+  {
+    "name": "progress",
+    "type": "base-ui"
+  },
+  {
+    "name": "radio",
+    "type": "base-ui"
+  },
+  {
+    "name": "radio-group",
+    "type": "base-ui"
+  },
+  {
+    "name": "scroll-area",
+    "type": "base-ui"
+  },
+  {
+    "name": "select",
+    "type": "base-ui"
+  },
+  {
+    "name": "separator",
+    "type": "base-ui"
+  },
+  {
+    "name": "skeleton",
+    "type": "html"
+  },
+  {
+    "name": "slider",
+    "type": "base-ui"
+  },
+  {
+    "name": "status-meter",
+    "type": "base-ui"
+  },
+  {
+    "name": "switch",
+    "type": "base-ui"
+  },
+  {
+    "name": "table",
+    "type": "html"
+  },
+  {
+    "name": "tabs",
+    "type": "base-ui"
+  },
+  {
+    "name": "textarea",
+    "type": "html"
+  },
+  {
+    "name": "toast",
+    "type": "base-ui"
+  },
+  {
+    "name": "toggle",
+    "type": "base-ui"
+  },
+  {
+    "name": "toggle-group",
+    "type": "base-ui"
+  },
+  {
+    "name": "toolbar",
+    "type": "base-ui"
+  },
+  {
+    "name": "tooltip",
+    "type": "base-ui"
+  },
+  {
+    "name": "typography",
+    "type": "html"
+  },
+  {
+    "name": "sidebar",
+    "type": "base-ui"
+  },
+  {
+    "name": "navigation-item",
+    "type": "base-ui"
+  }
+]

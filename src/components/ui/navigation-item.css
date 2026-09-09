@@ -1,0 +1,79 @@
+/* Roblox Home / Navigation.css: 40px row, 40px icon slot, 24px glyph. */
+.rbx-navigation-item {
+  box-sizing: border-box;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  padding-block: 0;
+  padding-inline: 4px 2px;
+  border: 0;
+  border-radius: var(--rbx-radius-medium);
+  background: transparent;
+  color: var(--rbx-color-content-emphasis);
+  font: 700 16px/1.4 var(--rbx-font-body);
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* Overlay preserves the selected background underneath hover/press. */
+.rbx-navigation-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: background-color 100ms;
+}
+.rbx-navigation-item[data-active],
+.rbx-navigation-item[aria-current="page"] {
+  background: var(--rbx-color-shift-200);
+}
+@media (hover: hover) {
+  .rbx-navigation-item:not([data-disabled]):hover::before {
+    background: var(--rbx-color-state-hover);
+  }
+}
+.rbx-navigation-item:not([data-disabled]):active::before {
+  background: var(--rbx-color-state-press);
+}
+.rbx-navigation-item:focus-visible {
+  outline: 3px solid var(--rbx-color-selection-start);
+  outline-offset: 3px;
+}
+.rbx-navigation-item[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.rbx-navigation-item-leading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 40px;
+  height: 40px;
+}
+.rbx-navigation-item-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rbx-navigation-item-trailing {
+  display: flex;
+  flex-shrink: 0;
+  margin-inline-start: auto;
+}
+/* Text-only catalog rows are a BLOCK/UI extension. */
+.rbx-navigation-item:not([data-leading]) {
+  padding-inline: 12px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rbx-navigation-item::before {
+    transition: none;
+  }
+}
