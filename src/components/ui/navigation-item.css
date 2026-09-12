@@ -28,7 +28,8 @@
   z-index: -1;
   border-radius: inherit;
   pointer-events: none;
-  transition: background-color 100ms;
+  transition: background-color var(--rbx-motion-duration-feedback)
+    var(--rbx-motion-ease-enter);
 }
 .rbx-navigation-item[data-active],
 .rbx-navigation-item[aria-current="page"] {

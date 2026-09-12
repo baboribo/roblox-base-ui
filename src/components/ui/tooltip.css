@@ -9,3 +9,17 @@
   box-shadow: 0 4px 16px var(--rbx-color-common-shadow);
   max-width: 280px;
 }
+
+.rbx-tooltip {
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter),
+    scale var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter);
+}
+.rbx-tooltip:is([data-starting-style], [data-ending-style]) {
+  opacity: 0;
+  scale: var(--rbx-motion-scale-overlay);
+}
+.rbx-tooltip[data-ending-style] {
+  transition-timing-function: var(--rbx-motion-ease-exit);
+}

@@ -185,7 +185,8 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .rbx-card-image {
-    transition: transform 160ms ease-out;
+    transition: transform var(--rbx-motion-duration-enter)
+      var(--rbx-motion-ease-enter);
   }
   .rbx-card:has(:is(.rbx-card-link, .rbx-card-action:enabled):hover)
     .rbx-card-image[data-fit="cover"] {

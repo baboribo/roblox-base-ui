@@ -12,6 +12,7 @@ export const componentNames = readdirSync(
 const shared = [
   "src/lib/cx.ts",
   "src/styles/theme.css",
+  "src/styles/motion.css",
   "src/styles/tokens.css",
   "src/styles/fonts.css",
 ];

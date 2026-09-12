@@ -103,7 +103,7 @@ export function MotionExample() {
             value={duration}
             onChange={(event) => setDuration(event.target.value)}
           >
-            {[100, 200, 300, 1000].map((ms) => (
+            {[100, 200, 300, 500, 1000].map((ms) => (
               <option key={ms} value={ms}>
                 {ms}ms{ms === 1000 ? " · 곡선 비교용" : ""}
               </option>

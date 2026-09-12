@@ -18,3 +18,19 @@
   max-width: 600px;
   margin: auto;
 }
+
+/* 스와이프 중에는 손가락을 바로 따라가고, 놓으면 전환합니다. */
+.rbx-drawer {
+  transition: transform var(--rbx-motion-duration-panel)
+    var(--rbx-motion-ease-enter);
+}
+.rbx-drawer:is([data-starting-style], [data-ending-style]) {
+  transform: translateY(100%);
+}
+.rbx-drawer[data-ending-style] {
+  transition-duration: var(--rbx-motion-duration-panel-exit);
+  transition-timing-function: var(--rbx-motion-ease-exit);
+}
+.rbx-drawer[data-swiping] {
+  transition: none;
+}

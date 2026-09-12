@@ -114,12 +114,12 @@ test("overlays and navigation work", async ({ page }) => {
     page.getByText("프로젝트 설정입니다.", { exact: true }),
   ).toBeVisible();
   await choose(page, "Toast");
-  await page.getByRole("button", { name: "알림 띄우기" }).click();
-  await expect(
-    page.getByText("변경사항을 저장했습니다", { exact: true }),
-  ).toBeVisible();
-  await page.locator(".rbx-toast-viewport").hover();
-  await page.getByRole("button", { name: "알림 닫기" }).click();
+  await page.getByRole("button", { name: "저장 알림 보기" }).click();
+  await expect(page.getByText("저장했습니다", { exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "알림 닫기" })).toHaveCount(0);
+  await expect(page.getByText("저장했습니다", { exact: true })).toBeHidden({
+    timeout: 7000,
+  });
 });
 test("input labels, ARIA relationships and control navigation remain accessible", async ({
   page,

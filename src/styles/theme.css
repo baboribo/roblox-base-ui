@@ -1,4 +1,5 @@
 @import "./tokens.css";
+@import "./motion.css";
 
 /* 1. 사용자 커스터마이징 시작점. 원본 스냅샷을 수정할 필요가 없습니다. */
 :root {
@@ -54,7 +55,10 @@
   font: var(--rbx-typography-label-medium-font);
   cursor: pointer;
   text-decoration: none;
-  transition: background-color var(--rbx-time-100) var(--rbx-ease-standard-out);
+  transition:
+    background-color var(--rbx-motion-duration-feedback)
+      var(--rbx-motion-ease-enter),
+    color var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter);
 }
 :is(.rbx-button, .rbx-icon-button, .rbx-select-trigger, .rbx-toggle):hover:not(
     :disabled
@@ -193,12 +197,13 @@
   box-shadow: var(--rbx-shadow-transient-high);
   transform-origin: var(--transform-origin);
   transition:
-    opacity 0.15s,
-    transform 0.15s;
+    opacity var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
+    scale var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter);
+  scale: 1;
 }
 .rbx-popup:is([data-starting-style], [data-ending-style]) {
   opacity: 0;
-  transform: scale(0.97);
+  scale: var(--rbx-motion-scale-overlay);
 }
 .rbx-padded {
   padding: 20px;
@@ -264,7 +269,8 @@
   inset: 0;
   z-index: var(--rbx-layer-modal);
   background: var(--rbx-color-common-backdrop);
-  transition: opacity var(--rbx-time-100) linear;
+  transition: opacity var(--rbx-motion-duration-panel)
+    var(--rbx-motion-ease-enter);
 }
 .rbx-backdrop:is([data-starting-style], [data-ending-style]) {
   opacity: 0;
@@ -284,6 +290,24 @@
   border: 1px solid var(--rbx-color-stroke-muted);
   border-radius: var(--rbx-radius-large);
   box-shadow: var(--rbx-shadow-transient-high);
+  scale: 1;
+  transition:
+    opacity var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter),
+    scale var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter);
+}
+/* 중앙 배치의 translate와 scale을 분리해 확대 중 위치가 흔들리지 않게 합니다. */
+.rbx-dialog:is([data-starting-style], [data-ending-style]) {
+  opacity: 0;
+  scale: var(--rbx-motion-scale-overlay);
+}
+.rbx-dialog[data-ending-style],
+.rbx-backdrop[data-ending-style] {
+  transition-duration: var(--rbx-motion-duration-panel-exit);
+  transition-timing-function: var(--rbx-motion-ease-exit);
+}
+.rbx-popup[data-ending-style] {
+  transition-duration: var(--rbx-motion-duration-exit);
+  transition-timing-function: var(--rbx-motion-ease-exit);
 }
 @media (prefers-reduced-motion: reduce) {
   :where([class*="rbx-"]) {
@@ -314,4 +338,39 @@
 
 [data-contrast="enhanced"][data-theme="dark"] .rbx-button[data-variant="link"] {
   color: var(--rbx-color-extended-blue-500);
+}
+
+/* 입력/선택 상태는 짧은 피드백을 사용합니다. 드래그 위치는 지연하지 않습니다. */
+:is(
+  .rbx-checkbox,
+  .rbx-radio,
+  .rbx-tab,
+  .rbx-option,
+  .rbx-input,
+  .rbx-input-group
+) {
+  transition:
+    background-color var(--rbx-motion-duration-feedback)
+      var(--rbx-motion-ease-enter),
+    color var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter),
+    border-color var(--rbx-motion-duration-feedback)
+      var(--rbx-motion-ease-enter),
+    box-shadow var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter);
+}
+.rbx-tab-indicator {
+  transition:
+    transform var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
+    width var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter);
+}
+:is(.rbx-checkbox-indicator, .rbx-radio-indicator) {
+  transition:
+    scale var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter),
+    opacity var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter);
+}
+:is(.rbx-checkbox-indicator, .rbx-radio-indicator):is(
+  [data-starting-style],
+  [data-ending-style]
+) {
+  scale: 0.8;
+  opacity: 0;
 }

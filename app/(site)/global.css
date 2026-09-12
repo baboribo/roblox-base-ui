@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
+@import "../../src/styles/motion.css";
 @source "../../docs/**/*.{tsx,mdx}";
 @source "../../node_modules/fumadocs-ui/dist/**/*.js";
 :root {
@@ -112,4 +113,24 @@ h3 {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* 문서 탐색: desktop 접힘/펼침과 mobile drawer에 같은 시간을 적용합니다. */
+#nd-notebook-layout,
+#nd-sidebar {
+  transition-duration: var(--rbx-motion-duration-sidebar);
+  transition-timing-function: var(--rbx-motion-ease-enter);
+}
+#nd-notebook-layout[data-sidebar-collapsed="true"],
+#nd-sidebar[data-collapsed="true"] {
+  transition-timing-function: var(--rbx-motion-ease-exit);
+}
+#nd-sidebar-mobile,
+#nd-notebook-layout [data-state]:has(+ #nd-sidebar-mobile) {
+  animation-duration: var(--rbx-motion-duration-sidebar);
+  animation-timing-function: var(--rbx-motion-ease-enter);
+}
+#nd-sidebar-mobile[data-state="closed"],
+#nd-notebook-layout [data-state="closed"]:has(+ #nd-sidebar-mobile) {
+  animation-timing-function: var(--rbx-motion-ease-exit);
 }

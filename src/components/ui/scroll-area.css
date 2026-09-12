@@ -13,7 +13,8 @@
   padding: 1px;
   margin: 4px;
   opacity: 0;
-  transition: opacity 0.15s;
+  transition: opacity var(--rbx-motion-duration-feedback)
+    var(--rbx-motion-ease-enter);
 }
 .rbx-scrollbar[data-hovering],
 .rbx-scrollbar[data-scrolling] {

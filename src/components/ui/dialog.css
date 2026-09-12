@@ -2,9 +2,6 @@
 /* Foundation Web Dialog: size controls width and 16/20px body/footer insets. */
 .rbx-dialog {
   --rbx-dialog-inset: 20px;
-  transition:
-    opacity 100ms linear,
-    scale 300ms var(--rbx-ease-standard-out);
 }
 .rbx-dialog[data-size="sm"] {
   width: min(320px, calc(100vw - 24px));
@@ -25,10 +22,6 @@
   justify-content: flex-end;
   gap: 8px;
   padding: 0 var(--rbx-dialog-inset) var(--rbx-dialog-inset);
-}
-.rbx-dialog:is([data-starting-style], [data-ending-style]) {
-  opacity: 0;
-  scale: 0.975;
 }
 
 .rbx-dialog-title {

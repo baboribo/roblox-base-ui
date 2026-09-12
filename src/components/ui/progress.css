@@ -15,7 +15,8 @@
   height: 100%;
   background: var(--rbx-color-system-emphasis);
   border-radius: inherit;
-  transition: width 0.2s;
+  transition: width var(--rbx-motion-duration-enter)
+    var(--rbx-motion-ease-enter);
 }
 .rbx-progress-indicator[data-indeterminate] {
   width: 35%;

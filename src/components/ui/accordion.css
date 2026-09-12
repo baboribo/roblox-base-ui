@@ -1,4 +1,4 @@
-/* Robux FAQ: Foundation tokens + page-specific composition. No height animation in observed source. */
+/* Roblox 표면 스타일 위에 프로젝트의 펼침/접힘 모션을 적용합니다. */
 .rbx-accordion {
   width: 100%;
   display: flex;
@@ -54,4 +54,20 @@
   .rbx-accordion {
     gap: 16px;
   }
+}
+
+.rbx-accordion-panel {
+  height: var(--accordion-panel-height, var(--collapsible-panel-height, auto));
+  transition:
+    height var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
+    opacity var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
+    padding-bottom var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter);
+}
+.rbx-accordion-panel:is([data-starting-style], [data-ending-style]) {
+  height: 0;
+  opacity: 0;
+  padding-bottom: 0;
+}
+.rbx-accordion-panel[data-ending-style] {
+  transition-timing-function: var(--rbx-motion-ease-exit);
 }

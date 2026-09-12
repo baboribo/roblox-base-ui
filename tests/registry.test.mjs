@@ -61,7 +61,7 @@ test("all registry entries have real self-contained sources", () => {
   );
 });
 test("token snapshot generates valid CSS with no missing variable references", () => {
-  const files = ["tokens.css", "theme.css"].map((name) =>
+  const files = ["tokens.css", "theme.css", "motion.css"].map((name) =>
     readFileSync(path.join(kitRoot, "src/styles", name), "utf8"),
   );
   const declared = new Set();

@@ -8,7 +8,7 @@ keywords: [모션, 애니메이션, 곡선, 속도, 이징, motion, easing, tran
 
 움직임은 무엇이 나타나고 사라졌는지 설명할 때 사용합니다. 같은 동작에는 같은 시간과 곡선을 적용합니다.
 
-시간과 곡선의 원본 값은 Roblox 공개 토큰에서 가져왔습니다. 용도별 조합과 토스트의 이동 거리는 이 프로젝트에서 정한 규칙입니다. 현재 이 규칙을 적용한 컴포넌트는 Toast이며, 다른 컴포넌트는 순차적으로 검토합니다.
+시간과 곡선의 원본 값은 Roblox 공개 토큰에서 가져왔습니다. 용도별 조합, 확대 비율과 이동 거리는 이 프로젝트에서 정한 규칙입니다. 레이어는 부드럽게 나타나고, 입력·선택은 짧게 반응하도록 구분합니다.
 
 ## 곡선 비교
 
@@ -36,9 +36,29 @@ keywords: [모션, 애니메이션, 곡선, 속도, 이징, motion, easing, tran
 
 자동 닫힘까지 기다리는 5초·10초와 모션의 100ms·200ms는 별도 값입니다. 표시 시간을 늘려도 모션이 느려지지는 않습니다.
 
+## 컴포넌트별 적용
+
+| 대상                                                                                                | 등장 / 퇴장   | 움직임                                                     |
+| --------------------------------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------- |
+| 문서 사이드바, Sidebar                                                                              | 500ms / 500ms | 가장자리에서 이동. 문서의 접힘·펼침과 모바일 탐색에도 적용 |
+| Dialog, Alert Dialog                                                                                | 300ms / 200ms | 중심을 유지하며 97.5% → 100%, 투명도 전환                  |
+| Menu, Context Menu, Menubar, Select, Combobox, Autocomplete, Popover, Preview Card, Navigation Menu | 200ms / 100ms | 연결된 요소를 기준으로 97.5% → 100%, 투명도 전환           |
+| Tooltip                                                                                             | 100ms / 100ms | 작은 확대와 투명도 전환                                    |
+| Drawer                                                                                              | 300ms / 200ms | 아래에서 이동. 스와이프 중에는 손가락 위치를 즉시 반영     |
+| Accordion, Collapsible                                                                              | 200ms / 200ms | 실제 내용 높이로 펼침·접힘                                 |
+| Button, Icon Button, 입력, 선택 항목                                                                | 100ms         | 배경·테두리·글자색 전환                                    |
+| Switch, Tabs, Progress, Meter                                                                       | 100–300ms     | 기존 상태 표시의 이동과 색상 변화에 공통 시간 적용         |
+| Card                                                                                                | 200ms         | 클릭 가능한 이미지의 기존 호버 움직임에 공통 시간 적용     |
+
+텍스트, 표, 구분선처럼 상태 변화가 없는 콘텐츠에는 등장 효과를 일괄 적용하지 않습니다. Slider처럼 드래그 중인 컨트롤은 포인터를 바로 따라갑니다.
+
+### 사이드바 500ms
+
+`--rbx-time-500` 원본 값에 `--rbx-motion-duration-sidebar`라는 용도별 이름을 연결했습니다. 등장과 퇴장 모두 500ms를 사용합니다. 위 비교 예제에서 500ms를 선택해 곡선을 확인할 수 있습니다.
+
 ## 코드와 조정 위치
 
-`src/styles/motion.css`에서 원본 토큰을 용도별 이름으로 연결합니다. 토스트 스타일이 이 파일을 불러오므로 컴포넌트 설치에도 함께 포함됩니다.
+`src/styles/motion.css`에서 원본 토큰을 용도별 이름으로 연결합니다. 공통 theme.css가 이 파일을 불러오며, 모든 컴포넌트 설치에 함께 포함됩니다.
 
 ```css
 :root {
@@ -47,6 +67,11 @@ keywords: [모션, 애니메이션, 곡선, 속도, 이징, motion, easing, tran
   --rbx-motion-ease-enter: var(--rbx-ease-standard-out);
   --rbx-motion-ease-exit: var(--rbx-ease-standard-in);
   --rbx-motion-distance-toast: 12px;
+  --rbx-motion-duration-sidebar: var(--rbx-time-500, 500ms);
+  --rbx-motion-duration-panel: var(--rbx-time-300);
+  --rbx-motion-duration-panel-exit: var(--rbx-time-200);
+  --rbx-motion-duration-feedback: var(--rbx-time-100);
+  --rbx-motion-scale-overlay: 0.975;
 }
 ```
 
@@ -54,7 +79,7 @@ keywords: [모션, 애니메이션, 곡선, 속도, 이징, motion, easing, tran
 
 ## 움직임 감소
 
-`prefers-reduced-motion: reduce`에서는 토스트의 이동과 전환을 생략합니다. 알림 내용, 작업 버튼, 표시 시간은 유지합니다. 비교 예제에서도 움직임 없이 끝 위치를 표시합니다.
+`prefers-reduced-motion: reduce`에서는 컴포넌트의 이동과 전환을 생략합니다. 알림 내용, 작업 버튼, 표시 시간은 유지합니다. 비교 예제에서도 움직임 없이 끝 위치를 표시합니다.
 
 ## 실제 동작
 
