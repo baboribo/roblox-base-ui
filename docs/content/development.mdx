@@ -13,13 +13,23 @@ pnpm install
 pnpm dev
 ```
 
-문서는 `http://127.0.0.1:5173`에서 실행됩니다.
+로컬 문서는 `http://127.0.0.1:5173/docs`, Storybook은 같은 서버의 `/storybook`에서 실행됩니다. `pnpm dev`는 시작할 때 Storybook을 한 번 빌드합니다.
+
+컴포넌트를 수정하면서 즉시 확인하려면 별도 터미널에서 Storybook 개발 서버를 실행합니다.
 
 ```sh
 pnpm storybook
 ```
 
-Storybook은 `http://localhost:6006`에서 실행됩니다. 컴포넌트별 예제와 상태를 비교하고 Controls에서 지원하는 속성을 변경할 수 있습니다.
+Storybook 개발 서버는 `http://localhost:6006`에서 실행됩니다. 컴포넌트별 예제와 상태를 비교하고 Controls에서 지원하는 속성을 변경할 수 있습니다. 예제에서 문서로 이동하려면 5173 문서 서버도 실행합니다.
+
+## 배포
+
+`pnpm build`로 문서와 Storybook을 함께 빌드합니다. 배포 후에는 상단 Storybook 링크가 같은 사이트의 `/storybook`으로 연결됩니다. 별도 배포 주소 설정은 필요하지 않습니다.
+
+`/storybook`은 `/storybook/index.html`로 이동하며, 예제와 이미지도 `/storybook/` 아래에서 불러옵니다. Storybook 예제의 `/docs` 링크는 같은 사이트의 문서로 돌아갑니다.
+
+`storybook-static/`과 `public/storybook/`은 자동 생성하는 결과물입니다. Git에 추가하지 않습니다. 로컬 문서 서버의 Storybook을 갱신할 때는 `pnpm storybook:build`를 실행합니다.
 
 ## 폴더
 

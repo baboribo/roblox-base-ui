@@ -38,8 +38,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm examples:build && next dev --webpack --hostname 127.0.0.1 --port 5173",
-    "build": "pnpm examples:build && pnpm registry:build && next build --webpack",
+    "dev": "pnpm storybook:build && next dev --webpack --hostname 127.0.0.1 --port 5173",
+    "build": "pnpm registry:build && pnpm storybook:build && next build --webpack",
     "typecheck": "pnpm examples:build && fumadocs-mdx && next typegen && tsc --noEmit",
     "registry:build": "node scripts/build-registry.mjs",
     "ui": "node scripts/add.mjs",
@@ -49,7 +49,7 @@
     "tokens:build": "node scripts/build-tokens.mjs",
     "start": "next start --hostname 127.0.0.1 --port 5173",
     "storybook": "pnpm examples:build && storybook dev -p 6006 --no-open",
-    "storybook:build": "pnpm examples:build && storybook build -o storybook-static",
+    "storybook:build": "pnpm examples:build && node scripts/build-storybook.mjs",
     "test:storybook": "playwright test --config playwright.storybook.config.ts",
     "examples:build": "node scripts/build-examples.mjs"
   },

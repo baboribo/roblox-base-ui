@@ -9,6 +9,8 @@ playwright-report/
 *.tsbuildinfo
 next-env.d.ts
 storybook-static/
+/public/storybook/
+.vercel/
 work/
 
 test-results-storybook/

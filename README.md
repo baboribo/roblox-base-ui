@@ -15,11 +15,19 @@ pnpm dev
 
 문서: http://127.0.0.1:5173/docs
 
+Storybook: http://127.0.0.1:5173/storybook
+
+`pnpm dev`는 Storybook을 한 번 빌드한 뒤 문서 서버를 시작합니다. 같은 주소의 Storybook을 갱신하려면 `pnpm storybook:build`를 실행합니다.
+
+컴포넌트 수정 내용을 즉시 확인하려면 별도 터미널에서 실행합니다.
+
 ```sh
 pnpm storybook
 ```
 
-Storybook: http://localhost:6006
+Storybook 개발 서버: http://localhost:6006
+
+개발 서버의 예제에서 문서로 이동하려면 5173 문서 서버도 실행 중이어야 합니다.
 
 ## 프로젝트에 설치
 
@@ -97,7 +105,15 @@ pnpm storybook:build
 pnpm test:storybook
 ```
 
-UI 검사는 빌드된 문서를 5174 포트에서 실행합니다. 개발 서버와 포트가 겹치지 않습니다. 문서 운영은 `pnpm start`, Storybook 정적 배포 결과는 `storybook-static/`입니다.
+UI 검사는 빌드된 문서를 5174 포트에서 실행합니다. 개발 서버와 포트가 겹치지 않습니다.
+
+## 배포
+
+`pnpm build`는 설치용 레지스트리, Storybook, Next.js 문서를 순서대로 빌드합니다. `pnpm start`로 실행하면 같은 사이트에서 `/docs`와 `/storybook`을 사용할 수 있습니다. `/storybook`은 상대 경로가 유지되도록 `/storybook/index.html`로 이동합니다.
+
+Vercel은 `vercel.json`의 Next.js 프리셋과 `pnpm build`를 사용합니다. Output Directory는 Next.js 기본값이며 `dist`를 지정하지 않습니다. Git 연결 프로젝트에서는 푸시할 때 두 화면을 함께 배포합니다. 별도 Storybook 주소나 `NEXT_PUBLIC_STORYBOOK_URL`은 필요하지 않습니다.
+
+`storybook-static/`은 Storybook 원본 빌드 결과, `public/storybook/`은 문서 서버가 제공할 복사본입니다. 둘 다 Git에서 제외하고 빌드 때 생성합니다. Storybook은 `public/`을 다시 복사하지 않습니다. 예제 이미지는 import나 data URI를 사용합니다.
 
 ## 범위
 

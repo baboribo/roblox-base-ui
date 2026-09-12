@@ -16,8 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           { text: "개발 안내", url: "/docs/development" },
           {
             text: "Storybook",
-            url:
-              process.env.NEXT_PUBLIC_STORYBOOK_URL || "http://127.0.0.1:6006",
+            url: "/storybook",
             external: true,
           },
         ]}

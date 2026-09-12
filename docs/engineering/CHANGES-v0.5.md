@@ -21,4 +21,4 @@ Fumadocs의 기본 번역 키에는 사용 위치도 포함됩니다. `docs/lib/
 
 검사는 복사 설치·내부 의존성, 토큰 참조, 실제 예제와 표시 코드의 일치, 한글 검색, 키보드 조작, 모바일 탐색, 테마 분리, 다이얼로그 배경과 포커스 복귀를 포함합니다. Storybook 검사는 63개 사례의 실제 렌더링과 Button Controls 적용을 확인합니다.
 
-실행 명령은 루트 README의 검증 절을 따릅니다. 배포할 때는 문서 빌드에 `NEXT_PUBLIC_STORYBOOK_URL`을 지정합니다.
+실행 명령은 루트 README의 검증 절을 따릅니다. 문서와 Storybook을 같은 사이트에 배포하며, 상단 링크는 `/storybook`입니다. 이전의 `NEXT_PUBLIC_STORYBOOK_URL` 설정은 사용하지 않습니다.

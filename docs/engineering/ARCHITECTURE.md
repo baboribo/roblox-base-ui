@@ -43,7 +43,9 @@ iframe은 준비된 클라이언트에서 예제를 렌더합니다. ResizeObser
 
 ## 실행과 배포
 
-pnpm 11.9.0과 pnpm-lock.yaml을 사용합니다. 문서는 Next.js 서버(`pnpm build`, `pnpm start`), Storybook은 정적 파일(`pnpm storybook:build`)로 제공합니다. 별도 배포 시 문서 빌드에 `NEXT_PUBLIC_STORYBOOK_URL`을 지정하면 상단 링크가 해당 주소를 사용합니다. 기본 링크는 로컬 6006 포트입니다.
+pnpm 11.9.0과 pnpm-lock.yaml을 사용합니다. `pnpm build`는 레지스트리, Storybook, Next.js를 순서대로 빌드합니다. `scripts/build-storybook.mjs`가 성공한 결과를 `public/storybook`에 복사하며, Next.js가 문서와 Storybook을 같은 출처에서 제공합니다. `/storybook`은 상대 자산 경로를 유지하는 `/storybook/index.html`로 이동합니다. Vercel 설정은 `vercel.json`에 기록합니다.
+
+`pnpm dev`는 Storybook을 한 번 빌드하고 문서 서버를 시작합니다. 별도 `pnpm storybook` 개발 서버는 문서 관련 경로를 5173 서버로 전달합니다. Storybook의 Vite `publicDir`와 `staticDirs`를 비워 빌드 결과의 재귀 복사를 방지합니다. 두 빌드 폴더는 Git에서 제외합니다.
 
 ## 이전 자료
 

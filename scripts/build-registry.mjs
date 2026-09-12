@@ -18,7 +18,7 @@ writeFileSync(
     {
       $schema: "https://ui.shadcn.com/schema/registry.json",
       name: "roblox-base-ui-local",
-      homepage: "http://127.0.0.1:5173",
+      homepage: "https://github.com/baboribo/roblox-base-ui",
       items,
     },
     null,
