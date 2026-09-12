@@ -53,6 +53,7 @@ export function ExampleCard({
           <Tabs.List aria-label={`${title} 보기`}>
             <Tabs.Tab value="preview">미리보기</Tabs.Tab>
             <Tabs.Tab value="code">코드</Tabs.Tab>
+            <Tabs.Indicator />
           </Tabs.List>
           <div className="docs-example-controls">
             <IconButton
@@ -84,17 +85,19 @@ export function ExampleCard({
             </Button>
           </div>
         </div>
-        <Tabs.Panel value="preview" keepMounted>
-          <iframe
-            key={`${name}-${theme}-${revision}`}
-            ref={ref}
-            src={src}
-            title={`${name} 예제`}
-            loading="lazy"
-            style={{ height }}
-          />
-        </Tabs.Panel>
-        <Tabs.Panel value="code">{children}</Tabs.Panel>
+        <Tabs.Panels>
+          <Tabs.Panel value="preview" keepMounted>
+            <iframe
+              key={`${name}-${theme}-${revision}`}
+              ref={ref}
+              src={src}
+              title={`${name} 예제`}
+              loading="lazy"
+              style={{ height }}
+            />
+          </Tabs.Panel>
+          <Tabs.Panel value="code">{children}</Tabs.Panel>
+        </Tabs.Panels>
       </Tabs.Root>
     </Card>
   );

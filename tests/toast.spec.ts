@@ -12,7 +12,7 @@ test("compact centered toast works in both themes and closes", async ({
     const toast = page.locator(activeToast);
     await expect(toast).toBeVisible();
     await expect(toast).toHaveCSS("opacity", "1");
-    await expect(toast).toHaveCSS("transition-duration", "0.2s, 0.2s");
+    await expect(toast).toHaveCSS("transition-duration", "0.3s, 0.3s, 0.3s");
     const rect = (await toast.boundingBox())!;
     expect(rect.height).toBeLessThanOrEqual(60);
     expect(Math.abs(rect.x + rect.width / 2 - 720)).toBeLessThan(2);
@@ -36,7 +36,21 @@ test("replacement never stacks or resurrects the previous toast", async ({
 }) => {
   await page.goto("/preview/toast-replace");
   const button = page.getByRole("button", { name: "새 알림 표시" });
-  for (let n = 1; n <= 6; n++) {
+  await button.click();
+  await expect(page.locator(activeToast)).toHaveCSS("opacity", "1");
+  await button.click();
+  const outgoing = page.locator(".rbx-toast[data-ending-style]");
+  await expect(outgoing).toHaveCount(1);
+  await expect(outgoing).toHaveCSS("display", "block");
+  await expect(outgoing).toHaveCSS("transition-duration", "0.2s");
+  expect(
+    await outgoing.evaluate((el) => el.getAnimations().length),
+  ).toBeGreaterThan(0);
+  expect(
+    await page.locator(activeToast).evaluate((el) => el.getAnimations().length),
+  ).toBeGreaterThan(0);
+  await expect(outgoing).toHaveCount(0);
+  for (let n = 3; n <= 6; n++) {
     await button.click();
     await expect(page.locator(activeToast)).toHaveCount(1);
     await expect(page.locator(activeToast)).toContainText(
@@ -174,4 +188,43 @@ test("motion comparison replays token curves and respects reduced motion", async
     "animation-name",
     "none",
   );
+});
+
+test("automatic timeout animates opacity and scale before removing the toast", async ({
+  page,
+}) => {
+  await page.goto("/preview/toast");
+  // Observe the exit in the page so a short animation cannot slip between test commands.
+  await page.evaluate(() => {
+    (window as any).toastExit = new Promise((resolve) => {
+      const observer = new MutationObserver(() => {
+        const toast = document.querySelector(".rbx-toast[data-ending-style]");
+        if (!toast) return;
+        observer.disconnect();
+        setTimeout(() => {
+          const style = getComputedStyle(toast);
+          resolve({
+            connected: toast.isConnected,
+            opacity: Number(style.opacity),
+            scale: Number(style.scale),
+            animations: toast.getAnimations().length,
+          });
+        }, 80);
+      });
+      observer.observe(document.body, {
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["data-ending-style"],
+      });
+    });
+  });
+  await page.getByRole("button", { name: "저장 알림 보기" }).click();
+  const exit = await page.evaluate(() => (window as any).toastExit);
+  expect(exit.connected).toBe(true);
+  expect(exit.opacity).toBeGreaterThan(0);
+  expect(exit.opacity).toBeLessThan(1);
+  expect(exit.scale).toBeGreaterThan(0.975);
+  expect(exit.scale).toBeLessThan(1);
+  expect(exit.animations).toBeGreaterThan(0);
+  await expect(page.locator(".rbx-toast")).toHaveCount(0);
 });

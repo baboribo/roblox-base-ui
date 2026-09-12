@@ -359,8 +359,8 @@
 }
 .rbx-tab-indicator {
   transition:
-    transform var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
-    width var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter);
+    transform var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter),
+    width var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter);
 }
 :is(.rbx-checkbox-indicator, .rbx-radio-indicator) {
   transition:

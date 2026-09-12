@@ -28,13 +28,13 @@ keywords: [모션, 애니메이션, 곡선, 속도, 이징, motion, easing, tran
 
 ## 시간과 이동
 
-| 동작 | 시간                     | 곡선         | 토스트의 변화                        |
-| ---- | ------------------------ | ------------ | ------------------------------------ |
-| 등장 | 200ms                    | standard-out | 아래 12px → 원래 위치, 투명 → 불투명 |
-| 퇴장 | 100ms                    | standard-in  | 원래 위치 → 아래 6px, 불투명 → 투명  |
-| 교체 | 새 알림에 등장 시간 적용 | standard-out | 이전 알림을 숨기고 새 알림 표시      |
+| 동작 | 시간                    | 곡선         | 토스트의 변화                                  |
+| ---- | ----------------------- | ------------ | ---------------------------------------------- |
+| 등장 | 300ms                   | standard-out | 97.5% → 100%, 아래 4px → 제자리, 투명 → 불투명 |
+| 퇴장 | 200ms                   | standard-in  | 100% → 97.5%, 아래 4px로 이동, 불투명 → 투명   |
+| 교체 | 퇴장 200ms / 등장 300ms | 각각의 곡선  | 이전 알림의 퇴장과 새 알림의 등장을 함께 재생  |
 
-자동 닫힘까지 기다리는 5초·10초와 모션의 100ms·200ms는 별도 값입니다. 표시 시간을 늘려도 모션이 느려지지는 않습니다.
+자동 닫힘까지 기다리는 5초·10초와 모션의 200ms·300ms는 별도 값입니다. 표시 시간을 늘려도 모션이 느려지지는 않습니다.
 
 ## 컴포넌트별 적용
 
@@ -66,7 +66,7 @@ keywords: [모션, 애니메이션, 곡선, 속도, 이징, motion, easing, tran
   --rbx-motion-duration-exit: var(--rbx-time-100);
   --rbx-motion-ease-enter: var(--rbx-ease-standard-out);
   --rbx-motion-ease-exit: var(--rbx-ease-standard-in);
-  --rbx-motion-distance-toast: 12px;
+  --rbx-motion-distance-toast: 4px;
   --rbx-motion-duration-sidebar: var(--rbx-time-500, 500ms);
   --rbx-motion-duration-panel: var(--rbx-time-300);
   --rbx-motion-duration-panel-exit: var(--rbx-time-200);
@@ -84,3 +84,9 @@ keywords: [모션, 애니메이션, 곡선, 속도, 이징, motion, easing, tran
 ## 실제 동작
 
 [Toast 문서](/docs/components/toast)에서 설명, 액션, 연속 알림의 등장과 퇴장을 확인할 수 있습니다.
+
+### 탭 콘텐츠 전환
+
+`Tabs.Panels` 안에서는 기존 내용의 퇴장 200ms → 간격 100ms → 새 내용의 등장 300ms 순서로 재생합니다. `--rbx-motion-delay-tabs`는 기존 100ms 토큰을 사용하며, `--rbx-motion-distance-tabs`는 24px입니다. 선택한 탭의 방향에 따라 퇴장과 등장 방향이 반대가 됩니다. 움직임 감소 설정에서는 전환과 간격을 생략합니다.
+
+탭 콘텐츠는 퇴장과 등장 모두 `standard-in` 곡선을 사용합니다. 끝으로 갈수록 빨라지는 움직임으로 통일합니다.

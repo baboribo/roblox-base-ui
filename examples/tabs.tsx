@@ -15,10 +15,13 @@ export function TabsExample() {
             {label}
           </Tabs.Tab>
         ))}
+        <Tabs.Indicator />
       </Tabs.List>
-      <Tabs.Panel value="overview">프로젝트의 기본 정보입니다.</Tabs.Panel>
-      <Tabs.Panel value="settings">프로젝트 설정입니다.</Tabs.Panel>
-      <Tabs.Panel value="activity">활동 내역이 없습니다.</Tabs.Panel>
+      <Tabs.Panels>
+        <Tabs.Panel value="overview">프로젝트의 기본 정보입니다.</Tabs.Panel>
+        <Tabs.Panel value="settings">프로젝트 설정입니다.</Tabs.Panel>
+        <Tabs.Panel value="activity">활동 내역이 없습니다.</Tabs.Panel>
+      </Tabs.Panels>
     </Tabs.Root>
   );
 }

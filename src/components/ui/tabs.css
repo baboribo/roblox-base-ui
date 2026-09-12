@@ -17,10 +17,79 @@
 }
 .rbx-tab[data-active] {
   color: var(--rbx-color-content-emphasis);
+}
+/* Indicator가 없는 기존 조합에서는 고정 밑줄을 유지합니다. */
+.rbx-tabs-list:not(:has(.rbx-tab-indicator)) > .rbx-tab[data-active] {
   border-bottom-color: var(--rbx-color-content-emphasis);
 }
 .rbx-tab-panel {
   padding: 24px 0;
+}
+.rbx-tab-panels {
+  display: grid;
+  overflow: clip;
+}
+.rbx-tab-panels > .rbx-tab-panel {
+  grid-area: 1 / 1;
+  min-width: 0;
+  --tab-enter-x: var(--rbx-motion-distance-tabs);
+  --tab-enter-y: 0px;
+}
+.rbx-tab-panels > .rbx-tab-panel[data-activation-direction="left"] {
+  --tab-enter-x: calc(-1 * var(--rbx-motion-distance-tabs));
+}
+.rbx-tab-panels > .rbx-tab-panel[data-activation-direction="down"] {
+  --tab-enter-x: 0px;
+  --tab-enter-y: var(--rbx-motion-distance-tabs);
+}
+.rbx-tab-panels > .rbx-tab-panel[data-activation-direction="up"] {
+  --tab-enter-x: 0px;
+  --tab-enter-y: calc(-1 * var(--rbx-motion-distance-tabs));
+}
+.rbx-tab-panels > .rbx-tab-panel:not([data-activation-direction="none"]) {
+  opacity: 1;
+  transform: translate(0, 0);
+  visibility: visible;
+  transition-property: opacity, transform, visibility;
+  transition-duration:
+    var(--rbx-motion-duration-panel), var(--rbx-motion-duration-panel), 0s;
+  transition-timing-function: var(--rbx-motion-ease-exit);
+  /* 퇴장 시간 뒤에 300ms 간격을 더합니다. 숨겨진 새 내용은 포커스도 받지 않습니다. */
+  transition-delay: calc(
+    var(--rbx-motion-duration-panel-exit) + var(--rbx-motion-delay-tabs)
+  );
+}
+@starting-style {
+  .rbx-tab-panels > .rbx-tab-panel:not([data-activation-direction="none"]) {
+    opacity: 0;
+    transform: translate(var(--tab-enter-x), var(--tab-enter-y));
+    visibility: hidden;
+  }
+}
+.rbx-tab-panels
+  > .rbx-tab-panel[data-starting-style]:not(
+    [data-activation-direction="none"]
+  ) {
+  opacity: 0;
+  transform: translate(var(--tab-enter-x), var(--tab-enter-y));
+  visibility: hidden;
+}
+.rbx-tab-panels > .rbx-tab-panel[data-ending-style] {
+  opacity: 0;
+  transform: translate(
+    calc(-1 * var(--tab-enter-x)),
+    calc(-1 * var(--tab-enter-y))
+  );
+  transition-duration: var(--rbx-motion-duration-panel-exit);
+  transition-timing-function: var(--rbx-motion-ease-exit);
+  transition-delay: 0s;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rbx-tab-panels > .rbx-tab-panel {
+    transition: none;
+    transform: none;
+  }
 }
 .rbx-tab-indicator {
   position: absolute;
@@ -30,4 +99,5 @@
   left: 0;
   transform: translateX(var(--active-tab-left));
   width: var(--active-tab-width);
+  pointer-events: none;
 }

@@ -13,6 +13,8 @@
 }
 .rbx-toast {
   grid-area: 1 / 1;
+  align-self: end;
+  z-index: 1;
   width: fit-content;
   max-width: min(480px, 100%);
   min-width: 0;
@@ -25,25 +27,38 @@
   pointer-events: auto;
   touch-action: pan-x;
   opacity: 1;
+  scale: 1;
+  transform-origin: center;
   transform: translate(
     var(--toast-swipe-movement-x, 0px),
     var(--toast-swipe-movement-y, 0px)
   );
   transition:
-    opacity var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
-    transform var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter);
+    opacity var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter),
+    scale var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter),
+    transform var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter);
 }
 .rbx-toast:not(:has(.rbx-toast-close)) {
   padding-inline-end: 16px;
 }
 .rbx-toast[data-starting-style] {
   opacity: 0;
+  scale: var(--rbx-motion-scale-overlay);
   transform: translateY(var(--rbx-motion-distance-toast));
+}
+/* 첫 화면을 그리기 전에 starting 상태가 해제돼도 등장 모션의 시작점을 제공합니다. */
+@starting-style {
+  .rbx-toast {
+    opacity: 0;
+    scale: var(--rbx-motion-scale-overlay);
+    transform: translateY(var(--rbx-motion-distance-toast));
+  }
 }
 .rbx-toast[data-ending-style] {
   opacity: 0;
-  transform: translateY(6px);
-  transition-duration: var(--rbx-motion-duration-exit);
+  scale: var(--rbx-motion-scale-overlay);
+  transform: translateY(var(--rbx-motion-distance-toast));
+  transition-duration: var(--rbx-motion-duration-panel-exit);
   transition-timing-function: var(--rbx-motion-ease-exit);
   pointer-events: none;
 }
@@ -56,9 +71,10 @@
 .rbx-toast[data-ending-style][data-swipe-direction="down"] {
   transform: translateY(calc(var(--toast-swipe-movement-y) + 100%));
 }
-/* 교체된 알림은 즉시 숨깁니다. Provider가 닫으므로 나중에 다시 나타나지 않습니다. */
+/* 교체된 알림도 퇴장이 끝날 때까지 남깁니다. 새 알림이 위에 그려집니다. */
 .rbx-toast[data-limited] {
-  display: none;
+  z-index: 0;
+  pointer-events: none;
 }
 .rbx-toast-content {
   display: flex;
@@ -131,5 +147,6 @@
   .rbx-toast {
     transition: none;
     transform: none;
+    scale: none;
   }
 }

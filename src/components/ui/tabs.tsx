@@ -39,6 +39,16 @@ function TabsTab({
   );
 }
 
+// 두 패널을 같은 칸에 두어 퇴장 중에도 내용 영역을 유지합니다.
+function TabsPanels({ className, ...props }: ComponentProps<"div">) {
+  return (
+    <div
+      {...props}
+      className={["rbx-tab-panels", className].filter(Boolean).join(" ")}
+    />
+  );
+}
+
 function TabsPanel({
   className,
   ...props
@@ -69,6 +79,7 @@ export const Tabs = {
   Root: TabsRoot,
   List: TabsList,
   Tab: TabsTab,
+  Panels: TabsPanels,
   Panel: TabsPanel,
   Indicator: TabsIndicator,
 };
