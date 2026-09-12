@@ -5,19 +5,16 @@ import manifest from "./manifest.json";
 import { ExampleBoundary } from "../docs/components/example-boundary";
 export function ExampleRenderer({
   name,
-  theme = "light",
   layout,
 }: {
   name: string;
-  theme?: "light" | "dark";
   layout?: "center";
 }) {
   const [ready, setReady] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
     setReady(true);
-  }, [theme]);
+  }, []);
   useEffect(() => {
     if (!ready || !ref.current) return;
     const send = () =>

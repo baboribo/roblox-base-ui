@@ -1,5 +1,11 @@
 "use client";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { useTheme } from "next-themes";
 import { Tabs } from "@/src/components/ui/tabs";
 import { Button } from "@/src/components/ui/button";
@@ -19,28 +25,26 @@ export function ExampleCard({
   children: ReactNode;
 }) {
   const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const documentTheme = resolvedTheme === "dark" ? "dark" : "light";
   const [override, setOverride] = useState<"light" | "dark">();
   const theme = override ?? documentTheme;
   const [revision, setRevision] = useState(0);
   const { minHeight, center } = getPreviewOptions(name);
   const [height, setHeight] = useState(minHeight);
-  const ref = useRef<HTMLIFrameElement>(null);
-  useEffect(() => {
-    const measure = (event: MessageEvent) => {
-      if (
-        event.origin !== location.origin ||
-        event.source !== ref.current?.contentWindow ||
-        event.data?.type !== "example-height" ||
-        !Number.isFinite(event.data.height)
-      )
-        return;
-      setHeight(Math.max(minHeight, Math.min(2400, event.data.height)));
-    };
-    window.addEventListener("message", measure);
-    return () => window.removeEventListener("message", measure);
-  }, [minHeight]);
   const src = `/preview/${name}?theme=${theme}${center ? "&layout=center" : ""}`;
+  // 테마를 모르는 동안 light 예제를 먼저 요청하지 않습니다.
+  if (!mounted || !resolvedTheme) {
+    return (
+      <div
+        className="docs-example-pending"
+        style={{ minHeight }}
+        aria-busy="true"
+        aria-label={`${title} 예제 준비 중`}
+      />
+    );
+  }
   return (
     <Card
       className="docs-example not-prose"
@@ -87,19 +91,71 @@ export function ExampleCard({
         </div>
         <Tabs.Panels>
           <Tabs.Panel value="preview" keepMounted>
-            <iframe
-              key={`${name}-${theme}-${revision}`}
-              ref={ref}
-              src={src}
-              title={`${name} 예제`}
-              loading="lazy"
-              style={{ height }}
+            <ExampleFrame
+              key={`${name}-${revision}`}
+              name={name}
+              theme={theme}
+              center={center}
+              height={height}
+              minHeight={minHeight}
+              onHeight={setHeight}
             />
           </Tabs.Panel>
           <Tabs.Panel value="code">{children}</Tabs.Panel>
         </Tabs.Panels>
       </Tabs.Root>
     </Card>
+  );
+}
+
+function ExampleFrame({
+  name,
+  theme,
+  center,
+  height,
+  minHeight,
+  onHeight,
+}: {
+  name: string;
+  theme: "light" | "dark";
+  center: boolean;
+  height: number;
+  minHeight: number;
+  onHeight: (height: number) => void;
+}) {
+  const ref = useRef<HTMLIFrameElement>(null);
+  // src는 최초 로딩 때만 정합니다. 이후 테마 변경은 입력값을 유지한 채 적용합니다.
+  const [src] = useState(
+    () => `/preview/${name}?theme=${theme}${center ? "&layout=center" : ""}`,
+  );
+  const applyTheme = () => {
+    const root = ref.current?.contentDocument?.documentElement;
+    if (root) root.dataset.theme = theme;
+  };
+  useLayoutEffect(applyTheme, [theme]);
+  useEffect(() => {
+    const measure = (event: MessageEvent) => {
+      if (
+        event.origin !== location.origin ||
+        event.source !== ref.current?.contentWindow ||
+        event.data?.type !== "example-height" ||
+        !Number.isFinite(event.data.height)
+      )
+        return;
+      onHeight(Math.max(minHeight, Math.min(2400, event.data.height)));
+    };
+    window.addEventListener("message", measure);
+    return () => window.removeEventListener("message", measure);
+  }, [minHeight, onHeight]);
+  return (
+    <iframe
+      ref={ref}
+      src={src}
+      title={`${name} 예제`}
+      loading="lazy"
+      style={{ height }}
+      onLoad={applyTheme}
+    />
   );
 }
 

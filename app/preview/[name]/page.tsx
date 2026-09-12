@@ -10,11 +10,10 @@ export default async function Page({
 }) {
   const { name } = await params;
   if (!exampleNames.has(name)) notFound();
-  const { theme, layout } = await searchParams;
+  const { layout } = await searchParams;
   return (
     <ExampleRenderer
       name={name}
-      theme={theme === "dark" ? "dark" : "light"}
       layout={layout === "center" ? "center" : undefined}
     />
   );

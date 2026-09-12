@@ -73,9 +73,8 @@ test("panels exit opposite the selected direction, pause, then enter", async ({
     expect(x * sign).toBeGreaterThan(0);
     await expect(entering).toHaveCSS("visibility", "hidden");
     await expect.poll(() => exiting.count(), { intervals: [10] }).toBe(0);
-    // The old panel has left, but the new panel must still wait for the 100ms gap.
-    await expect(entering).toHaveCSS("visibility", "hidden");
-    await expect(entering).toHaveCSS("transition-delay", "0.3s");
+    // With the optional gap token omitted, only the 200ms exit is awaited.
+    await expect(entering).toHaveCSS("transition-delay", "0.2s");
     await expect(entering).toHaveCSS("opacity", "1");
     await expect(entering).toBeVisible();
   }

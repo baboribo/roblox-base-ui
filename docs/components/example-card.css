@@ -113,3 +113,8 @@
     padding: 16px;
   }
 }
+.docs-example-pending {
+  margin-block: 20px 32px;
+  border-radius: 8px;
+  background: var(--color-fd-muted);
+}

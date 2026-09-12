@@ -54,9 +54,9 @@
   transition-duration:
     var(--rbx-motion-duration-panel), var(--rbx-motion-duration-panel), 0s;
   transition-timing-function: var(--rbx-motion-ease-exit);
-  /* 퇴장 시간 뒤에 300ms 간격을 더합니다. 숨겨진 새 내용은 포커스도 받지 않습니다. */
+  /* 추가 간격을 생략하면 0ms로 처리하고, 기존 내용의 퇴장만 기다립니다. */
   transition-delay: calc(
-    var(--rbx-motion-duration-panel-exit) + var(--rbx-motion-delay-tabs)
+    var(--rbx-motion-duration-panel-exit) + var(--rbx-motion-delay-tabs, 0ms)
   );
 }
 @starting-style {
