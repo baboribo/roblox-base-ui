@@ -1,0 +1,21 @@
+"use client";
+import { List } from "../src/components/ui/list";
+
+export function ListBoxedExample() {
+  return (
+    <List.Root variant="boxed">
+      <List.Item>
+        <List.Content>
+          <List.Title>프로젝트 A</List.Title>
+          <List.Description>최종 수정: 오늘</List.Description>
+        </List.Content>
+      </List.Item>
+      <List.Item>
+        <List.Content>
+          <List.Title>프로젝트 B</List.Title>
+          <List.Description>최종 수정: 어제</List.Description>
+        </List.Content>
+      </List.Item>
+    </List.Root>
+  );
+}

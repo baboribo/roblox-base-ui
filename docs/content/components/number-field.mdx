@@ -1,0 +1,42 @@
+---
+title: "Number Field"
+description: "숫자를 입력하거나 증감 버튼으로 조절합니다."
+keywords: ["숫자 입력", "숫자", "입력"]
+group: "입력"
+---
+
+<ComponentExample name="number-field" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add number-field --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+min/max로 허용 범위, step으로 변화량을 지정할 수 있습니다.
+
+value/onValueChange로 값에 반응하고, 증감 버튼에는 의미 있는 aria-label을 넣습니다.
+
+## 구성
+
+| 구성 요소               | 역할                                     |
+| ----------------------- | ---------------------------------------- |
+| `Root`                  | 숫자 값, 범위, 증감 단위를 관리합니다.   |
+| `Group`                 | 입력과 증감 버튼을 묶습니다.             |
+| `Input`                 | 숫자 입력 영역입니다.                    |
+| `Increment / Decrement` | 값을 늘리거나 줄입니다.                  |
+| `ScrubArea`             | 드래그로 숫자를 바꿀 수 있는 영역입니다. |
+
+## 범위와 증감 단위
+
+`min`, `max`, `step`을 함께 지정합니다. 이 예제는 0에서 100까지 5씩 조절합니다.
+
+<ComponentExample name="number-field-step" title="범위와 증감 단위" />
+
+## 구현 코드
+
+<ComponentSource name="number-field" />

@@ -3,3 +3,20 @@ dist/
 test-results/
 playwright-report/
 .DS_Store
+
+.next/
+.source/
+*.tsbuildinfo
+next-env.d.ts
+storybook-static/
+work/
+
+test-results-storybook/
+
+# 로컬 환경변수와 실행 로그는 저장소에 올리지 않습니다.
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.log
+coverage/

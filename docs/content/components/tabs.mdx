@@ -1,0 +1,48 @@
+---
+title: "Tabs"
+description: "관련 콘텐츠를 전환합니다."
+keywords: ["탭", "탭"]
+group: "탐색"
+---
+
+<ComponentExample name="tabs" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add tabs --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+Tab과 Panel의 value를 일치시키고 Root에 초기 defaultValue를 지정합니다.
+
+value/onValueChange로 현재 탭을 앱 상태나 URL과 연결할 수 있습니다.
+
+## 구성
+
+| 구성 요소   | 역할                                                                         |
+| ----------- | ---------------------------------------------------------------------------- |
+| `Root`      | 현재 탭 값을 관리합니다.                                                     |
+| `List`      | 탭 버튼을 묶습니다.                                                          |
+| `Tab`       | 고유한 `value`를 가진 탭 버튼입니다.                                         |
+| `Panel`     | 같은 `value`의 탭을 선택했을 때 표시하는 내용입니다.                         |
+| `Indicator` | 활성 탭 위치를 따르는 표시입니다. 기본 밑줄만 사용한다면 생략할 수 있습니다. |
+
+## 선택과 포커스 분리
+
+`List.activateOnFocus={false}`로 방향키는 포커스만 옮기고 Enter 또는 Space로 탭을 선택하게 합니다.
+
+<ComponentExample name="tabs-manual" title="선택과 포커스 분리" />
+
+## 비활성 탭
+
+사용할 수 없는 `Tab`에 `disabled`를 지정합니다.
+
+<ComponentExample name="tabs-disabled" title="비활성 탭" />
+
+## 구현 코드
+
+<ComponentSource name="tabs" />

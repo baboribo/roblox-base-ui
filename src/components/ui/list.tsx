@@ -3,11 +3,15 @@ import type { ComponentProps, ReactNode } from "react";
 import { Button } from "@base-ui/react/button";
 import { cx, withClassName } from "../../lib/cx";
 import "./list.css";
+export type ListRootProps = ComponentProps<"ul"> & {
+  /** 목록 테두리와 구분선입니다. @defaultValue "standard" */
+  variant?: "standard" | "boxed" | "inset";
+};
 function ListRoot({
   variant = "standard",
   className,
   ...props
-}: ComponentProps<"ul"> & { variant?: "standard" | "boxed" | "inset" }) {
+}: ListRootProps) {
   return (
     <ul
       {...props}
@@ -28,13 +32,19 @@ function ListAction({ className, ...props }: ComponentProps<typeof Button>) {
     />
   );
 }
+export type ListContentProps = ComponentProps<"div"> & {
+  /** 내용 앞에 표시할 요소입니다. */
+  leading?: ReactNode;
+  /** 내용 뒤에 표시할 요소입니다. */
+  trailing?: ReactNode;
+};
 function ListContent({
   leading,
   trailing,
   children,
   className,
   ...props
-}: ComponentProps<"div"> & { leading?: ReactNode; trailing?: ReactNode }) {
+}: ListContentProps) {
   return (
     <div {...props} className={cx("rbx-list-content", className)}>
       {leading && <span className="rbx-list-leading">{leading}</span>}

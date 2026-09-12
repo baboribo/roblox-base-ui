@@ -1,0 +1,75 @@
+---
+title: "Dialog"
+description: "현재 화면 위에서 입력이나 작업을 수행합니다."
+keywords: ["다이얼로그 대화상자 모달", "다이얼로그", "대화상자", "모달"]
+group: "피드백"
+---
+
+<ComponentExample name="dialog" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add dialog button input --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+현재 화면 위에서 입력하거나 작업할 때 사용합니다. `Title`로 목적을 설명하고 `open`과 `onOpenChange`로 열림을 제어합니다. 예제의 저장 동작은 로컬 상태만 변경합니다.
+
+## 구성
+
+| 구성 요소         | 역할                                                                  |
+| ----------------- | --------------------------------------------------------------------- |
+| `Root`            | 열림 상태를 관리합니다. `open`과 `onOpenChange`로 제어할 수 있습니다. |
+| `Trigger`         | 대화상자를 여는 버튼입니다.                                           |
+| `Portal`          | 대화상자와 배경을 별도 영역에 렌더합니다.                             |
+| `Backdrop`        | 뒤 화면을 덮는 배경입니다.                                            |
+| `Popup`           | 내용과 포커스를 담습니다. `size`로 너비를 지정합니다.                 |
+| `Title`           | 대화상자의 접근 가능한 이름입니다.                                    |
+| `Description`     | 대화상자의 목적이나 입력 안내입니다.                                  |
+| `Body`            | 본문 여백을 구성합니다. Popup의 직접 자식으로 둡니다.                 |
+| `Footer`          | 하단 작업 버튼의 여백과 정렬을 구성합니다.                            |
+| `Close`           | 닫기 동작을 연결한 버튼입니다.                                        |
+| `CloseAffordance` | Popup 오른쪽 위의 닫기 아이콘 버튼입니다.                             |
+
+## 크기 SM
+
+`Popup size="sm"`의 최대 너비는 320px입니다. 화면이 좁으면 화면 너비에 맞게 줄어듭니다.
+
+<ComponentExample name="dialog-sm" title="크기 SM" />
+
+## 크기 MD
+
+`Popup size="md"`의 최대 너비는 480px입니다. 화면이 좁으면 화면 너비에 맞게 줄어듭니다. 기본값입니다.
+
+<ComponentExample name="dialog-md" title="크기 MD" />
+
+## 크기 LG
+
+`Popup size="lg"`의 최대 너비는 640px입니다. 화면이 좁으면 화면 너비에 맞게 줄어듭니다.
+
+<ComponentExample name="dialog-lg" title="크기 LG" />
+
+## 닫기 아이콘
+
+`CloseAffordance`는 오른쪽 위 닫기 버튼입니다. `aria-label`로 작업 이름을 지정합니다.
+
+<ComponentExample name="dialog-close" title="닫기 아이콘" />
+
+## 속성
+
+이 프로젝트에서 추가하거나 제한한 속성입니다.
+
+### Popup
+
+<auto-type-table
+  path="./src/components/ui/dialog.tsx"
+  name="DialogPopupProps"
+/>
+
+## 구현 코드
+
+<ComponentSource name="dialog" />

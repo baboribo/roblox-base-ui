@@ -1,0 +1,49 @@
+---
+title: "Slider"
+description: "범위 안에서 숫자를 조절합니다."
+keywords: ["슬라이더", "슬라이더"]
+group: "입력"
+---
+
+<ComponentExample name="slider" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add slider --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+min/max/step으로 범위와 이동 단위를 지정합니다.
+
+Label과 Value는 설명과 현재 수치를 표시합니다. value/onValueChange로 상태를 연결합니다.
+
+## 구성
+
+| 구성 요소       | 역할                                     |
+| --------------- | ---------------------------------------- |
+| `Root`          | 값과 `min`, `max`, `step`을 관리합니다.  |
+| `Label / Value` | 이름과 현재 값을 표시합니다.             |
+| `Control`       | 포인터 조작 영역입니다.                  |
+| `Track`         | 전체 범위를 표시합니다.                  |
+| `Indicator`     | 선택된 값 또는 구간을 표시합니다.        |
+| `Thumb`         | 키보드와 포인터로 조작하는 손잡이입니다. |
+
+## 범위 선택
+
+값 두 개와 Thumb 두 개로 구간을 선택합니다. 각 Thumb에 서로 다른 이름을 지정합니다.
+
+<ComponentExample name="slider-range" title="범위 선택" />
+
+## 비활성
+
+`Root.disabled`는 모든 Thumb의 조작을 막습니다.
+
+<ComponentExample name="slider-disabled" title="비활성" />
+
+## 구현 코드
+
+<ComponentSource name="slider" />

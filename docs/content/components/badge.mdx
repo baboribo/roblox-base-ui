@@ -1,0 +1,86 @@
+---
+title: "Badge"
+description: "상태나 개수를 표시합니다."
+keywords: ["배지 상태", "배지", "상태"]
+group: "콘텐츠"
+---
+
+<ComponentExample name="badge" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add badge --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+짧은 상태나 개수를 표시합니다. Badge는 span 요소이며 클릭 동작이나 선택 상태를 관리하지 않습니다.
+
+## Standard
+
+`variant="standard"` — 기본 중립 색상입니다.
+
+<ComponentExample name="badge-standard" title="Standard" />
+
+## Contrast
+
+`variant="contrast"` — 명암 대비가 큰 배경입니다.
+
+<ComponentExample name="badge-contrast" title="Contrast" />
+
+## Emphasis
+
+`variant="emphasis"` — 강조 색상의 배경입니다.
+
+<ComponentExample name="badge-emphasis" title="Emphasis" />
+
+## Success
+
+`variant="success"` — 성공 상태의 배경입니다.
+
+<ComponentExample name="badge-success" title="Success" />
+
+## Warning
+
+`variant="warning"` — 주의 상태의 배경입니다.
+
+<ComponentExample name="badge-warning" title="Warning" />
+
+## Alert
+
+`variant="alert"` — 오류 상태의 배경입니다.
+
+<ComponentExample name="badge-alert" title="Alert" />
+
+## Over media
+
+`variant="over-media"` — 이미지나 영상 위에 배치하는 배경입니다.
+
+<ComponentExample name="badge-over-media" title="Over media" />
+
+## 크기
+
+`size`는 `xs`와 `sm`입니다. 기본값은 `sm`입니다.
+
+<ComponentExample name="badge-sizes" title="크기" />
+
+## 모양
+
+`shape="pill"`은 양 끝을 둥글게, `shape="box"`는 모서리를 4px로 표시합니다.
+
+<ComponentExample name="badge-shape" title="모양" />
+
+## 속성
+
+이 프로젝트에서 추가하거나 제한한 속성입니다.
+
+### Badge
+
+<auto-type-table path="./src/components/ui/badge.tsx" name="BadgeProps" />
+
+## 구현 코드
+
+<ComponentSource name="badge" />

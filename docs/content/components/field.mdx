@@ -1,0 +1,36 @@
+---
+title: "Field"
+description: "입력 요소에 레이블과 설명, 오류 메시지를 연결합니다."
+keywords: ["필드 입력 오류", "필드", "입력", "오류"]
+group: "입력"
+---
+
+<ComponentExample name="field" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add field --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+Field.Label과 Control을 같은 Root 안에 두면 레이블 관계가 연결됩니다.
+
+required/type 같은 제약과 Error의 match로 오류 메시지를 구분합니다.
+
+## 구성
+
+| 구성 요소     | 역할                                                                 |
+| ------------- | -------------------------------------------------------------------- |
+| `Root`        | 입력의 값, 오류, 레이블 관계를 관리합니다.                           |
+| `Label`       | 입력 이름입니다.                                                     |
+| `Control`     | 기본 입력 요소입니다. 같은 Root 안에서 Input을 사용할 수도 있습니다. |
+| `Description` | 입력 형식이나 조건을 설명합니다.                                     |
+| `Error`       | 검증 오류를 표시합니다. `match`로 오류 조건을 구분합니다.            |
+
+## 구현 코드
+
+<ComponentSource name="field" />

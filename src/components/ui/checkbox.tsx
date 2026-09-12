@@ -6,13 +6,11 @@ import { withClassName } from "../../lib/cx";
 import "./checkbox.css";
 
 // 동작과 접근성은 Base UI가 담당합니다. 이 파일은 스타일 연결만 담당합니다.
-function CheckboxRoot({
-  size = "sm",
-  className,
-  ...props
-}: ComponentProps<typeof Primitive.Root> & {
+export type CheckboxRootProps = ComponentProps<typeof Primitive.Root> & {
+  /** 체크 영역 크기입니다. @defaultValue "sm" */
   size?: "xs" | "sm" | "md" | "lg";
-}) {
+};
+function CheckboxRoot({ size = "sm", className, ...props }: CheckboxRootProps) {
   return (
     <Primitive.Root
       {...props}

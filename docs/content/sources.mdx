@@ -1,0 +1,23 @@
+---
+title: 출처와 범위
+description: 참조한 자료와 구현 범위입니다.
+keywords: [출처, 범위, Roblox, Base UI, SEED]
+---
+
+## 컴포넌트
+
+Roblox의 공개 배포 CSS와 화면을 참고했습니다. 상호작용은 `@base-ui/react`로 구현하고, 카드와 표 등은 HTML 요소로 구성했습니다. Roblox의 공식 배포물이나 내부 소스의 복제본은 아닙니다.
+
+Default 라이트·다크 테마를 제공합니다. 전체 컴포넌트가 원본과 픽셀 단위로 동일함을 검증한 것은 아닙니다.
+
+## 토큰과 글꼴
+
+토큰의 원본 값과 출처는 `tokens/roblox.snapshot.json`에 기록되어 있습니다. `fonts.css`는 Roblox의 공개 글꼴 URL을 참조합니다. 글꼴 파일은 저장소에 포함하지 않습니다.
+
+## 문서 구조
+
+[SEED Design](https://github.com/daangn/seed-design)의 문서 구성과 예제 파일 공유 방식을 참고했습니다. 문서는 Fumadocs, 컴포넌트 상태 비교는 Storybook으로 구성했습니다. SEED의 로고, 콘텐츠, 컴포넌트 코드를 복사하지 않았습니다.
+
+## 구현 범위
+
+예제의 저장은 로컬 상태 변경입니다. 메시지 전송, 인증 코드 검증, 외부 서버 저장은 별도 구현이 필요합니다. 참고 자료와 이전 검증 기록은 `docs/engineering/history`에 보관합니다.

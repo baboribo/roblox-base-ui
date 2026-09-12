@@ -18,13 +18,15 @@ function PopoverTrigger({
   );
 }
 
+export type PopoverPopupProps = ComponentProps<typeof Primitive.Popup> & {
+  /** 표면과 글자 색상입니다. @defaultValue "standard" */
+  variant?: "standard" | "inverse";
+};
 function PopoverPopup({
   variant = "standard",
   className,
   ...props
-}: ComponentProps<typeof Primitive.Popup> & {
-  variant?: "standard" | "inverse";
-}) {
+}: PopoverPopupProps) {
   return (
     <Primitive.Popup
       {...props}

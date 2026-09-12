@@ -1,0 +1,38 @@
+---
+title: "Chat"
+description: "대화 목록과 그룹 선택 패널을 표시합니다."
+keywords: ["채팅 대화", "채팅", "대화"]
+group: "콘텐츠"
+---
+
+<ComponentExample name="chat" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add chat --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+대화 목록과 그룹 입력 패널에 앱 데이터를 전달합니다. 네트워크 통신, 인증, 메시지 전송은 포함하지 않습니다. 그룹 예제에서는 생성 요청 대신 전달된 값을 표시합니다.
+
+## 구성
+
+| 구성 요소        | 역할                                                                           |
+| ---------------- | ------------------------------------------------------------------------------ |
+| `ChatPanel`      | 대화 UI를 담는 표면입니다.                                                     |
+| `ChatDock`       | 대화 목록, 검색, 접기를 제공합니다. `conversations`와 선택 콜백을 받습니다.    |
+| `ChatGroupPanel` | 그룹 이름과 멤버를 입력받습니다. `people`, `onClose`, `onCreate`를 연결합니다. |
+
+## 그룹 만들기
+
+`ChatGroupPanel`은 이름과 멤버를 입력받습니다. 2명 이상 선택하면 만들기 버튼이 활성화되고, 최대 5명까지 선택할 수 있습니다. `onCreate`가 받는 이름과 ID 배열을 서버 요청에 연결합니다.
+
+<ComponentExample name="chat-group" title="그룹 만들기" />
+
+## 구현 코드
+
+<ComponentSource name="chat" />

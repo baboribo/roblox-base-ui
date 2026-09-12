@@ -1,0 +1,40 @@
+---
+title: "Context Menu"
+description: "요소의 작업 메뉴를 우클릭으로 엽니다."
+keywords: ["컨텍스트 메뉴 우클릭", "컨텍스트", "메뉴", "우클릭"]
+group: "피드백"
+---
+
+<ComponentExample name="context-menu" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add context-menu --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+Trigger에 tabIndex를 넣어 키보드에서도 접근할 수 있게 합니다.
+
+Shift+F10으로도 열 수 있습니다. 메뉴 항목의 onClick을 앱 동작에 연결합니다.
+
+## 구성
+
+| 구성 요소                                     | 역할                                                         |
+| --------------------------------------------- | ------------------------------------------------------------ |
+| `Root`                                        | 메뉴의 열림 상태를 관리합니다.                               |
+| `Trigger`                                     | 컨텍스트 메뉴를 여는 대상 영역입니다.                        |
+| `Portal / Positioner`                         | 메뉴를 별도 영역에 렌더하고 버튼을 기준으로 배치합니다.      |
+| `Popup`                                       | 마우스 오른쪽 버튼이나 키보드로 열린 작업 목록의 표면입니다. |
+| `Item`                                        | 하나의 작업입니다. `onClick`으로 동작을 연결합니다.          |
+| `Group / GroupLabel / Separator`              | 관련 작업을 묶거나 구분합니다.                               |
+| `SubmenuRoot / SubmenuTrigger`                | 하위 메뉴의 상태와 여는 항목을 구성합니다.                   |
+| `CheckboxItem / CheckboxItemIndicator`        | 서로 독립적인 켜짐·꺼짐 항목과 선택 표시입니다.              |
+| `RadioGroup / RadioItem / RadioItemIndicator` | 여러 값 중 하나를 선택하는 항목과 선택 표시입니다.           |
+
+## 구현 코드
+
+<ComponentSource name="context-menu" />

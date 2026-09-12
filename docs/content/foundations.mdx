@@ -1,0 +1,33 @@
+---
+title: 디자인 토큰
+description: 색상, 간격, 크기, 글꼴을 정의하는 CSS 변수입니다.
+keywords: [토큰, 색상, 간격, 크기, 글꼴, 타이포그래피, radius, color]
+---
+
+## 사용
+
+토큰 이름은 `--rbx-`로 시작합니다. 컴포넌트에는 가능한 한 용도가 정해진 의미 토큰을 사용합니다.
+
+```css
+.panel {
+  color: var(--rbx-color-content-emphasis);
+  background: var(--rbx-color-surface-100);
+  border-radius: var(--rbx-radius-medium);
+}
+```
+
+## 값 변경
+
+기본값은 `src/styles/tokens.css`, 테마와 공통 스타일은 `src/styles/theme.css`에 있습니다. 값을 조정할 때는 공통 스타일 다음에 재정의를 추가합니다.
+
+```css
+[data-theme="light"] {
+  --rbx-color-system-emphasis: #2851ce;
+}
+```
+
+## 기본 토큰
+
+검색 결과의 복사 버튼은 `var(--rbx-…)` 형식으로 복사합니다.
+
+<TokenTable />

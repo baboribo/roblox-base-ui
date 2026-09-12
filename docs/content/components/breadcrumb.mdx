@@ -1,0 +1,35 @@
+---
+title: "Breadcrumb"
+description: "현재 페이지의 상위 경로를 표시합니다."
+keywords: ["경로 브레드크럼", "경로", "브레드크럼"]
+group: "탐색"
+---
+
+<ComponentExample name="breadcrumb" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add breadcrumb --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+상위 경로에는 BreadcrumbLink와 href를 지정합니다.
+
+마지막 항목에는 aria-current="page"로 현재 위치를 표시합니다.
+
+## 구성
+
+| 구성 요소        | 역할                                                                             |
+| ---------------- | -------------------------------------------------------------------------------- |
+| `Breadcrumb`     | 현재 페이지 경로를 담는 탐색 영역입니다.                                         |
+| `BreadcrumbList` | 순서가 있는 경로 목록입니다.                                                     |
+| `BreadcrumbItem` | 경로의 한 단계입니다.                                                            |
+| `BreadcrumbLink` | 해당 경로로 이동하는 링크입니다. 현재 위치는 `aria-current="page"`로 표시합니다. |
+
+## 구현 코드
+
+<ComponentSource name="breadcrumb" />

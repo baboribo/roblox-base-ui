@@ -1,0 +1,12 @@
+{
+  "title": "문서",
+  "pages": [
+    "index",
+    "installation",
+    "components",
+    "foundations",
+    "patterns",
+    "development",
+    "sources"
+  ]
+}

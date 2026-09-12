@@ -1,0 +1,39 @@
+---
+title: "Radio"
+description: "여러 항목 중 하나를 선택합니다."
+keywords: ["라디오", "라디오"]
+group: "입력"
+---
+
+<ComponentExample name="radio" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add radio radio-group --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+Radio.Root의 value는 같은 RadioGroup 안에서 서로 달라야 합니다.
+
+Indicator가 선택된 점을 표시합니다. label을 클릭해도 선택됩니다.
+
+## 구성
+
+| 구성 요소   | 역할                                                     |
+| ----------- | -------------------------------------------------------- |
+| `Root`      | RadioGroup 안에서 고유한 `value`를 가진 선택 항목입니다. |
+| `Indicator` | 선택된 항목의 점 표시입니다.                             |
+
+## 비활성 항목
+
+개별 `Radio.Root`에 `disabled`를 지정하면 해당 항목만 선택할 수 없습니다.
+
+<ComponentExample name="radio-disabled" title="비활성 항목" />
+
+## 구현 코드
+
+<ComponentSource name="radio" />

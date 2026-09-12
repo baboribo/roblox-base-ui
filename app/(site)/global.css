@@ -1,0 +1,115 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+@source "../../docs/**/*.{tsx,mdx}";
+@source "../../node_modules/fumadocs-ui/dist/**/*.js";
+:root {
+  --color-fd-primary: #2851ce;
+  --color-fd-background: #fff;
+  --color-fd-muted: #f6f6f7;
+  --color-fd-border: #e8e8eb;
+}
+.dark {
+  --color-fd-primary: #a4b8ff;
+  --color-fd-background: #171719;
+  --color-fd-muted: #222225;
+  --color-fd-border: #333338;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: -0.015em;
+}
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+.source-details summary {
+  padding: 12px 16px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.component-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.component-card {
+  display: block;
+  padding: 18px 20px;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 10px;
+  text-decoration: none !important;
+}
+.component-card:hover {
+  background: var(--color-fd-muted);
+}
+.component-card strong {
+  display: block;
+  font-size: 15px;
+}
+.component-card span {
+  display: block;
+  color: var(--color-fd-muted-foreground);
+  font-size: 13px;
+  margin-top: 6px;
+  line-height: 1.6;
+}
+.token-search {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.token-scroll {
+  max-height: 600px;
+  overflow: auto;
+  font-size: 12px;
+}
+.token-scroll table {
+  min-width: 550px;
+  width: 100%;
+}
+.token-scroll button {
+  cursor: pointer;
+  white-space: nowrap;
+}
+.source-details {
+  border: 1px solid var(--color-fd-border);
+  border-radius: 8px;
+  margin-block: 12px;
+}
+@media (max-width: 640px) {
+  .component-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+:root {
+  --color-fd-muted-foreground: #62626a;
+  --color-fd-secondary: #fafafa;
+  --color-fd-card: #fafafa;
+}
+.dark {
+  --color-fd-muted-foreground: #b0b0ba;
+  --color-fd-secondary: #242428;
+  --color-fd-card: #202024;
+}
+
+:root {
+  --color-fd-card: #fff;
+}
+.dark {
+  --color-fd-card: #202024;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

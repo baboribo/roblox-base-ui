@@ -1,0 +1,43 @@
+---
+title: "Accordion"
+description: "여러 항목의 내용을 접거나 펼칩니다."
+keywords: ["아코디언 접기", "아코디언", "접기"]
+group: "탐색"
+---
+
+<ComponentExample name="accordion" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add accordion --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+각 Item에 고유한 value를 주고 Trigger와 Panel을 같은 Item에 둡니다.
+
+defaultValue는 펼친 항목의 배열입니다. multiple로 여러 항목을 동시에 열지 결정합니다.
+
+## 구성
+
+| 구성 요소 | 역할                                                                          |
+| --------- | ----------------------------------------------------------------------------- |
+| `Root`    | 펼쳐진 항목을 값 배열로 관리합니다. `multiple`로 여러 항목을 동시에 펼칩니다. |
+| `Item`    | 하나의 제목과 본문을 묶습니다. 고유한 `value`가 필요합니다.                   |
+| `Header`  | 펼침 버튼을 담는 제목 영역입니다.                                             |
+| `Trigger` | 해당 항목을 펼치거나 접습니다.                                                |
+| `Chevron` | 펼침 상태에 따라 바뀌는 화살표입니다.                                         |
+| `Panel`   | 펼쳐지는 본문입니다.                                                          |
+
+## 여러 항목 펼치기
+
+`Root.multiple`을 지정하면 여러 항목을 동시에 펼칠 수 있습니다. `defaultValue`는 펼칠 항목의 값 배열입니다.
+
+<ComponentExample name="accordion-multiple" title="여러 항목 펼치기" />
+
+## 구현 코드
+
+<ComponentSource name="accordion" />

@@ -1,0 +1,36 @@
+---
+title: "Scroll Area"
+description: "지정한 영역 안에서 콘텐츠를 스크롤합니다."
+keywords: ["스크롤 영역", "스크롤", "영역"]
+group: "콘텐츠"
+---
+
+<ComponentExample name="scroll-area" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add scroll-area --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+Root에 높이를 지정하고 Viewport 안에 내용을 넣습니다.
+
+Scrollbar 안에 Thumb를 넣고, 스크롤 영역의 이름을 aria-label로 설명합니다.
+
+## 구성
+
+| 구성 요소   | 역할                                          |
+| ----------- | --------------------------------------------- |
+| `Root`      | 스크롤 영역 전체를 묶습니다.                  |
+| `Viewport`  | 실제로 스크롤되는 내용의 창입니다.            |
+| `Content`   | 스크롤할 내용을 담습니다.                     |
+| `Scrollbar` | 세로 또는 가로 스크롤바입니다.                |
+| `Thumb`     | 스크롤 위치를 표시하고 조작하는 손잡이입니다. |
+
+## 구현 코드
+
+<ComponentSource name="scroll-area" />

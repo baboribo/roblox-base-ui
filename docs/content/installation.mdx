@@ -1,0 +1,77 @@
+---
+title: 설치
+description: 컴포넌트 파일을 복사하고 공통 스타일을 연결합니다.
+keywords: [설치, pnpm, 시작, 추가, React, Next.js]
+---
+
+## 파일 복사
+
+이 저장소에서 실행합니다. `--cwd`에는 대상 프로젝트의 경로를 지정합니다.
+
+```sh
+pnpm ui add button dialog --cwd ../my-app
+```
+
+TSX, CSS, 공통 토큰, 필요한 내부 의존 파일을 함께 복사합니다. 변경된 파일이 이미 있으면 쓰기 전에 중단합니다.
+
+```sh
+# 복사할 파일 확인
+pnpm ui add button --cwd ../my-app --dry-run
+
+# 전체 컴포넌트 복사
+pnpm ui add --all --cwd ../my-app
+```
+
+## 의존성
+
+대상 프로젝트에서 설치합니다. React 19와 TypeScript를 기준으로 작성되었습니다.
+
+```sh
+pnpm add @base-ui/react@1.8.0
+```
+
+Lucide 아이콘을 import하는 예제를 사용할 때는 `pnpm add lucide-react`도 실행합니다.
+
+## 스타일
+
+Vite에서는 `src/main.tsx`, Next.js에서는 `src/app/layout.tsx`에서 공통 스타일을 가져옵니다.
+
+```tsx
+// src/main.tsx
+import "./styles/theme.css";
+// 선택 사항: Builder Sans. 생략하면 시스템 글꼴을 사용합니다.
+import "./styles/fonts.css";
+```
+
+`html`의 `data-theme`를 `light` 또는 `dark`로 지정합니다.
+
+```tsx
+// src/app/layout.tsx
+import "../styles/theme.css";
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="ko" data-theme="light">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+## 사용
+
+문서의 사용 코드는 `@/`가 `src/`를 가리킨다고 가정합니다. 별칭을 사용하지 않으면 상대 경로로 바꿉니다.
+
+```tsx
+import { Button } from "@/components/ui/button";
+
+export function SubmitButton() {
+  return <Button type="submit">저장</Button>;
+}
+```
+
+## 업데이트
+
+복사한 파일은 대상 프로젝트에서 관리합니다. 원본을 업데이트해도 복사본은 자동으로 바뀌지 않습니다. `--overwrite`는 수정한 파일도 교체하므로 변경 내용을 비교한 뒤 사용합니다.
+
+레지스트리 JSON은 `public/r/`에 생성됩니다. HTTP로 제공하는 경우 shadcn CLI에서도 해당 JSON 주소로 설치할 수 있습니다.

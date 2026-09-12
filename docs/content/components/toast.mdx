@@ -1,0 +1,38 @@
+---
+title: "Toast"
+description: "작업 결과를 일정 시간 표시합니다."
+keywords: ["토스트 알림", "토스트", "알림"]
+group: "피드백"
+---
+
+<ComponentExample name="toast" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add toast button --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+useToastManager는 Toast.Provider 안에서 호출해야 합니다.
+
+manager.add로 추가하고 manager.toasts를 Viewport에 렌더합니다. 예제는 5초 후 닫힙니다.
+
+## 구성
+
+| 구성 요소             | 역할                                                   |
+| --------------------- | ------------------------------------------------------ |
+| `Provider`            | 알림 상태를 제공하는 범위입니다.                       |
+| `useToastManager`     | `toasts` 목록과 `add`, `close` 등의 작업을 사용합니다. |
+| `Portal / Viewport`   | 알림이 나타나는 위치를 구성합니다.                     |
+| `Root`                | 알림 하나입니다. `toast` 데이터를 연결합니다.          |
+| `Title / Description` | 알림의 제목과 설명입니다.                              |
+| `Close`               | 알림을 닫습니다.                                       |
+| `Action`              | 알림에 관련된 작업을 실행합니다.                       |
+
+## 구현 코드
+
+<ComponentSource name="toast" />

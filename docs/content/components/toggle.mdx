@@ -1,0 +1,30 @@
+---
+title: "Toggle"
+description: "버튼의 선택 상태를 전환합니다."
+keywords: ["토글", "토글"]
+group: "탐색"
+---
+
+<ComponentExample name="toggle" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add toggle --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+버튼 하나의 눌림 상태를 전환합니다. `pressed`와 `onPressedChange`로 제어할 수 있으며, 아이콘만 있다면 `aria-label`로 작업 이름을 지정합니다.
+
+## 눌림 상태 제어
+
+`pressed`와 `onPressedChange`로 눌림 상태를 연결합니다. `aria-pressed`는 Toggle이 관리합니다.
+
+<ComponentExample name="toggle-controlled" title="눌림 상태 제어" />
+
+## 구현 코드
+
+<ComponentSource name="toggle" />

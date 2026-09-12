@@ -1,0 +1,37 @@
+---
+title: "Table"
+description: "데이터를 행과 열로 표시합니다."
+keywords: ["표 테이블", "표", "테이블"]
+group: "콘텐츠"
+---
+
+<ComponentExample name="table" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add table --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+Header/Body 안에 Row를 구성하고 Head와 Cell을 구분합니다.
+
+Caption으로 표의 목적을 설명하고 열 제목에 scope="col"을 지정합니다.
+
+## 구성
+
+| 구성 요소                 | 역할                                                   |
+| ------------------------- | ------------------------------------------------------ |
+| `Table`                   | 행과 열을 묶는 표입니다.                               |
+| `TableCaption`            | 표의 이름이나 설명입니다.                              |
+| `TableHeader / TableBody` | 제목 행과 데이터 행 영역입니다.                        |
+| `TableRow`                | 하나의 행입니다.                                       |
+| `TableHead`               | 제목 셀입니다. `scope`로 행 또는 열 제목을 지정합니다. |
+| `TableCell`               | 데이터 셀입니다.                                       |
+
+## 구현 코드
+
+<ComponentSource name="table" />

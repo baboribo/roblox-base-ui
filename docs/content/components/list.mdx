@@ -1,0 +1,71 @@
+---
+title: "List"
+description: "콘텐츠를 목록으로 표시합니다."
+keywords: ["목록 리스트", "목록", "리스트"]
+group: "콘텐츠"
+---
+
+<ComponentExample name="list" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add list badge icon --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+항목마다 `Item`과 `Content`를 구성합니다. 추가 설명은 `Description`에 넣고, 클릭할 행에만 `Action`을 사용합니다.
+
+## 구성
+
+| 구성 요소     | 역할                                                       |
+| ------------- | ---------------------------------------------------------- |
+| `Root`        | 목록 전체입니다. `variant`로 테두리와 구분선을 지정합니다. |
+| `Item`        | 하나의 목록 행입니다.                                      |
+| `Content`     | 행의 본문과 `leading`, `trailing` 영역을 배치합니다.       |
+| `Title`       | 행의 주된 정보입니다.                                      |
+| `Description` | 행의 보조 정보입니다. 필요할 때만 넣습니다.                |
+| `Action`      | 클릭할 수 있는 행에 사용합니다. 본문을 감싸는 버튼입니다.  |
+
+## Standard
+
+`Root variant="standard"`는 기본 목록입니다.
+
+<ComponentExample name="list-standard" title="Standard" />
+
+## Boxed
+
+`Root variant="boxed"`는 테두리로 목록을 감쌉니다.
+
+<ComponentExample name="list-boxed" title="Boxed" />
+
+## Inset
+
+`Root variant="inset"`는 구분선 시작점을 안쪽으로 들여 표시합니다. 앞쪽 아이콘이 있는 행에 사용할 수 있습니다.
+
+<ComponentExample name="list-inset" title="Inset" />
+
+## 작업이 있는 행
+
+`Action`은 버튼입니다. `onClick`에 동작을 연결하고 내부에는 다른 버튼이나 링크를 넣지 않습니다.
+
+<ComponentExample name="list-action" title="작업이 있는 행" />
+
+## 속성
+
+이 프로젝트에서 추가하거나 제한한 속성입니다.
+
+### Root
+
+<auto-type-table path="./src/components/ui/list.tsx" name="ListRootProps" />
+
+### Content
+
+<auto-type-table path="./src/components/ui/list.tsx" name="ListContentProps" />
+
+## 구현 코드
+
+<ComponentSource name="list" />

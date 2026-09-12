@@ -1,0 +1,33 @@
+---
+title: "Fieldset"
+description: "관련 입력을 하나의 그룹으로 묶습니다."
+keywords: ["필드 그룹", "필드", "그룹"]
+group: "입력"
+---
+
+<ComponentExample name="fieldset" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add fieldset field input --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+Legend는 그룹 제목, Description은 그룹 전체에 대한 설명입니다.
+
+각 입력에도 별도 레이블을 제공합니다.
+
+## 구성
+
+| 구성 요소 | 역할                              |
+| --------- | --------------------------------- |
+| `Root`    | 관련된 여러 입력 필드를 묶습니다. |
+| `Legend`  | 필드 묶음의 이름입니다.           |
+
+## 구현 코드
+
+<ComponentSource name="fieldset" />

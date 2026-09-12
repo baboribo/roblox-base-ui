@@ -1,0 +1,66 @@
+---
+title: "Status Meter"
+description: "상태를 네 단계로 표시합니다."
+keywords: ["상태 표시", "상태", "표시"]
+group: "피드백"
+---
+
+<ComponentExample name="status-meter" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add status-meter button --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+`value`에 0–4 범위의 상태값을, `label`에 상태 이름을 전달합니다. `startLabel`과 `endLabel`은 양 끝의 설명입니다. `tone`은 수치와 독립적인 색상입니다.
+
+## 구성
+
+| 구성 요소     | 역할                                                                       |
+| ------------- | -------------------------------------------------------------------------- |
+| `StatusMeter` | 0–4 범위의 값을 네 칸으로 표시합니다. 범위를 벗어난 값은 0–4로 제한됩니다. |
+| `StatusCard`  | 제목과 상태 내용을 묶는 카드입니다. Meter 없이도 사용할 수 있습니다.       |
+
+## Success
+
+`tone="success"`로 채워진 칸의 색상을 지정합니다. 기본값입니다. 값의 의미는 사용하는 화면에서 정합니다.
+
+<ComponentExample name="status-meter-success" title="Success" />
+
+## Warning
+
+`tone="warning"`로 채워진 칸의 색상을 지정합니다. 값의 의미는 사용하는 화면에서 정합니다.
+
+<ComponentExample name="status-meter-warning" title="Warning" />
+
+## Alert
+
+`tone="alert"`로 채워진 칸의 색상을 지정합니다. 값의 의미는 사용하는 화면에서 정합니다.
+
+<ComponentExample name="status-meter-alert" title="Alert" />
+
+## Emphasis
+
+`tone="emphasis"`로 채워진 칸의 색상을 지정합니다. 값의 의미는 사용하는 화면에서 정합니다.
+
+<ComponentExample name="status-meter-emphasis" title="Emphasis" />
+
+## 속성
+
+이 프로젝트에서 추가하거나 제한한 속성입니다.
+
+### StatusMeter
+
+<auto-type-table
+  path="./src/components/ui/status-meter.tsx"
+  name="StatusMeterProps"
+/>
+
+## 구현 코드
+
+<ComponentSource name="status-meter" />

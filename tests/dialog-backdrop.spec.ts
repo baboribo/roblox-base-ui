@@ -5,13 +5,12 @@ test("page dialogs retain their full-screen backdrop outside the sidebar modal",
 }) => {
   for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto("/#default-web");
+    await page.goto("/preview/settings?theme=dark");
     await page.reload(); // 같은 hash 재이동은 React 테마 상태를 초기화하지 않습니다.
     for (const theme of ["dark", "light"]) {
-      if (theme === "light")
-        await page.getByRole("button", { name: "라이트 테마로 전환" }).click();
+      if (theme === "light") await page.goto("/preview/settings?theme=light");
       const trigger = page.getByRole("button", {
-        name: "Change Name",
+        name: "이름 변경",
         exact: true,
       });
       await trigger.click();
@@ -49,20 +48,19 @@ test("page dialogs retain their full-screen backdrop outside the sidebar modal",
   }
 });
 
-test("catalog Dialog and AlertDialog render backdrops too", async ({
+test("document example dialogs render backdrops inside an isolated frame", async ({
   page,
 }) => {
-  await page.goto("/#components");
-  const nav = page.getByRole("navigation", { name: "컴포넌트 목록" });
-  for (const [component, trigger, role] of [
-    ["Dialog", "프로젝트 편집", "dialog"],
-    ["Alert Dialog", "프로젝트 삭제", "alertdialog"],
+  for (const [id, trigger, role] of [
+    ["dialog", "프로젝트 편집", "dialog"],
+    ["alert-dialog", "프로젝트 삭제", "alertdialog"],
   ] as const) {
-    await nav.getByRole("button", { name: component, exact: true }).click();
-    await page.getByRole("button", { name: trigger, exact: true }).click();
-    await expect(page.getByRole(role)).toBeVisible();
-    await expect(page.locator(".rbx-backdrop")).toBeVisible();
+    await page.goto("/docs/components/" + id);
+    const frame = page.frameLocator("iframe").first();
+    await frame.getByRole("button", { name: trigger, exact: true }).click();
+    await expect(frame.getByRole(role)).toBeVisible();
+    await expect(frame.locator(".rbx-backdrop")).toBeVisible();
     await page.keyboard.press("Escape");
-    await expect(page.locator(".rbx-backdrop")).toHaveCount(0);
+    await expect(frame.locator(".rbx-backdrop")).toHaveCount(0);
   }
 });

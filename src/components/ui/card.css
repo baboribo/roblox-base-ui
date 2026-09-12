@@ -1,24 +1,194 @@
-/* card — semantic HTML composition. */
+/* 표면과 내용 간격을 분리합니다. 이미지와 문서 예제 프레임에는 여백을 강제하지 않습니다. */
 .rbx-card {
+  --rbx-card-inset: 16px;
+  position: relative;
+  min-width: 0;
   border: 1px solid var(--rbx-color-stroke-default);
-  border-radius: var(--rbx-radius-large);
-  background: var(--rbx-color-surface-100);
+  border-radius: 8px;
+  background: var(--rbx-color-surface-0);
+  color: var(--rbx-color-content-emphasis);
   overflow: hidden;
+}
+.rbx-card[data-density="compact"] {
+  --rbx-card-inset: 12px;
+}
+.rbx-card[data-variant="filled"] {
+  border-color: transparent;
+  background: var(--rbx-color-shift-200);
+}
+.rbx-card[data-variant="plain"] {
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+.rbx-card[data-selected] {
+  box-shadow: inset 0 0 0 2px var(--rbx-color-system-emphasis);
+}
+.rbx-card[data-variant="plain"][data-selected] {
+  box-shadow: none;
+}
+.rbx-card[data-variant="plain"][data-selected] > .rbx-card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--rbx-color-system-emphasis);
+  border-radius: inherit;
+  pointer-events: none;
 }
 .rbx-card-header,
 .rbx-card-content,
 .rbx-card-footer {
-  padding: 24px;
+  padding: var(--rbx-card-inset);
+  min-width: 0;
+}
+.rbx-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.rbx-card-content {
+  display: grid;
+  gap: 12px;
+  font: var(--rbx-typography-body-medium-font);
 }
 .rbx-card-header + .rbx-card-content {
   padding-top: 0;
 }
 .rbx-card-title {
-  font: 700 1.125rem/1.4 var(--rbx-font-heading);
   margin: 0;
+  font: var(--rbx-typography-title-large-font);
+  overflow-wrap: anywhere;
+}
+.rbx-card-description {
+  margin: 0;
+  color: var(--rbx-color-content-default);
+  font: var(--rbx-typography-body-medium-font);
+  overflow-wrap: anywhere;
+}
+.rbx-card-meta {
+  margin: 0;
+  color: var(--rbx-color-content-default);
+  font: var(--rbx-typography-body-small-font);
+  overflow-wrap: anywhere;
 }
 .rbx-card-footer {
-  border-top: 1px solid var(--rbx-color-stroke-default);
+  position: relative;
+  z-index: 1;
   display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 0;
+}
+.rbx-card-footer[data-divider] {
+  padding-top: 12px;
+  border-top: 1px solid var(--rbx-color-stroke-default);
+}
+.rbx-card-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--rbx-color-shift-200);
+}
+.rbx-card-media[data-ratio="square"] {
+  aspect-ratio: 1;
+}
+.rbx-card-media[data-ratio="wide"] {
+  aspect-ratio: 21 / 9;
+}
+.rbx-card-image {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.rbx-card-image[data-fit="contain"] {
+  object-fit: contain;
+  padding: 12px;
+}
+.rbx-card-image-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  color: var(--rbx-color-content-default);
+  font: var(--rbx-typography-body-small-font);
+}
+.rbx-card[data-variant="plain"] > .rbx-card-media {
+  border-radius: 8px;
+}
+.rbx-card[data-variant="plain"]
+  > :is(.rbx-card-header, .rbx-card-content, .rbx-card-footer) {
+  padding-inline: 0;
+}
+.rbx-card[data-variant="plain"] > .rbx-card-header {
+  padding-top: 8px;
+  padding-bottom: 0;
+}
+.rbx-card[data-variant="plain"] > .rbx-card-header + .rbx-card-footer {
+  padding-top: 12px;
+}
+.rbx-card[data-layout="horizontal"] {
+  display: grid;
+  grid-template-columns: minmax(80px, 30%) minmax(0, 1fr);
+  align-items: stretch;
+}
+.rbx-card[data-layout="horizontal"] > .rbx-card-media {
+  aspect-ratio: 1;
+  min-height: 100%;
+}
+.rbx-card[data-layout="horizontal"] > .rbx-card-content {
+  align-content: center;
+  gap: 4px;
+}
+.rbx-card[data-layout="horizontal"][data-variant="plain"] {
   gap: 12px;
+}
+.rbx-card-link,
+.rbx-card-action {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+.rbx-card-action {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+:is(.rbx-card-link, .rbx-card-action)[data-stretch]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 8px;
+}
+:is(.rbx-card-link, .rbx-card-action)[data-stretch]:focus-visible::after {
+  outline: 2px solid var(--rbx-color-system-emphasis);
+  outline-offset: -2px;
+}
+:is(.rbx-card-link, .rbx-card-action):not([data-stretch]):focus-visible {
+  outline: 2px solid var(--rbx-color-system-emphasis);
+  outline-offset: 3px;
+}
+.rbx-card:has(:is(.rbx-card-link, .rbx-card-action:enabled):hover)
+  .rbx-card-title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .rbx-card-image {
+    transition: transform 160ms ease-out;
+  }
+  .rbx-card:has(:is(.rbx-card-link, .rbx-card-action:enabled):hover)
+    .rbx-card-image[data-fit="cover"] {
+    transform: scale(1.02);
+  }
 }

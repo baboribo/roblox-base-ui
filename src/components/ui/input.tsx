@@ -5,10 +5,13 @@ import { withClassName } from "../../lib/cx";
 import "./input.css";
 
 export type InputProps = ComponentProps<typeof Primitive> & {
-  /** native size(글자 수)와 달리 컨트롤 높이를 정합니다. */
+  /** native size(글자 수)와 달리 컨트롤 높이를 정합니다. @defaultValue "lg" */
   controlSize?: "xs" | "sm" | "md" | "lg";
+  /** 입력 영역의 배경과 테두리 표현입니다. @defaultValue "standard" */
   variant?: "standard" | "contrast" | "utility";
+  /** 입력 영역 앞에 표시할 아이콘이나 내용입니다. */
   leading?: ReactNode;
+  /** 입력 영역 뒤에 표시할 아이콘이나 내용입니다. */
   trailing?: ReactNode;
 };
 /** Base UI는 입력/Field 연동, 외부 래퍼는 아이콘과 테두리만 담당합니다. ref는 input에 전달됩니다. */

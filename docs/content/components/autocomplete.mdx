@@ -1,0 +1,44 @@
+---
+title: "Autocomplete"
+description: "텍스트 입력에 추천 항목을 표시합니다."
+keywords: ["자동완성", "자동완성"]
+group: "입력"
+---
+
+<ComponentExample name="autocomplete" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add autocomplete --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+items가 추천 후보입니다. 선택을 강제해야 한다면 Combobox 사용을 검토합니다.
+
+Input의 aria-label과 Empty의 빈 결과 문구를 앱에 맞게 바꾸세요.
+
+## 구성
+
+| 구성 요소                     | 역할                                  |
+| ----------------------------- | ------------------------------------- |
+| `Root`                        | 추천 항목과 입력 문자열을 관리합니다. |
+| `Input`                       | 직접 텍스트를 입력하는 영역입니다.    |
+| `Trigger / Clear`             | 추천 목록을 열거나 입력을 지웁니다.   |
+| `Portal / Positioner / Popup` | 추천 목록의 위치와 표면을 구성합니다. |
+| `List / Item`                 | 추천 목록과 입력할 후보입니다.        |
+| `Empty`                       | 추천 결과가 없을 때 표시합니다.       |
+| `Group / GroupLabel`          | 추천 항목의 그룹과 이름입니다.        |
+
+## 입력값 제어
+
+`value`와 `onValueChange`로 입력 문자열을 관리합니다. 추천에 없는 문자열도 유지됩니다.
+
+<ComponentExample name="autocomplete-controlled" title="입력값 제어" />
+
+## 구현 코드
+
+<ComponentSource name="autocomplete" />

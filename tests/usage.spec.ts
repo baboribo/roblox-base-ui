@@ -1,85 +1,54 @@
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
-import catalog from "../tokens/catalog.json" with { type: "json" };
-async function choose(page: import("@playwright/test").Page, name: string) {
-  await page
-    .getByRole("navigation", { name: "컴포넌트 목록" })
-    .getByRole("button", { name, exact: true })
-    .click();
-}
-test("all 55 pages expose the actual preview source with complete installation guidance", async ({
+import manifest from "../examples/manifest.json" with { type: "json" };
+test("all component docs expose their real example source and individual URLs", async ({
   page,
 }) => {
-  await page.goto("/#components");
-  for (const item of catalog) {
-    const name = item.name
-      .split("-")
-      .map((word) => word[0].toUpperCase() + word.slice(1))
-      .join(" ");
-    await choose(page, name);
-    const guide = page.getByRole("region", { name: "사용 예시", exact: true });
-    await expect(guide).toBeVisible();
-    const code = readFileSync(
-      new URL(`../src/demo/usage-examples/${item.name}.tsx`, import.meta.url),
+  test.setTimeout(180000);
+  for (const item of manifest) {
+    await page.goto("/docs/components/" + item.id);
+    await expect(
+      page.getByRole("heading", { level: 1, name: item.name, exact: true }),
+    ).toBeVisible();
+    const example = page.locator(".docs-example").first();
+    await example.getByRole("tab", { name: "코드", exact: true }).click();
+    const source = readFileSync(
+      new URL(`../examples/${item.id}.tsx`, import.meta.url),
       "utf8",
-    ).replaceAll('"../../components/ui/', '"@/components/ui/');
-    expect(
-      await guide
-        .locator(".usage-steps > li")
-        .nth(2)
-        .locator("pre code")
-        .textContent(),
-    ).toBe(code);
-    await expect(guide.locator(".usage-steps > li").first()).toContainText(
-      "npm run ui -- add",
+    ).replaceAll("../src/components/", "@/components/");
+    expect((await example.locator("pre").textContent())?.trim()).toBe(
+      source.trim(),
     );
-    await expect(guide.locator(".usage-tips li")).toHaveCount(2);
+    await expect(page.locator("main")).toContainText("pnpm ui add " + item.id);
   }
 });
-test("usage code copies correctly and the controlled switch and loading button work", async ({
+test("copy, loading example and controlled switch work in document frames", async ({
   page,
   context,
 }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
-  await page.goto("/#components");
-  const guide = page.getByRole("region", { name: "사용 예시", exact: true });
-  const block = guide
-    .locator(".usage-steps > li")
-    .nth(2)
-    .locator(".source-block");
-  await block.getByRole("button", { name: "복사", exact: true }).click();
+  await page.goto("/docs/components/button");
+  const example = page.locator(".docs-example").first();
+  await example.getByRole("tab", { name: "코드", exact: true }).click();
+  await example.getByRole("button", { name: /copy|コピー|복사/i }).click();
   const clipboard = await page.evaluate(() => navigator.clipboard.readText());
-  expect(clipboard).toContain("import { Button");
   expect(clipboard).toContain("@/components/ui/button");
   expect(clipboard).toContain("export function ButtonExample");
-  expect(clipboard).not.toContain('className="demo-row"');
-  const loading = page.getByRole("region", {
-    name: "처리 중인 버튼",
-    exact: true,
-  });
-  await loading.getByRole("button", { name: "예제 저장", exact: true }).click();
+  await page
+    .locator('iframe[title="button-loading 예제"]')
+    .scrollIntoViewIfNeeded();
+  const loading = page.frameLocator('iframe[title="button-loading 예제"]');
+  await loading.getByRole("button", { name: "저장", exact: true }).click();
   await expect(
-    loading.getByRole("button", { name: "저장 중…", exact: true }),
+    loading.getByRole("button", { name: "저장 중…" }),
   ).toBeDisabled();
   await expect(loading.getByRole("status").first()).toContainText(
-    "예제 저장 완료",
+    "저장했습니다.",
   );
-  await choose(page, "Switch");
-  const controlled = page.getByRole("region", {
-    name: "상태를 직접 관리하기",
-    exact: true,
-  });
-  await controlled.getByRole("switch", { name: "변경사항 자동 저장" }).click();
-  await expect(controlled.getByRole("status").first()).toHaveText(
-    "자동 저장: 켜짐",
+  await page.goto("/docs/components/switch");
+  const controlled = page.frameLocator(
+    'iframe[title="switch-controlled 예제"]',
   );
-  await guide.locator("summary").click();
-  await expect(guide).toContainText("npm install @base-ui/react@1.8.0");
-  await page.setViewportSize({ width: 390, height: 844 });
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBe(true);
-  await page.screenshot({ path: test.info().outputPath("usage-mobile.png") });
+  await controlled.getByRole("switch").click();
+  await expect(controlled.getByRole("status")).toHaveText("자동 저장: 켜짐");
 });

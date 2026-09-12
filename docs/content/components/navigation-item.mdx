@@ -1,0 +1,60 @@
+---
+title: "Navigation Item"
+description: "아이콘과 레이블로 탐색 항목을 표시합니다."
+keywords: ["탐색 항목", "탐색", "항목"]
+group: "탐색"
+---
+
+<ComponentExample name="navigation-item" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add navigation-item badge --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+화면 안의 작업은 `NavigationItem`, 주소 이동은 `NavigationLink`로 구성합니다. `active`는 현재 위치 표시입니다. `leading`이 있으면 `icon` 대신 그 내용을 표시합니다.
+
+## 페이지 이동
+
+`NavigationLink`는 실제 주소를 가진 링크입니다. `active`로 현재 페이지를 표시합니다.
+
+<ComponentExample name="navigation-item-link" title="페이지 이동" />
+
+## 보조 정보
+
+`trailing`으로 개수나 상태를 표시합니다. 행 안에는 다른 버튼을 넣지 않습니다.
+
+<ComponentExample name="navigation-item-trailing" title="보조 정보" />
+
+## 비활성
+
+`NavigationItem.disabled`로 작업을 막습니다. 링크의 비활성 처리는 제공하지 않습니다.
+
+<ComponentExample name="navigation-item-disabled" title="비활성" />
+
+## 속성
+
+이 프로젝트에서 추가하거나 제한한 속성입니다.
+
+### NavigationItem
+
+<auto-type-table
+  path="./src/components/ui/navigation-item.tsx"
+  name="NavigationItemProps"
+/>
+
+### NavigationLink
+
+<auto-type-table
+  path="./src/components/ui/navigation-item.tsx"
+  name="NavigationLinkProps"
+/>
+
+## 구현 코드
+
+<ComponentSource name="navigation-item" />

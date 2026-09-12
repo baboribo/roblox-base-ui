@@ -1,0 +1,52 @@
+---
+title: "Typography"
+description: "제목, 본문, 코드를 표시합니다."
+keywords: ["타이포그래피 글꼴 글자", "타이포그래피", "글꼴", "글자"]
+group: "콘텐츠"
+---
+
+<ComponentExample name="typography" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add typography --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+Heading/Text/Code를 필요한 곳에 사용합니다.
+
+현재 Heading은 h2입니다. 다른 제목 계층이 필요하면 컴포넌트의 태그를 확장하거나 원하는 제목 태그에 rbx-heading 클래스를 적용합니다.
+
+## 구성
+
+| 구성 요소 | 역할                                     |
+| --------- | ---------------------------------------- |
+| `Heading` | 제목을 표시합니다. 기본 요소는 h2입니다. |
+| `Text`    | 본문 단락입니다.                         |
+| `Code`    | 문장 안의 코드나 속성 이름입니다.        |
+
+## 제목
+
+Heading은 h2 요소를 사용합니다. 페이지의 제목 계층에 맞게 배치합니다.
+
+<ComponentExample name="typography-heading" title="제목" />
+
+## 본문
+
+Text는 본문 단락을 표시합니다.
+
+<ComponentExample name="typography-text" title="본문" />
+
+## 인라인 코드
+
+Code는 문장 안의 코드나 속성값을 표시합니다.
+
+<ComponentExample name="typography-code" title="인라인 코드" />
+
+## 구현 코드
+
+<ComponentSource name="typography" />

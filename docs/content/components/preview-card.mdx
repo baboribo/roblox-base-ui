@@ -1,0 +1,35 @@
+---
+title: "Preview Card"
+description: "링크에 대한 보조 정보를 표시합니다."
+keywords: ["미리보기 카드", "미리보기", "카드"]
+group: "피드백"
+---
+
+<ComponentExample name="preview-card" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add preview-card --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+Trigger의 href는 실제 이동 주소입니다. Popup은 보조 정보입니다.
+
+마우스 없이도 링크 자체만으로 목적을 알 수 있도록 작성합니다.
+
+## 구성
+
+| 구성 요소                     | 역할                                         |
+| ----------------------------- | -------------------------------------------- |
+| `Root`                        | 미리보기의 열림 상태를 관리합니다.           |
+| `Trigger`                     | 마우스 또는 포커스의 대상이 되는 링크입니다. |
+| `Portal / Positioner / Popup` | 미리보기 내용의 위치와 표면을 구성합니다.    |
+| `Arrow`                       | 대상 링크 방향을 가리키는 표시입니다.        |
+
+## 구현 코드
+
+<ComponentSource name="preview-card" />

@@ -19,11 +19,11 @@ function DialogBackdrop({
   );
 }
 
-function DialogPopup({
-  size = "md",
-  className,
-  ...props
-}: ComponentProps<typeof Primitive.Popup> & { size?: "sm" | "md" | "lg" }) {
+export type DialogPopupProps = ComponentProps<typeof Primitive.Popup> & {
+  /** 대화상자 너비입니다. @defaultValue "md" */
+  size?: "sm" | "md" | "lg";
+};
+function DialogPopup({ size = "md", className, ...props }: DialogPopupProps) {
   return (
     <Primitive.Popup
       {...props}

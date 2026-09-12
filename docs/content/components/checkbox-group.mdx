@@ -1,0 +1,30 @@
+---
+title: "Checkbox Group"
+description: "여러 항목의 선택값을 배열로 관리합니다."
+keywords: ["체크박스 그룹", "체크박스", "그룹"]
+group: "입력"
+---
+
+<ComponentExample name="checkbox-group" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add checkbox-group checkbox --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+`CheckboxGroup`은 선택한 값 배열을 관리합니다. 각 `Checkbox.Root`의 `value`로 항목을 구분하고 `value`와 `onValueChange`로 선택 결과를 받습니다.
+
+## 선택값 배열 제어
+
+`value`는 선택한 항목의 값 배열입니다. 체크를 바꾸면 `onValueChange`로 새 배열을 받습니다.
+
+<ComponentExample name="checkbox-group-controlled" title="선택값 배열 제어" />
+
+## 구현 코드
+
+<ComponentSource name="checkbox-group" />

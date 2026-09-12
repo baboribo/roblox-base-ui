@@ -1,0 +1,89 @@
+---
+title: "Icon Button"
+description: "아이콘으로 작업을 실행합니다."
+keywords: ["아이콘 버튼", "아이콘", "버튼"]
+group: "입력"
+---
+
+<ComponentExample name="icon-button" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add icon-button --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+`icon`과 `aria-label`을 함께 지정합니다. `aria-label`에는 아이콘 모양이 아니라 실행할 작업 이름을 적습니다. 기본 종류는 `emphasis`, 기본 크기는 `lg`입니다.
+
+## Emphasis
+
+`variant="emphasis"` — 강조 색상으로 주요 작업을 표시합니다. 기본값입니다.
+
+<ComponentExample name="icon-button-emphasis" title="Emphasis" />
+
+## Standard
+
+`variant="standard"` — 중립 색상의 배경으로 일반 작업을 표시합니다.
+
+<ComponentExample name="icon-button-standard" title="Standard" />
+
+## Alert
+
+`variant="alert"` — 삭제와 같은 위험한 작업을 표시합니다.
+
+<ComponentExample name="icon-button-alert" title="Alert" />
+
+## Utility
+
+`variant="utility"` — 배경 없이 아이콘을 표시합니다.
+
+<ComponentExample name="icon-button-utility" title="Utility" />
+
+## Over media
+
+`variant="over-media"` — 배경 위에서 아이콘 버튼을 표시합니다. Button의 같은 이름 속성과는 다른 색상 토큰을 사용합니다.
+
+<ComponentExample name="icon-button-over-media" title="Over media" />
+
+## 원형
+
+`circular`를 지정하면 모서리가 원형으로 바뀝니다. 기본값은 `false`입니다.
+
+<ComponentExample name="icon-button-circular" title="원형" />
+
+## 비활성
+
+`disabled`로 조작을 막습니다. 작업 이름을 설명하는 `aria-label`은 그대로 유지합니다.
+
+<ComponentExample name="icon-button-disabled" title="비활성" />
+
+## 크기
+
+`size`는 `xs`, `sm`, `md`, `lg`이며 기본값은 `lg`입니다. 아이콘 크기도 각각 16, 20, 24, 28px로 바뀝니다.
+
+<ComponentExample name="icon-button-sizes" title="크기" />
+
+## 선택 상태
+
+`selected`는 `utility` 종류의 배경을 바꿉니다. 선택 상태는 직접 관리하고 `aria-pressed`도 함께 연결합니다.
+
+<ComponentExample name="icon-button-selected" title="선택 상태" />
+
+## 속성
+
+이 프로젝트에서 추가하거나 제한한 속성입니다.
+
+### IconButton
+
+<auto-type-table
+  path="./src/components/ui/icon-button.tsx"
+  name="IconButtonProps"
+/>
+
+## 구현 코드
+
+<ComponentSource name="icon-button" />

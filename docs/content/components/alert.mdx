@@ -1,0 +1,34 @@
+---
+title: "Alert"
+description: "화면 안에 안내 메시지를 표시합니다."
+keywords: ["안내 경고", "안내", "경고"]
+group: "콘텐츠"
+---
+
+<ComponentExample name="alert" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add alert --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+AlertTitle과 AlertDescription으로 제목과 설명을 구분합니다.
+
+화면에 유지되는 안내에 사용합니다. 일시적인 작업 결과는 Toast를 사용합니다.
+
+## 구성
+
+| 구성 요소          | 역할                                             |
+| ------------------ | ------------------------------------------------ |
+| `Alert`            | 알림 내용을 묶습니다. 기본 `role`은 alert입니다. |
+| `AlertTitle`       | 알림 제목입니다.                                 |
+| `AlertDescription` | 알림의 상세 내용입니다.                          |
+
+## 구현 코드
+
+<ComponentSource name="alert" />

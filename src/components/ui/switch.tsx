@@ -5,7 +5,8 @@ import { withClassName } from "../../lib/cx";
 import { Icon } from "./icon";
 import "./switch.css";
 
-type SwitchRootProps = ComponentProps<typeof Primitive.Root> & {
+export type SwitchRootProps = ComponentProps<typeof Primitive.Root> & {
+  /** 스위치 크기입니다. @defaultValue "md" */
   size?: "xs" | "sm" | "md" | "lg";
 };
 /** 두 spacer의 flex-grow가 바뀌면서 손잡이가 이동합니다. RTL도 자연스럽게 반전됩니다. */

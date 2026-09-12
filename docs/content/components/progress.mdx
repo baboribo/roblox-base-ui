@@ -1,0 +1,41 @@
+---
+title: "Progress"
+description: "작업의 진행률을 표시합니다."
+keywords: ["진행률 진행 상태", "진행률", "진행", "상태"]
+group: "콘텐츠"
+---
+
+<ComponentExample name="progress" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add progress --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+value에 진행 수치를 전달하고 max로 최댓값을 지정합니다.
+
+Root 안의 Label/Value와 Track/Indicator가 같은 상태를 사용합니다.
+
+## 구성
+
+| 구성 요소       | 역할                                                                   |
+| --------------- | ---------------------------------------------------------------------- |
+| `Root`          | 작업 진행값을 관리합니다. 진행률을 모르면 `value={null}`을 전달합니다. |
+| `Label / Value` | 작업 이름과 진행값입니다.                                              |
+| `Track`         | 진행률 전체 범위입니다.                                                |
+| `Indicator`     | 완료된 비율을 표시합니다.                                              |
+
+## 진행률을 모를 때
+
+`value={null}`로 진행률을 알 수 없는 상태를 표시합니다.
+
+<ComponentExample name="progress-indeterminate" title="진행률을 모를 때" />
+
+## 구현 코드
+
+<ComponentSource name="progress" />

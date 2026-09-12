@@ -1,0 +1,115 @@
+.docs-example.rbx-card {
+  margin-block: 20px 32px;
+  border-radius: 8px;
+  color: var(--rbx-color-content-emphasis);
+  background: var(--rbx-color-surface-100);
+}
+.docs-example-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  padding-inline: 16px;
+  border-bottom: 1px solid var(--rbx-color-stroke-default);
+}
+.docs-example .rbx-tabs-list {
+  gap: 24px;
+  border: 0;
+}
+.docs-example .rbx-tab {
+  padding: 17px 0 15px;
+  font-size: 14px;
+}
+.docs-example .rbx-tab-panel {
+  padding: 0;
+}
+.docs-example-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-block: 8px;
+}
+.docs-example-controls .rbx-button,
+.docs-code-header .rbx-button {
+  font-size: 12px;
+}
+.docs-example iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+}
+.docs-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--rbx-color-stroke-default);
+}
+.docs-code-header > span {
+  font:
+    12px/1.5 ui-monospace,
+    monospace;
+  overflow-wrap: anywhere;
+}
+.docs-code-viewport {
+  max-height: 480px;
+  overflow: auto;
+  padding: 24px;
+}
+.docs-code-viewport pre {
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  font:
+    13px/1.75 ui-monospace,
+    monospace;
+}
+.docs-code-viewport code {
+  font: inherit;
+}
+.docs-example[data-theme="dark"] .shiki,
+.docs-example[data-theme="dark"] .shiki span {
+  color: var(--shiki-dark) !important;
+}
+.docs-copy-status {
+  margin: 0;
+  font-size: 12px;
+}
+.docs-copy-status:not(:empty) {
+  padding: 8px 16px;
+  border-top: 1px solid var(--rbx-color-stroke-default);
+}
+.docs-example-code + .docs-example-code {
+  border-top: 1px solid var(--rbx-color-stroke-default);
+}
+.component-guide h2 {
+  margin-top: 56px;
+  padding-top: 8px;
+}
+.component-guide h3 {
+  margin-top: 40px;
+  font-size: 20px;
+}
+.component-guide h3 + p {
+  margin-top: 12px;
+}
+.component-guide .docs-example + h3 {
+  margin-top: 48px;
+}
+@media (max-width: 600px) {
+  .docs-example-header {
+    padding-inline: 12px;
+    gap: 4px 8px;
+  }
+  .docs-example .rbx-tabs-list {
+    gap: 16px;
+  }
+  .docs-example-controls {
+    gap: 0;
+  }
+  .docs-code-viewport {
+    padding: 16px;
+  }
+}

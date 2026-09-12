@@ -1,0 +1,277 @@
+[
+  {
+    "id": "sidebar",
+    "name": "Sidebar",
+    "group": "탐색"
+  },
+  {
+    "id": "navigation-item",
+    "name": "Navigation Item",
+    "group": "탐색"
+  },
+  {
+    "id": "status-meter",
+    "name": "Status Meter",
+    "group": "피드백"
+  },
+  {
+    "id": "carousel",
+    "name": "Carousel",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "chat",
+    "name": "Chat",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "icon",
+    "name": "Icon",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "icon-button",
+    "name": "Icon Button",
+    "group": "입력"
+  },
+  {
+    "id": "list",
+    "name": "List",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "button",
+    "name": "Button",
+    "group": "입력"
+  },
+  {
+    "id": "checkbox",
+    "name": "Checkbox",
+    "group": "입력"
+  },
+  {
+    "id": "checkbox-group",
+    "name": "Checkbox Group",
+    "group": "입력"
+  },
+  {
+    "id": "switch",
+    "name": "Switch",
+    "group": "입력"
+  },
+  {
+    "id": "input",
+    "name": "Input",
+    "group": "입력"
+  },
+  {
+    "id": "textarea",
+    "name": "Textarea",
+    "group": "입력"
+  },
+  {
+    "id": "field",
+    "name": "Field",
+    "group": "입력"
+  },
+  {
+    "id": "form",
+    "name": "Form",
+    "group": "입력"
+  },
+  {
+    "id": "fieldset",
+    "name": "Fieldset",
+    "group": "입력"
+  },
+  {
+    "id": "select",
+    "name": "Select",
+    "group": "입력"
+  },
+  {
+    "id": "combobox",
+    "name": "Combobox",
+    "group": "입력"
+  },
+  {
+    "id": "autocomplete",
+    "name": "Autocomplete",
+    "group": "입력"
+  },
+  {
+    "id": "radio",
+    "name": "Radio",
+    "group": "입력"
+  },
+  {
+    "id": "radio-group",
+    "name": "Radio Group",
+    "group": "입력"
+  },
+  {
+    "id": "slider",
+    "name": "Slider",
+    "group": "입력"
+  },
+  {
+    "id": "number-field",
+    "name": "Number Field",
+    "group": "입력"
+  },
+  {
+    "id": "otp-field",
+    "name": "OTP Field",
+    "group": "입력"
+  },
+  {
+    "id": "dialog",
+    "name": "Dialog",
+    "group": "피드백"
+  },
+  {
+    "id": "alert-dialog",
+    "name": "Alert Dialog",
+    "group": "피드백"
+  },
+  {
+    "id": "drawer",
+    "name": "Drawer",
+    "group": "피드백"
+  },
+  {
+    "id": "popover",
+    "name": "Popover",
+    "group": "피드백"
+  },
+  {
+    "id": "preview-card",
+    "name": "Preview Card",
+    "group": "피드백"
+  },
+  {
+    "id": "tooltip",
+    "name": "Tooltip",
+    "group": "피드백"
+  },
+  {
+    "id": "menu",
+    "name": "Menu",
+    "group": "피드백"
+  },
+  {
+    "id": "context-menu",
+    "name": "Context Menu",
+    "group": "피드백"
+  },
+  {
+    "id": "toast",
+    "name": "Toast",
+    "group": "피드백"
+  },
+  {
+    "id": "accordion",
+    "name": "Accordion",
+    "group": "탐색"
+  },
+  {
+    "id": "collapsible",
+    "name": "Collapsible",
+    "group": "탐색"
+  },
+  {
+    "id": "tabs",
+    "name": "Tabs",
+    "group": "탐색"
+  },
+  {
+    "id": "toggle",
+    "name": "Toggle",
+    "group": "탐색"
+  },
+  {
+    "id": "toggle-group",
+    "name": "Toggle Group",
+    "group": "탐색"
+  },
+  {
+    "id": "toolbar",
+    "name": "Toolbar",
+    "group": "탐색"
+  },
+  {
+    "id": "menubar",
+    "name": "Menubar",
+    "group": "탐색"
+  },
+  {
+    "id": "navigation-menu",
+    "name": "Navigation Menu",
+    "group": "탐색"
+  },
+  {
+    "id": "breadcrumb",
+    "name": "Breadcrumb",
+    "group": "탐색"
+  },
+  {
+    "id": "avatar",
+    "name": "Avatar",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "badge",
+    "name": "Badge",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "card",
+    "name": "Card",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "alert",
+    "name": "Alert",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "progress",
+    "name": "Progress",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "meter",
+    "name": "Meter",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "scroll-area",
+    "name": "Scroll Area",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "separator",
+    "name": "Separator",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "skeleton",
+    "name": "Skeleton",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "table",
+    "name": "Table",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "typography",
+    "name": "Typography",
+    "group": "콘텐츠"
+  },
+  {
+    "id": "empty",
+    "name": "Empty",
+    "group": "콘텐츠"
+  }
+]

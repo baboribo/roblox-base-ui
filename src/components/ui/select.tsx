@@ -6,13 +6,15 @@ import { withClassName } from "../../lib/cx";
 import "./select.css";
 
 // 동작과 접근성은 Base UI가 담당합니다. 이 파일은 스타일 연결만 담당합니다.
+export type SelectTriggerProps = ComponentProps<typeof Primitive.Trigger> & {
+  /** 여는 버튼 높이입니다. @defaultValue "lg" */
+  size?: "xs" | "sm" | "md" | "lg";
+};
 function SelectTrigger({
   size = "lg",
   className,
   ...props
-}: ComponentProps<typeof Primitive.Trigger> & {
-  size?: "xs" | "sm" | "md" | "lg";
-}) {
+}: SelectTriggerProps) {
   return (
     <Primitive.Trigger
       {...props}
@@ -22,13 +24,11 @@ function SelectTrigger({
   );
 }
 
-function SelectPopup({
-  size = "lg",
-  className,
-  ...props
-}: ComponentProps<typeof Primitive.Popup> & {
+export type SelectPopupProps = ComponentProps<typeof Primitive.Popup> & {
+  /** 목록 항목의 글자 크기와 여백입니다. @defaultValue "lg" */
   size?: "xs" | "sm" | "md" | "lg";
-}) {
+};
+function SelectPopup({ size = "lg", className, ...props }: SelectPopupProps) {
   return (
     <Primitive.Popup
       {...props}

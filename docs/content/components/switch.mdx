@@ -1,0 +1,57 @@
+---
+title: "Switch"
+description: "설정을 켜거나 끕니다."
+keywords: ["스위치 설정", "스위치", "설정"]
+group: "입력"
+---
+
+<ComponentExample name="switch" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add switch --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+하나의 설정을 켜거나 끌 때 사용합니다. `Root`와 `Thumb`을 조합하고 label로 설정 이름을 연결합니다.
+
+## 구성
+
+| 구성 요소 | 역할                                                                            |
+| --------- | ------------------------------------------------------------------------------- |
+| `Root`    | 켜짐 상태와 크기를 관리합니다. `checked`와 `onCheckedChange`로 제어합니다.      |
+| `Thumb`   | 현재 상태에 따라 움직이는 손잡이입니다. 체크 아이콘은 내부에 포함되어 있습니다. |
+
+## 크기
+
+`size`의 기본값은 `md`입니다. 너비 × 높이는 `xs` 28×16, `sm` 32×20, `md` 40×24, `lg` 44×24px입니다.
+
+<ComponentExample name="switch-sizes" title="크기" />
+
+## 비활성
+
+`disabled`로 상태 전환을 막습니다.
+
+<ComponentExample name="switch-disabled" title="비활성" />
+
+## 상태 제어
+
+`checked`와 `onCheckedChange`를 연결해 설정값을 관리합니다.
+
+<ComponentExample name="switch-controlled" title="상태 제어" />
+
+## 속성
+
+이 프로젝트에서 추가하거나 제한한 속성입니다.
+
+### Root
+
+<auto-type-table path="./src/components/ui/switch.tsx" name="SwitchRootProps" />
+
+## 구현 코드
+
+<ComponentSource name="switch" />

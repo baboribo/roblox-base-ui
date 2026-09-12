@@ -1,0 +1,38 @@
+import type { Translations } from "fumadocs-ui/i18n";
+
+// Fumadocs 번역 키에는 사용 위치와 접근성 설명도 포함됩니다.
+// 라이브러리 타입으로 키를 검사하여 적용되지 않는 번역을 방지합니다.
+export const translations = {
+  displayName: "한국어",
+  "Prop(type table)": "속성",
+  "Type(type table)": "타입",
+  "Default(type table)": "기본값",
+  "Parameters(type table)": "매개변수",
+  "Returns(type table)": "반환값",
+  "Search(search trigger)": "검색",
+  "Search(search dialog)": "검색",
+  "Open Search(search trigger)(aria-label)": "검색 열기",
+  "Close Search(search dialog)(aria-label)": "검색 닫기",
+  "No results found(search dialog)": "검색 결과가 없습니다.",
+  "On this page(table of contents)": "목차",
+  "No Headings(table of contents)": "목차가 없습니다.",
+  "Table of Contents(inline table of contents)": "목차",
+  "Copy Text(code block)(aria-label)": "코드 복사",
+  "Copied Text(code block)(aria-label)": "복사했습니다",
+  "Copy Anchor Link(heading anchor)(aria-label)": "제목 링크 복사",
+  "Copy Link(accordion)(aria-label)": "링크 복사",
+  "Toggle Theme(theme switcher)(aria-label)": "문서 테마 전환",
+  "Light(theme switcher)(aria-label)": "라이트",
+  "Dark(theme switcher)(aria-label)": "다크",
+  "System(theme switcher)(aria-label)": "시스템 설정",
+  "Open Sidebar(sidebar)(aria-label)": "탐색 열기",
+  "Close Sidebar(sidebar)(aria-label)": "탐색 닫기",
+  "Close Sidebar(aria-label)": "탐색 닫기",
+  "Collapse Sidebar(sidebar)(aria-label)": "탐색 접기",
+  "Show Sidebar(sidebar)": "탐색 펼치기",
+  "Hide Sidebar(sidebar)": "탐색 접기",
+  "Toggle Menu(mobile menu)(aria-label)": "메뉴 전환",
+  "Layout Tab(layout tab trigger)": "문서 선택",
+  "Next Page(pagination)": "다음",
+  "Previous Page(pagination)": "이전",
+} satisfies Partial<Translations>;

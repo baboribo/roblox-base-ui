@@ -1,0 +1,61 @@
+---
+title: "Popover"
+description: "기준 요소 옆에 내용이나 작업을 표시합니다."
+keywords: ["팝오버", "팝오버"]
+group: "피드백"
+---
+
+<ComponentExample name="popover" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add popover --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+Positioner의 side/align/sideOffset으로 위치를 조절합니다.
+
+Title/Description을 넣고, 사용자가 작업을 마치면 Close로 닫을 수 있습니다.
+
+## 구성
+
+| 구성 요소             | 역할                                                 |
+| --------------------- | ---------------------------------------------------- |
+| `Root`                | 열림 상태를 관리합니다.                              |
+| `Trigger`             | 클릭해서 내용을 여는 버튼입니다.                     |
+| `Portal / Positioner` | 팝오버를 버튼 기준으로 배치합니다.                   |
+| `Popup`               | 내용을 담는 표면입니다. `variant`로 색상을 바꿉니다. |
+| `Title / Description` | 제목과 설명입니다.                                   |
+| `Arrow`               | 버튼 방향을 가리키는 표시입니다.                     |
+| `Close`               | 팝오버를 닫습니다.                                   |
+
+## Standard
+
+`Popup variant="standard"`는 기본 표면 색상입니다.
+
+<ComponentExample name="popover-standard" title="Standard" />
+
+## Inverse
+
+`Popup variant="inverse"`는 반전된 표면과 글자 색상입니다.
+
+<ComponentExample name="popover-inverse" title="Inverse" />
+
+## 속성
+
+이 프로젝트에서 추가하거나 제한한 속성입니다.
+
+### Popup
+
+<auto-type-table
+  path="./src/components/ui/popover.tsx"
+  name="PopoverPopupProps"
+/>
+
+## 구현 코드
+
+<ComponentSource name="popover" />

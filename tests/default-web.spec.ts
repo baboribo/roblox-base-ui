@@ -5,7 +5,7 @@ import measurements from "../tokens/default-web.measurements.json" with { type: 
 test("Default Web matches measured Chat, input, dialog and menu properties", async ({
   page,
 }) => {
-  await page.goto("/#default-web");
+  await page.goto("/preview/settings?theme=dark");
   await page.evaluate(() => document.fonts.ready);
   for (const sample of measurements.samples) {
     const element = page.locator(sample.localSelector).first();
@@ -16,7 +16,7 @@ test("Default Web matches measured Chat, input, dialog and menu properties", asy
       );
     }
   }
-  await page.getByRole("combobox", { name: "Appearance" }).click();
+  await page.getByRole("combobox", { name: "표시 모드" }).click();
   const menu = page.locator(".rbx-popup");
   await expect(menu).toHaveCSS("border-radius", "16px");
   await expect(menu).toHaveCSS("background-color", "rgb(25, 26, 31)");
@@ -25,7 +25,7 @@ test("Default Web matches measured Chat, input, dialog and menu properties", asy
   await expect(option).toHaveCSS("font-size", "16px");
   await page.keyboard.press("Escape");
   const trigger = page.getByRole("button", {
-    name: "Change Name",
+    name: "이름 변경",
     exact: true,
   });
   await trigger.click();
@@ -40,9 +40,9 @@ test("Default Web matches measured Chat, input, dialog and menu properties", asy
     "36px",
   );
   await page
-    .getByRole("textbox", { name: "Display name", exact: true })
+    .getByRole("textbox", { name: "표시 이름", exact: true })
     .fill("Local Builder");
-  await page.getByRole("button", { name: "Save", exact: true }).click();
+  await page.getByRole("button", { name: "저장", exact: true }).click();
   await expect(trigger).toBeFocused();
   await expect(page.getByText("Local Builder", { exact: true })).toBeVisible();
 });
@@ -54,7 +54,7 @@ test("synthetic Chat search, collapse, group selection and keyboard focus remain
   page.on("request", (request) => {
     if (request.method() !== "GET") requests.push(request.url());
   });
-  await page.goto("/#default-web");
+  await page.goto("/preview/settings?theme=dark");
   await page
     .getByRole("textbox", { name: "Search conversations" })
     .fill("Pixel");
@@ -85,10 +85,12 @@ test("synthetic Chat search, collapse, group selection and keyboard focus remain
 test("Default demo is accessible in both modes and fits mobile", async ({
   page,
 }) => {
-  await page.goto("/#default-web");
+  await page.goto("/preview/settings?theme=dark");
   for (const theme of ["dark", "light"]) {
     if (theme === "light")
-      await page.getByRole("button", { name: "라이트 테마로 전환" }).click();
+      await page.evaluate(() => {
+        document.documentElement.dataset.theme = "light";
+      });
     await expect(page.locator(".rbx-chat-panel").first()).toHaveCSS(
       "background-color",
       theme === "dark" ? "rgb(25, 26, 31)" : "rgb(247, 247, 248)",
@@ -116,7 +118,7 @@ test("Default demo is accessible in both modes and fits mobile", async ({
 test("button size map and explicit enhanced alert contrast are verified", async ({
   page,
 }) => {
-  await page.goto("/#components");
+  await page.goto("/preview/button-overview?theme=dark");
   for (const [size, height, font, radius] of [
     ["xs", "24px", "12px", "4px"],
     ["sm", "32px", "12px", "8px"],
@@ -140,7 +142,9 @@ test("button size map and explicit enhanced alert contrast are verified", async 
   });
   for (const theme of ["dark", "light"]) {
     if (theme === "light")
-      await page.getByRole("button", { name: "라이트 테마로 전환" }).click();
+      await page.evaluate(() => {
+        document.documentElement.dataset.theme = "light";
+      });
     await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
     await expect(page.locator('[data-variant="over-media"]')).toHaveCSS(
       "background-color",
@@ -154,7 +158,7 @@ test("button size map and explicit enhanced alert contrast are verified", async 
 test("Robux FAQ spacing, multiple expansion and keyboard behavior match the source pattern", async ({
   page,
 }) => {
-  await page.goto("/#default-web");
+  await page.goto("/preview/settings?theme=dark");
   const accordion = page.locator(".rbx-accordion");
   await expect(accordion).toHaveCSS("gap", "16px");
   const first = page.getByRole("button", {
@@ -197,8 +201,8 @@ test("Robux FAQ spacing, multiple expansion and keyboard behavior match the sour
 test("Account Status meter and card collection work with synthetic data", async ({
   page,
 }) => {
-  await page.goto("/#default-web");
-  const meter = page.getByRole("meter", { name: "Example project health" });
+  await page.goto("/preview/settings?theme=dark");
+  const meter = page.getByRole("meter", { name: "프로젝트 상태" });
   await expect(meter).toHaveAttribute("aria-valuenow", "4");
   await expect(page.locator(".rbx-status-segments")).toHaveCSS("height", "8px");
   await expect(page.locator(".rbx-status-segments")).toHaveCSS("gap", "2px");
@@ -249,7 +253,7 @@ test("Account Status meter and card collection work with synthetic data", async 
 test("new Foundation Switch uses contrast, checkmark, flex spacers and logical direction", async ({
   page,
 }) => {
-  await page.goto("/#default-web");
+  await page.goto("/preview/settings?theme=dark");
   const control = page.getByRole("switch");
   const thumb = control.locator(".rbx-switch-thumb");
   await expect(control).toHaveCSS("width", "40px");

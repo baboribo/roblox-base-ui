@@ -1,0 +1,35 @@
+---
+title: "Toolbar"
+description: "관련 작업을 도구 모음으로 표시합니다."
+keywords: ["도구 모음 툴바", "도구", "모음", "툴바"]
+group: "탐색"
+---
+
+<ComponentExample name="toolbar" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add toolbar --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+Toolbar.Button의 onClick에 작업을 연결합니다.
+
+aria-label로 도구 모음을 설명하고 Separator로 작업 범위를 구분합니다.
+
+## 구성
+
+| 구성 요소   | 역할                                       |
+| ----------- | ------------------------------------------ |
+| `Root`      | 관련 작업의 키보드 이동 범위를 구성합니다. |
+| `Button`    | 도구를 실행합니다.                         |
+| `Link`      | 페이지나 문서로 이동합니다.                |
+| `Separator` | 작업 그룹을 구분합니다.                    |
+
+## 구현 코드
+
+<ComponentSource name="toolbar" />

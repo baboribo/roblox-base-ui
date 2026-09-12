@@ -1,0 +1,30 @@
+---
+title: "Radio Group"
+description: "라디오 항목의 선택 상태를 관리합니다."
+keywords: ["라디오 그룹", "라디오", "그룹"]
+group: "입력"
+---
+
+<ComponentExample name="radio-group" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add radio-group radio --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+`RadioGroup`은 하나의 선택값을 관리하고 자식 `Radio.Root`는 각각 다른 `value`를 가집니다. `defaultValue`는 초기값, `value`와 `onValueChange`는 외부에서 제어하는 값입니다.
+
+## 선택값 제어
+
+`value`는 선택한 Radio의 값입니다. `onValueChange`로 다른 항목의 선택을 반영합니다.
+
+<ComponentExample name="radio-group-controlled" title="선택값 제어" />
+
+## 구현 코드
+
+<ComponentSource name="radio-group" />

@@ -18,13 +18,11 @@ function MenuTrigger({
   );
 }
 
-function MenuPopup({
-  size = "md",
-  className,
-  ...props
-}: ComponentProps<typeof Primitive.Popup> & {
+export type MenuPopupProps = ComponentProps<typeof Primitive.Popup> & {
+  /** 목록 항목의 글자 크기와 여백입니다. @defaultValue "md" */
   size?: "xs" | "sm" | "md" | "lg";
-}) {
+};
+function MenuPopup({ size = "md", className, ...props }: MenuPopupProps) {
   return (
     <Primitive.Popup
       {...props}

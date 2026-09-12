@@ -1,0 +1,32 @@
+.variant-matrix {
+  max-width: 100%;
+  overflow: auto;
+  margin-block: 0 32px;
+  border: 1px solid var(--rbx-color-stroke-default);
+  border-radius: 8px;
+}
+.variant-matrix table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.variant-matrix caption {
+  text-align: start;
+  padding: 16px;
+  font-weight: 600;
+}
+.variant-matrix th,
+.variant-matrix td {
+  padding: 16px;
+  text-align: start;
+  border-top: 1px solid var(--rbx-color-stroke-default);
+}
+.variant-matrix th {
+  font-size: 13px;
+  white-space: nowrap;
+}
+.variant-matrix td {
+  min-width: 144px;
+}
+.variant-matrix td > .rbx-input {
+  min-width: 144px;
+}

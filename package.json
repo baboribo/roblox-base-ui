@@ -1,35 +1,57 @@
 {
   "dependencies": {
     "@base-ui/react": "^1.8.0",
+    "es-hangul": "^2.4.0",
+    "fumadocs-core": "^16.15.9",
+    "fumadocs-mdx": "^15.4.0",
+    "fumadocs-typescript": "5.4.0",
+    "fumadocs-ui": "^16.15.9",
+    "hast-util-to-jsx-runtime": "^2.3.6",
     "lucide-react": "^1.43.0",
+    "next": "^16.3.5",
+    "next-themes": "^0.4.6",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "shiki": "^4.4.3",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.63.0",
+    "@storybook/addon-docs": "^10.6.0",
+    "@storybook/react-vite": "^10.6.0",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26.5.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
     "postcss": "^8.5.28",
     "prettier": "^3.9.6",
+    "storybook": "^10.6.0",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.13",
     "typescript": "^7.0.2",
     "vite": "^8.2.2"
   },
   "name": "roblox-base-ui-local",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
-    "build": "node scripts/build-registry.mjs && tsc --noEmit && vite build",
-    "typecheck": "tsc --noEmit",
+    "dev": "pnpm examples:build && next dev --webpack --hostname 127.0.0.1 --port 5173",
+    "build": "pnpm examples:build && pnpm registry:build && next build --webpack",
+    "typecheck": "pnpm examples:build && fumadocs-mdx && next typegen && tsc --noEmit",
     "registry:build": "node scripts/build-registry.mjs",
     "ui": "node scripts/add.mjs",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test tests/*.test.mjs && tsx --test tests/*.test.ts",
     "test:ui": "playwright test",
-    "format": "prettier --write src scripts docs tests *.json *.ts README.md",
-    "tokens:build": "node scripts/build-tokens.mjs"
-  }
+    "format": "prettier --write app docs/content docs/components docs/lib examples stories .storybook scripts tests src *.json *.ts *.mjs README.md",
+    "tokens:build": "node scripts/build-tokens.mjs",
+    "start": "next start --hostname 127.0.0.1 --port 5173",
+    "storybook": "pnpm examples:build && storybook dev -p 6006 --no-open",
+    "storybook:build": "pnpm examples:build && storybook build -o storybook-static",
+    "test:storybook": "playwright test --config playwright.storybook.config.ts",
+    "examples:build": "node scripts/build-examples.mjs"
+  },
+  "packageManager": "pnpm@11.9.0"
 }

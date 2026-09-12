@@ -1,0 +1,39 @@
+---
+title: "Drawer"
+description: "화면 가장자리에서 패널을 엽니다."
+keywords: ["드로어 하단 패널", "드로어", "하단", "패널"]
+group: "피드백"
+---
+
+<ComponentExample name="drawer" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add drawer --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+Portal → Viewport → Popup → Content 순서로 조합합니다.
+
+Title/Description을 제공하고 Close로 닫습니다. 스와이프 동작은 Base UI가 처리합니다.
+
+## 구성
+
+| 구성 요소             | 역할                                         |
+| --------------------- | -------------------------------------------- |
+| `Root`                | 열림 상태와 스와이프 동작을 관리합니다.      |
+| `Trigger`             | 패널을 여는 버튼입니다.                      |
+| `Portal / Backdrop`   | 패널을 별도 영역에 렌더하고 배경을 덮습니다. |
+| `Viewport`            | 패널의 위치와 스와이프 영역을 구성합니다.    |
+| `Popup`               | 아래쪽 패널의 표면입니다.                    |
+| `Content`             | 패널 안의 내용 영역입니다.                   |
+| `Title / Description` | 패널 이름과 설명을 연결합니다.               |
+| `Close`               | 패널을 닫습니다.                             |
+
+## 구현 코드
+
+<ComponentSource name="drawer" />

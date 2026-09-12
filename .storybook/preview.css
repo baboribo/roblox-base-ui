@@ -1,0 +1,8 @@
+body {
+  font-family: var(--rbx-font-body);
+  background: var(--rbx-color-surface-100);
+  color: var(--rbx-color-content-emphasis);
+}
+* {
+  box-sizing: border-box;
+}

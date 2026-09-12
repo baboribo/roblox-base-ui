@@ -87,7 +87,7 @@ function main(args) {
     writeFileSync(item.dest, item.content);
   }
   console.log(
-    `${plans.filter((item) => !item.same).length}개 파일 복사, ${plans.filter((item) => item.same).length}개 동일 파일 유지.\n대상: ${root}\n대상 앱에서 npm install @base-ui/react@1.8.0\n앱 진입점에서 styles/theme.css를 import하고 html에 data-theme를 지정하세요.`,
+    `${plans.filter((item) => !item.same).length}개 파일 복사, ${plans.filter((item) => item.same).length}개 동일 파일 유지.\n대상: ${root}\n대상 앱에서 pnpm add @base-ui/react@1.8.0\n앱 진입점에서 styles/theme.css를 import하고 html에 data-theme를 지정하세요.`,
   );
 }
 try {

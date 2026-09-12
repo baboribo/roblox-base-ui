@@ -1,0 +1,34 @@
+---
+title: "Meter"
+description: "정해진 범위 안의 측정값을 표시합니다."
+keywords: ["측정 사용량", "측정", "사용량"]
+group: "콘텐츠"
+---
+
+<ComponentExample name="meter" title="기본" />
+
+## 설치
+
+```sh
+pnpm ui add meter --cwd ../my-app
+```
+
+[공통 설치 설정](/docs/installation)을 먼저 적용합니다.
+
+## 사용법
+
+value/min/max로 측정 범위를 연결합니다.
+
+업로드처럼 작업 진행률이라면 Progress를 사용합니다.
+
+## 구성
+
+| 구성 요소           | 역할                                     |
+| ------------------- | ---------------------------------------- |
+| `Root`              | 측정값과 `min`, `max` 범위를 관리합니다. |
+| `Label / Value`     | 측정 대상의 이름과 현재 수치입니다.      |
+| `Track / Indicator` | 전체 범위와 측정값의 비율을 표시합니다.  |
+
+## 구현 코드
+
+<ComponentSource name="meter" />
