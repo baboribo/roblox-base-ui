@@ -1,34 +1,135 @@
-@import "./button.css";
-/* Toast: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+@import "../../styles/motion.css";
+
+/* 화면 아래 중앙. 긴 문장도 화면 너비 안에서 줄바꿈합니다. */
 .rbx-toast-viewport {
   position: fixed;
   z-index: var(--rbx-layer-toast);
-  right: 20px;
-  bottom: 20px;
-  width: min(360px, calc(100vw - 32px));
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  inset-inline: 16px;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  display: grid;
+  justify-items: center;
+  pointer-events: none;
+  outline: none;
 }
 .rbx-toast {
-  position: relative;
-  padding: 14px;
-  border: 1px solid var(--rbx-color-stroke-emphasis);
-  border-radius: 12px;
-  background: var(--rbx-color-surface-200);
+  grid-area: 1 / 1;
+  width: fit-content;
+  max-width: min(480px, 100%);
+  min-width: 0;
+  padding: 8px 8px 8px 16px;
+  border: 1px solid var(--rbx-color-stroke-default);
+  border-radius: var(--rbx-radius-medium);
+  background: var(--rbx-color-surface-300);
   color: var(--rbx-color-content-emphasis);
-  box-shadow: 0 8px 32px var(--rbx-color-common-shadow);
-  gap: 4px;
+  box-shadow: var(--rbx-shadow-transient-low);
+  pointer-events: auto;
+  touch-action: pan-x;
+  opacity: 1;
+  transform: translate(
+    var(--toast-swipe-movement-x, 0px),
+    var(--toast-swipe-movement-y, 0px)
+  );
+  transition:
+    opacity var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
+    transform var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter);
+}
+.rbx-toast:not(:has(.rbx-toast-close)) {
+  padding-inline-end: 16px;
+}
+.rbx-toast[data-starting-style] {
+  opacity: 0;
+  transform: translateY(var(--rbx-motion-distance-toast));
+}
+.rbx-toast[data-ending-style] {
+  opacity: 0;
+  transform: translateY(6px);
+  transition-duration: var(--rbx-motion-duration-exit);
+  transition-timing-function: var(--rbx-motion-ease-exit);
+  pointer-events: none;
+}
+.rbx-toast[data-swiping] {
+  transition: none;
+}
+.rbx-toast[data-ending-style][data-swipe-direction="right"] {
+  transform: translateX(calc(var(--toast-swipe-movement-x) + 100%));
+}
+.rbx-toast[data-ending-style][data-swipe-direction="down"] {
+  transform: translateY(calc(var(--toast-swipe-movement-y) + 100%));
+}
+/* 교체된 알림은 즉시 숨깁니다. Provider가 닫으므로 나중에 다시 나타나지 않습니다. */
+.rbx-toast[data-limited] {
+  display: none;
+}
+.rbx-toast-content {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-height: 32px;
+}
+.rbx-toast-text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding-block: 4px;
 }
 .rbx-toast-title {
-  font-weight: 700;
-  margin-bottom: 4px;
+  margin: 0;
+  font: var(--rbx-typography-body-small-font);
+  font-weight: 500;
 }
-.rbx-toast .rbx-icon-button {
-  position: absolute;
-  top: 3px;
-  right: 3px;
+.rbx-toast-description {
+  margin: 2px 0 0;
+  font: var(--rbx-typography-body-small-font);
+  color: var(--rbx-color-content-default);
+}
+.rbx-toast-icon {
+  flex: 0 0 auto;
+}
+.rbx-toast[data-type="success"] .rbx-toast-icon {
+  color: var(--rbx-color-system-success);
+}
+.rbx-toast[data-type="error"] .rbx-toast-icon {
+  color: var(--rbx-color-system-alert);
+}
+.rbx-toast-action,
+.rbx-toast-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-height: 32px;
+  border: 0;
+  border-radius: var(--rbx-radius-medium);
   background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.rbx-toast-action {
+  padding: 4px 8px;
+  font: var(--rbx-typography-body-small-font);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.rbx-toast-close {
+  width: 32px;
+  padding: 0;
+  color: var(--rbx-color-content-default);
+}
+:is(.rbx-toast-action, .rbx-toast-close):hover {
+  background: var(--rbx-color-state-hover);
+}
+:is(.rbx-toast-action, .rbx-toast-close):active {
+  background: var(--rbx-color-state-press);
+}
+@media (max-width: 400px) {
+  .rbx-toast-content {
+    gap: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rbx-toast {
+    transition: none;
+    transform: none;
+  }
 }

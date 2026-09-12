@@ -1,0 +1,8 @@
+/* 원본 Roblox 토큰을 용도별 이름으로 연결합니다. 우리 UI에서 정한 사용 규칙입니다. */
+:root {
+  --rbx-motion-duration-enter: var(--rbx-time-200);
+  --rbx-motion-duration-exit: var(--rbx-time-100);
+  --rbx-motion-ease-enter: var(--rbx-ease-standard-out);
+  --rbx-motion-ease-exit: var(--rbx-ease-standard-in);
+  --rbx-motion-distance-toast: 12px;
+}

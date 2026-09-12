@@ -390,6 +390,9 @@ export const examples = {
   meter: lazy(() =>
     import("./meter").then((m) => ({ default: m.MeterExample })),
   ),
+  motion: lazy(() =>
+    import("./motion").then((m) => ({ default: m.MotionExample })),
+  ),
   "navigation-item-disabled": lazy(() =>
     import("./navigation-item-disabled").then((m) => ({
       default: m.NavigationItemDisabledExample,
@@ -598,6 +601,28 @@ export const examples = {
   ),
   textarea: lazy(() =>
     import("./textarea").then((m) => ({ default: m.TextareaExample })),
+  ),
+  "toast-change": lazy(() =>
+    import("./toast-change").then((m) => ({ default: m.ToastChangeExample })),
+  ),
+  "toast-description": lazy(() =>
+    import("./toast-description").then((m) => ({
+      default: m.ToastDescriptionExample,
+    })),
+  ),
+  "toast-replace": lazy(() =>
+    import("./toast-replace").then((m) => ({ default: m.ToastReplaceExample })),
+  ),
+  "toast-retry": lazy(() =>
+    import("./toast-retry").then((m) => ({ default: m.ToastRetryExample })),
+  ),
+  "toast-undo": lazy(() =>
+    import("./toast-undo").then((m) => ({ default: m.ToastUndoExample })),
+  ),
+  "toast-variants": lazy(() =>
+    import("./toast-variants").then((m) => ({
+      default: m.ToastVariantsExample,
+    })),
   ),
   toast: lazy(() =>
     import("./toast").then((m) => ({ default: m.ToastExample })),
