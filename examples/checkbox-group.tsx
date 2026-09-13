@@ -1,6 +1,6 @@
 "use client";
+import { Icon } from "../src/components/ui/icon";
 
-import { Check } from "lucide-react";
 import { Checkbox } from "../src/components/ui/checkbox";
 import { CheckboxGroup } from "../src/components/ui/checkbox-group";
 
@@ -19,7 +19,7 @@ export function CheckboxGroupExample() {
         >
           <Checkbox.Root value={value}>
             <Checkbox.Indicator>
-              <Check size={14} />
+              <Icon name="icon-filled-check" size={14} />
             </Checkbox.Indicator>
           </Checkbox.Root>
           {value}

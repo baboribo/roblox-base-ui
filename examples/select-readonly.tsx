@@ -5,13 +5,13 @@ const options = [
   { value: "friends", label: "친구만" },
   { value: "private", label: "비공개" },
 ];
-export function SelectLgExample() {
+export function SelectReadonlyExample() {
   return (
     <div style={{ width: "100%", maxWidth: 320 }}>
       <Select
         label="공개 범위"
         options={options}
-        size="lg"
+        readOnly
         defaultValue="public"
       />
     </div>

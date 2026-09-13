@@ -1,33 +1,30 @@
 "use client";
+import { useState } from "react";
 import { Select } from "../src/components/ui/select";
-const items = [
-  { value: "public", label: "전체 공개" },
-  { value: "friends", label: "친구만" },
-  { value: "private", label: "비공개" },
+const options = [
+  { value: "design", label: "디자인" },
+  { value: "development", label: "개발" },
+  { value: "operations", label: "운영" },
 ];
 export function SelectMultipleExample() {
+  const [value, setValue] = useState<string[]>(["design", "development"]);
   return (
     <div style={{ width: "100%", maxWidth: 320 }}>
-      <Select.Root items={items} multiple defaultValue={["public", "friends"]}>
-        <Select.Trigger size="lg" aria-label="공개 범위">
-          <Select.Value placeholder="공개 범위 선택" />
-          <Select.Icon>⌄</Select.Icon>
-        </Select.Trigger>
-        <Select.Portal>
-          <Select.Positioner>
-            <Select.Popup size="lg">
-              <Select.List>
-                {items.map((item) => (
-                  <Select.Item key={item.value} value={item.value}>
-                    <Select.ItemIndicator>✓</Select.ItemIndicator>
-                    <Select.ItemText>{item.label}</Select.ItemText>
-                  </Select.Item>
-                ))}
-              </Select.List>
-            </Select.Popup>
-          </Select.Positioner>
-        </Select.Portal>
-      </Select.Root>
+      <Select
+        multiple
+        label="분야"
+        options={options}
+        value={value}
+        onValueChange={setValue}
+        description="여러 분야를 선택할 수 있습니다."
+      />
+      <p role="status">
+        선택한 분야:{" "}
+        {options
+          .filter((option) => value.includes(option.value))
+          .map((option) => option.label)
+          .join(", ") || "없음"}
+      </p>
     </div>
   );
 }

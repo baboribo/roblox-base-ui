@@ -1,4 +1,5 @@
 "use client";
+import { Icon } from "../src/components/ui/icon";
 import { Menu } from "../src/components/ui/menu";
 
 export function MenuRadioExample() {
@@ -10,10 +11,16 @@ export function MenuRadioExample() {
           <Menu.Popup>
             <Menu.RadioGroup defaultValue="recent">
               <Menu.RadioItem value="recent">
-                최근 수정순<Menu.RadioItemIndicator>✓</Menu.RadioItemIndicator>
+                최근 수정순
+                <Menu.RadioItemIndicator>
+                  <Icon name="icon-filled-check" size={16} />
+                </Menu.RadioItemIndicator>
               </Menu.RadioItem>
               <Menu.RadioItem value="name">
-                이름순<Menu.RadioItemIndicator>✓</Menu.RadioItemIndicator>
+                이름순
+                <Menu.RadioItemIndicator>
+                  <Icon name="icon-filled-check" size={16} />
+                </Menu.RadioItemIndicator>
               </Menu.RadioItem>
             </Menu.RadioGroup>
           </Menu.Popup>

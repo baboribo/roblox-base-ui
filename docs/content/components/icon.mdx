@@ -10,7 +10,7 @@ group: "콘텐츠"
 ## 설치
 
 ```sh
-pnpm ui add icon --cwd ../my-app
+pnpm ui add icon icon-button --cwd ../my-app
 ```
 
 [공통 설치 설정](/docs/installation)을 먼저 적용합니다.
@@ -18,6 +18,22 @@ pnpm ui add icon --cwd ../my-app
 ## 사용법
 
 `name`으로 아이콘을 고릅니다. `size`는 픽셀 단위이며 기본값은 20입니다. 색상은 부모의 `color`를 따릅니다. 기본적으로 장식 요소이므로 버튼 이름은 버튼의 `aria-label`로 지정합니다.
+
+## 다른 아이콘팩 사용
+
+Roblox 목록에 없는 아이콘은 `render`에 SVG 아이콘 컴포넌트를 넣습니다. 현재 프로젝트에서는 Lucide를 보완용으로 사용합니다. 다른 React SVG 아이콘팩도 같은 자리에 넣을 수 있으며, 팩별 속성은 전달한 요소에서 설정합니다.
+
+```tsx
+import { Minus } from "lucide-react";
+
+<Icon name="icon-filled-check" size={20} />
+<Icon render={<Minus strokeWidth={2} />} size={20} />
+<IconButton icon={<Minus />} aria-label="수량 줄이기" />
+```
+
+`name`과 `render`는 하나만 지정합니다. `size`는 외곽 크기를 통일하고 색상은 `currentColor`를 따르는 SVG에 적용됩니다. 다른 프로젝트로 복사할 때는 사용하는 아이콘팩을 별도로 설치합니다. Lucide는 `pnpm add lucide-react`로 설치합니다.
+
+<ComponentExample name="icon-custom" title="다른 아이콘팩" />
 
 ## 속성
 

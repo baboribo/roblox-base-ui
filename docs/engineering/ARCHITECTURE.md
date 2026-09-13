@@ -27,7 +27,7 @@ iframe은 준비된 클라이언트에서 예제를 렌더합니다. ResizeObser
 
 ## 타입 문서와 상태 비교
 
-`auto-type-table`은 컴포넌트의 타입과 JSDoc에서 속성표를 생성합니다. `docs/lib/api-generator.ts`는 외부 React/HTML 속성을 걸러냅니다. 크기와 종류를 추가한 Select.Trigger, Select.Popup, Menu.Popup, Dialog.Popup 등의 자식에도 각각 연결되어 있습니다. 설명과 `@defaultValue`는 컴포넌트 타입 선언에서 수정합니다.
+`auto-type-table`은 컴포넌트의 타입과 JSDoc에서 속성표를 생성합니다. `docs/lib/api-generator.ts`는 외부 React/HTML 속성을 걸러냅니다. Select는 `SelectProps`와 `SelectOption`을 문서화하고, Menu.Popup과 Dialog.Popup처럼 자식 컴포넌트에 속성이 있는 경우에는 각 자식의 타입을 연결합니다. 설명과 `@defaultValue`는 컴포넌트 타입 선언에서 수정합니다.
 
 `stories/components/variant-matrix.tsx`는 Button/Input의 크기·종류·상태를 비교하는 공통 표입니다. Storybook의 Controls와 조합표가 선택지 배열을 공유합니다.
 

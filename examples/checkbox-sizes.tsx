@@ -1,4 +1,5 @@
 "use client";
+import { Icon } from "../src/components/ui/icon";
 import { Checkbox } from "../src/components/ui/checkbox";
 
 export function CheckboxSizesExample() {
@@ -14,25 +15,33 @@ export function CheckboxSizesExample() {
     >
       <label style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <Checkbox.Root size="xs" defaultChecked>
-          <Checkbox.Indicator>✓</Checkbox.Indicator>
+          <Checkbox.Indicator>
+            <Icon name="icon-filled-check" size={16} />
+          </Checkbox.Indicator>
         </Checkbox.Root>
         xs · 16px
       </label>
       <label style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <Checkbox.Root size="sm" defaultChecked>
-          <Checkbox.Indicator>✓</Checkbox.Indicator>
+          <Checkbox.Indicator>
+            <Icon name="icon-filled-check" size={16} />
+          </Checkbox.Indicator>
         </Checkbox.Root>
         sm · 20px
       </label>
       <label style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <Checkbox.Root size="md" defaultChecked>
-          <Checkbox.Indicator>✓</Checkbox.Indicator>
+          <Checkbox.Indicator>
+            <Icon name="icon-filled-check" size={16} />
+          </Checkbox.Indicator>
         </Checkbox.Root>
         md · 24px
       </label>
       <label style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <Checkbox.Root size="lg" defaultChecked>
-          <Checkbox.Indicator>✓</Checkbox.Indicator>
+          <Checkbox.Indicator>
+            <Icon name="icon-filled-check" size={16} />
+          </Checkbox.Indicator>
         </Checkbox.Root>
         lg · 24px
       </label>

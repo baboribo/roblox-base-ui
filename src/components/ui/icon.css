@@ -9,6 +9,16 @@
   mask: var(--rbx-icon-svg) center / contain no-repeat;
   vertical-align: middle;
 }
+/* 다른 SVG 아이콘팩도 같은 크기·색상·접근성 규칙으로 표시합니다. */
+.rbx-icon[data-custom] {
+  background: none;
+  mask: none;
+}
+.rbx-icon[data-custom] > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 .rbx-icon[data-icon="icon-filled-arrow-spin-clockwise"] {
   --rbx-icon-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32'%3E%3Cpath d='M16 1.5C20.6865 1.5 24.8501 3.7244 27.5 7.1709V5C27.5 4.17157 28.1716 3.5 29 3.5C29.8284 3.5 30.5 4.17157 30.5 5V11C30.5 11.8284 29.8284 12.5 29 12.5H23C22.1716 12.5 21.5 11.8284 21.5 11C21.5 10.1716 22.1716 9.5 23 9.5H25.4873C23.4137 6.47944 19.9372 4.5 16 4.5C9.64873 4.5 4.5 9.64873 4.5 16C4.5 22.3513 9.64873 27.5 16 27.5C19.0904 27.5 21.8933 26.2829 23.9609 24.2988C24.5585 23.7253 25.5084 23.7444 26.082 24.3418C26.6555 24.9394 26.6364 25.8893 26.0391 26.4629C23.4352 28.9617 19.8954 30.5 16 30.5C7.99187 30.5 1.5 24.0081 1.5 16C1.5 7.99187 7.99187 1.5 16 1.5Z' fill='black'/%3E%3C/svg%3E");
 }

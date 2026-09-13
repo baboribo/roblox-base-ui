@@ -1,7 +1,6 @@
 "use client";
+import { Icon } from "../src/components/ui/icon";
 import { useId } from "react";
-
-import { Check } from "lucide-react";
 
 import { Combobox } from "../src/components/ui/combobox";
 
@@ -30,7 +29,7 @@ export function ComboboxExample() {
               {(item: string) => (
                 <Combobox.Item key={item} value={item}>
                   <Combobox.ItemIndicator>
-                    <Check size={14} />
+                    <Icon name="icon-filled-check" size={14} />
                   </Combobox.ItemIndicator>
                   {item}
                 </Combobox.Item>

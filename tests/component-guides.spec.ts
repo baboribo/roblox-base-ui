@@ -19,12 +19,14 @@ test("every registered focused example renders without runtime errors", async ({
   expect(errors).toEqual([]);
 });
 
-test("Select and Menu sizes are independently operable and part APIs show their defaults", async ({
+test("Select and Menu sizes operate through their documented APIs", async ({
   page,
 }) => {
   for (const component of ["select", "menu"]) {
     await page.goto(`/docs/components/${component}`);
-    for (const size of ["xs", "sm", "md", "lg"]) {
+    for (const size of component === "select"
+      ? ["sm", "md", "lg"]
+      : ["xs", "sm", "md", "lg"]) {
       const card = page.locator(`[data-example="${component}-${size}"]`);
       await card.scrollIntoViewIfNeeded();
       const frame = card.locator("iframe").contentFrame();
@@ -32,30 +34,25 @@ test("Select and Menu sizes are independently operable and part APIs show their 
         component === "select" ? "combobox" : "button",
       );
       await trigger.click();
-      await expect(frame.locator(".rbx-popup")).toHaveAttribute(
-        "data-size",
-        size,
+      const popup = frame.locator(
+        component === "select" ? ".rbx-attached-popup" : ".rbx-popup",
       );
-      await expect(frame.locator(".rbx-popup")).toBeVisible();
+      await expect(popup).toHaveAttribute("data-size", size);
+      await expect(popup).toBeVisible();
       if (component === "select") {
         await expect(trigger).toHaveAttribute("data-size", size);
         await frame.getByRole("option", { name: "친구만" }).click();
         await expect(trigger).toContainText("친구만");
       } else await frame.getByRole("menuitem", { name: "복제" }).click();
-      await expect(frame.locator(".rbx-popup")).toBeHidden();
+      await expect(popup).toBeHidden();
       await card.getByRole("tab", { name: "코드", exact: true }).click();
       await expect(card.locator("pre")).toContainText(`size="${size}"`);
     }
-    const part =
-      component === "select" ? "SelectTriggerProps" : "MenuPopupProps";
+    const part = component === "select" ? "SelectProps" : "MenuPopupProps";
     const api = page.locator(`[id="type-table-${component}.tsx-${part}"]`);
     await api.getByRole("button", { name: /^size/ }).click();
     await expect(api).toContainText(component === "select" ? '"lg"' : '"md"');
   }
-  await page.goto("/preview/select-mixed-sizes");
-  await page.getByRole("combobox").click();
-  await expect(page.getByRole("combobox")).toHaveAttribute("data-size", "sm");
-  await expect(page.locator(".rbx-popup")).toHaveAttribute("data-size", "lg");
 });
 
 test("multiple selection, controlled settings and manual tabs are functional", async ({
@@ -107,6 +104,8 @@ test("compound docs fit mobile and expose accessible code, APIs and overlays", a
     const card = page.locator(".docs-example").first();
     await card.getByRole("tab", { name: "코드", exact: true }).click();
     await expect(card.locator("pre")).toBeVisible();
+    // 탭의 페이드가 끝난 실제 표시 색으로 대비를 검사합니다.
+    await expect(card.getByRole("tabpanel", { name: "코드", exact: true })).toHaveCSS("opacity", "1");
     await expect
       .poll(() =>
         page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
@@ -143,16 +142,16 @@ test("Select multiple keeps the popup usable while adding and removing values", 
   await page.goto("/preview/select-multiple");
   const trigger = page.getByRole("combobox");
   await trigger.click();
-  await expect(page.getByRole("option", { name: "친구만" })).toHaveAttribute(
+  await expect(page.getByRole("option", { name: "개발" })).toHaveAttribute(
     "aria-selected",
     "true",
   );
-  await page.getByRole("option", { name: "친구만" }).click();
-  await expect(page.getByRole("option", { name: "친구만" })).toHaveAttribute(
+  await page.getByRole("option", { name: "개발" }).click();
+  await expect(page.getByRole("option", { name: "개발" })).toHaveAttribute(
     "aria-selected",
     "false",
   );
-  await page.getByRole("option", { name: "비공개" }).click();
+  await page.getByRole("option", { name: "운영" }).click();
   await page.keyboard.press("Escape");
-  await expect(trigger).toContainText("비공개");
+  await expect(trigger).toContainText("운영");
 });

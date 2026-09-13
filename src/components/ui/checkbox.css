@@ -20,6 +20,18 @@
 }
 .rbx-checkbox-indicator {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.rbx-checkbox-indicator > .rbx-icon {
+  width: 100%;
+  height: 100%;
+}
+/* 원본 체크 glyph의 넓은 내부 여백을 보정합니다. 바깥 박스 크기는 유지합니다. */
+.rbx-checkbox-indicator > [data-icon="icon-filled-check"] {
+  mask-size: 150%;
 }
 
 .rbx-checkbox[data-size="xs"] {

@@ -1,4 +1,5 @@
 "use client";
+import { Icon } from "../src/components/ui/icon";
 import { useState } from "react";
 import { CheckboxGroup } from "../src/components/ui/checkbox-group";
 import { Checkbox } from "../src/components/ui/checkbox";
@@ -18,7 +19,9 @@ export function CheckboxGroupControlledExample() {
             style={{ display: "flex", alignItems: "center", gap: 12 }}
           >
             <Checkbox.Root value={item}>
-              <Checkbox.Indicator>✓</Checkbox.Indicator>
+              <Checkbox.Indicator>
+                <Icon name="icon-filled-check" size={16} />
+              </Checkbox.Indicator>
             </Checkbox.Root>
             {item}
           </label>

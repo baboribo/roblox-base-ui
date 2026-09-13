@@ -1,41 +1,397 @@
-/* Browser preferences: transparent input shell, 1px contrast-alpha stroke. */
-.rbx-select-trigger {
-  justify-content: space-between;
-  width: 100%;
-  height: 48px;
-  min-height: 48px;
-  padding: 1px 16px;
-  border: 1px solid var(--rbx-color-stroke-contrast-alpha);
-  background: transparent;
-  color: var(--rbx-color-content-default);
+.rbx-attached-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  min-width: 0;
+}
+.rbx-attached-label {
+  font: var(--rbx-typography-body-medium-font);
+  color: var(--rbx-color-content-emphasis);
+}
+.rbx-attached-trigger,
+.rbx-attached-header {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  color: var(--rbx-color-content-emphasis);
   font: var(--rbx-typography-body-large-font);
 }
-.rbx-select-trigger[data-size="md"] {
-  height: 40px;
+.rbx-attached-trigger {
+  min-width: 0;
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--rbx-color-stroke-contrast-alpha);
+  border-radius: 12px;
+  background: var(--rbx-color-surface-100);
+  cursor: pointer;
+  text-align: start;
+}
+.rbx-attached-trigger[data-size="md"] {
   min-height: 40px;
   padding-inline: 12px;
   font: var(--rbx-typography-body-medium-font);
+  border-radius: 10px;
 }
-.rbx-select-trigger[data-size="sm"] {
-  height: 32px;
+.rbx-attached-trigger[data-size="sm"] {
   min-height: 32px;
   padding-inline: 12px;
   font: var(--rbx-typography-body-small-font);
+  border-radius: 8px;
 }
-.rbx-select-trigger[data-size="xs"] {
-  height: 24px;
-  min-height: 24px;
-  padding-inline: 8px;
-  border-radius: 4px;
+.rbx-attached-trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.rbx-attached-trigger[aria-invalid="true"] {
+  border-color: var(--rbx-color-system-alert);
+}
+.rbx-attached-trigger:focus-visible {
+  outline: 2px solid var(--rbx-focus-ring);
+  outline-offset: 2px;
+}
+.rbx-attached-trigger > span:first-child {
+  flex: 1;
+  min-width: 0;
+}
+.rbx-attached-trigger > .rbx-icon,
+.rbx-attached-header > .rbx-icon {
+  flex-shrink: 0;
+}
+.rbx-attached-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+.rbx-attached-names {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.rbx-attached-name-entry {
+  display: flex;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.rbx-attached-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rbx-attached-count,
+.rbx-attached-name-entry > span:last-child:not(.rbx-attached-name) {
+  flex-shrink: 0;
+}
+.rbx-attached-trigger[data-size="sm"] .rbx-attached-count {
+  height: 20px;
+  padding: 2px 6px;
+}
+.rbx-attached-description,
+.rbx-attached-error {
+  margin: 0;
   font: var(--rbx-typography-body-small-font);
 }
-.rbx-select-trigger:focus-visible {
-  outline: none;
-  border-color: var(--rbx-color-system-emphasis);
-  box-shadow: inset 0 0 0 1px var(--rbx-color-system-emphasis);
+.rbx-attached-description {
+  color: var(--rbx-color-content-default);
 }
-.rbx-scroll-arrow {
-  padding: 4px;
-  text-align: center;
+.rbx-attached-error {
+  color: var(--rbx-color-system-alert);
+}
+.rbx-attached-positioner {
+  z-index: var(--rbx-layer-popup);
+  pointer-events: none;
+  outline: none;
+  /* 배치 계산에는 펼쳐진 높이를 사용합니다. 모션 도중 방향이 뒤집히지 않습니다. */
+  --attached-list-height: min(
+    240px,
+    var(--attached-content, 240px),
+    max(
+      0px,
+      calc(var(--available-height, 100vh) - var(--attached-header) - 1px)
+    )
+  );
+  height: calc(var(--attached-header) + var(--attached-list-height) + 1px);
+  --attached-enter: calc(
+    var(--rbx-motion-duration-panel) * var(--attached-speed, 1)
+  );
+  --attached-exit: calc(
+    var(--rbx-motion-duration-panel-exit) * var(--attached-speed, 1)
+  );
+  --attached-follow: calc(var(--rbx-time-100) * var(--attached-speed, 1));
+}
+.rbx-attached-positioner[data-anchor-hidden] {
+  visibility: hidden;
+}
+/* 포털 표면을 버튼 위치까지 겹쳐 그립니다. 헤더 클릭은 원래 Trigger로 전달됩니다. */
+.rbx-attached-popup {
+  box-sizing: border-box;
+  width: var(--anchor-width);
+  display: flex;
+  flex-direction: column;
+  height: calc(var(--attached-header) + var(--attached-list-height) + 1px);
+  border: 1px solid var(--rbx-color-stroke-contrast-alpha);
+  border-radius: 12px;
   background: var(--rbx-color-surface-100);
+  color: var(--rbx-color-content-emphasis);
+  box-shadow: var(--rbx-shadow-transient-low);
+  /* hidden은 포커스 이동으로 스크롤될 수 있습니다. 표면은 자르기만 합니다. */
+  overflow: clip;
+  outline: none;
+  pointer-events: none;
+  transition:
+    height var(--attached-enter) var(--rbx-motion-ease-enter),
+    box-shadow var(--attached-enter) var(--rbx-motion-ease-enter);
+}
+.rbx-attached-popup[data-size="md"] {
+  border-radius: 10px;
+}
+.rbx-attached-popup[data-size="sm"] {
+  border-radius: 8px;
+}
+.rbx-attached-header {
+  min-width: 0;
+  flex: 0 0 calc(var(--attached-header) - 2px);
+  height: calc(var(--attached-header) - 2px);
+}
+.rbx-attached-header > .rbx-icon {
+  rotate: 180deg;
+}
+.rbx-attached-popup[data-size="md"] .rbx-attached-header {
+  padding-inline: 12px;
+  font: var(--rbx-typography-body-medium-font);
+}
+.rbx-attached-popup[data-size="sm"] .rbx-attached-header {
+  padding-inline: 12px;
+  font: var(--rbx-typography-body-small-font);
+}
+.rbx-attached-popup[data-size="lg"] .rbx-attached-header {
+  padding-inline: 16px;
+}
+.rbx-attached-popup[data-size="sm"] .rbx-attached-count {
+  height: 20px;
+  padding: 2px 6px;
+}
+.rbx-attached-reveal {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: clip;
+}
+.rbx-attached-clip {
+  height: 100%;
+  min-height: 0;
+  overflow: clip;
+}
+.rbx-attached-list-shell {
+  position: relative;
+  padding-top: 1px;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    transform var(--attached-enter) var(--rbx-motion-ease-enter)
+      var(--attached-follow),
+    opacity var(--attached-enter) var(--rbx-motion-ease-enter)
+      var(--attached-follow);
+}
+.rbx-attached-list {
+  box-sizing: border-box;
+  max-height: var(--attached-list-height);
+  overflow: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  scrollbar-width: none;
+  padding: 8px;
+  scroll-padding-block: 32px;
+  outline: none;
+  pointer-events: auto;
+}
+.rbx-attached-list::-webkit-scrollbar {
+  display: none;
+}
+.rbx-attached-option {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 8px;
+  min-height: 44px;
+  border-radius: 6px;
+  font: var(--rbx-typography-body-medium-font);
+  color: var(--rbx-color-content-emphasis);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+.rbx-attached-option[hidden] {
+  display: none;
+}
+.rbx-attached-popup[data-size="md"] .rbx-attached-option {
+  min-height: 36px;
+  padding-block: 8px;
+}
+.rbx-attached-popup[data-size="sm"] .rbx-attached-option {
+  min-height: 32px;
+  padding-block: 6px;
+  font: var(--rbx-typography-body-small-font);
+}
+.rbx-attached-option-text {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+.rbx-attached-option:hover:not([data-disabled]) {
+  background: var(--rbx-color-state-hover);
+}
+.rbx-attached-option[data-disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.rbx-attached-popup:not([data-pointer]) .rbx-attached-option:focus-visible {
+  outline: 2px solid var(--rbx-focus-ring);
+  outline-offset: -2px;
+}
+.rbx-attached-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.rbx-attached-edge {
+  position: absolute;
+  z-index: 1;
+  inset-inline: 0;
+  height: calc(28px * var(--attached-strength));
+  opacity: var(--attached-strength);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  padding: 0;
+  color: var(--rbx-color-content-emphasis);
+  cursor: pointer;
+  pointer-events: auto;
+  transition:
+    height var(--attached-follow) var(--rbx-motion-ease-enter),
+    opacity var(--attached-follow) var(--rbx-motion-ease-enter);
+}
+.rbx-attached-edge:disabled {
+  pointer-events: none;
+}
+.rbx-attached-edge > .rbx-icon {
+  flex-shrink: 0;
+}
+.rbx-attached-edge[data-edge="up"] {
+  --attached-strength: var(--attached-up, 0);
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--rbx-color-surface-100) 45%,
+    transparent
+  );
+}
+.rbx-attached-edge[data-edge="down"] {
+  --attached-strength: var(--attached-down, 0);
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    var(--rbx-color-surface-100) 45%,
+    transparent
+  );
+}
+/* 헤더와 구분선은 이동하지 않습니다. 배경 높이와 목록의 모션만 분리합니다. */
+.rbx-attached-reveal::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 auto;
+  height: 1px;
+  background: var(--rbx-color-stroke-default);
+  pointer-events: none;
+}
+.rbx-attached-popup[data-side="top"] {
+  position: absolute;
+  bottom: 0;
+  flex-direction: column-reverse;
+}
+.rbx-attached-popup[data-side="top"] .rbx-attached-header > .rbx-icon {
+  rotate: 0deg;
+}
+.rbx-attached-popup[data-side="top"] .rbx-attached-reveal::before {
+  inset: auto 0 0;
+}
+.rbx-attached-popup[data-side="top"] .rbx-attached-list-shell {
+  padding-top: 0;
+  padding-bottom: 1px;
+}
+.rbx-attached-popup:is([data-starting-style], [data-ending-style]) {
+  height: var(--attached-header);
+  box-shadow: none;
+}
+.rbx-attached-popup:is([data-starting-style], [data-ending-style])
+  .rbx-attached-list-shell {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.rbx-attached-popup[data-side="top"]:is(
+    [data-starting-style],
+    [data-ending-style]
+  )
+  .rbx-attached-list-shell {
+  transform: translateY(-12px);
+}
+.rbx-attached-popup[data-ending-style],
+.rbx-attached-popup[data-ending-style] .rbx-attached-list-shell {
+  transition-duration: var(--attached-exit);
+  transition-delay: 0ms;
+  transition-timing-function: var(--rbx-motion-ease-exit);
+  pointer-events: none;
+}
+.rbx-attached-popup[data-ending-style] * {
+  pointer-events: none;
+}
+@media (pointer: coarse) {
+  .rbx-attached-popup[data-size] .rbx-attached-option {
+    min-height: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rbx-attached-popup,
+  .rbx-attached-popup * {
+    transition: none !important;
+  }
+}
+
+/* 단일 값은 전체 이름을 줄바꿈하고, 다중 요약은 높이를 유지합니다. */
+.rbx-attached-trigger:not([data-multiple]) {
+  padding-block: 8px;
+}
+.rbx-attached-trigger:not([data-multiple])[data-size="sm"] {
+  padding-block: 4px;
+}
+.rbx-attached-trigger:not([data-multiple])[data-size="md"] {
+  padding-block: 6px;
+}
+:is(.rbx-attached-trigger, .rbx-attached-popup):not([data-multiple])
+  .rbx-attached-name {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.rbx-attached-trigger[data-multiple] {
+  height: 48px;
+}
+.rbx-attached-trigger[data-multiple][data-size="md"] {
+  height: 40px;
+}
+.rbx-attached-trigger[data-multiple][data-size="sm"] {
+  height: 32px;
 }

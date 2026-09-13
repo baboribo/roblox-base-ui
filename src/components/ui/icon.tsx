@@ -1,4 +1,4 @@
-import type { ComponentProps, CSSProperties } from "react";
+import type { ComponentProps, CSSProperties, ReactElement } from "react";
 import { cx } from "../../lib/cx";
 import "./icon.css";
 /** ReactChat / Navigation 배포 CSS에서 확인한 glyph. 그림은 CSS mask, 색은 currentColor입니다. */
@@ -42,11 +42,13 @@ export type IconName =
   | "icon-filled-verified-check"
   | "icon-regular-x";
 export type IconProps = Omit<ComponentProps<"span">, "children"> & {
-  name: IconName;
   size?: number;
-};
+} & (
+    { name: IconName; render?: never } | { name?: never; render: ReactElement }
+  );
 export function Icon({
   name,
+  render,
   size = 20,
   style,
   className,
@@ -57,8 +59,11 @@ export function Icon({
       aria-hidden="true"
       {...props}
       data-icon={name}
+      data-custom={render ? "" : undefined}
       className={cx("rbx-icon", className)}
       style={{ "--rbx-icon-size": `${size}px`, ...style } as CSSProperties}
-    />
+    >
+      {render}
+    </span>
   );
 }

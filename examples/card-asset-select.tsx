@@ -1,4 +1,5 @@
 "use client";
+import { Icon } from "../src/components/ui/icon";
 import { useState } from "react";
 import { Button } from "../src/components/ui/button";
 import {
@@ -43,7 +44,7 @@ export function CardAssetSelectExample() {
                 font: "var(--rbx-typography-body-small-font)",
               }}
             >
-              ✓ 선택됨
+              <Icon name="icon-filled-check" size={16} /> 선택됨
             </span>
           )}
         </CardMedia>

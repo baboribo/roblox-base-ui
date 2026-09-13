@@ -305,6 +305,9 @@ export const examples = {
   "icon-button": lazy(() =>
     import("./icon-button").then((m) => ({ default: m.IconButtonExample })),
   ),
+  "icon-custom": lazy(() =>
+    import("./icon-custom").then((m) => ({ default: m.IconCustomExample })),
+  ),
   icon: lazy(() => import("./icon").then((m) => ({ default: m.IconExample }))),
   "input-contrast": lazy(() =>
     import("./input-contrast").then((m) => ({
@@ -482,15 +485,36 @@ export const examples = {
       default: m.SelectDisabledExample,
     })),
   ),
+  "select-error": lazy(() =>
+    import("./select-error").then((m) => ({ default: m.SelectErrorExample })),
+  ),
+  "select-form": lazy(() =>
+    import("./select-form").then((m) => ({ default: m.SelectFormExample })),
+  ),
   "select-lg": lazy(() =>
     import("./select-lg").then((m) => ({ default: m.SelectLgExample })),
+  ),
+  "select-long-list": lazy(() =>
+    import("./select-long-list").then((m) => ({
+      default: m.SelectLongListExample,
+    })),
   ),
   "select-md": lazy(() =>
     import("./select-md").then((m) => ({ default: m.SelectMdExample })),
   ),
-  "select-mixed-sizes": lazy(() =>
-    import("./select-mixed-sizes").then((m) => ({
-      default: m.SelectMixedSizesExample,
+  "select-motion-reference": lazy(() =>
+    import("./select-motion-reference").then((m) => ({
+      default: m.SelectMotionReferenceExample,
+    })),
+  ),
+  "select-motion-study": lazy(() =>
+    import("./select-motion-study").then((m) => ({
+      default: m.SelectMotionStudyExample,
+    })),
+  ),
+  "select-multiple-long-labels": lazy(() =>
+    import("./select-multiple-long-labels").then((m) => ({
+      default: m.SelectMultipleLongLabelsExample,
     })),
   ),
   "select-multiple": lazy(() =>
@@ -503,11 +527,16 @@ export const examples = {
       default: m.SelectPlaceholderExample,
     })),
   ),
+  "select-readonly": lazy(() =>
+    import("./select-readonly").then((m) => ({
+      default: m.SelectReadonlyExample,
+    })),
+  ),
+  "select-sizes": lazy(() =>
+    import("./select-sizes").then((m) => ({ default: m.SelectSizesExample })),
+  ),
   "select-sm": lazy(() =>
     import("./select-sm").then((m) => ({ default: m.SelectSmExample })),
-  ),
-  "select-xs": lazy(() =>
-    import("./select-xs").then((m) => ({ default: m.SelectXsExample })),
   ),
   select: lazy(() =>
     import("./select").then((m) => ({ default: m.SelectExample })),

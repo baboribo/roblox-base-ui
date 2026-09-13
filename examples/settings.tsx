@@ -41,32 +41,15 @@ export function SettingsExample() {
                 <Icon name="icon-filled-check" size={16} />
               </span>
             </div>
-            <label id="appearance-label" className="default-field-label">
-              표시 모드
-            </label>
-            <Select.Root
-              items={{ System: "System", Light: "Light", Dark: "Dark" }}
+            <Select
+              label="표시 모드"
+              options={["System", "Light", "Dark"].map((value) => ({
+                value,
+                label: value,
+              }))}
               value={preference}
               onValueChange={(value) => value && setPreference(value)}
-            >
-              <Select.Trigger aria-labelledby="appearance-label">
-                <Select.Value />
-                <Select.Icon>
-                  <Icon name="icon-regular-chevron-large-down" size={20} />
-                </Select.Icon>
-              </Select.Trigger>
-              <Select.Portal>
-                <Select.Positioner>
-                  <Select.Popup>
-                    {["System", "Light", "Dark"].map((value) => (
-                      <Select.Item key={value} value={value}>
-                        <Select.ItemText>{value}</Select.ItemText>
-                      </Select.Item>
-                    ))}
-                  </Select.Popup>
-                </Select.Positioner>
-              </Select.Portal>
-            </Select.Root>
+            />
             <p className="default-help">선택값은 예제 안에서만 유지됩니다.</p>
           </section>
           <section className="default-section">

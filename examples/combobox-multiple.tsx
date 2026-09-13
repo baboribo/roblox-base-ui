@@ -1,4 +1,5 @@
 "use client";
+import { Icon } from "../src/components/ui/icon";
 import { useState, useId } from "react";
 import { Combobox } from "../src/components/ui/combobox";
 const items = ["Adventure", "Racing", "Sports"];
@@ -18,7 +19,7 @@ export function ComboboxMultipleExample() {
           <Combobox.Chip key={item}>
             {item}
             <Combobox.ChipRemove aria-label={`${item} 삭제`}>
-              ×
+              <Icon name="icon-regular-x" size={16} />
             </Combobox.ChipRemove>
           </Combobox.Chip>
         ))}
@@ -31,7 +32,9 @@ export function ComboboxMultipleExample() {
             <Combobox.List>
               {(item: string) => (
                 <Combobox.Item key={item} value={item}>
-                  <Combobox.ItemIndicator>✓</Combobox.ItemIndicator>
+                  <Combobox.ItemIndicator>
+                    <Icon name="icon-filled-check" size={16} />
+                  </Combobox.ItemIndicator>
                   {item}
                 </Combobox.Item>
               )}

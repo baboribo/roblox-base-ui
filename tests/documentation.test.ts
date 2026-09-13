@@ -19,7 +19,7 @@ test("all documented cases resolve to real registered source files", () => {
     }
   }
   for (const name of [
-    "select-xs",
+    "select-sm",
     "select-lg",
     "menu-xs",
     "menu-lg",

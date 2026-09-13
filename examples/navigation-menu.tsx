@@ -1,6 +1,6 @@
 "use client";
+import { Icon } from "../src/components/ui/icon";
 
-import { ChevronDown } from "lucide-react";
 import { NavigationMenu } from "../src/components/ui/navigation-menu";
 
 export function NavigationMenuExample() {
@@ -9,7 +9,7 @@ export function NavigationMenuExample() {
       <NavigationMenu.List>
         <NavigationMenu.Item>
           <NavigationMenu.Trigger>
-            가이드 <ChevronDown size={16} />
+            가이드 <Icon name="icon-regular-chevron-large-down" size={16} />
           </NavigationMenu.Trigger>
           <NavigationMenu.Content>
             <NavigationMenu.Link href="/docs/installation" target="_top">

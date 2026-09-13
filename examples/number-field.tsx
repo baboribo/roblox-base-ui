@@ -1,7 +1,8 @@
 "use client";
+import { Icon } from "../src/components/ui/icon";
 import { useId } from "react";
 
-import { Minus, Plus } from "lucide-react";
+import { Minus } from "lucide-react";
 
 import { NumberField } from "../src/components/ui/number-field";
 
@@ -14,11 +15,11 @@ export function NumberFieldExample() {
       </NumberField.ScrubArea>
       <NumberField.Group>
         <NumberField.Decrement aria-label="인원 줄이기">
-          <Minus size={16} />
+          <Icon render={<Minus />} size={16} />
         </NumberField.Decrement>
         <NumberField.Input />
         <NumberField.Increment aria-label="인원 늘리기">
-          <Plus size={16} />
+          <Icon name="icon-regular-plus-large" size={16} />
         </NumberField.Increment>
       </NumberField.Group>
     </NumberField.Root>
