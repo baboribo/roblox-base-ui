@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <DocsLayout
         slots={{ header: DocsHeader }}
         tree={source.getPageTree()}
-        nav={{ title: "Roblox Base UI", url: "/docs" }}
+        nav={{ title: "PLY UI", url: "/docs" }}
         sidebar={{ defaultOpenLevel: 1 }}
         links={[
           { text: "컴포넌트", url: "/docs/components" },

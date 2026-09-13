@@ -1,4 +1,4 @@
-# Roblox Base UI
+# PLY UI
 
 Base UI 기반 React 컴포넌트 55종과 디자인 토큰입니다. 컴포넌트 파일을 프로젝트에 복사해 사용합니다. 문서는 Fumadocs, 상태 비교는 Storybook으로 제공합니다.
 
@@ -29,7 +29,20 @@ Storybook 개발 서버: http://localhost:6006
 
 개발 서버의 예제에서 문서로 이동하려면 5173 문서 서버도 실행 중이어야 합니다.
 
-## 프로젝트에 설치
+## npm 패키지
+
+```sh
+pnpm add ply-ui
+```
+
+```tsx
+import "ply-ui/styles.css";
+import { Button } from "ply-ui/button";
+```
+
+React 19를 사용합니다. `html`에 `data-theme="light"` 또는 `data-theme="dark"`를 지정합니다. 패키지의 스타일·타입·개별 컴포넌트 경로를 제공합니다. 자세한 사용법은 [패키지 README](packaging/ui/README.md), 배포 작업은 [배포 안내](docs/engineering/PACKAGE-RELEASE.md)를 참고하세요.
+
+## 소스를 프로젝트에 복사
 
 이 저장소에서 실행합니다. 대상 프로젝트는 미리 만들어 둡니다.
 

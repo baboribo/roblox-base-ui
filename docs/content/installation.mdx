@@ -1,8 +1,41 @@
 ---
 title: 설치
-description: 컴포넌트 파일을 복사하고 공통 스타일을 연결합니다.
+description: npm 패키지 또는 소스 복사로 PLY를 설치합니다.
 keywords: [설치, pnpm, 시작, 추가, React, Next.js]
 ---
+
+## npm 패키지
+
+React 19 프로젝트에서 설치합니다. Base UI는 함께 설치됩니다.
+
+```sh
+pnpm add ply-ui
+```
+
+Vite의 `src/main.tsx` 또는 Next.js의 `app/layout.tsx`에서 공통 스타일을 한 번 불러옵니다.
+
+```tsx
+import "ply-ui/styles.css";
+```
+
+컴포넌트는 이름으로 가져옵니다. 필요한 컴포넌트만 개별 경로로 가져올 수도 있습니다.
+
+```tsx
+import { Button } from "ply-ui/button";
+import { Select } from "ply-ui/select";
+```
+
+전체 진입점인 `import { Button, Select } from "ply-ui"`도 지원합니다. 타입은 패키지에 포함되어 있습니다. 기기의 테마를 자동으로 읽는 기능은 포함하지 않으며 `html`에 `data-theme="light"` 또는 `data-theme="dark"`를 지정합니다.
+
+Next.js에서 상태나 이벤트를 다루는 화면에는 `"use client"`를 지정합니다. 패키지 내부 컴포넌트의 클라이언트 지시문은 보존됩니다.
+
+문서 예제의 `@/components/ui/select` 같은 복사본 경로는 패키지를 사용할 때 `ply-ui/select`로 바꿉니다. 나머지 컴포넌트 사용법은 같습니다.
+
+```sh
+pnpm update ply-ui
+```
+
+기본 설치는 외부 폰트를 요청하지 않습니다. 기존 Builder Sans 연결이 필요할 때만 `import "ply-ui/fonts.css"`를 추가합니다. 사용자 토큰은 패키지 스타일 다음에 불러오는 CSS에서 덮어씁니다.
 
 ## 파일 복사
 

@@ -51,7 +51,10 @@
     "storybook": "pnpm examples:build && storybook dev -p 6006 --no-open",
     "storybook:build": "pnpm examples:build && node scripts/build-storybook.mjs",
     "test:storybook": "playwright test --config playwright.storybook.config.ts",
-    "examples:build": "node scripts/build-examples.mjs"
+    "examples:build": "node scripts/build-examples.mjs",
+    "package:build": "node scripts/build-package.mjs",
+    "package:pack": "pnpm package:build && pnpm --dir dist/npm pack --pack-destination ..",
+    "package:test": "pnpm package:pack && node scripts/test-package.mjs"
   },
   "packageManager": "pnpm@11.9.0"
 }
