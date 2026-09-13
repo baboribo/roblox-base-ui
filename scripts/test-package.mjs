@@ -221,6 +221,20 @@ async function check(url) {
   ).toHaveAttribute("aria-selected", "true");
   await page.keyboard.press("Escape");
   await expect(select).toHaveCSS("height", "48px");
+  // 문서 밖에 설치한 패키지/복사한 소스도 영역별 테마를 Portal까지 유지합니다.
+  await select.evaluate((el) => {
+    el.closest(".rbx-attached-field").setAttribute("data-theme", "dark");
+  });
+  await select.click();
+  const surface = await select.evaluate((el) => {
+    const css = getComputedStyle(el);
+    return { background: css.backgroundColor, color: css.color };
+  });
+  const popup = page.locator(".rbx-attached-popup:not([data-ending-style])");
+  await expect(popup).toHaveCSS("background-color", surface.background);
+  await expect(popup).toHaveCSS("color", surface.color);
+  await expect(popup).toHaveCSS("box-shadow", /rgba\(4, 4, 8, 0\.25\)/);
+  await page.keyboard.press("Escape");
   assert.deepEqual(errors, []);
   assert.deepEqual(
     fonts,

@@ -6,6 +6,14 @@
   --rbx-font-body:
     "Builder Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --rbx-font-heading: var(--rbx-font-body);
+  --rbx-layer-popup: 120;
+  --rbx-layer-modal: 100;
+  --rbx-layer-toast: 200;
+}
+/* 파생 토큰은 테마 영역마다 다시 계산해야 중첩 테마에서도 색이 맞습니다. */
+:root,
+[data-theme="light"],
+[data-theme="dark"] {
   --rbx-focus-ring: var(--rbx-color-selection-start);
   --rbx-shadow-transient-low:
     0 2px 4px -0.5px var(--rbx-alpha-color-shadow-subtle),
@@ -14,9 +22,6 @@
     var(--rbx-shadow-transient-low),
     0 16px 32px -1px var(--rbx-alpha-color-shadow-subtle),
     0 48px 56px -1.5px var(--rbx-alpha-color-shadow-subtle);
-  --rbx-layer-popup: 120;
-  --rbx-layer-modal: 100;
-  --rbx-layer-toast: 200;
 }
 [data-theme="dark"] {
   color-scheme: dark;

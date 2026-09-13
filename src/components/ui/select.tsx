@@ -12,7 +12,33 @@ import { Select as Primitive } from "@base-ui/react/select";
 import { Badge } from "./badge";
 import { Icon } from "./icon";
 import { cx } from "../../lib/cx";
+import { usePortalStyle } from "../../lib/use-portal-style";
 import "./select.css";
+
+// Select와 요약 Badge가 사용하는 값만 복사합니다. 전체 토큰/아이콘은 복사하지 않습니다.
+const portalTokens = [
+  "--rbx-color-surface-200",
+  "--rbx-color-content-emphasis",
+  "--rbx-color-stroke-contrast-alpha",
+  "--rbx-color-stroke-default",
+  "--rbx-color-system-alert",
+  "--rbx-color-state-hover",
+  "--rbx-color-shift-200",
+  "--rbx-focus-ring",
+  "--rbx-shadow-transient-low",
+  "--rbx-alpha-color-shadow-subtle",
+  "--rbx-font-body",
+  "--rbx-typography-body-large-font",
+  "--rbx-typography-body-medium-font",
+  "--rbx-typography-body-small-font",
+  "--rbx-typography-label-small-font",
+  "--rbx-motion-duration-panel",
+  "--rbx-motion-duration-panel-exit",
+  "--rbx-motion-ease-enter",
+  "--rbx-motion-ease-exit",
+  "--rbx-time-100",
+  "--rbx-layer-popup",
+] as const;
 
 export type SelectOption = {
   value: string;
@@ -76,6 +102,7 @@ export function Select<Multiple extends boolean = false>({
   const triggerRef = useRef<HTMLButtonElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [popup, setPopup] = useState<HTMLDivElement | null>(null);
+  const portalStyle = usePortalStyle(triggerRef, open || !!popup, portalTokens);
   const [headerHeight, setHeaderHeight] = useState(
     { sm: 32, md: 40, lg: 48 }[size],
   );
@@ -297,12 +324,14 @@ export function Select<Multiple extends boolean = false>({
             }}
             positionMethod="fixed"
             className="rbx-attached-positioner"
-            style={motion}
+            data-theme={portalStyle.theme}
+            style={{ ...portalStyle.style, ...motion }}
           >
             <Primitive.Popup
               ref={setPopup}
               finalFocus={triggerRef}
               className="rbx-attached-popup"
+              data-invalid={invalid || !!error ? "" : undefined}
               data-size={size}
               data-multiple={multiple ? "" : undefined}
               data-pointer={pointer ? "" : undefined}

@@ -24,7 +24,7 @@
   min-height: 48px;
   border: 1px solid var(--rbx-color-stroke-contrast-alpha);
   border-radius: 12px;
-  background: var(--rbx-color-surface-100);
+  background: var(--rbx-color-surface-200);
   cursor: pointer;
   text-align: start;
 }
@@ -44,7 +44,8 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
-.rbx-attached-trigger[aria-invalid="true"] {
+.rbx-attached-trigger[aria-invalid="true"],
+.rbx-attached-popup[data-invalid] {
   border-color: var(--rbx-color-system-alert);
 }
 .rbx-attached-trigger:focus-visible {
@@ -137,9 +138,12 @@
   height: calc(var(--attached-header) + var(--attached-list-height) + 1px);
   border: 1px solid var(--rbx-color-stroke-contrast-alpha);
   border-radius: 12px;
-  background: var(--rbx-color-surface-100);
+  background: var(--rbx-color-surface-200);
   color: var(--rbx-color-content-emphasis);
-  box-shadow: var(--rbx-shadow-transient-low);
+  /* 전체 표면에는 얕은 그림자, 목록 아래에는 한 겹 더해 배경과 분리합니다. */
+  box-shadow:
+    var(--rbx-shadow-transient-low),
+    0 4px 8px var(--rbx-alpha-color-shadow-subtle);
   /* hidden은 포커스 이동으로 스크롤될 수 있습니다. 표면은 자르기만 합니다. */
   overflow: clip;
   outline: none;
@@ -294,7 +298,7 @@
   top: 0;
   background: linear-gradient(
     to bottom,
-    var(--rbx-color-surface-100) 45%,
+    var(--rbx-color-surface-200) 45%,
     transparent
   );
 }
@@ -303,7 +307,7 @@
   bottom: 0;
   background: linear-gradient(
     to top,
-    var(--rbx-color-surface-100) 45%,
+    var(--rbx-color-surface-200) 45%,
     transparent
   );
 }
