@@ -53,7 +53,9 @@ test("documented install commands include every component imported by their exam
       path.join(kitRoot, `docs/content/components/${id}.mdx`),
       "utf8",
     );
-    const command = doc.match(/pnpm ui add (.+) --cwd/)[1].split(" ");
+    const install = doc.match(/^pnpm dlx ply-ui add ([^\n]+)/m);
+    assert.ok(install, `${id}: missing public CLI install command`);
+    const command = install[1].trim().split(/\s+/);
     for (const [, name] of doc.matchAll(
       /<ComponentExample\s+name="([^"]+)"/g,
     )) {

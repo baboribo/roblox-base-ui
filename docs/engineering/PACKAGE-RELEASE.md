@@ -6,8 +6,10 @@
 - `src/index.ts`: 전체 패키지에서 공개하는 컴포넌트와 타입입니다.
 - `packaging/ui/package.json`: npm 이름, 버전, 의존성, 라이선스입니다. 루트 package.json은 문서 개발용이며 계속 private입니다.
 - `scripts/build-package.mjs`: JavaScript·타입 선언·CSS를 `dist/npm`으로 만듭니다. 각 파일의 `use client`를 유지하며 상대 import에 `.js`를 붙입니다.
-- `scripts/test-package.mjs`: 실제 `.tgz`를 저장소 밖의 새 프로젝트에 설치하고 TypeScript, Vite, Next.js 빌드와 브라우저 조작을 검사합니다.
+- `scripts/test-package.mjs`: 실제 `.tgz`를 저장소 밖의 새 프로젝트에 설치하고 TypeScript, Vite, Next.js 빌드와 브라우저 조작을 검사합니다. 패키지 import와 CLI 소스 복사를 각각 확인합니다.
 - `dist/ply-ui-버전.tgz`: npm에 올리는 압축파일입니다. dist는 Git에서 제외됩니다.
+
+`cli/`에는 설치 명령을, `templates/src/`에는 해당 버전의 원본을 포함합니다. npm의 bin은 `ply-ui`이며 `pnpm dlx ply-ui add`로 실행합니다. 저장소의 복사 도구와 같은 경로·충돌 검사를 사용합니다.
 
 ## 준비와 검증
 
@@ -36,7 +38,7 @@ npm whoami
 로그인에만 npm CLI를 사용합니다. 빌드·설치·압축·공개는 pnpm을 사용합니다. 검증한 압축파일을 그대로 배포합니다. 아래 버전은 실제 manifest의 버전으로 바꿉니다.
 
 ```sh
-pnpm publish ./dist/ply-ui-0.1.0.tgz --access public --no-git-checks
+pnpm publish ./dist/ply-ui-0.2.0.tgz --access public --no-git-checks
 pnpm view ply-ui version
 ```
 

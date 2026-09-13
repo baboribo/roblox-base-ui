@@ -44,21 +44,17 @@ React 19를 사용합니다. `html`에 `data-theme="light"` 또는 `data-theme="
 
 ## 소스를 프로젝트에 복사
 
-이 저장소에서 실행합니다. 대상 프로젝트는 미리 만들어 둡니다.
+가져올 대상 React 19 + TypeScript 프로젝트 안에서 실행합니다. 저장소를 따로 받을 필요가 없습니다.
 
 ```sh
-pnpm ui list
-pnpm ui add button dialog --cwd ../my-app
-pnpm ui add --all --cwd ../my-app --dry-run
+pnpm dlx ply-ui add button select
+pnpm dlx ply-ui list
+pnpm dlx ply-ui add --all --dry-run
 ```
 
-대상 프로젝트에서:
+TSX·CSS·공통 토큰과 내부 의존 컴포넌트를 복사하고, Base UI 설치와 시작 파일의 스타일 연결까지 처리합니다. Next.js App Router와 Vite를 자동 감지합니다. 다른 구조는 `--entry`로 시작 파일을 지정합니다. 선택한 경로는 `ply-ui.json`에 보관합니다.
 
-```sh
-pnpm add @base-ui/react@1.8.0
-```
-
-`src/main.tsx`에서 `./styles/theme.css`를 import합니다. Next.js에서는 `src/app/layout.tsx`에서 `../styles/theme.css`를 import합니다. `html`의 `data-theme`는 `light` 또는 `dark`로 지정합니다.
+수정한 파일과 충돌하면 쓰기 전에 중단합니다. `--overwrite`는 공통 파일까지 교체하므로 변경 내용을 확인한 뒤 사용합니다. `--no-setup`은 소스만 복사합니다. 저장소 개발 중에는 동일한 도구를 `pnpm ui add button --cwd ../my-app`으로 실행할 수 있습니다.
 
 ```tsx
 import { Button } from "./components/ui/button";

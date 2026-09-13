@@ -14,6 +14,7 @@ import { chromium, expect } from "@playwright/test";
 import { preview } from "vite";
 import { componentNames, kitRoot } from "./registry-lib.mjs";
 
+const sourceMode = process.argv.includes("--source");
 const manifest = JSON.parse(
   readFileSync(path.join(kitRoot, "dist/npm/package.json"), "utf8"),
 );
@@ -144,6 +145,48 @@ write(
   "index.html",
   '<html lang="ko" data-theme="light"><head><meta charset="UTF-8"><title>PLY 설치 검사</title></head><body><div id="root"></div><script type="module" src="/main.tsx"></script></body></html>',
 );
+if (sourceMode) {
+  let demo = readFileSync(path.join(fixture, "demo.tsx"), "utf8")
+    .replace(
+      'import { Button, Switch } from "ply-ui";',
+      'import { Button } from "./src/components/ui/button";\nimport { Switch } from "./src/components/ui/switch";',
+    )
+    .replace('from "ply-ui/select"', 'from "./src/components/ui/select"');
+  write("demo.tsx", demo);
+  write(
+    "main.tsx",
+    readFileSync(path.join(fixture, "main.tsx"), "utf8").replace(
+      `import '${manifest.name}/styles.css';\n`,
+      "",
+    ),
+  );
+  const args = [
+    "exec",
+    "ply-ui",
+    "add",
+    "button",
+    "select",
+    "switch",
+    "badge",
+    "--entry",
+    "main.tsx",
+    "--src",
+    "src",
+  ];
+  run([...args, "--dry-run"]);
+  assert.equal(
+    existsSync(path.join(fixture, "src/components/ui/button.tsx")),
+    false,
+  );
+  run(args);
+  assert.ok(
+    JSON.parse(readFileSync(path.join(fixture, "package.json"), "utf8"))
+      .dependencies["@base-ui/react"],
+  );
+  const first = readFileSync(path.join(fixture, "main.tsx"), "utf8");
+  run(args);
+  assert.equal(readFileSync(path.join(fixture, "main.tsx"), "utf8"), first);
+}
 run(["exec", "tsc", "--noEmit"]);
 run(["exec", "vite", "build"]);
 
@@ -197,6 +240,20 @@ try {
     "app/page.tsx",
     `import Demo from '../demo';\nimport { Badge, Button } from '${manifest.name}';\nexport default function Page() { return <><Badge>설치 확인</Badge><Button>서버 페이지 버튼</Button><Demo/></>; }`,
   );
+  if (sourceMode) {
+    write(
+      "app/layout.tsx",
+      readFileSync(path.join(fixture, "app/layout.tsx"), "utf8").replace(
+        `import '${manifest.name}/styles.css';\n`,
+        "",
+      ),
+    );
+    write(
+      "app/page.tsx",
+      "import Demo from '../demo';\nimport { Badge } from '../src/components/ui/badge';\nexport default function Page() { return <><Badge>설치 확인</Badge><Demo/></>; }",
+    );
+    run(["exec", "ply-ui", "add", "badge", "--entry", "app/layout.tsx"]);
+  }
   write("next.config.mjs", "export default { experimental: { cpus: 2 } };\n");
   run(["exec", "next", "build", "--webpack"]);
   next = spawn(
@@ -218,7 +275,7 @@ try {
     .toBe(200);
   await check("http://127.0.0.1:5197");
   console.log(
-    `PASS: ${manifest.name}@${manifest.version}, ${componentNames.length} exports, TypeScript, Vite, Next.js, browser interactions. Fixture: ${fixture}`,
+    `PASS (${sourceMode ? "source CLI" : "package imports"}): ${manifest.name}@${manifest.version}, ${componentNames.length} exports, TypeScript, Vite, Next.js, browser interactions. Fixture: ${fixture}`,
   );
 } finally {
   if (next?.pid) {

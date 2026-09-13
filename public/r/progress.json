@@ -9,6 +9,12 @@
   ],
   "files": [
     {
+      "path": "src/assets.d.ts",
+      "type": "registry:file",
+      "target": "~/src/assets.d.ts",
+      "content": "// CSS는 앱의 번들러가 처리합니다.\ndeclare module \"*.css\";\n"
+    },
+    {
       "path": "src/components/ui/progress.css",
       "type": "registry:file",
       "target": "~/src/components/ui/progress.css",

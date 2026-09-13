@@ -8,7 +8,7 @@ import {
 } from "node:fs";
 import { execFileSync } from "node:child_process";
 import path from "node:path";
-import { componentNames, kitRoot } from "./registry-lib.mjs";
+import { componentNames, filesFor, kitRoot } from "./registry-lib.mjs";
 
 // 원본은 src에만 둡니다. dist/npm은 언제든 다시 만들 수 있는 배포 결과입니다.
 const output = path.join(kitRoot, "dist/npm");
@@ -74,6 +74,21 @@ cpSync(
 );
 for (const name of ["LICENSE", "THIRD_PARTY_NOTICES.md"]) {
   cpSync(path.join(kitRoot, "packaging/ui", name), path.join(output, name));
+}
+// CLI에서 가져갈 원본도 같은 버전에 묶습니다. 네트워크에서 임의 소스를 받지 않습니다.
+mkdirSync(path.join(output, "cli"), { recursive: true });
+for (const name of [
+  "cli.mjs",
+  "add.mjs",
+  "install-setup.mjs",
+  "registry-lib.mjs",
+]) {
+  cpSync(path.join(kitRoot, "scripts", name), path.join(output, "cli", name));
+}
+for (const file of filesFor(componentNames)) {
+  const destination = path.join(output, "templates", file);
+  mkdirSync(path.dirname(destination), { recursive: true });
+  cpSync(path.join(kitRoot, file), destination);
 }
 console.log(
   `${manifest.name}@${manifest.version}: ${componentNames.length}개 컴포넌트를 dist/npm에 만들었습니다.`,

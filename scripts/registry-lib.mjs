@@ -2,7 +2,11 @@ import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
-export const kitRoot = fileURLToPath(new URL("..", import.meta.url));
+const baseRoot = fileURLToPath(new URL("..", import.meta.url));
+// npm CLI에는 원본 TSX/CSS를 templates 아래에 함께 제공합니다.
+export const kitRoot = existsSync(path.join(baseRoot, "templates/src"))
+  ? path.join(baseRoot, "templates")
+  : baseRoot;
 export const componentNames = readdirSync(
   path.join(kitRoot, "src/components/ui"),
 )
@@ -10,6 +14,7 @@ export const componentNames = readdirSync(
   .map((name) => name.slice(0, -4))
   .sort();
 const shared = [
+  "src/assets.d.ts",
   "src/lib/cx.ts",
   "src/styles/theme.css",
   "src/styles/motion.css",

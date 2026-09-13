@@ -4,7 +4,28 @@
 
 패키지 이름은 `ply-ui`입니다. React 컴포넌트와 타입, CSS를 제공합니다.
 
-## 설치와 사용
+## 소스를 내 프로젝트에 추가
+
+Node.js 22 이상, pnpm, React 19 + TypeScript 프로젝트에서 실행합니다.
+
+```sh
+pnpm dlx ply-ui add button select
+```
+
+TSX·CSS와 필요한 내부 컴포넌트를 복사하고, Base UI를 설치하며 공통 스타일을 시작 파일에 연결합니다. Next.js App Router와 Vite를 감지합니다. `src` 구조는 `src/components/ui`, 루트 `app` 구조는 `components/ui`에 추가합니다. 설치 경로는 `ply-ui.json`에 저장합니다.
+
+```sh
+pnpm dlx ply-ui list
+pnpm dlx ply-ui add --all
+pnpm dlx ply-ui add button --dry-run
+pnpm dlx ply-ui add button --cwd ../my-app --src src --entry src/main.tsx
+```
+
+시작 파일이 모호하면 `--entry`로 지정합니다. 다른 내용의 기존 파일을 만나면 쓰기 전에 중단합니다. `--overwrite`는 공통 파일을 포함해 교체하며, `--no-install`은 의존성 설치만 생략하고 `--no-setup`은 소스만 복사합니다. 다시 실행해도 동일 파일과 스타일 import를 중복으로 추가하지 않습니다.
+
+복사한 소스는 내 프로젝트에서 직접 관리합니다. 이후 npm 패키지를 업데이트해도 복사본은 자동으로 바뀌지 않습니다.
+
+## 패키지로 설치해서 사용
 
 React 19 프로젝트에서 `pnpm add ply-ui`로 설치합니다. 로컬 패키지를 검증할 때는 `pnpm add /절대/경로/패키지.tgz`로 설치할 수 있습니다.
 
