@@ -1,6 +1,6 @@
 {
   "name": "ply-ui",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Roblox-inspired React components with connected selection, motion, and accessible interactions.",
   "type": "module",
   "license": "MIT",
