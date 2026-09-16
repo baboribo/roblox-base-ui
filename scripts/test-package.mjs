@@ -198,7 +198,7 @@ const vite = await preview({
 });
 let next;
 async function check(url) {
-  const page = await browser.newPage();
+  const page = await browser.newPage({ reducedMotion: "reduce" });
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   const fonts = [];
@@ -230,11 +230,42 @@ async function check(url) {
     const css = getComputedStyle(el);
     return { background: css.backgroundColor, color: css.color };
   });
-  const popup = page.locator(".rbx-attached-popup:not([data-ending-style])");
+  const popup = page.locator(".rbx-attached-popup[data-open]");
   await expect(popup).toHaveCSS("background-color", surface.background);
   await expect(popup).toHaveCSS("color", surface.color);
   await expect(popup).toHaveCSS("box-shadow", /rgba\(4, 4, 8, 0\.25\)/);
   await page.keyboard.press("Escape");
+  // docs의 여백 없이 사용하는 Next/Vite 앱에서도 버튼과 목록이 붙어 있어야 합니다.
+  for (const edge of ["left", "right", "full"]) {
+    await select.evaluate((el, edge) => {
+      const field = el.closest(".rbx-attached-field");
+      Object.assign(field.style, {
+        position: "fixed",
+        top: "40px",
+        width: edge === "full" ? "100vw" : "320px",
+        left: edge === "right" ? "auto" : "0px",
+        right: edge === "right" ? "0px" : "auto",
+      });
+    }, edge);
+    await select.click();
+    await expect(select).toHaveAttribute("aria-expanded", "true");
+    await expect
+      .poll(async () => {
+        const button = await select.boundingBox();
+        const panel = await popup.boundingBox();
+        return button && panel
+          ? Math.max(
+              Math.abs(button.x - panel.x),
+              Math.abs(button.width - panel.width),
+            )
+          : Infinity;
+      })
+      .toBeLessThan(1);
+    await page.keyboard.press("Escape");
+    await expect(select).toHaveAttribute("aria-expanded", "false");
+    await expect(page.locator(".rbx-attached-popup[data-open]")).toHaveCount(0);
+    await expect(page.getByRole("listbox")).toHaveCount(0);
+  }
   assert.deepEqual(errors, []);
   assert.deepEqual(
     fonts,

@@ -315,11 +315,12 @@ export function Select<Multiple extends boolean = false>({
             side="bottom"
             align="start"
             sideOffset={-headerHeight}
-            collisionPadding={8}
+            // 버튼과 한 표면이므로 목록만 좌우로 이동시키지 않습니다.
+            collisionPadding={{ top: 8, bottom: 8, left: 0, right: 0 }}
             collisionBoundary={collisionBoundary}
             collisionAvoidance={{
               side: "flip",
-              align: "shift",
+              align: "none",
               fallbackAxisSide: "none",
             }}
             positionMethod="fixed"
