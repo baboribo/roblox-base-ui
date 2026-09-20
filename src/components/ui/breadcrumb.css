@@ -1,19 +1,24 @@
-/* breadcrumb — semantic HTML composition. */
-.rbx-breadcrumb-list {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  padding: 0;
-}
-.rbx-breadcrumb-item + .rbx-breadcrumb-item::before {
-  content: "/";
-  color: var(--rbx-color-content-muted);
-  margin-right: 0;
-  margin-inline-end: 8px;
-}
-.rbx-breadcrumb-item {
-  min-width: 0;
-  overflow-wrap: anywhere;
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+
+@layer components.ply {
+  /* breadcrumb — semantic HTML composition. */
+  .rbx-breadcrumb-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+  }
+  .rbx-breadcrumb-item + .rbx-breadcrumb-item::before {
+    content: "/";
+    color: var(--rbx-color-content-muted);
+    margin-right: 0;
+    margin-inline-end: 8px;
+  }
+  .rbx-breadcrumb-item {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
 }

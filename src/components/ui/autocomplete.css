@@ -1,2 +1,7 @@
 @import "./button.css";
-/* Autocomplete uses shared input and popup styles in theme.css. */
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+@import "./button.css";
+@layer components.ply {
+  /* Autocomplete uses shared input and popup styles in theme.css. */
+}

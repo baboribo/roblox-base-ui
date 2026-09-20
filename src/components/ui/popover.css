@@ -1,16 +1,21 @@
 @import "./button.css";
-/* Community educational tooltip variant. Standard popovers retain the shared surface. */
-.rbx-popup[data-variant="inverse"] {
-  padding: 12px;
-  border: 0;
-  border-radius: 8px;
-  background: var(--rbx-inverse-surface-0);
-  color: var(--rbx-inverse-content-emphasis);
-  box-shadow: none;
-}
-.rbx-popup[data-variant="inverse"] .rbx-description {
-  color: var(--rbx-inverse-content-default);
-}
-.rbx-popup[data-variant="inverse"] .rbx-popup-arrow {
-  fill: var(--rbx-inverse-surface-0);
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+@import "./button.css";
+@layer components.ply {
+  /* Community educational tooltip variant. Standard popovers retain the shared surface. */
+  .rbx-popup[data-variant="inverse"] {
+    padding: 12px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--rbx-inverse-surface-0);
+    color: var(--rbx-inverse-content-emphasis);
+    box-shadow: none;
+  }
+  .rbx-popup[data-variant="inverse"] .rbx-description {
+    color: var(--rbx-inverse-content-default);
+  }
+  .rbx-popup[data-variant="inverse"] .rbx-popup-arrow {
+    fill: var(--rbx-inverse-surface-0);
+  }
 }

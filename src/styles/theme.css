@@ -1,389 +1,410 @@
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
 @import "./tokens.css";
 @import "./motion.css";
-
-/* 1. 사용자 커스터마이징 시작점. 원본 스냅샷을 수정할 필요가 없습니다. */
-:root {
-  --rbx-font-body:
-    "Builder Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --rbx-font-heading: var(--rbx-font-body);
-  --rbx-layer-popup: 120;
-  --rbx-layer-modal: 100;
-  --rbx-layer-toast: 200;
-}
-/* 파생 토큰은 테마 영역마다 다시 계산해야 중첩 테마에서도 색이 맞습니다. */
-:root,
-[data-theme="light"],
-[data-theme="dark"] {
-  --rbx-focus-ring: var(--rbx-color-selection-start);
-  --rbx-shadow-transient-low:
-    0 2px 4px -0.5px var(--rbx-alpha-color-shadow-subtle),
-    0 10px 20px -0.75px var(--rbx-alpha-color-shadow-subtle);
-  --rbx-shadow-transient-high:
-    var(--rbx-shadow-transient-low),
-    0 16px 32px -1px var(--rbx-alpha-color-shadow-subtle),
-    0 48px 56px -1.5px var(--rbx-alpha-color-shadow-subtle);
-}
-[data-theme="dark"] {
-  color-scheme: dark;
-}
-[data-theme="light"] {
-  color-scheme: light;
-}
-
-/* 2. 공유 동작 상태. Base UI가 제공하는 data 속성에만 반응합니다. */
-:where([class*="rbx-"]) {
-  box-sizing: border-box;
-  font-family: var(--rbx-font-body);
-}
-:where([class*="rbx-"]):focus-visible {
-  outline: 3px solid var(--rbx-focus-ring);
-  outline-offset: 3px;
-}
-:where([class*="rbx-"]):is([data-disabled], :disabled) {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-:where(.rbx-button, .rbx-icon-button, .rbx-select-trigger, .rbx-toggle) {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--rbx-gap-small);
-  min-height: var(--rbx-input-size-medium);
-  padding: 0 var(--rbx-padding-medium);
-  border: 0;
-  border-radius: var(--rbx-radius-medium);
-  background: var(--rbx-color-action-standard-background);
-  color: var(--rbx-color-action-standard-foreground);
-  font: var(--rbx-typography-label-medium-font);
-  cursor: pointer;
-  text-decoration: none;
-  transition:
-    background-color var(--rbx-motion-duration-feedback)
-      var(--rbx-motion-ease-enter),
-    color var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter);
-}
-:is(.rbx-button, .rbx-icon-button, .rbx-select-trigger, .rbx-toggle):hover:not(
-    :disabled
-  ):not([data-disabled]) {
-  background-image: linear-gradient(
-    var(--rbx-color-state-hover),
-    var(--rbx-color-state-hover)
-  );
-}
-:is(.rbx-button, .rbx-icon-button, .rbx-select-trigger):active:not(
-    :disabled
-  ):not([data-disabled]) {
-  background-image: linear-gradient(
-    var(--rbx-color-state-press),
-    var(--rbx-color-state-press)
-  );
-}
-.rbx-icon-button {
-  width: 40px;
-  padding: 0;
-  flex-shrink: 0;
-}
-.rbx-label {
-  color: var(--rbx-color-content-emphasis);
-  font-weight: 600;
-}
-.rbx-description {
-  color: var(--rbx-color-content-default);
-  font-size: 0.875rem;
-  line-height: 1.5;
-  margin: 4px 0 0;
-}
-.rbx-error {
-  color: var(--rbx-color-system-alert);
-  font-size: 0.875rem;
-}
-/* TextField: Standard / Large. size는 data-size로만 조절해 native size 속성과 구분합니다. */
-.rbx-input,
-.rbx-input-group {
-  --rbx-control-height: 48px;
-  --rbx-control-font: var(--rbx-typography-body-large-font);
-  width: 100%;
-  min-width: 0;
-  height: var(--rbx-control-height);
-  border: 1px solid var(--rbx-color-stroke-contrast-alpha);
-  border-radius: var(--rbx-radius-medium);
-  background: transparent;
-  color: var(--rbx-color-content-emphasis);
-  padding: 0 12px;
-  font: var(--rbx-control-font);
-}
-:is(.rbx-input, .rbx-input-group)[data-size="md"] {
-  --rbx-control-height: 40px;
-  --rbx-control-font: var(--rbx-typography-body-medium-font);
-}
-:is(.rbx-input, .rbx-input-group)[data-size="sm"] {
-  --rbx-control-height: 32px;
-  --rbx-control-font: var(--rbx-typography-body-small-font);
-}
-:is(.rbx-input, .rbx-input-group)[data-size="xs"] {
-  --rbx-control-height: 24px;
-  --rbx-control-font: var(--rbx-typography-body-small-font);
-  border-radius: 4px;
-  padding-inline: 8px;
-}
-:is(.rbx-input, .rbx-input-group)[data-variant="contrast"] {
-  border: 0;
-  background: var(--rbx-color-shift-200);
-}
-:is(.rbx-input, .rbx-input-group)[data-variant="utility"] {
-  border: 0;
-}
-.rbx-input::placeholder {
-  color: var(--rbx-color-content-muted);
-  opacity: 1;
-}
-:is(.rbx-input, .rbx-input-group):focus-within {
-  outline: none;
-  border-color: var(--rbx-color-system-emphasis);
-  box-shadow: inset 0 0 0 1px var(--rbx-color-system-emphasis);
-}
-:is(.rbx-input, .rbx-input-group):is([data-invalid], [aria-invalid="true"]) {
-  border-color: var(--rbx-color-system-alert);
-}
-:is(.rbx-input, .rbx-input-group):is(
-    [data-invalid],
-    [aria-invalid="true"]
-  ):focus-within {
-  box-shadow: inset 0 0 0 1px var(--rbx-color-system-alert);
-}
-.rbx-input-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.rbx-input-group > .rbx-input {
-  height: 100%;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  background: transparent;
-  font: inherit;
-}
-.rbx-input-adornment {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  color: var(--rbx-color-content-default);
-}
-.rbx-separator {
-  border: 0;
-  background: var(--rbx-color-stroke-default);
-  height: 1px;
-  margin: 8px 0;
-}
-.rbx-separator[data-orientation="vertical"] {
-  width: 1px;
-  height: auto;
-  align-self: stretch;
-  margin: 0 8px;
-}
-
-/* 3. Portal의 공통 표면. html의 data-theme를 바꾸면 Portal도 테마를 상속합니다. */
-.rbx-positioner {
-  z-index: var(--rbx-layer-popup);
-  outline: none;
-}
-.rbx-popup {
-  min-width: min(
-    var(--anchor-width, 180px),
-    var(--available-width, calc(100vw - 16px)),
-    calc(100vw - 16px)
-  );
-  max-width: min(420px, var(--available-width, 100vw), calc(100vw - 16px));
-  overflow-wrap: anywhere;
-  max-height: var(--available-height, 70vh);
-  overflow: auto;
-  padding: 8px;
-  border: 1px solid var(--rbx-color-stroke-default);
-  border-radius: var(--rbx-radius-large);
-  background: var(--rbx-color-surface-100);
-  color: var(--rbx-color-content-emphasis);
-  box-shadow: var(--rbx-shadow-transient-high);
-  transform-origin: var(--transform-origin);
-  transition:
-    opacity var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
-    scale var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter);
-  scale: 1;
-}
-.rbx-popup:is([data-starting-style], [data-ending-style]) {
-  opacity: 0;
-  scale: var(--rbx-motion-scale-overlay);
-}
-.rbx-padded {
-  padding: 20px;
-}
-.rbx-option {
-  display: flex;
-  align-items: center;
-  gap: var(--rbx-option-gap, 12px);
-  padding: var(--rbx-option-padding, 8px 12px);
-  border: 0;
-  border-radius: var(--rbx-option-radius, 8px);
-  font: var(--rbx-option-font, var(--rbx-typography-body-medium-font));
-  color: var(--rbx-color-content-emphasis);
-  background: transparent;
-  cursor: pointer;
-  outline: none;
-  user-select: none;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-.rbx-popup[data-size="lg"] {
-  --rbx-option-font: var(--rbx-typography-body-large-font);
-  --rbx-option-padding: 12px 16px;
-  --rbx-option-gap: 16px;
-}
-.rbx-popup[data-size="sm"] {
-  --rbx-option-font: var(--rbx-typography-body-small-font);
-}
-.rbx-popup[data-size="xs"] {
-  --rbx-option-font: var(--rbx-typography-body-small-font);
-  --rbx-option-padding: 4px 12px;
-  --rbx-option-radius: 4px;
-  padding: 4px;
-  border-radius: 8px;
-}
-.rbx-option[data-highlighted] {
-  background: var(--rbx-color-state-hover);
-}
-.rbx-option[data-disabled] {
-  pointer-events: none;
-}
-.rbx-option-indicator {
-  width: 16px;
-  display: inline-flex;
-}
-.rbx-group-label {
-  padding: 8px 12px;
-  color: var(--rbx-color-content-muted);
-  font-size: 0.75rem;
-}
-.rbx-popup-arrow {
-  fill: var(--rbx-color-surface-100);
-}
-.rbx-nav-link {
-  color: var(--rbx-color-content-link);
-  text-underline-offset: 4px;
-}
-:where(.rbx-dialog-title) {
-  margin: 0 0 8px;
-  font: var(--rbx-typography-heading-medium-font);
-  letter-spacing: var(--rbx-typography-heading-medium-letter-spacing);
-}
-.rbx-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: var(--rbx-layer-modal);
-  background: var(--rbx-color-common-backdrop);
-  transition: opacity var(--rbx-motion-duration-panel)
-    var(--rbx-motion-ease-enter);
-}
-.rbx-backdrop:is([data-starting-style], [data-ending-style]) {
-  opacity: 0;
-}
-.rbx-dialog {
-  position: fixed;
-  z-index: calc(var(--rbx-layer-modal) + 1);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(480px, calc(100vw - 32px));
-  max-height: calc(100dvh - 48px);
-  overflow: auto;
-  padding: clamp(12px, 4vw, 20px);
-  overflow-wrap: anywhere;
-  background: var(--rbx-color-surface-100);
-  color: var(--rbx-color-content-emphasis);
-  border: 1px solid var(--rbx-color-stroke-muted);
-  border-radius: var(--rbx-radius-large);
-  box-shadow: var(--rbx-shadow-transient-high);
-  scale: 1;
-  transition:
-    opacity var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter),
-    scale var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter);
-}
-/* 중앙 배치의 translate와 scale을 분리해 확대 중 위치가 흔들리지 않게 합니다. */
-.rbx-dialog:is([data-starting-style], [data-ending-style]) {
-  opacity: 0;
-  scale: var(--rbx-motion-scale-overlay);
-}
-.rbx-dialog[data-ending-style],
-.rbx-backdrop[data-ending-style] {
-  transition-duration: var(--rbx-motion-duration-panel-exit);
-  transition-timing-function: var(--rbx-motion-ease-exit);
-}
-.rbx-popup[data-ending-style] {
-  transition-duration: var(--rbx-motion-duration-exit);
-  transition-timing-function: var(--rbx-motion-ease-exit);
-}
-@media (prefers-reduced-motion: reduce) {
-  :where([class*="rbx-"]) {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
+@layer components.ply-base {
+  /* 1. 사용자 커스터마이징 시작점. 원본 스냅샷을 수정할 필요가 없습니다. */
+  :root {
+    --rbx-font-body:
+      "Builder Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --rbx-font-heading: var(--rbx-font-body);
+    --rbx-layer-popup: 120;
+    --rbx-layer-modal: 100;
+    --rbx-layer-toast: 200;
   }
-}
+  /* 파생 토큰은 테마 영역마다 다시 계산해야 중첩 테마에서도 색이 맞습니다. */
+  :root,
+  [data-theme="light"],
+  [data-theme="dark"] {
+    --rbx-focus-ring: var(--rbx-color-selection-start);
+    --rbx-shadow-transient-low:
+      0 2px 4px -0.5px var(--rbx-alpha-color-shadow-subtle),
+      0 10px 20px -0.75px var(--rbx-alpha-color-shadow-subtle);
+    --rbx-shadow-transient-high:
+      var(--rbx-shadow-transient-low),
+      0 16px 32px -1px var(--rbx-alpha-color-shadow-subtle),
+      0 48px 56px -1.5px var(--rbx-alpha-color-shadow-subtle);
+  }
+  [data-theme="dark"] {
+    color-scheme: dark;
+  }
+  [data-theme="light"] {
+    color-scheme: light;
+  }
 
-/* 선택적 접근성 보정. 원본 alert 색은 기본값으로 보존합니다. */
-[data-contrast="enhanced"][data-theme="dark"] {
-  --rbx-dark-mode-action-alert-foreground: var(--rbx-color-extended-red-600);
-}
-[data-contrast="enhanced"][data-theme="light"] {
-  --rbx-light-mode-action-alert-foreground: var(--rbx-color-extended-red-1000);
-}
-
-/* 래퍼와 input에 disabled opacity가 두 번 곱해지지 않도록 합니다. */
-.rbx-input-group[data-disabled] > .rbx-input {
-  opacity: 1;
-}
-.rbx-input-group:has(> .rbx-input[data-invalid]) {
-  border-color: var(--rbx-color-system-alert);
-}
-.rbx-input-group:has(> .rbx-input[data-invalid]):focus-within {
-  box-shadow: inset 0 0 0 1px var(--rbx-color-system-alert);
-}
-
-[data-contrast="enhanced"][data-theme="dark"] .rbx-button[data-variant="link"] {
-  color: var(--rbx-color-extended-blue-500);
-}
-
-/* 입력/선택 상태는 짧은 피드백을 사용합니다. 드래그 위치는 지연하지 않습니다. */
-:is(
-  .rbx-checkbox,
-  .rbx-radio,
-  .rbx-tab,
-  .rbx-option,
+  /* 2. 공유 동작 상태. Base UI가 제공하는 data 속성에만 반응합니다. */
+  :where([class*="rbx-"]) {
+    box-sizing: border-box;
+    font-family: var(--rbx-font-body);
+  }
+  :where([class*="rbx-"]):focus-visible {
+    outline: 3px solid var(--rbx-focus-ring);
+    outline-offset: 3px;
+  }
+  :where(
+      button,
+      input,
+      textarea,
+      select,
+      [role="button"],
+      [role="checkbox"],
+      [role="radio"],
+      [role="switch"],
+      [role="tab"],
+      [role="option"],
+      [role^="menuitem"],
+      .rbx-button,
+      .rbx-icon-button,
+      .rbx-input-group
+    )[class*="rbx-"]:is([data-disabled], :disabled) {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  :where(.rbx-button, .rbx-icon-button, .rbx-select-trigger, .rbx-toggle) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--rbx-gap-small);
+    min-height: var(--rbx-input-size-medium);
+    padding: 0 var(--rbx-padding-medium);
+    border: 0;
+    border-radius: var(--rbx-radius-medium);
+    background: var(--rbx-color-action-standard-background);
+    color: var(--rbx-color-action-standard-foreground);
+    font: var(--rbx-typography-label-medium-font);
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      background-color var(--rbx-motion-duration-feedback)
+        var(--rbx-motion-ease-enter),
+      color var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter);
+  }
+  :is(
+      .rbx-button,
+      .rbx-icon-button,
+      .rbx-select-trigger,
+      .rbx-toggle
+    ):hover:not(:disabled):not([data-disabled]) {
+    background-image: linear-gradient(
+      var(--rbx-color-state-hover),
+      var(--rbx-color-state-hover)
+    );
+  }
+  :is(.rbx-button, .rbx-icon-button, .rbx-select-trigger):active:not(
+      :disabled
+    ):not([data-disabled]) {
+    background-image: linear-gradient(
+      var(--rbx-color-state-press),
+      var(--rbx-color-state-press)
+    );
+  }
+  .rbx-icon-button {
+    width: 40px;
+    padding: 0;
+    flex-shrink: 0;
+  }
+  .rbx-label {
+    font: var(--rbx-typography-body-medium-font);
+    color: var(--rbx-color-content-emphasis);
+    font-weight: 600;
+  }
+  .rbx-description {
+    color: var(--rbx-color-content-default);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 4px 0 0;
+  }
+  .rbx-error {
+    color: var(--rbx-color-system-alert);
+    font-size: 0.875rem;
+  }
+  /* TextField: Standard / Large. size는 data-size로만 조절해 native size 속성과 구분합니다. */
   .rbx-input,
-  .rbx-input-group
-) {
-  transition:
-    background-color var(--rbx-motion-duration-feedback)
-      var(--rbx-motion-ease-enter),
-    color var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter),
-    border-color var(--rbx-motion-duration-feedback)
-      var(--rbx-motion-ease-enter),
-    box-shadow var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter);
-}
-.rbx-tab-indicator {
-  transition:
-    transform var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter),
-    width var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter);
-}
-:is(.rbx-checkbox-indicator, .rbx-radio-indicator) {
-  transition:
-    scale var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter),
-    opacity var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter);
-}
-:is(.rbx-checkbox-indicator, .rbx-radio-indicator):is(
-  [data-starting-style],
-  [data-ending-style]
-) {
-  scale: 0.8;
-  opacity: 0;
+  .rbx-input-group {
+    --rbx-control-height: 48px;
+    --rbx-control-font: var(--rbx-typography-body-large-font);
+    width: 100%;
+    min-width: 0;
+    height: var(--rbx-control-height);
+    border: 1px solid var(--rbx-color-stroke-contrast-alpha);
+    border-radius: var(--rbx-radius-medium);
+    background: transparent;
+    color: var(--rbx-color-content-emphasis);
+    padding: 0 12px;
+    font: var(--rbx-control-font);
+  }
+  :is(.rbx-input, .rbx-input-group)[data-size="md"] {
+    --rbx-control-height: 40px;
+    --rbx-control-font: var(--rbx-typography-body-medium-font);
+  }
+  :is(.rbx-input, .rbx-input-group)[data-size="sm"] {
+    --rbx-control-height: 32px;
+    --rbx-control-font: var(--rbx-typography-body-small-font);
+  }
+  :is(.rbx-input, .rbx-input-group)[data-size="xs"] {
+    --rbx-control-height: 24px;
+    --rbx-control-font: var(--rbx-typography-body-small-font);
+    border-radius: 4px;
+    padding-inline: 8px;
+  }
+  :is(.rbx-input, .rbx-input-group)[data-variant="contrast"] {
+    border: 0;
+    background: var(--rbx-color-shift-200);
+  }
+  :is(.rbx-input, .rbx-input-group)[data-variant="utility"] {
+    border: 0;
+  }
+  .rbx-input::placeholder {
+    color: var(--rbx-color-content-muted);
+    opacity: 1;
+  }
+  :is(.rbx-input, .rbx-input-group):focus-within {
+    outline: none;
+    border-color: var(--rbx-color-system-emphasis);
+    box-shadow: inset 0 0 0 1px var(--rbx-color-system-emphasis);
+  }
+  :is(.rbx-input, .rbx-input-group):is([data-invalid], [aria-invalid="true"]) {
+    border-color: var(--rbx-color-system-alert);
+  }
+  :is(.rbx-input, .rbx-input-group):is(
+      [data-invalid],
+      [aria-invalid="true"]
+    ):focus-within {
+    box-shadow: inset 0 0 0 1px var(--rbx-color-system-alert);
+  }
+  .rbx-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .rbx-input-group > .rbx-input {
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    font: inherit;
+  }
+  .rbx-input-adornment {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    color: var(--rbx-color-content-default);
+  }
+  .rbx-separator {
+    border: 0;
+    background: var(--rbx-color-stroke-default);
+    height: 1px;
+    margin: 8px 0;
+  }
+  .rbx-separator[data-orientation="vertical"] {
+    width: 1px;
+    height: auto;
+    align-self: stretch;
+    margin: 0 8px;
+  }
+
+  /* 3. Portal의 공통 표면. html의 data-theme를 바꾸면 Portal도 테마를 상속합니다. */
+  .rbx-positioner {
+    z-index: var(--rbx-layer-popup);
+    outline: none;
+  }
+  .rbx-popup {
+    min-width: min(
+      var(--anchor-width, 180px),
+      var(--available-width, calc(100vw - 16px)),
+      calc(100vw - 16px)
+    );
+    max-width: min(420px, var(--available-width, 100vw), calc(100vw - 16px));
+    overflow-wrap: anywhere;
+    max-height: var(--available-height, 70vh);
+    overflow: auto;
+    padding: 8px;
+    border: 1px solid var(--rbx-color-stroke-default);
+    border-radius: var(--rbx-radius-large);
+    background: var(--rbx-color-surface-100);
+    color: var(--rbx-color-content-emphasis);
+    box-shadow: var(--rbx-shadow-transient-high);
+    transform-origin: var(--transform-origin);
+    transition:
+      opacity var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
+      scale var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter);
+    scale: 1;
+  }
+  .rbx-popup:is([data-starting-style], [data-ending-style]) {
+    opacity: 0;
+    scale: var(--rbx-motion-scale-overlay);
+  }
+  .rbx-padded {
+    padding: 20px;
+  }
+  .rbx-option {
+    display: flex;
+    align-items: center;
+    gap: var(--rbx-option-gap, 12px);
+    padding: var(--rbx-option-padding, 8px 12px);
+    border: 0;
+    border-radius: var(--rbx-option-radius, 8px);
+    font: var(--rbx-option-font, var(--rbx-typography-body-medium-font));
+    color: var(--rbx-color-content-emphasis);
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .rbx-popup[data-size="lg"] {
+    --rbx-option-font: var(--rbx-typography-body-large-font);
+    --rbx-option-padding: 12px 16px;
+    --rbx-option-gap: 16px;
+  }
+  .rbx-popup[data-size="sm"] {
+    --rbx-option-font: var(--rbx-typography-body-small-font);
+  }
+  .rbx-popup[data-size="xs"] {
+    --rbx-option-font: var(--rbx-typography-body-small-font);
+    --rbx-option-padding: 4px 12px;
+    --rbx-option-radius: 4px;
+    padding: 4px;
+    border-radius: 8px;
+  }
+  .rbx-option[data-highlighted] {
+    background: var(--rbx-color-state-hover);
+  }
+  .rbx-option[data-disabled] {
+    pointer-events: none;
+  }
+  .rbx-option-indicator {
+    width: 16px;
+    display: inline-flex;
+  }
+  .rbx-group-label {
+    padding: 8px 12px;
+    color: var(--rbx-color-content-muted);
+    font-size: 0.75rem;
+  }
+  .rbx-popup-arrow {
+    fill: var(--rbx-color-surface-100);
+  }
+  .rbx-nav-link {
+    color: var(--rbx-color-content-link);
+    text-underline-offset: 4px;
+  }
+  :where(.rbx-dialog-title) {
+    margin: 0 0 8px;
+    font: var(--rbx-typography-heading-medium-font);
+    letter-spacing: var(--rbx-typography-heading-medium-letter-spacing);
+  }
+  .rbx-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--rbx-layer-modal);
+    background: var(--rbx-color-common-backdrop);
+    transition: opacity var(--rbx-motion-duration-panel)
+      var(--rbx-motion-ease-enter);
+  }
+  .rbx-backdrop:is([data-starting-style], [data-ending-style]) {
+    opacity: 0;
+  }
+  .rbx-dialog {
+    position: fixed;
+    z-index: calc(var(--rbx-layer-modal) + 1);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(480px, calc(100vw - 32px));
+    max-height: calc(100dvh - 48px);
+    overflow: auto;
+    padding: clamp(12px, 4vw, 20px);
+    overflow-wrap: anywhere;
+    background: var(--rbx-color-surface-100);
+    color: var(--rbx-color-content-emphasis);
+    border: 1px solid var(--rbx-color-stroke-muted);
+    border-radius: var(--rbx-radius-large);
+    box-shadow: var(--rbx-shadow-transient-high);
+    scale: 1;
+    transition:
+      opacity var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter),
+      scale var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter);
+  }
+  /* 중앙 배치의 translate와 scale을 분리해 확대 중 위치가 흔들리지 않게 합니다. */
+  .rbx-dialog:is([data-starting-style], [data-ending-style]) {
+    opacity: 0;
+    scale: var(--rbx-motion-scale-overlay);
+  }
+  .rbx-dialog[data-ending-style],
+  .rbx-backdrop[data-ending-style] {
+    transition-duration: var(--rbx-motion-duration-panel-exit);
+    transition-timing-function: var(--rbx-motion-ease-exit);
+  }
+  .rbx-popup[data-ending-style] {
+    transition-duration: var(--rbx-motion-duration-exit);
+    transition-timing-function: var(--rbx-motion-ease-exit);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :where([class*="rbx-"]) {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* 선택적 접근성 보정. 원본 alert 색은 기본값으로 보존합니다. */
+  [data-contrast="enhanced"][data-theme="dark"] {
+    --rbx-dark-mode-action-alert-foreground: var(--rbx-color-extended-red-600);
+  }
+  [data-contrast="enhanced"][data-theme="light"] {
+    --rbx-light-mode-action-alert-foreground: var(
+      --rbx-color-extended-red-1000
+    );
+  }
+
+  /* 래퍼와 input에 disabled opacity가 두 번 곱해지지 않도록 합니다. */
+  .rbx-input-group[data-disabled] > .rbx-input {
+    opacity: 1;
+  }
+  .rbx-input-group:has(> .rbx-input[data-invalid]) {
+    border-color: var(--rbx-color-system-alert);
+  }
+  .rbx-input-group:has(> .rbx-input[data-invalid]):focus-within {
+    box-shadow: inset 0 0 0 1px var(--rbx-color-system-alert);
+  }
+
+  /* 입력/선택 상태는 짧은 피드백을 사용합니다. 드래그 위치는 지연하지 않습니다. */
+  :is(
+    .rbx-checkbox,
+    .rbx-radio,
+    .rbx-tab,
+    .rbx-option,
+    .rbx-input,
+    .rbx-input-group
+  ) {
+    transition:
+      background-color var(--rbx-motion-duration-feedback)
+        var(--rbx-motion-ease-enter),
+      color var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter),
+      border-color var(--rbx-motion-duration-feedback)
+        var(--rbx-motion-ease-enter),
+      box-shadow var(--rbx-motion-duration-feedback)
+        var(--rbx-motion-ease-enter);
+  }
+  .rbx-tab-indicator {
+    transition:
+      transform var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter),
+      width var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter);
+  }
+  :is(.rbx-checkbox-indicator, .rbx-radio-indicator) {
+    transition:
+      scale var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter),
+      opacity var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter);
+  }
+  :is(.rbx-checkbox-indicator, .rbx-radio-indicator):is(
+    [data-starting-style],
+    [data-ending-style]
+  ) {
+    scale: 0.8;
+    opacity: 0;
+  }
 }

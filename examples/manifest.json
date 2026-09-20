@@ -283,5 +283,10 @@
     "id": "pagination",
     "name": "Pagination",
     "group": "탐색"
+  },
+  {
+    "id": "layout",
+    "name": "Layout",
+    "group": "레이아웃"
   }
 ]

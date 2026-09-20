@@ -1,54 +1,59 @@
-.rbx-icon-button {
-  width: 48px;
-  height: 48px;
-  min-height: 48px;
-  padding: 0;
-  border: 0;
-  background-color: var(--rbx-color-action-emphasis-background);
-  color: var(--rbx-color-action-emphasis-foreground);
-}
-.rbx-icon-button[data-size="md"] {
-  width: 40px;
-  height: 40px;
-  min-height: 40px;
-}
-.rbx-icon-button[data-size="sm"] {
-  width: 32px;
-  height: 32px;
-  min-height: 32px;
-}
-.rbx-icon-button[data-size="xs"] {
-  width: 24px;
-  height: 24px;
-  min-height: 24px;
-  border-radius: 4px;
-}
-.rbx-icon-button[data-circular] {
-  border-radius: 9999px;
-}
-.rbx-icon-button[data-variant="standard"] {
-  background-color: var(--rbx-color-action-standard-background);
-  color: var(--rbx-color-action-standard-foreground);
-}
-.rbx-icon-button[data-variant="alert"] {
-  background-color: var(--rbx-color-action-alert-background);
-  color: var(--rbx-color-action-alert-foreground);
-}
-.rbx-icon-button[data-variant="utility"] {
-  background-color: var(--rbx-color-action-link-background);
-  color: var(--rbx-color-content-emphasis);
-}
-.rbx-icon-button[data-variant="utility"][data-selected] {
-  background-color: var(--rbx-color-shift-300);
-}
-.rbx-icon-button[data-variant="over-media"] {
-  background-color: var(--rbx-color-over-media-0);
-  color: var(--rbx-color-content-emphasis);
-}
-.rbx-icon-button:is(:disabled, [data-disabled]):is(
-    [data-variant="emphasis"],
-    [data-variant="alert"]
-  ) {
-  background-color: var(--rbx-color-action-standard-background);
-  color: var(--rbx-color-action-standard-foreground);
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+
+@layer components.ply {
+  .rbx-icon-button {
+    width: 48px;
+    height: 48px;
+    min-height: 48px;
+    padding: 0;
+    border: 0;
+    background-color: var(--rbx-color-action-emphasis-background);
+    color: var(--rbx-color-action-emphasis-foreground);
+  }
+  .rbx-icon-button[data-size="md"] {
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+  }
+  .rbx-icon-button[data-size="sm"] {
+    width: 32px;
+    height: 32px;
+    min-height: 32px;
+  }
+  .rbx-icon-button[data-size="xs"] {
+    width: 24px;
+    height: 24px;
+    min-height: 24px;
+    border-radius: 4px;
+  }
+  .rbx-icon-button[data-circular] {
+    border-radius: 9999px;
+  }
+  .rbx-icon-button[data-variant="standard"] {
+    background-color: var(--rbx-color-action-standard-background);
+    color: var(--rbx-color-action-standard-foreground);
+  }
+  .rbx-icon-button[data-variant="alert"] {
+    background-color: var(--rbx-color-action-alert-background);
+    color: var(--rbx-color-action-alert-foreground);
+  }
+  .rbx-icon-button[data-variant="utility"] {
+    background-color: var(--rbx-color-action-link-background);
+    color: var(--rbx-color-content-emphasis);
+  }
+  .rbx-icon-button[data-variant="utility"][data-selected] {
+    background-color: var(--rbx-color-shift-300);
+  }
+  .rbx-icon-button[data-variant="over-media"] {
+    background-color: var(--rbx-color-over-media-0);
+    color: var(--rbx-color-content-emphasis);
+  }
+  .rbx-icon-button:is(:disabled, [data-disabled]):is(
+      [data-variant="emphasis"],
+      [data-variant="alert"]
+    ) {
+    background-color: var(--rbx-color-action-standard-background);
+    color: var(--rbx-color-action-standard-foreground);
+  }
 }

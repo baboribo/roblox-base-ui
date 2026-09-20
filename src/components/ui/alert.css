@@ -1,10 +1,15 @@
-/* alert — semantic HTML composition. */
-.rbx-alert {
-  border: 1px solid var(--rbx-color-stroke-emphasis);
-  border-radius: 8px;
-  padding: 16px;
-  background: var(--rbx-color-surface-100);
-  min-width: 0;
-  max-width: 100%;
-  overflow-wrap: anywhere;
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+
+@layer components.ply {
+  /* alert — semantic HTML composition. */
+  .rbx-alert {
+    border: 1px solid var(--rbx-color-stroke-emphasis);
+    border-radius: 8px;
+    padding: 16px;
+    background: var(--rbx-color-surface-100);
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
 }

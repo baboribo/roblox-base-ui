@@ -93,6 +93,7 @@ export const exampleNames = new Set([
   "input-trailing",
   "input-utility",
   "input",
+  "layout",
   "list-action",
   "list-boxed",
   "list-inset",

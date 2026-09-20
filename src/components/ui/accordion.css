@@ -1,73 +1,84 @@
-/* Roblox 표면 스타일 위에 프로젝트의 펼침/접힘 모션을 적용합니다. */
-.rbx-accordion {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-width: 0;
-  max-width: 100%;
-  overflow-wrap: anywhere;
-}
-.rbx-accordion-item {
-  border: 1px solid var(--rbx-color-stroke-default);
-  border-radius: 8px;
-  overflow: hidden;
-  padding: 8px 12px;
-}
-.rbx-accordion-header {
-  margin: 0;
-}
-.rbx-accordion-trigger {
-  width: 100%;
-  min-height: 40px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  border: 0;
-  background: transparent;
-  color: var(--rbx-color-content-default);
-  font: var(--rbx-typography-title-medium-font);
-  cursor: pointer;
-  text-align: start;
-}
-.rbx-accordion-panel {
-  color: var(--rbx-color-content-default);
-  overflow: hidden;
-  font: var(--rbx-typography-body-medium-font);
-  white-space: pre-wrap;
-  padding-bottom: 12px;
-  height: var(--accordion-panel-height, var(--collapsible-panel-height, auto));
-  transition:
-    height var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
-    opacity var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
-    padding-bottom var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter);
-}
-.rbx-accordion-chevron {
-  display: inline-flex;
-  flex-shrink: 0;
-  color: var(--rbx-color-content-emphasis);
-}
-.rbx-accordion-chevron > :last-child {
-  display: none;
-}
-.rbx-accordion-trigger[data-panel-open] .rbx-accordion-chevron > :first-child {
-  display: none;
-}
-.rbx-accordion-trigger[data-panel-open] .rbx-accordion-chevron > :last-child {
-  display: inline-block;
-}
-@media (min-width: 1141px) {
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+
+@layer components.ply {
+  /* Roblox 표면 스타일 위에 프로젝트의 펼침/접힘 모션을 적용합니다. */
   .rbx-accordion {
-    gap: 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
-}
-.rbx-accordion-panel:is([data-starting-style], [data-ending-style]) {
-  height: 0;
-  opacity: 0;
-  padding-bottom: 0;
-}
-.rbx-accordion-panel[data-ending-style] {
-  transition-timing-function: var(--rbx-motion-ease-exit);
+  .rbx-accordion-item {
+    border: 1px solid var(--rbx-color-stroke-default);
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 8px 12px;
+  }
+  .rbx-accordion-header {
+    margin: 0;
+  }
+  .rbx-accordion-trigger {
+    width: 100%;
+    min-height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 0;
+    background: transparent;
+    color: var(--rbx-color-content-default);
+    font: var(--rbx-typography-title-medium-font);
+    cursor: pointer;
+    text-align: start;
+  }
+  .rbx-accordion-panel {
+    color: var(--rbx-color-content-default);
+    overflow: hidden;
+    font: var(--rbx-typography-body-medium-font);
+    white-space: pre-wrap;
+    padding-bottom: 12px;
+    height: var(
+      --accordion-panel-height,
+      var(--collapsible-panel-height, auto)
+    );
+    transition:
+      height var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
+      opacity var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
+      padding-bottom var(--rbx-motion-duration-enter)
+        var(--rbx-motion-ease-enter);
+  }
+  .rbx-accordion-chevron {
+    display: inline-flex;
+    flex-shrink: 0;
+    color: var(--rbx-color-content-emphasis);
+  }
+  .rbx-accordion-chevron > :last-child {
+    display: none;
+  }
+  .rbx-accordion-trigger[data-panel-open]
+    .rbx-accordion-chevron
+    > :first-child {
+    display: none;
+  }
+  .rbx-accordion-trigger[data-panel-open] .rbx-accordion-chevron > :last-child {
+    display: inline-block;
+  }
+  @media (min-width: 1141px) {
+    .rbx-accordion {
+      gap: 16px;
+    }
+  }
+  .rbx-accordion-panel:is([data-starting-style], [data-ending-style]) {
+    height: 0;
+    opacity: 0;
+    padding-bottom: 0;
+  }
+  .rbx-accordion-panel[data-ending-style] {
+    transition-timing-function: var(--rbx-motion-ease-exit);
+  }
 }

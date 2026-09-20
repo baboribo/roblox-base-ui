@@ -359,6 +359,9 @@ export const examples = {
   input: lazy(() =>
     import("./input").then((m) => ({ default: m.InputExample })),
   ),
+  layout: lazy(() =>
+    import("./layout").then((m) => ({ default: m.LayoutExample })),
+  ),
   "list-action": lazy(() =>
     import("./list-action").then((m) => ({ default: m.ListActionExample })),
   ),

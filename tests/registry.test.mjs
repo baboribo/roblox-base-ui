@@ -44,7 +44,7 @@ test("copy installation includes CSS dependencies, rejects partial overwrite, an
   }
 });
 test("all registry entries have real self-contained sources", () => {
-  assert.equal(componentNames.length, 57);
+  assert.equal(componentNames.length, 58);
   for (const name of componentNames) {
     const item = makeItem(name);
     assert.ok(item.files.length >= 6);

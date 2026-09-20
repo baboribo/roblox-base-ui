@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import { Button, Switch } from "ply-ui";
+import { Input } from "ply-ui/input";
+import { Stack } from "ply-ui/layout";
 import { Select } from "ply-ui/select";
 import { Dialog } from "ply-ui/dialog";
 import { Pagination } from "ply-ui/pagination";
@@ -19,6 +21,10 @@ export default function Demo() {
   const [page, setPage] = useState(1);
   return (
     <main style={{ maxWidth: 320, padding: 24, display: "grid", gap: 16 }}>
+      <Stack>
+        <Button className="h-16 min-h-0 rounded-none">사용자 크기</Button>
+        <Input aria-label="장식 입력" leading="@" className="w-40" />
+      </Stack>
       <Button onClick={() => setCount(count + 1)}>저장</Button>
       <p role="status">저장 {count}회</p>
       <Switch.Root aria-label="알림">

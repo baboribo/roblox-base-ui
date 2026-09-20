@@ -1,36 +1,41 @@
 @import "./button.css";
-/* Drawer: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
-.rbx-drawer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: calc(var(--rbx-layer-modal) + 1);
-  max-height: 85dvh;
-  overflow: auto;
-  background: var(--rbx-color-surface-100);
-  color: var(--rbx-color-content-emphasis);
-  border-radius: 16px 16px 0 0;
-  transform: translateY(var(--drawer-swipe-movement-y, 0));
-  transition: transform var(--rbx-motion-duration-panel)
-    var(--rbx-motion-ease-enter);
-  overflow-wrap: anywhere;
-  padding: clamp(16px, 4vw, 32px);
-  padding-bottom: max(16px, env(safe-area-inset-bottom));
-}
-.rbx-drawer-content {
-  max-width: 600px;
-  margin: auto;
-}
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+@import "./button.css";
+@layer components.ply {
+  /* Drawer: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+  .rbx-drawer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: calc(var(--rbx-layer-modal) + 1);
+    max-height: 85dvh;
+    overflow: auto;
+    background: var(--rbx-color-surface-100);
+    color: var(--rbx-color-content-emphasis);
+    border-radius: 16px 16px 0 0;
+    transform: translateY(var(--drawer-swipe-movement-y, 0));
+    transition: transform var(--rbx-motion-duration-panel)
+      var(--rbx-motion-ease-enter);
+    overflow-wrap: anywhere;
+    padding: clamp(16px, 4vw, 32px);
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+  .rbx-drawer-content {
+    max-width: 600px;
+    margin: auto;
+  }
 
-/* 스와이프 중에는 손가락을 바로 따라가고, 놓으면 전환합니다. */
-.rbx-drawer:is([data-starting-style], [data-ending-style]) {
-  transform: translateY(100%);
-}
-.rbx-drawer[data-ending-style] {
-  transition-duration: var(--rbx-motion-duration-panel-exit);
-  transition-timing-function: var(--rbx-motion-ease-exit);
-}
-.rbx-drawer[data-swiping] {
-  transition: none;
+  /* 스와이프 중에는 손가락을 바로 따라가고, 놓으면 전환합니다. */
+  .rbx-drawer:is([data-starting-style], [data-ending-style]) {
+    transform: translateY(100%);
+  }
+  .rbx-drawer[data-ending-style] {
+    transition-duration: var(--rbx-motion-duration-panel-exit);
+    transition-timing-function: var(--rbx-motion-ease-exit);
+  }
+  .rbx-drawer[data-swiping] {
+    transition: none;
+  }
 }

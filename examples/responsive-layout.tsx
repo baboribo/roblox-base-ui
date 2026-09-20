@@ -1,28 +1,30 @@
 "use client";
 import { useState } from "react";
 import { Button } from "../src/components/ui/button";
-import { Card, CardContent } from "../src/components/ui/card";
-import { Tabs } from "../src/components/ui/tabs";
-import { Pagination } from "../src/components/ui/pagination";
+import { Badge } from "../src/components/ui/badge";
 import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-  TableCaption,
-} from "../src/components/ui/table";
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "../src/components/ui/card";
+import { Field } from "../src/components/ui/field";
+import { Input } from "../src/components/ui/input";
+import { Select } from "../src/components/ui/select";
+import { Stack, Inline, Grid, ControlGroup } from "../src/components/ui/layout";
+import { Icon } from "../src/components/ui/icon";
 
 export function ResponsiveLayoutExample() {
-  const [width, setWidth] = useState(320);
-  const [page, setPage] = useState(1);
+  const [width, setWidth] = useState(640);
+  const [name, setName] = useState("홈 화면 개편");
+  const [invite, setInvite] = useState("");
+  const [members, setMembers] = useState(["design@example.com"]);
+  const [saved, setSaved] = useState("");
   return (
-    <div style={{ display: "grid", gap: 16, minWidth: 0 }}>
-      <div
-        aria-label="예제 영역 너비"
-        style={{ display: "flex", flexWrap: "wrap", gap: 8 }}
-      >
+    <Stack>
+      <Inline aria-label="예제 영역 너비">
         {[200, 320, 640].map((size) => (
           <Button
             key={size}
@@ -34,56 +36,70 @@ export function ResponsiveLayoutExample() {
             {size}px
           </Button>
         ))}
-      </div>
+      </Inline>
       <Card style={{ width: "100%", maxWidth: width }}>
+        <CardHeader>
+          <Badge>초안</Badge>
+          <CardTitle>프로젝트 설정</CardTitle>
+          <CardDescription>
+            이름과 공개 범위를 설정하고 구성원을 추가합니다.
+          </CardDescription>
+        </CardHeader>
         <CardContent>
-          <Button>선택한 프로젝트의 모든 변경사항 저장</Button>
-          <Tabs.Root defaultValue={0}>
-            <Tabs.List>
-              {["프로젝트 정보", "팀 구성원", "변경 기록", "공유 설정"].map(
-                (name, index) => (
-                  <Tabs.Tab key={name} value={index}>
-                    {name}
-                  </Tabs.Tab>
-                ),
-              )}
-              <Tabs.Indicator />
-            </Tabs.List>
-            {[
-              "프로젝트 이름과 설명",
-              "이 프로젝트에 참여한 구성원",
-              "최근 저장한 변경사항",
-              "공개 범위와 링크",
-            ].map((text, index) => (
-              <Tabs.Panel key={text} value={index}>
-                {text}
-              </Tabs.Panel>
-            ))}
-          </Tabs.Root>
-          <Table>
-            <TableCaption>프로젝트 변경 기록</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>파일</TableHead>
-                <TableHead>변경한 사람</TableHead>
-                <TableHead>수정일</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {[1, 2, 3].map((row) => (
-                <TableRow key={row}>
-                  <TableCell>
-                    project-preview-{(page - 1) * 3 + row}.png
-                  </TableCell>
-                  <TableCell>디자인 팀</TableCell>
-                  <TableCell>2026-09-20</TableCell>
-                </TableRow>
+          <Stack gap={24}>
+            <Grid minItemWidth="14rem">
+              <Field.Root>
+                <Field.Label>프로젝트 이름</Field.Label>
+                <Input value={name} onValueChange={setName} />
+              </Field.Root>
+              <Select
+                label="공개 범위"
+                defaultValue="team"
+                options={[
+                  { value: "team", label: "팀 구성원" },
+                  { value: "private", label: "나만 보기" },
+                ]}
+              />
+            </Grid>
+            <Field.Root>
+              <Field.Label>구성원 이메일</Field.Label>
+              <ControlGroup>
+                <Input
+                  leading={<Icon name="icon-regular-person" size={20} />}
+                  type="email"
+                  placeholder="name@example.com"
+                  value={invite}
+                  onValueChange={setInvite}
+                />
+                <Button
+                  variant="standard"
+                  disabled={!invite.includes("@")}
+                  onClick={() => {
+                    setMembers([...new Set([...members, invite])]);
+                    setInvite("");
+                  }}
+                >
+                  추가
+                </Button>
+              </ControlGroup>
+              <Field.Description>
+                프로젝트에 참여할 구성원을 목록에 추가합니다.
+              </Field.Description>
+            </Field.Root>
+            <Inline aria-label="구성원">
+              {members.map((member) => (
+                <Badge key={member}>{member}</Badge>
               ))}
-            </TableBody>
-          </Table>
-          <Pagination pageCount={20} page={page} onPageChange={setPage} />
+            </Inline>
+          </Stack>
         </CardContent>
+        <CardFooter divider>
+          <Button onClick={() => setSaved(`${name} 설정을 저장했습니다.`)}>
+            저장
+          </Button>
+        </CardFooter>
       </Card>
-    </div>
+      {saved && <p role="status">{saved}</p>}
+    </Stack>
   );
 }

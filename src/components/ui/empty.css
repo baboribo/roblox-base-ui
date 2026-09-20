@@ -1,12 +1,17 @@
-/* empty — semantic HTML composition. */
-.rbx-empty {
-  text-align: center;
-  padding: 48px 24px;
-  border: 1px dashed var(--rbx-color-stroke-emphasis);
-  border-radius: 16px;
-  color: var(--rbx-color-content-default);
-  min-width: 0;
-  max-width: 100%;
-  overflow-wrap: anywhere;
-  padding-inline: clamp(12px, 5%, 24px);
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+
+@layer components.ply {
+  /* empty — semantic HTML composition. */
+  .rbx-empty {
+    text-align: center;
+    padding: 48px 24px;
+    border: 1px dashed var(--rbx-color-stroke-emphasis);
+    border-radius: 16px;
+    color: var(--rbx-color-content-default);
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    padding-inline: clamp(12px, 5%, 24px);
+  }
 }

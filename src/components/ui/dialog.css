@@ -1,59 +1,64 @@
 @import "./button.css";
-/* Foundation Web Dialog: size controls width and 16/20px body/footer insets. */
-.rbx-dialog {
-  --rbx-dialog-inset: 20px;
-  max-width: calc(100vw - 24px);
-}
-.rbx-dialog[data-size="sm"] {
-  width: min(320px, calc(100vw - 24px));
-  --rbx-dialog-inset: 16px;
-  padding: var(--rbx-dialog-inset);
-}
-.rbx-dialog[data-size="lg"] {
-  width: min(640px, calc(100vw - 24px));
-}
-.rbx-dialog:has(> .rbx-dialog-body) {
-  padding: 0;
-}
-.rbx-dialog-body {
-  padding: var(--rbx-dialog-inset);
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-.rbx-dialog-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  padding: 0 var(--rbx-dialog-inset) var(--rbx-dialog-inset);
-  flex-wrap: wrap;
-}
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+@import "./button.css";
+@layer components.ply {
+  /* Foundation Web Dialog: size controls width and 16/20px body/footer insets. */
+  .rbx-dialog {
+    --rbx-dialog-inset: 20px;
+    max-width: calc(100vw - 24px);
+  }
+  .rbx-dialog[data-size="sm"] {
+    width: min(320px, calc(100vw - 24px));
+    --rbx-dialog-inset: 16px;
+    padding: var(--rbx-dialog-inset);
+  }
+  .rbx-dialog[data-size="lg"] {
+    width: min(640px, calc(100vw - 24px));
+  }
+  .rbx-dialog:has(> .rbx-dialog-body) {
+    padding: 0;
+  }
+  .rbx-dialog-body {
+    padding: var(--rbx-dialog-inset);
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .rbx-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 0 var(--rbx-dialog-inset) var(--rbx-dialog-inset);
+    flex-wrap: wrap;
+  }
 
-.rbx-dialog-title {
-  font: var(--rbx-typography-heading-small-font);
-  letter-spacing: var(--rbx-typography-heading-small-letter-spacing);
-}
-.rbx-dialog-close-affordance {
-  position: absolute;
-  top: 12px;
-  inset-inline-end: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  padding: 8px;
-  border: 0;
-  border-radius: 9999px;
-  background: var(--rbx-color-over-media-100);
-  color: var(--rbx-color-content-emphasis);
-  cursor: pointer;
-}
-.rbx-dialog-close-affordance:hover {
-  background-image: linear-gradient(
-    var(--rbx-color-state-hover),
-    var(--rbx-color-state-hover)
-  );
-}
-.rbx-dialog:has(.rbx-dialog-close-affordance) .rbx-dialog-title {
-  padding-inline-end: 36px;
+  .rbx-dialog-title {
+    font: var(--rbx-typography-heading-small-font);
+    letter-spacing: var(--rbx-typography-heading-small-letter-spacing);
+  }
+  .rbx-dialog-close-affordance {
+    position: absolute;
+    top: 12px;
+    inset-inline-end: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    border: 0;
+    border-radius: 9999px;
+    background: var(--rbx-color-over-media-100);
+    color: var(--rbx-color-content-emphasis);
+    cursor: pointer;
+  }
+  .rbx-dialog-close-affordance:hover {
+    background-image: linear-gradient(
+      var(--rbx-color-state-hover),
+      var(--rbx-color-state-hover)
+    );
+  }
+  .rbx-dialog:has(.rbx-dialog-close-affordance) .rbx-dialog-title {
+    padding-inline-end: 36px;
+  }
 }

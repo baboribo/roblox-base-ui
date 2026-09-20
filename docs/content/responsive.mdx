@@ -27,3 +27,13 @@ Pagination은 숫자 버튼이 들어갈 공간이 부족하면 이전·다음 �
 ## 팝업
 
 팝업은 화면에 남은 너비와 높이를 넘지 않도록 제한합니다. Portal은 선언된 영역의 테마와 글자 방향을 상속하며, Portal에 직접 지정한 `data-theme`가 있으면 해당 테마를 사용합니다.
+
+## 컴포넌트 조합
+
+[Layout](/docs/components/layout)의 `Stack`, `Inline`, `Grid`, `ControlGroup`으로 간격과 줄 전환을 정합니다. Button·Badge는 내용 너비를 유지하므로 카드나 세로 배치에 넣어도 자동으로 가로 전체를 채우지 않습니다. 입력·선택은 가용 너비를 사용합니다.
+
+## 스타일 우선순위
+
+PLY는 `theme → base → components → utilities` 레이어 순서를 선언합니다. 기본 스타일은 `components.ply-base`, 개별 스타일은 `components.ply`에 둡니다. Tailwind 유틸리티나 레이어 밖의 사용자 CSS는 기본 스타일보다 우선합니다. `!important` 없이 크기·간격을 바꿀 수 있습니다.
+
+프로젝트의 전역 reset은 `@layer base`에 둡니다. 예를 들어 레이어 밖의 `button { font: inherit }`은 모든 컴포넌트보다 우선하므로, 의도적인 사용자 스타일이 아니라면 base 레이어로 옮깁니다.

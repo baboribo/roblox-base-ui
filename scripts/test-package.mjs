@@ -52,6 +52,8 @@ write(
       devDependencies: Object.fromEntries(
         [
           "vite",
+          "tailwindcss",
+          "@tailwindcss/postcss",
           "typescript",
           "@types/react",
           "@types/react-dom",
@@ -108,6 +110,11 @@ cpSync(
   path.join(kitRoot, "tests/package-fixture/demo.tsx"),
   path.join(fixture, "demo.tsx"),
 );
+write("consumer.css", '@import "tailwindcss";\n@source "./demo.tsx";\n');
+write(
+  "postcss.config.mjs",
+  'export default {plugins: {"@tailwindcss/postcss": {}}};\n',
+);
 write("style-imports.d.ts", 'declare module "*.css";\n');
 write(
   "tsconfig.json",
@@ -139,7 +146,7 @@ export const sample = <><Select {...a}/><DirectSelect {...b}/><Button>저장</Bu
 );
 write(
   "main.tsx",
-  `import { createRoot } from 'react-dom/client';\nimport Demo from './demo';\nimport '${manifest.name}/styles.css';\ncreateRoot(document.getElementById('root')!).render(<Demo/>);\n`,
+  `import { createRoot } from 'react-dom/client';\nimport './consumer.css';\nimport Demo from './demo';\nimport '${manifest.name}/styles.css';\ncreateRoot(document.getElementById('root')!).render(<Demo/>);\n`,
 );
 write(
   "index.html",
@@ -173,6 +180,8 @@ if (sourceMode) {
     "textarea",
     "tooltip",
     "table",
+    "input",
+    "layout",
     "--entry",
     "main.tsx",
     "--src",
@@ -211,6 +220,15 @@ async function check(url) {
     if (/rbxcdn/.test(request.url())) fonts.push(request.url());
   });
   await page.goto(url);
+  await expect(page.getByRole("button", { name: "사용자 크기" })).toHaveCSS(
+    "height",
+    "64px",
+  );
+  await expect(page.getByRole("button", { name: "사용자 크기" })).toHaveCSS(
+    "border-radius",
+    "0px",
+  );
+  await expect(page.locator(".rbx-input-group")).toHaveCSS("width", "160px");
   await page.getByRole("button", { name: "저장" }).click();
   await expect(page.getByRole("status")).toHaveText("저장 1회");
   await page.getByRole("switch", { name: "알림" }).click();
@@ -318,7 +336,7 @@ try {
   // Next 앱에서는 서버 페이지가 패키지의 정적 컴포넌트와 클라이언트 컴포넌트를 함께 import합니다.
   write(
     "app/layout.tsx",
-    `import '${manifest.name}/styles.css';\nexport default function Layout({children}: {children: React.ReactNode}) { return <html lang="ko" data-theme="light"><body>{children}</body></html>; }`,
+    `import '../consumer.css';\nimport '${manifest.name}/styles.css';\nexport default function Layout({children}: {children: React.ReactNode}) { return <html lang="ko" data-theme="light"><body>{children}</body></html>; }`,
   );
   write(
     "app/page.tsx",

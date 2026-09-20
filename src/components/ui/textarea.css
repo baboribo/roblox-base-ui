@@ -1,7 +1,12 @@
-/* textarea — semantic HTML composition. */
-.rbx-textarea.rbx-input {
-  height: auto;
-  padding-block: 12px;
-  min-height: 100px;
-  resize: vertical;
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+
+@layer components.ply {
+  /* textarea — semantic HTML composition. */
+  .rbx-textarea.rbx-input {
+    height: auto;
+    padding-block: 12px;
+    min-height: 100px;
+    resize: vertical;
+  }
 }

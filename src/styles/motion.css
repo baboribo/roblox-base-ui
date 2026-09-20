@@ -1,16 +1,21 @@
-/* 원본 Roblox 토큰을 용도별 이름으로 연결합니다. 우리 UI에서 정한 사용 규칙입니다. */
-:root {
-  --rbx-motion-duration-enter: var(--rbx-time-200);
-  --rbx-motion-duration-exit: var(--rbx-time-100);
-  --rbx-motion-ease-enter: var(--rbx-ease-standard-out);
-  --rbx-motion-ease-exit: var(--rbx-ease-standard-in);
-  --rbx-motion-distance-toast: 4px;
-  /* 큰 영역은 충분히 이동을 읽을 수 있도록 시간을 더 줍니다. */
-  --rbx-motion-duration-sidebar: var(--rbx-time-500, 500ms);
-  --rbx-motion-duration-panel: var(--rbx-time-300);
-  --rbx-motion-duration-panel-exit: var(--rbx-time-200);
-  --rbx-motion-duration-feedback: var(--rbx-time-100);
-  /* --rbx-motion-delay-tabs: var(--rbx-time-100); */
-  --rbx-motion-distance-tabs: 24px;
-  --rbx-motion-scale-overlay: 0.975;
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+
+@layer components.ply-base {
+  /* 원본 Roblox 토큰을 용도별 이름으로 연결합니다. 우리 UI에서 정한 사용 규칙입니다. */
+  :root {
+    --rbx-motion-duration-enter: var(--rbx-time-200);
+    --rbx-motion-duration-exit: var(--rbx-time-100);
+    --rbx-motion-ease-enter: var(--rbx-ease-standard-out);
+    --rbx-motion-ease-exit: var(--rbx-ease-standard-in);
+    --rbx-motion-distance-toast: 4px;
+    /* 큰 영역은 충분히 이동을 읽을 수 있도록 시간을 더 줍니다. */
+    --rbx-motion-duration-sidebar: var(--rbx-time-500, 500ms);
+    --rbx-motion-duration-panel: var(--rbx-time-300);
+    --rbx-motion-duration-panel-exit: var(--rbx-time-200);
+    --rbx-motion-duration-feedback: var(--rbx-time-100);
+    /* --rbx-motion-delay-tabs: var(--rbx-time-100); */
+    --rbx-motion-distance-tabs: 24px;
+    --rbx-motion-scale-overlay: 0.975;
+  }
 }

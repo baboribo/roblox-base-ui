@@ -1,55 +1,129 @@
 "use client";
 import { hasContent } from "../../lib/content";
-import type { ComponentProps, ReactNode } from "react";
+import { cx } from "../../lib/cx";
+import { useRender } from "@base-ui/react/use-render";
+import type { ComponentProps, CSSProperties, ReactNode } from "react";
 import { Input as Primitive } from "@base-ui/react/input";
-import { withClassName } from "../../lib/cx";
 import "./input.css";
 
 export type InputProps = ComponentProps<typeof Primitive> & {
-  /** native size(글자 수)와 달리 컨트롤 높이를 정합니다. @defaultValue "lg" */
+  /** 컨트롤 높이입니다. @defaultValue "lg" */
   controlSize?: "xs" | "sm" | "md" | "lg";
-  /** 입력 영역의 배경과 테두리 표현입니다. @defaultValue "standard" */
+  /** 입력 표면의 배경과 테두리입니다. */
   variant?: "standard" | "contrast" | "utility";
-  /** 입력 영역 앞에 표시할 아이콘이나 내용입니다. */
+  /** 입력 앞의 아이콘 또는 내용입니다. */
   leading?: ReactNode;
-  /** 입력 영역 뒤에 표시할 아이콘이나 내용입니다. */
+  /** 입력 뒤의 아이콘 또는 내용입니다. */
   trailing?: ReactNode;
+  /** 장식 유무와 관계없이 네이티브 input에만 적용합니다. */
+  inputClassName?: string;
+  inputStyle?: CSSProperties;
 };
-/** Base UI는 입력/Field 연동, 외부 래퍼는 아이콘과 테두리만 담당합니다. ref는 input에 전달됩니다. */
+/** className/style은 보이는 전체 표면, ref·이벤트·입력 속성은 실제 input에 연결합니다. */
 export function Input({
   controlSize = "lg",
   variant = "standard",
   leading,
   trailing,
   className,
+  style,
+  inputClassName,
+  inputStyle,
+  render,
   ...props
 }: InputProps) {
-  const input = (
+  return (
     <Primitive
       {...props}
-      data-size={controlSize}
-      data-variant={variant}
-      className={withClassName("rbx-input", className)}
+      render={(elementProps, state) => (
+        <InputSurface
+          elementProps={elementProps}
+          state={state}
+          render={render}
+          controlSize={controlSize}
+          variant={variant}
+          leading={leading}
+          trailing={trailing}
+          className={className}
+          style={style}
+          inputClassName={inputClassName}
+          inputStyle={inputStyle}
+        />
+      )}
     />
   );
-  const hasLeading = hasContent(leading);
-  const hasTrailing = hasContent(trailing);
-  if (!hasLeading && !hasTrailing) return input;
+}
+function InputSurface({
+  elementProps,
+  state,
+  render,
+  controlSize,
+  variant,
+  leading,
+  trailing,
+  className,
+  style,
+  inputClassName,
+  inputStyle,
+}: Pick<
+  InputProps,
+  | "render"
+  | "controlSize"
+  | "variant"
+  | "leading"
+  | "trailing"
+  | "className"
+  | "style"
+  | "inputClassName"
+  | "inputStyle"
+> & { elementProps: ComponentProps<"input">; state: Primitive.State }) {
+  const grouped = hasContent(leading) || hasContent(trailing);
+  const custom = typeof className === "function" ? className(state) : className;
+  const resolvedStyle = typeof style === "function" ? style(state) : style;
+  const { ref, ...props } = elementProps;
+  const invalid =
+    state.valid === false ||
+    props["aria-invalid"] === true ||
+    props["aria-invalid"] === "true";
+  const input = useRender({
+    defaultTagName: "input",
+    render,
+    ref,
+    state: { ...state },
+    props: {
+      ...props,
+      "data-size": controlSize,
+      "data-variant": variant,
+      className: cx(
+        "rbx-input",
+        props.className,
+        !grouped && custom,
+        inputClassName,
+      ),
+      style: {
+        ...props.style,
+        ...(!grouped ? resolvedStyle : undefined),
+        ...inputStyle,
+      },
+    },
+  });
+  if (!grouped) return input;
   return (
     <div
-      className="rbx-input-group"
+      className={cx("rbx-input-group", custom)}
+      style={resolvedStyle}
       data-size={controlSize}
       data-variant={variant}
-      data-disabled={props.disabled || undefined}
-      data-invalid={
-        props["aria-invalid"] === true ||
-        props["aria-invalid"] === "true" ||
-        undefined
-      }
+      data-disabled={state.disabled || undefined}
+      data-invalid={invalid || undefined}
     >
-      {hasLeading && <span className="rbx-input-adornment">{leading}</span>}
+      {hasContent(leading) && (
+        <span className="rbx-input-adornment">{leading}</span>
+      )}
       {input}
-      {hasTrailing && <span className="rbx-input-adornment">{trailing}</span>}
+      {hasContent(trailing) && (
+        <span className="rbx-input-adornment">{trailing}</span>
+      )}
     </div>
   );
 }

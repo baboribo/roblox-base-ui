@@ -77,3 +77,27 @@ React와 React DOM은 사용하는 앱이 제공합니다. Base UI는 패키지 
 `<Button loading={saving}>저장</Button>`은 처리 중 표시와 재실행 방지를 제공합니다. 독립적인 로딩 표시는 `Spinner`, 진행률 표시는 `Progress`를 사용합니다.
 
 `<Pagination pageCount={20} page={page} onPageChange={setPage} />`는 1부터 시작하는 페이지 선택 UI입니다. 데이터 조회와 URL 변경은 앱에서 처리합니다.
+
+## Layout and customization
+
+`Stack`, `Inline`, `Grid`, and `ControlGroup` are available from `ply-ui/layout`.
+They own spacing and wrapping; inputs fill available space while buttons and badges keep their intrinsic width.
+
+```tsx
+import { ControlGroup } from "ply-ui/layout";
+import { Input } from "ply-ui/input";
+import { Button } from "ply-ui/button";
+
+<ControlGroup>
+  <Input aria-label="Search projects" />
+  <Button>Search</Button>
+</ControlGroup>
+```
+
+PLY declares `theme, base, components, utilities` cascade layers in every CSS entry.
+Tailwind utilities and unlayered application CSS override PLY without `!important`.
+Put general resets in `@layer base` so they do not override component styles accidentally.
+
+In 0.4, an Input's `className`/`style` target its whole surface, including adornments.
+Use `inputClassName`/`inputStyle` for only the native input; its `ref` and events still target the input.
+Use `w-full` or `style={{ width: "100%" }}` when a Button or Badge should fill its parent.

@@ -56,3 +56,5 @@ export * from "./components/ui/tooltip";
 export * from "./components/ui/typography";
 export * from "./components/ui/spinner";
 export * from "./components/ui/pagination";
+
+export * from "./components/ui/layout";

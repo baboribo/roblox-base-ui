@@ -38,18 +38,48 @@ test("replacement never stacks or resurrects the previous toast", async ({
   const button = page.getByRole("button", { name: "새 알림 표시" });
   await button.click();
   await expect(page.locator(activeToast)).toHaveCSS("opacity", "1");
+  // 200ms 모션이 여러 브라우저 왕복 사이에서 끝나지 않도록 같은 프레임에서 기록합니다.
+  await page.evaluate(() => {
+    (window as any).replacementMotion = new Promise((resolve) => {
+      const observer = new MutationObserver(() => {
+        const outgoing = document.querySelector(
+          ".rbx-toast[data-ending-style]",
+        );
+        const incoming = document.querySelector(
+          ".rbx-toast:not([data-limited]):not([data-ending-style])",
+        );
+        if (!outgoing || !incoming) return;
+        getComputedStyle(outgoing).opacity;
+        getComputedStyle(incoming).opacity;
+        resolve({
+          outgoing: outgoing.getAnimations().length,
+          incoming: incoming.getAnimations().length,
+          display: getComputedStyle(outgoing).display,
+          duration: getComputedStyle(outgoing).transitionDuration,
+          inert: outgoing.hasAttribute("inert"),
+          hidden: outgoing.getAttribute("aria-hidden"),
+        });
+        observer.disconnect();
+      });
+      observer.observe(document.body, {
+        subtree: true,
+        childList: true,
+        attributes: true,
+        attributeFilter: ["data-ending-style"],
+      });
+    });
+  });
   await button.click();
+  const motion = await page.evaluate(() => (window as any).replacementMotion);
+  expect(motion.outgoing).toBeGreaterThan(0);
+  expect(motion.incoming).toBeGreaterThan(0);
   const outgoing = page.locator(".rbx-toast[data-ending-style]");
-  await expect(outgoing).toHaveCount(1);
-  await expect(outgoing).toHaveCSS("display", "block");
-  await expect(outgoing).toHaveAttribute("inert", "");
-  await expect(outgoing).toHaveCSS("transition-duration", "0.2s");
-  expect(
-    await outgoing.evaluate((el) => el.getAnimations().length),
-  ).toBeGreaterThan(0);
-  expect(
-    await page.locator(activeToast).evaluate((el) => el.getAnimations().length),
-  ).toBeGreaterThan(0);
+  expect(motion).toMatchObject({
+    display: "block",
+    duration: "0.2s",
+    inert: true,
+    hidden: "true",
+  });
   await expect(outgoing).toHaveCount(0);
   for (let n = 3; n <= 6; n++) {
     await button.click();

@@ -1,129 +1,134 @@
-/* Tabs: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
-.rbx-tabs-list {
-  display: flex;
-  gap: 24px;
-  position: relative;
-  border-bottom: 1px solid var(--rbx-color-stroke-default);
-  max-width: 100%;
-  min-width: 0;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scrollbar-width: thin;
-}
-.rbx-tab {
-  padding: 14px 0;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  background: transparent;
-  color: var(--rbx-color-content-muted);
-  font: 600 1rem var(--rbx-font-body);
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.rbx-tab[data-active] {
-  color: var(--rbx-color-content-emphasis);
-}
-/* Indicator가 없는 기존 조합에서는 고정 밑줄을 유지합니다. */
-.rbx-tabs-list:not(:has(.rbx-tab-indicator)) > .rbx-tab[data-active] {
-  border-bottom-color: var(--rbx-color-content-emphasis);
-}
-.rbx-tab-panel {
-  padding: 24px 0;
-}
-.rbx-tab-panels {
-  display: grid;
-  overflow: clip;
-}
-.rbx-tab-panels > .rbx-tab-panel {
-  grid-area: 1 / 1;
-  min-width: 0;
-  --tab-enter-x: var(--rbx-motion-distance-tabs);
-  --tab-enter-y: 0px;
-}
-.rbx-tab-panels > .rbx-tab-panel[data-activation-direction="left"] {
-  --tab-enter-x: calc(-1 * var(--rbx-motion-distance-tabs));
-}
-.rbx-tab-panels > .rbx-tab-panel[data-activation-direction="down"] {
-  --tab-enter-x: 0px;
-  --tab-enter-y: var(--rbx-motion-distance-tabs);
-}
-.rbx-tab-panels > .rbx-tab-panel[data-activation-direction="up"] {
-  --tab-enter-x: 0px;
-  --tab-enter-y: calc(-1 * var(--rbx-motion-distance-tabs));
-}
-.rbx-tab-panels > .rbx-tab-panel:not([data-activation-direction="none"]) {
-  opacity: 1;
-  transform: translate(0, 0);
-  visibility: visible;
-  transition-property: opacity, transform, visibility;
-  transition-duration:
-    var(--rbx-motion-duration-panel), var(--rbx-motion-duration-panel), 0s;
-  transition-timing-function: var(--rbx-motion-ease-exit);
-  /* 추가 간격을 생략하면 0ms로 처리하고, 기존 내용의 퇴장만 기다립니다. */
-  transition-delay: calc(
-    var(--rbx-motion-duration-panel-exit) + var(--rbx-motion-delay-tabs, 0ms)
-  );
-}
-@starting-style {
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+
+@layer components.ply {
+  /* Tabs: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+  .rbx-tabs-list {
+    display: flex;
+    gap: 24px;
+    position: relative;
+    border-bottom: 1px solid var(--rbx-color-stroke-default);
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+  .rbx-tab {
+    padding: 14px 0;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--rbx-color-content-muted);
+    font: 600 1rem var(--rbx-font-body);
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .rbx-tab[data-active] {
+    color: var(--rbx-color-content-emphasis);
+  }
+  /* Indicator가 없는 기존 조합에서는 고정 밑줄을 유지합니다. */
+  .rbx-tabs-list:not(:has(.rbx-tab-indicator)) > .rbx-tab[data-active] {
+    border-bottom-color: var(--rbx-color-content-emphasis);
+  }
+  .rbx-tab-panel {
+    padding: 24px 0;
+  }
+  .rbx-tab-panels {
+    display: grid;
+    overflow: clip;
+  }
+  .rbx-tab-panels > .rbx-tab-panel {
+    grid-area: 1 / 1;
+    min-width: 0;
+    --tab-enter-x: var(--rbx-motion-distance-tabs);
+    --tab-enter-y: 0px;
+  }
+  .rbx-tab-panels > .rbx-tab-panel[data-activation-direction="left"] {
+    --tab-enter-x: calc(-1 * var(--rbx-motion-distance-tabs));
+  }
+  .rbx-tab-panels > .rbx-tab-panel[data-activation-direction="down"] {
+    --tab-enter-x: 0px;
+    --tab-enter-y: var(--rbx-motion-distance-tabs);
+  }
+  .rbx-tab-panels > .rbx-tab-panel[data-activation-direction="up"] {
+    --tab-enter-x: 0px;
+    --tab-enter-y: calc(-1 * var(--rbx-motion-distance-tabs));
+  }
   .rbx-tab-panels > .rbx-tab-panel:not([data-activation-direction="none"]) {
+    opacity: 1;
+    transform: translate(0, 0);
+    visibility: visible;
+    transition-property: opacity, transform, visibility;
+    transition-duration:
+      var(--rbx-motion-duration-panel), var(--rbx-motion-duration-panel), 0s;
+    transition-timing-function: var(--rbx-motion-ease-exit);
+    /* 추가 간격을 생략하면 0ms로 처리하고, 기존 내용의 퇴장만 기다립니다. */
+    transition-delay: calc(
+      var(--rbx-motion-duration-panel-exit) + var(--rbx-motion-delay-tabs, 0ms)
+    );
+  }
+  @starting-style {
+    .rbx-tab-panels > .rbx-tab-panel:not([data-activation-direction="none"]) {
+      opacity: 0;
+      transform: translate(var(--tab-enter-x), var(--tab-enter-y));
+      visibility: hidden;
+    }
+  }
+  .rbx-tab-panels
+    > .rbx-tab-panel[data-starting-style]:not(
+      [data-activation-direction="none"]
+    ) {
     opacity: 0;
     transform: translate(var(--tab-enter-x), var(--tab-enter-y));
     visibility: hidden;
   }
-}
-.rbx-tab-panels
-  > .rbx-tab-panel[data-starting-style]:not(
-    [data-activation-direction="none"]
-  ) {
-  opacity: 0;
-  transform: translate(var(--tab-enter-x), var(--tab-enter-y));
-  visibility: hidden;
-}
-.rbx-tab-panels > .rbx-tab-panel[data-ending-style] {
-  opacity: 0;
-  transform: translate(
-    calc(-1 * var(--tab-enter-x)),
-    calc(-1 * var(--tab-enter-y))
-  );
-  transition-duration: var(--rbx-motion-duration-panel-exit);
-  transition-timing-function: var(--rbx-motion-ease-exit);
-  transition-delay: 0s;
-  pointer-events: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .rbx-tab-panels > .rbx-tab-panel {
-    transition: none;
-    transform: none;
+  .rbx-tab-panels > .rbx-tab-panel[data-ending-style] {
+    opacity: 0;
+    transform: translate(
+      calc(-1 * var(--tab-enter-x)),
+      calc(-1 * var(--tab-enter-y))
+    );
+    transition-duration: var(--rbx-motion-duration-panel-exit);
+    transition-timing-function: var(--rbx-motion-ease-exit);
+    transition-delay: 0s;
+    pointer-events: none;
   }
-}
-.rbx-tab-indicator {
-  position: absolute;
-  bottom: 0;
-  height: 2px;
-  background: var(--rbx-color-content-emphasis);
-  left: 0;
-  transform: translateX(var(--active-tab-left));
-  width: var(--active-tab-width);
-  pointer-events: none;
-}
-.rbx-tabs,
-.rbx-tab-panel {
-  min-width: 0;
-  max-width: 100%;
-  overflow-wrap: anywhere;
-}
-.rbx-tab:focus-visible {
-  outline-offset: -3px;
-}
-.rbx-tabs-list[data-orientation="vertical"] {
-  flex-direction: column;
-}
-.rbx-tabs-list[data-orientation="vertical"] .rbx-tab-indicator {
-  top: 0;
-  bottom: auto;
-  inset-inline-start: 0;
-  width: 2px;
-  height: var(--active-tab-height);
-  transform: translateY(var(--active-tab-top));
+  @media (prefers-reduced-motion: reduce) {
+    .rbx-tab-panels > .rbx-tab-panel {
+      transition: none;
+      transform: none;
+    }
+  }
+  .rbx-tab-indicator {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background: var(--rbx-color-content-emphasis);
+    left: 0;
+    transform: translateX(var(--active-tab-left));
+    width: var(--active-tab-width);
+    pointer-events: none;
+  }
+  .rbx-tabs,
+  .rbx-tab-panel {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .rbx-tab:focus-visible {
+    outline-offset: -3px;
+  }
+  .rbx-tabs-list[data-orientation="vertical"] {
+    flex-direction: column;
+  }
+  .rbx-tabs-list[data-orientation="vertical"] .rbx-tab-indicator {
+    top: 0;
+    bottom: auto;
+    inset-inline-start: 0;
+    width: 2px;
+    height: var(--active-tab-height);
+    transform: translateY(var(--active-tab-top));
+  }
 }

@@ -1,21 +1,26 @@
-/* OTPField: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
-.rbx-otp {
-  display: flex;
-  min-width: 0;
-  max-width: 100%;
-  gap: clamp(2px, 2%, 8px);
-}
-.rbx-otp-input {
-  width: 40px;
-  height: 48px;
-  border: 1px solid var(--rbx-color-stroke-default);
-  background: var(--rbx-color-surface-0);
-  color: var(--rbx-color-content-emphasis);
-  text-align: center;
-  border-radius: 8px;
-  font-size: 1.25rem;
-  flex: 1 1 40px;
-  min-width: 0;
-  max-width: 40px;
-  padding-inline: 0;
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+
+@layer components.ply {
+  /* OTPField: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+  .rbx-otp {
+    display: flex;
+    min-width: 0;
+    max-width: 100%;
+    gap: clamp(2px, 2%, 8px);
+  }
+  .rbx-otp-input {
+    width: 40px;
+    height: 48px;
+    border: 1px solid var(--rbx-color-stroke-default);
+    background: var(--rbx-color-surface-0);
+    color: var(--rbx-color-content-emphasis);
+    text-align: center;
+    border-radius: 8px;
+    font-size: 1.25rem;
+    flex: 1 1 40px;
+    min-width: 0;
+    max-width: 40px;
+    padding-inline: 0;
+  }
 }

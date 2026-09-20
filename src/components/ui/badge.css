@@ -1,57 +1,67 @@
-.rbx-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 8px;
-  border-radius: 9999px;
-  background: var(--rbx-color-shift-200);
-  color: var(--rbx-color-content-emphasis);
-  font: var(--rbx-typography-label-small-font);
-  max-width: 100%;
-  min-width: 0;
-  height: auto;
-  min-height: 24px;
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
-.rbx-badge[data-size="xs"] {
-  padding: 0 4px;
-  font: var(--rbx-typography-caption-small-font);
-  height: auto;
-  min-height: 16px;
-}
-.rbx-badge[data-shape="box"] {
-  border-radius: 4px;
-}
-.rbx-badge[data-variant="contrast"] {
-  background: var(--rbx-color-system-contrast);
-  color: var(--rbx-inverse-content-emphasis);
-}
-.rbx-badge[data-variant="emphasis"] {
-  background: var(--rbx-color-system-emphasis);
-  color: var(--rbx-dark-mode-content-emphasis);
-}
-.rbx-badge[data-variant="success"] {
-  background: color-mix(
-    in srgb,
-    var(--rbx-color-system-success) 20%,
-    transparent
-  );
-}
-.rbx-badge[data-variant="warning"] {
-  background: color-mix(
-    in srgb,
-    var(--rbx-color-system-warning) 20%,
-    transparent
-  );
-}
-.rbx-badge[data-variant="alert"] {
-  background: color-mix(
-    in srgb,
-    var(--rbx-color-system-alert) 20%,
-    transparent
-  );
-}
-.rbx-badge[data-variant="over-media"] {
-  background: var(--rbx-color-over-media-0);
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+
+@layer components.ply {
+  .rbx-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 9999px;
+    background: var(--rbx-color-shift-200);
+    color: var(--rbx-color-content-emphasis);
+    font: var(--rbx-typography-label-small-font);
+    max-width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 24px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .rbx-badge[data-size="xs"] {
+    padding: 0 4px;
+    font: var(--rbx-typography-caption-small-font);
+    height: auto;
+    min-height: 16px;
+  }
+  .rbx-badge[data-shape="box"] {
+    border-radius: 4px;
+  }
+  .rbx-badge[data-variant="contrast"] {
+    background: var(--rbx-color-system-contrast);
+    color: var(--rbx-inverse-content-emphasis);
+  }
+  .rbx-badge[data-variant="emphasis"] {
+    background: var(--rbx-color-system-emphasis);
+    color: var(--rbx-dark-mode-content-emphasis);
+  }
+  .rbx-badge[data-variant="success"] {
+    background: color-mix(
+      in srgb,
+      var(--rbx-color-system-success) 20%,
+      transparent
+    );
+  }
+  .rbx-badge[data-variant="warning"] {
+    background: color-mix(
+      in srgb,
+      var(--rbx-color-system-warning) 20%,
+      transparent
+    );
+  }
+  .rbx-badge[data-variant="alert"] {
+    background: color-mix(
+      in srgb,
+      var(--rbx-color-system-alert) 20%,
+      transparent
+    );
+  }
+  .rbx-badge[data-variant="over-media"] {
+    background: var(--rbx-color-over-media-0);
+  }
+
+  .rbx-badge {
+    inline-size: fit-content;
+    flex-shrink: 0;
+  }
 }

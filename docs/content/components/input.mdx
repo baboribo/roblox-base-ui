@@ -90,3 +90,11 @@ pnpm dlx ply-ui add input field icon
 ## 구현 코드
 
 <ComponentSource name="input" />
+
+## 장식과 너비 지정
+
+`leading`·`trailing` 유무와 관계없이 `className`과 `style`은 전체 입력 표면에 적용합니다. `ref`, 이벤트와 입력 속성은 실제 `input`에 연결합니다. 내부 글자나 입력 자체만 꾸밀 때는 `inputClassName`·`inputStyle`을 사용합니다.
+
+```tsx
+<Input leading={<Icon name="icon-regular-person" />} className="max-w-64" />
+```

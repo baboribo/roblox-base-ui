@@ -1,32 +1,37 @@
-/* Progress: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
-.rbx-progress {
-  display: grid;
-  gap: 8px;
-  width: 100%;
-}
-.rbx-progress-track {
-  height: 6px;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 99px;
-  background: var(--rbx-color-shift-300);
-}
-.rbx-progress-indicator {
-  height: 100%;
-  background: var(--rbx-color-system-emphasis);
-  border-radius: inherit;
-  transition: width var(--rbx-motion-duration-enter)
-    var(--rbx-motion-ease-enter);
-}
-.rbx-progress-indicator[data-indeterminate] {
-  width: 35%;
-  animation: rbx-progress 1.3s infinite ease-in-out;
-}
-@keyframes rbx-progress {
-  from {
-    transform: translateX(-100%);
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+
+@layer components.ply {
+  /* Progress: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+  .rbx-progress {
+    display: grid;
+    gap: 8px;
+    width: 100%;
   }
-  to {
-    transform: translateX(350%);
+  .rbx-progress-track {
+    height: 6px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 99px;
+    background: var(--rbx-color-shift-300);
+  }
+  .rbx-progress-indicator {
+    height: 100%;
+    background: var(--rbx-color-system-emphasis);
+    border-radius: inherit;
+    transition: width var(--rbx-motion-duration-enter)
+      var(--rbx-motion-ease-enter);
+  }
+  .rbx-progress-indicator[data-indeterminate] {
+    width: 35%;
+    animation: rbx-progress 1.3s infinite ease-in-out;
+  }
+  @keyframes rbx-progress {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(350%);
+    }
   }
 }

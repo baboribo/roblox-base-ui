@@ -1,5 +1,10 @@
-/* CheckboxGroup: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
-.rbx-checkbox-group {
-  display: grid;
-  gap: 12px;
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+
+@layer components.ply {
+  /* CheckboxGroup: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+  .rbx-checkbox-group {
+    display: grid;
+    gap: 12px;
+  }
 }

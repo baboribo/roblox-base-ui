@@ -28,11 +28,13 @@ body {
   align-items: center;
   justify-content: center;
 }
-button,
-input,
-textarea,
-select {
-  font: inherit;
+@layer base {
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
 }
 p {
   line-height: 1.6;

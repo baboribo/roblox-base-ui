@@ -1,44 +1,49 @@
-/* Checkbox: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
-.rbx-checkbox {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  border: 1px solid var(--rbx-color-stroke-contrast-alpha);
-  border-radius: var(--rbx-radius-small);
-  background: transparent;
-  color: var(--rbx-inverse-content-emphasis);
-  cursor: pointer;
-}
-.rbx-checkbox[data-checked],
-.rbx-checkbox[data-indeterminate] {
-  background: var(--rbx-color-system-contrast);
-  border-color: transparent;
-}
-.rbx-checkbox-indicator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-.rbx-checkbox-indicator > .rbx-icon {
-  width: 100%;
-  height: 100%;
-}
-/* 원본 체크 glyph의 넓은 내부 여백을 보정합니다. 바깥 박스 크기는 유지합니다. */
-.rbx-checkbox-indicator > [data-icon="icon-filled-check"] {
-  mask-size: 150%;
-}
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
 
-.rbx-checkbox[data-size="xs"] {
-  width: 16px;
-  height: 16px;
-}
-.rbx-checkbox:is([data-size="md"], [data-size="lg"]) {
-  width: 24px;
-  height: 24px;
+@layer components.ply {
+  /* Checkbox: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+  .rbx-checkbox {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    border: 1px solid var(--rbx-color-stroke-contrast-alpha);
+    border-radius: var(--rbx-radius-small);
+    background: transparent;
+    color: var(--rbx-inverse-content-emphasis);
+    cursor: pointer;
+  }
+  .rbx-checkbox[data-checked],
+  .rbx-checkbox[data-indeterminate] {
+    background: var(--rbx-color-system-contrast);
+    border-color: transparent;
+  }
+  .rbx-checkbox-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  .rbx-checkbox-indicator > .rbx-icon {
+    width: 100%;
+    height: 100%;
+  }
+  /* 원본 체크 glyph의 넓은 내부 여백을 보정합니다. 바깥 박스 크기는 유지합니다. */
+  .rbx-checkbox-indicator > [data-icon="icon-filled-check"] {
+    mask-size: 150%;
+  }
+
+  .rbx-checkbox[data-size="xs"] {
+    width: 16px;
+    height: 16px;
+  }
+  .rbx-checkbox:is([data-size="md"], [data-size="lg"]) {
+    width: 24px;
+    height: 24px;
+  }
 }

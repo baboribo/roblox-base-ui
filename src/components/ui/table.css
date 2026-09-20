@@ -1,33 +1,38 @@
-/* table — semantic HTML composition. */
-.rbx-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: start;
-}
-.rbx-table-head,
-.rbx-table-cell {
-  white-space: nowrap;
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--rbx-color-stroke-default);
-}
-.rbx-table-head {
-  color: var(--rbx-color-content-muted);
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-.rbx-table-caption {
-  text-align: start;
-  padding: 12px;
-  color: var(--rbx-color-content-default);
-  font-size: 0.875rem;
-}
-.rbx-table-container {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-}
-.rbx-table-container:focus-visible {
-  outline-offset: -3px;
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+
+@layer components.ply {
+  /* table — semantic HTML composition. */
+  .rbx-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: start;
+  }
+  .rbx-table-head,
+  .rbx-table-cell {
+    white-space: nowrap;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--rbx-color-stroke-default);
+  }
+  .rbx-table-head {
+    color: var(--rbx-color-content-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  .rbx-table-caption {
+    text-align: start;
+    padding: 12px;
+    color: var(--rbx-color-content-default);
+    font-size: 0.875rem;
+  }
+  .rbx-table-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+  .rbx-table-container:focus-visible {
+    outline-offset: -3px;
+  }
 }

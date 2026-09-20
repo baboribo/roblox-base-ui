@@ -1,0 +1,54 @@
+---
+title: "Layout"
+description: "컴포넌트 사이의 간격, 정렬과 줄 전환을 관리합니다."
+keywords: ["레이아웃", "배치", "그리드", "스택", "반응형"]
+group: "레이아웃"
+---
+
+<ComponentExample name="layout" title="검색과 프로젝트 목록" />
+
+## 설치
+
+```sh
+pnpm dlx ply-ui add layout card button input badge field select icon
+```
+
+## 구성
+
+| 컴포넌트     | 역할                                                   | 기본값                            |
+| ------------ | ------------------------------------------------------ | --------------------------------- |
+| Stack        | 위에서 아래로 내용 배치                                | 16px 간격                         |
+| Inline       | 버튼·배지를 가로로 배치하고 항목 단위로 줄 전환        | 8px 간격                          |
+| Grid         | 부모 너비에 따라 열 수 변경                            | 최소 열 너비 16rem, 16px 간격     |
+| ControlGroup | 입력 영역이 남은 너비를 사용하고 액션 버튼의 너비 보존 | 8px 간격, 공간이 부족하면 줄 전환 |
+
+`gap`은 `0`, `4`, `8`, `12`, `16`, `24`, `32`, `48` 중 선택합니다. `className`, `style`, HTML 속성과 `ref`는 배치 요소에 전달합니다. 직접 CSS Grid나 Flex를 사용해도 됩니다.
+
+## 입력과 버튼
+
+```tsx
+import { ControlGroup } from "ply-ui/layout";
+import { Input } from "ply-ui/input";
+import { Button } from "ply-ui/button";
+
+<ControlGroup>
+  <Input aria-label="검색어" placeholder="프로젝트 검색" />
+  <Button>검색</Button>
+</ControlGroup>;
+```
+
+입력 영역은 최소 12rem을 기준으로 늘어나며, 공간이 부족하면 버튼이 다음 줄로 이동합니다. 버튼 자체를 좁혀 글자를 여러 줄로 쪼개지 않습니다. 긴 버튼 이름 하나가 부모보다 크면 그 버튼 안에서 줄바꿈합니다.
+
+## 실제 화면 구성
+
+<ComponentExample name="responsive-layout" title="프로젝트 설정" />
+
+`Grid minItemWidth="14rem"`으로 필드 두 개를 배치합니다. 넓으면 두 열, 좁으면 한 열이 됩니다. 부모 패널의 너비가 기준이므로 별도의 화면 크기 조건은 필요하지 않습니다.
+
+## 크기 규칙
+
+입력·선택·표는 가용 너비를 사용합니다. Button·Badge는 내용 너비, IconButton은 지정한 정사각형 크기를 유지합니다. 부모를 채우는 버튼이 필요하면 `className="w-full"` 또는 `style={{ width: "100%" }}`을 지정합니다.
+
+## 구현 코드
+
+<ComponentSource name="layout" />

@@ -1,3 +1,8 @@
 @import "./button.css";
+@layer theme, base, components, utilities;
+@layer components.ply-base, components.ply;
+@import "./button.css";
 @import "./accordion.css";
-/* Collapsible: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+@layer components.ply {
+  /* Collapsible: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
+}

@@ -54,6 +54,11 @@ function ToastRoot({
     <Primitive.Root
       {...props}
       toast={toast}
+      aria-hidden={
+        toast.limited || toast.transitionStatus === "ending"
+          ? true
+          : props["aria-hidden"]
+      }
       // 퇴장 모션은 남기되 이전 알림을 다시 읽거나 실행할 수는 없게 합니다.
       inert={toast.limited || toast.transitionStatus === "ending" || inert}
       className={withClassName("rbx-toast", className)}

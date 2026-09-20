@@ -1,5 +1,19 @@
 # 변경 기록
 
+## 0.4.0
+
+- 기본·컴포넌트·사용자 스타일의 CSS 레이어를 분리합니다. Tailwind 클래스와 일반 사용자 CSS가 의도한 크기·간격을 적용합니다.
+- Button·Badge의 고유 너비와 버튼 축소 방지를 명시하고, Input·Select의 필드 레이블을 정렬합니다.
+- 장식 Input의 className/style은 전체 표면에 적용합니다. 내부 전용 inputClassName/inputStyle을 추가하며 ref·이벤트·Field 상태는 실제 입력에 유지합니다.
+- Field·Indicator에 중첩 적용되던 disabled 투명도를 실제 조작 표면으로 제한합니다.
+- 공유 CSS recipe를 명시적으로 import하여 다른 컴포넌트의 로딩 여부로 디자인이 바뀌는 문제를 제거합니다.
+- Stack·Inline·Grid·ControlGroup을 추가하고, 반응형 예제를 실제 프로젝트 설정 조합으로 교체합니다.
+- 실제 Tailwind 소비자와 설치 패키지에서 스타일 우선순위·폭·줄 전환·테마·입력 및 저장을 검증합니다.
+
+### 마이그레이션
+
+장식 Input 내부만 꾸미던 className/style은 inputClassName/inputStyle로 이동합니다. 부모를 채우는 Button·Badge에는 w-full 또는 width:100%를 지정합니다. 전역 reset은 @layer base에 둡니다.
+
 ## 0.3.1
 
 - 퇴장 중인 Toast가 키보드와 접근성 탐색에 남아 이전 작업을 다시 실행할 수 있던 문제를 수정합니다.
