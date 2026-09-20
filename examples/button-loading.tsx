@@ -20,7 +20,7 @@ export function ButtonLoadingExample() {
   }
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      <Button disabled={saving} aria-busy={saving} onClick={save}>
+      <Button loading={saving} onClick={save}>
         {saving ? "저장 중…" : "저장"}
       </Button>
       <p role="status">{message}</p>

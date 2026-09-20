@@ -277,6 +277,11 @@ export const examples = {
       default: m.IconButtonEmphasisExample,
     })),
   ),
+  "icon-button-loading": lazy(() =>
+    import("./icon-button-loading").then((m) => ({
+      default: m.IconButtonLoadingExample,
+    })),
+  ),
   "icon-button-over-media": lazy(() =>
     import("./icon-button-over-media").then((m) => ({
       default: m.IconButtonOverMediaExample,
@@ -309,6 +314,11 @@ export const examples = {
     import("./icon-custom").then((m) => ({ default: m.IconCustomExample })),
   ),
   icon: lazy(() => import("./icon").then((m) => ({ default: m.IconExample }))),
+  "input-adornment-states": lazy(() =>
+    import("./input-adornment-states").then((m) => ({
+      default: m.InputAdornmentStatesExample,
+    })),
+  ),
   "input-contrast": lazy(() =>
     import("./input-contrast").then((m) => ({
       default: m.InputContrastExample,
@@ -432,6 +442,19 @@ export const examples = {
   "otp-field": lazy(() =>
     import("./otp-field").then((m) => ({ default: m.OTPExample })),
   ),
+  "pagination-disabled": lazy(() =>
+    import("./pagination-disabled").then((m) => ({
+      default: m.PaginationDisabledExample,
+    })),
+  ),
+  "pagination-uncontrolled": lazy(() =>
+    import("./pagination-uncontrolled").then((m) => ({
+      default: m.PaginationUncontrolledExample,
+    })),
+  ),
+  pagination: lazy(() =>
+    import("./pagination").then((m) => ({ default: m.PaginationExample })),
+  ),
   "popover-inverse": lazy(() =>
     import("./popover-inverse").then((m) => ({
       default: m.PopoverInverseExample,
@@ -444,6 +467,9 @@ export const examples = {
   ),
   popover: lazy(() =>
     import("./popover").then((m) => ({ default: m.PopoverExample })),
+  ),
+  "portal-theme": lazy(() =>
+    import("./portal-theme").then((m) => ({ default: m.PortalThemeExample })),
   ),
   "preview-card": lazy(() =>
     import("./preview-card").then((m) => ({ default: m.PreviewCardExample })),
@@ -574,6 +600,9 @@ export const examples = {
   slider: lazy(() =>
     import("./slider").then((m) => ({ default: m.SliderExample })),
   ),
+  spinner: lazy(() =>
+    import("./spinner").then((m) => ({ default: m.SpinnerExample })),
+  ),
   "status-meter-alert": lazy(() =>
     import("./status-meter-alert").then((m) => ({
       default: m.StatusMeterAlertExample,
@@ -626,6 +655,11 @@ export const examples = {
   "textarea-disabled": lazy(() =>
     import("./textarea-disabled").then((m) => ({
       default: m.TextareaDisabledExample,
+    })),
+  ),
+  "textarea-states": lazy(() =>
+    import("./textarea-states").then((m) => ({
+      default: m.TextareaStatesExample,
     })),
   ),
   textarea: lazy(() =>

@@ -151,7 +151,7 @@ if (sourceMode) {
       'import { Button, Switch } from "ply-ui";',
       'import { Button } from "./src/components/ui/button";\nimport { Switch } from "./src/components/ui/switch";',
     )
-    .replace('from "ply-ui/select"', 'from "./src/components/ui/select"');
+    .replace(/from "ply-ui\/([a-z-]+)"/g, 'from "./src/components/ui/$1"');
   write("demo.tsx", demo);
   write(
     "main.tsx",
@@ -168,6 +168,9 @@ if (sourceMode) {
     "select",
     "switch",
     "badge",
+    "dialog",
+    "pagination",
+    "textarea",
     "--entry",
     "main.tsx",
     "--src",
@@ -266,6 +269,25 @@ async function check(url) {
     await expect(page.locator(".rbx-attached-popup[data-open]")).toHaveCount(0);
     await expect(page.getByRole("listbox")).toHaveCount(0);
   }
+  await select.evaluate((el) =>
+    el.closest(".rbx-attached-field").removeAttribute("style"),
+  );
+  const dialogTrigger = page.getByRole("button", { name: "설치 대화상자" });
+  await dialogTrigger.click();
+  await expect(page.getByRole("dialog")).toHaveCSS(
+    "background-color",
+    "rgb(25, 26, 31)",
+  );
+  await page.keyboard.press("Escape");
+  await expect(dialogTrigger).toBeFocused();
+  await page.getByRole("button", { name: "다음 페이지" }).click();
+  await expect(page.getByTestId("page-result")).toHaveText("2");
+  await expect(
+    page.getByRole("button", { name: "처리 중인 버튼" }),
+  ).toBeDisabled();
+  await expect(
+    page.getByRole("textbox", { name: "설치 설명" }),
+  ).toHaveAttribute("rows", "8");
   assert.deepEqual(errors, []);
   assert.deepEqual(
     fonts,

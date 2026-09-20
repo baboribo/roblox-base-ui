@@ -1,0 +1,30 @@
+.rbx-spinner {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  vertical-align: middle;
+  animation: rbx-spinner-rotate 800ms linear infinite;
+}
+.rbx-spinner[data-size="sm"] {
+  width: 16px;
+  height: 16px;
+}
+.rbx-spinner[data-size="lg"] {
+  width: 28px;
+  height: 28px;
+  border-width: 3px;
+}
+@keyframes rbx-spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rbx-spinner {
+    animation: none;
+  }
+}

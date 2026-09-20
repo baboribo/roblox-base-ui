@@ -56,7 +56,7 @@ Next.js App Router에서는 `app/layout.tsx`에서 `styles.css`를 불러옵니�
 
 ## 테마와 폰트
 
-`html`에 `data-theme="light"` 또는 `data-theme="dark"`를 지정합니다. 패키지 CSS 다음에 사용자 CSS를 불러와 토큰을 덮어씁니다.
+`html`에 `data-theme="light"` 또는 `data-theme="dark"`를 지정합니다. 영역별 테마도 지원하며, Menu·Dialog 등은 해당 영역 안에 선언한 Portal로 의미 토큰을 전달합니다. 팝업은 body에 표시되어 overflow에 잘리지 않습니다. 패키지 CSS 다음에 사용자 CSS를 불러와 토큰을 덮어씁니다.
 
 ```css
 :root {
@@ -71,3 +71,9 @@ Next.js App Router에서는 `app/layout.tsx`에서 `styles.css`를 불러옵니�
 React와 React DOM은 사용하는 앱이 제공합니다. Base UI는 패키지 의존성으로 설치됩니다. Next.js, Fumadocs, Storybook과 문서 예제는 포함되지 않습니다.
 
 토큰과 기본 아이콘은 기존 프로젝트에서 기록한 Roblox 공개 CSS를 바탕으로 합니다. 컴포넌트 동작은 Base UI 위에 별도로 구현했습니다. PLY가 직접 작성한 코드는 MIT 라이선스로 제공합니다. 제3자 자료의 출처와 적용 범위는 `THIRD_PARTY_NOTICES.md`를 참고하세요.
+
+## 처리 상태와 페이지 이동
+
+`<Button loading={saving}>저장</Button>`은 처리 중 표시와 재실행 방지를 제공합니다. 독립적인 로딩 표시는 `Spinner`, 진행률 표시는 `Progress`를 사용합니다.
+
+`<Pagination pageCount={20} page={page} onPageChange={setPage} />`는 1부터 시작하는 페이지 선택 UI입니다. 데이터 조회와 URL 변경은 앱에서 처리합니다.

@@ -2,9 +2,13 @@
 import { useState } from "react";
 import { Button, Switch } from "ply-ui";
 import { Select } from "ply-ui/select";
+import { Dialog } from "ply-ui/dialog";
+import { Pagination } from "ply-ui/pagination";
+import { Textarea } from "ply-ui/textarea";
 
 export default function Demo() {
   const [count, setCount] = useState(0);
+  const [page, setPage] = useState(1);
   return (
     <main style={{ maxWidth: 320, padding: 24, display: "grid", gap: 16 }}>
       <Button onClick={() => setCount(count + 1)}>저장</Button>
@@ -29,6 +33,23 @@ export default function Demo() {
           { value: "development", label: "개발" },
         ]}
       />
+      <section data-theme="dark">
+        <Dialog.Root>
+          <Dialog.Trigger>설치 대화상자</Dialog.Trigger>
+          <Dialog.Portal>
+            <Dialog.Backdrop />
+            <Dialog.Popup>
+              <Dialog.Title>설치 확인</Dialog.Title>
+              <Dialog.Description>영역 테마를 유지합니다.</Dialog.Description>
+              <Dialog.Close>닫기</Dialog.Close>
+            </Dialog.Popup>
+          </Dialog.Portal>
+        </Dialog.Root>
+      </section>
+      <Pagination pageCount={3} page={page} onPageChange={setPage} />
+      <p data-testid="page-result">{page}</p>
+      <Textarea aria-label="설치 설명" rows={8} />
+      <Button loading>처리 중인 버튼</Button>
     </main>
   );
 }

@@ -9,6 +9,7 @@ import { IconButtonCircularExample as Example5 } from "../../examples/icon-butto
 import { IconButtonDisabledExample as Example6 } from "../../examples/icon-button-disabled";
 import { IconButtonSizesExample as Example7 } from "../../examples/icon-button-sizes";
 import { IconButtonSelectedExample as Example8 } from "../../examples/icon-button-selected";
+import { IconButtonLoadingExample as Example9 } from "../../examples/icon-button-loading";
 export default {
   title: "입력/Icon Button",
   parameters: { controls: { disable: true } },
@@ -48,4 +49,8 @@ export const CaseIconButtonSizes: StoryObj = {
 export const CaseIconButtonSelected: StoryObj = {
   name: "예제 · 선택 상태",
   render: () => <Example8 />,
+};
+export const CaseIconButtonLoading: StoryObj = {
+  name: "예제 · 처리 중",
+  render: () => <Example9 />,
 };

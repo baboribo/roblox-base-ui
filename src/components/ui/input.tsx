@@ -31,18 +31,26 @@ export function Input({
       className={withClassName("rbx-input", className)}
     />
   );
-  if (!leading && !trailing) return input;
+  const hasLeading =
+    leading !== undefined && leading !== null && leading !== false;
+  const hasTrailing =
+    trailing !== undefined && trailing !== null && trailing !== false;
+  if (!hasLeading && !hasTrailing) return input;
   return (
     <div
       className="rbx-input-group"
       data-size={controlSize}
       data-variant={variant}
       data-disabled={props.disabled || undefined}
-      data-invalid={props["aria-invalid"] === true || undefined}
+      data-invalid={
+        props["aria-invalid"] === true ||
+        props["aria-invalid"] === "true" ||
+        undefined
+      }
     >
-      {leading && <span className="rbx-input-adornment">{leading}</span>}
+      {hasLeading && <span className="rbx-input-adornment">{leading}</span>}
       {input}
-      {trailing && <span className="rbx-input-adornment">{trailing}</span>}
+      {hasTrailing && <span className="rbx-input-adornment">{trailing}</span>}
     </div>
   );
 }

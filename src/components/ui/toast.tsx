@@ -3,7 +3,10 @@
 import { useEffect, type ComponentProps } from "react";
 import { Toast as Primitive } from "@base-ui/react/toast";
 import { withClassName } from "../../lib/cx";
+import { createThemedPortal } from "../../lib/create-themed-portal";
 import "./toast.css";
+
+const ThemedPortal = createThemedPortal(Primitive.Portal);
 
 // limit만 줄이면 이전 알림이 다시 나타날 수 있습니다.
 // 교체된 알림은 닫아 타이머와 상태도 함께 정리합니다.
@@ -137,7 +140,7 @@ function StatusIcon({ type }: { type: string }) {
 function ToastToaster() {
   const { toasts } = Primitive.useToastManager();
   return (
-    <Primitive.Portal>
+    <ThemedPortal>
       <ToastViewport>
         {toasts.map((toast) => (
           <ToastRoot key={toast.id} toast={toast}>
@@ -170,13 +173,14 @@ function ToastToaster() {
           </ToastRoot>
         ))}
       </ToastViewport>
-    </Primitive.Portal>
+    </ThemedPortal>
   );
 }
 
 // manager의 add/update/close/promise 및 전역 manager API는 Base UI 그대로 사용합니다.
 export const Toast = {
   ...Primitive,
+  Portal: ThemedPortal,
   Provider: ToastProvider,
   Toaster: ToastToaster,
   Viewport: ToastViewport,

@@ -149,23 +149,16 @@ test("generated API properties and preview reset are usable", async ({
 test("a failing preview keeps the document usable and can reload successfully", async ({
   page,
 }) => {
-  // 실제 React 렌더 단계에 오류를 주입합니다. 새로 불러온 문서에서는 한 번만 실패합니다.
-  await page.addInitScript(() => {
-    if (
-      location.pathname !== "/preview/input" ||
-      sessionStorage.getItem("preview-fault")
-    )
-      return;
-    sessionStorage.setItem("preview-fault", "done");
-    const create = document.createElement.bind(document);
-    document.createElement = ((
-      tag: string,
-      options?: ElementCreationOptions,
-    ) => {
-      if (tag === "input")
-        throw new Error("intentional preview render failure");
-      return create(tag, options);
-    }) as typeof document.createElement;
+  // iframe 문서 응답에 렌더 오류를 주입합니다. init script의 iframe 실행 시점에 의존하지 않습니다.
+  let failPreview = true;
+  await page.route(/\/preview\/input(?:\?|$)/, async (route) => {
+    const response = await route.fetch();
+    const body = await response.text();
+    const fault = `<script>const originalCreate = document.createElement.bind(document); document.createElement = function(tag, options) { if (tag === "input") throw new Error("intentional preview render failure"); return originalCreate(tag, options); };</script>`;
+    await route.fulfill({
+      response,
+      body: failPreview ? body.replace("<head>", "<head>" + fault) : body,
+    });
   });
   await page.goto("/docs/components/input");
   const frame = page.frameLocator('iframe[title="input 예제"]');
@@ -186,6 +179,7 @@ test("a failing preview keeps the document usable and can reload successfully", 
     .first()
     .getByRole("tab", { name: "미리보기" })
     .click();
+  failPreview = false;
   await frame.getByRole("button", { name: "예제 다시 불러오기" }).click();
   await expect(frame.getByRole("textbox").first()).toBeVisible();
   await expect(frame.getByRole("alert", { name: "예제 오류" })).toHaveCount(0);

@@ -3,11 +3,14 @@ import type { ComponentProps, ReactElement } from "react";
 import { Button as Primitive } from "@base-ui/react/button";
 import { withClassName } from "../../lib/cx";
 import { Icon, type IconName } from "./icon";
+import { Spinner } from "./spinner";
 import "./icon-button.css";
 export type IconButtonProps = Omit<
   ComponentProps<typeof Primitive>,
   "children"
 > & {
+  /** 처리 중 표시를 켜고 재실행을 막습니다. @defaultValue false */
+  loading?: boolean;
   /** 스크린 리더가 읽을 작업 이름입니다. */
   "aria-label": string;
   /** Roblox 아이콘 이름 또는 다른 아이콘팩의 SVG 요소입니다. */
@@ -28,19 +31,25 @@ export function IconButton({
   variant = "emphasis",
   circular = false,
   selected = false,
+  loading = false,
+  disabled,
   className,
   ...props
 }: IconButtonProps) {
   return (
     <Primitive
       {...props}
+      disabled={disabled || loading}
+      aria-busy={loading || props["aria-busy"]}
       data-size={size}
       data-variant={variant}
       data-circular={circular || undefined}
       data-selected={selected || undefined}
       className={withClassName("rbx-icon-button", className)}
     >
-      {typeof icon === "string" ? (
+      {loading ? (
+        <Spinner size={size === "xs" ? "sm" : "md"} aria-hidden="true" />
+      ) : typeof icon === "string" ? (
         <Icon name={icon} size={{ xs: 16, sm: 20, md: 24, lg: 28 }[size]} />
       ) : (
         <Icon render={icon} size={{ xs: 16, sm: 20, md: 24, lg: 28 }[size]} />

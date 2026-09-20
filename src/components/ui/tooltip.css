@@ -23,3 +23,6 @@
 .rbx-tooltip[data-ending-style] {
   transition-timing-function: var(--rbx-motion-ease-exit);
 }
+.rbx-tooltip-arrow {
+  fill: var(--rbx-color-content-emphasis);
+}

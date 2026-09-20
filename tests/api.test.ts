@@ -12,6 +12,7 @@ test("API docs resolve source unions, required fields and defaults without inher
       "ButtonProps",
     );
     assert.deepEqual(button.entries.map((entry) => entry.name).sort(), [
+      "loading",
       "size",
       "variant",
     ]);

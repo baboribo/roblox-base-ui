@@ -15,7 +15,9 @@ import { cx, withClassName } from "../../lib/cx";
 import { IconButton } from "./icon-button";
 import { ScrollArea } from "./scroll-area";
 import { NavigationItem, NavigationLink } from "./navigation-item";
+import { createThemedPortal } from "../../lib/create-themed-portal";
 import "./sidebar.css";
+const ThemedPortal = createThemedPortal(Dialog.Portal);
 
 // CSS의 breakpoint와 맞춥니다. SSR에서는 desktop → hydration 후 실제 viewport 적용.
 const mobileQuery = "(max-width: 1140px)";
@@ -120,7 +122,7 @@ function SidebarPanel({
           {children}
         </SidebarRoot>
       ) : (
-        <Dialog.Portal>
+        <ThemedPortal>
           <Dialog.Backdrop className="rbx-sidebar-backdrop" />
           <Dialog.Popup
             className="rbx-sidebar-popup"
@@ -145,7 +147,7 @@ function SidebarPanel({
               {children}
             </SidebarRoot>
           </Dialog.Popup>
-        </Dialog.Portal>
+        </ThemedPortal>
       )}
     </Dialog.Root>
   );

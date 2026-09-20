@@ -273,5 +273,15 @@
     "id": "empty",
     "name": "Empty",
     "group": "콘텐츠"
+  },
+  {
+    "id": "spinner",
+    "name": "Spinner",
+    "group": "피드백"
+  },
+  {
+    "id": "pagination",
+    "name": "Pagination",
+    "group": "탐색"
   }
 ]

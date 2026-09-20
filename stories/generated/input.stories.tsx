@@ -9,6 +9,7 @@ import { InputReadonlyExample as Example5 } from "../../examples/input-readonly"
 import { InputInvalidExample as Example6 } from "../../examples/input-invalid";
 import { InputLeadingExample as Example7 } from "../../examples/input-leading";
 import { InputTrailingExample as Example8 } from "../../examples/input-trailing";
+import { InputAdornmentStatesExample as Example9 } from "../../examples/input-adornment-states";
 export default {
   title: "입력/Input",
   parameters: { controls: { disable: true } },
@@ -48,4 +49,8 @@ export const CaseInputLeading: StoryObj = {
 export const CaseInputTrailing: StoryObj = {
   name: "예제 · 뒤쪽 아이콘",
   render: () => <Example8 />,
+};
+export const CaseInputAdornmentStates: StoryObj = {
+  name: "예제 · 오류와 숫자 장식",
+  render: () => <Example9 />,
 };

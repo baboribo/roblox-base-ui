@@ -122,3 +122,11 @@ export function SubmitButton() {
 복사한 파일은 대상 프로젝트에서 관리합니다. 원본을 업데이트해도 복사본은 자동으로 바뀌지 않습니다. `--overwrite`는 수정한 파일도 교체하므로 변경 내용을 비교한 뒤 사용합니다.
 
 레지스트리 JSON은 `public/r/`에 생성됩니다. HTTP로 제공하는 경우 shadcn CLI에서도 해당 JSON 주소로 설치할 수 있습니다.
+
+## 영역별 테마
+
+페이지 일부를 다른 테마로 보여주려면 해당 영역에 `data-theme="dark"` 또는 `data-theme="light"`를 지정합니다. Menu·Dialog·Popover·Tooltip 등의 `Portal`은 선언된 영역의 테마와 의미 토큰을 함께 전달합니다. Portal을 그 영역 안에서 선언하세요. 팝업은 계속 body로 이동하므로 부모의 overflow에 잘리지 않습니다.
+
+<ComponentExample name="portal-theme" title="영역별 테마와 팝업" />
+
+개별 영역에 직접 작성한 CSS 선택자는 DOM 밖으로 이동한 팝업에 적용되지 않습니다. 색상·글자·그림자는 `--rbx-*` 의미 토큰으로 변경하고, 팝업 자체의 레이아웃은 Popup의 `className` 또는 `style`로 조정합니다.

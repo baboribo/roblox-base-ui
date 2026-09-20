@@ -5,7 +5,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 101;
+  z-index: calc(var(--rbx-layer-modal) + 1);
   max-height: 85dvh;
   overflow: auto;
   background: var(--rbx-color-surface-100);

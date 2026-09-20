@@ -7,7 +7,10 @@ test("Default Web matches measured Chat, input, dialog and menu properties", asy
 }) => {
   await page.goto("/preview/settings?theme=dark");
   await page.evaluate(() => document.fonts.ready);
-  for (const sample of measurements.samples) {
+  // Select는 원본 측정 이후 연결형으로 재설계했습니다. 원본 기록은 보존하고 아래에서 새 구조를 검사합니다.
+  for (const sample of measurements.samples.filter(
+    (item) => item.component !== "Preferences select",
+  )) {
     const element = page.locator(sample.localSelector).first();
     for (const [property, value] of Object.entries(sample.css)) {
       await expect(element, `${sample.component}: ${property}`).toHaveCSS(
@@ -16,13 +19,13 @@ test("Default Web matches measured Chat, input, dialog and menu properties", asy
       );
     }
   }
-  await page.getByRole("combobox", { name: "표시 모드" }).click();
-  const menu = page.locator(".rbx-popup");
-  await expect(menu).toHaveCSS("border-radius", "16px");
-  await expect(menu).toHaveCSS("background-color", "rgb(25, 26, 31)");
-  const option = page.getByRole("option", { name: "System", exact: true });
-  await expect(option).toHaveCSS("padding", "12px 16px");
-  await expect(option).toHaveCSS("font-size", "16px");
+  await page.getByRole("combobox", { name: /표시 모드/ }).click();
+  const menu = page.locator(".rbx-attached-popup");
+  await expect(menu).toHaveCSS("border-radius", "12px");
+  await expect(menu).toHaveCSS("background-color", "rgb(32, 34, 39)");
+  const option = page.getByRole("option", { name: "Light", exact: true });
+  await expect(option).toHaveCSS("padding", "12px 8px");
+  await expect(option).toHaveCSS("font-size", "14px");
   await page.keyboard.press("Escape");
   const trigger = page.getByRole("button", {
     name: "이름 변경",

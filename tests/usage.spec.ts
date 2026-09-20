@@ -19,7 +19,9 @@ test("all component docs expose their real example source and individual URLs", 
     expect((await example.locator("pre").textContent())?.trim()).toBe(
       source.trim(),
     );
-    await expect(page.locator("main")).toContainText("pnpm ui add " + item.id);
+    await expect(page.locator("main")).toContainText(
+      "pnpm dlx ply-ui add " + item.id,
+    );
   }
 });
 test("copy, loading example and controlled switch work in document frames", async ({

@@ -1,0 +1,30 @@
+---
+title: "Spinner"
+description: "진행률을 알 수 없는 작업의 처리 상태를 표시합니다."
+keywords: ["로딩", "처리 중", "스피너"]
+group: "피드백"
+---
+
+<ComponentExample name="spinner" title="크기" />
+
+## 설치
+
+```sh
+pnpm dlx ply-ui add spinner
+```
+
+## 사용법
+
+`size`는 `sm`(16px), `md`(20px), `lg`(28px)입니다. `label`로 스크린 리더가 읽을 작업 이름을 지정합니다. 화면에는 원형 표시만 나타납니다.
+
+주변에 같은 의미의 텍스트가 있다면 `aria-hidden="true"`로 중복 안내를 막습니다. 모션 줄이기를 설정한 환경에서는 회전하지 않습니다.
+
+버튼 안의 로딩은 `Button loading`을 사용합니다. 퍼센트를 알 수 있는 작업은 [Progress](/docs/components/progress)를 사용합니다.
+
+## 속성
+
+<auto-type-table path="./src/components/ui/spinner.tsx" name="SpinnerProps" />
+
+## 구현 코드
+
+<ComponentSource name="spinner" />

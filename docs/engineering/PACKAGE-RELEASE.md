@@ -35,13 +35,13 @@ npm login --auth-type=web
 npm whoami
 ```
 
-로그인에만 npm CLI를 사용합니다. 빌드·설치·압축·공개는 pnpm을 사용합니다. 검증한 압축파일을 그대로 배포합니다. 아래 버전은 실제 manifest의 버전으로 바꿉니다.
+빌드·설치·압축에는 pnpm을, 브라우저 인증과 공개에는 npm CLI를 사용합니다. 검증한 압축파일을 그대로 배포합니다. 아래 버전은 실제 manifest의 버전으로 바꿉니다.
 
 ```sh
-pnpm publish ./dist/ply-ui-0.2.0.tgz --access public --no-git-checks
-pnpm view ply-ui version
+npm publish ./dist/ply-ui-0.3.0.tgz --access public
+npm view ply-ui version
 ```
 
-`--no-git-checks`는 소스 커밋과 npm 공개를 별도로 진행하기 위한 설정입니다. Git 커밋·푸시는 따로 수행합니다. 공개 후에는 레지스트리에서 패키지를 새 앱에 설치해 확인합니다.
+상대 경로는 반드시 `./dist/`로 시작합니다. npm의 성공 응답 뒤에도 레지스트리 반영에 시간이 걸릴 수 있습니다. 버전과 latest 태그를 조회하고 공개 tarball의 해시가 검증한 파일과 일치하는지 확인합니다. Git 커밋·푸시와 GitHub 릴리즈는 별도로 진행합니다.
 
 라이선스는 PLY 원본 코드에 MIT를 적용합니다. 제3자 자료의 범위는 패키지에 포함되는 `THIRD_PARTY_NOTICES.md`에 기록합니다.
