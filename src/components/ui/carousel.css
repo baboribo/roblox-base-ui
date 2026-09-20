@@ -31,6 +31,8 @@
     color: var(--rbx-color-content-emphasis);
     text-align: start;
     scroll-snap-align: start;
+  }
+  button.rbx-carousel-item {
     cursor: pointer;
   }
   .rbx-carousel-media {

@@ -259,3 +259,36 @@ test("automatic timeout animates opacity and scale before removing the toast", a
   expect(exit.animations).toBeGreaterThan(0);
   await expect(page.locator(".rbx-toast")).toHaveCount(0);
 });
+
+test("recovery actions remain available after dismissing their toast", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/preview/toast-undo");
+  await page.getByRole("button", { name: "파일 삭제", exact: true }).click();
+  await page.getByRole("button", { name: "알림 닫기" }).click();
+  await page.getByRole("button", { name: "삭제한 파일 복원" }).click();
+  await expect(page.getByText("기획안.pdf", { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "파일 삭제", exact: true }),
+  ).toBeEnabled();
+
+  await page.goto("/preview/toast-retry");
+  await page.getByRole("button", { name: "실패 상황 재현" }).click();
+  await page.getByRole("button", { name: "알림 닫기" }).click();
+  await page.getByRole("button", { name: "불러오기 재시도" }).click();
+  await expect(page.getByRole("status").first()).toContainText(
+    "toast 컴포넌트",
+  );
+
+  await page.goto("/preview/toast-change");
+  await page
+    .getByRole("button", { name: "보관함으로 이동", exact: true })
+    .click();
+  await page.getByRole("button", { name: "알림 닫기" }).click();
+  await page
+    .getByRole("button", { name: "이동 위치 변경", exact: true })
+    .click();
+  await page.getByRole("button", { name: "작업 폴더", exact: true }).click();
+  await expect(page.getByRole("status").first()).toContainText("작업 폴더");
+});

@@ -2,6 +2,7 @@
   "title": "문서",
   "pages": [
     "index",
+    "design-principles",
     "installation",
     "responsive",
     "components",

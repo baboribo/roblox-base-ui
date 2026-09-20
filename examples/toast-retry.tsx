@@ -45,6 +45,9 @@ function RetryContent() {
       >
         실패 상황 재현
       </Button>
+      {status === "불러오기 실패" && (
+        <Button onClick={retry}>불러오기 재시도</Button>
+      )}
     </div>
   );
 }

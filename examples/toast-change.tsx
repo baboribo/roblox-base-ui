@@ -30,6 +30,7 @@ function MoveFile() {
       >
         보관함으로 이동
       </Button>
+      <Button onClick={() => setOpen(true)}>이동 위치 변경</Button>
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Portal>
           <Dialog.Backdrop />

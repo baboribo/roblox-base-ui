@@ -19,6 +19,12 @@
     z-index: 1;
     width: fit-content;
     max-width: min(480px, 100%);
+    max-height: calc(
+      100dvh - max(24px, env(safe-area-inset-bottom)) -
+        max(16px, env(safe-area-inset-top))
+    );
+    overflow: auto;
+    overscroll-behavior: contain;
     min-width: 0;
     padding: 8px 8px 8px 16px;
     border: 1px solid var(--rbx-color-stroke-default);
@@ -27,7 +33,7 @@
     color: var(--rbx-color-content-emphasis);
     box-shadow: var(--rbx-shadow-transient-low);
     pointer-events: auto;
-    touch-action: pan-x;
+    touch-action: pan-y;
     opacity: 1;
     scale: 1;
     transform-origin: center;
@@ -80,12 +86,24 @@
   }
   .rbx-toast-content {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 12px;
     min-height: 32px;
   }
+  .rbx-toast-content:has(> .rbx-toast-close) {
+    position: relative;
+    padding-inline-end: 36px;
+  }
+  .rbx-toast-content > .rbx-toast-close {
+    position: absolute;
+    inset-inline-end: 0;
+    top: 0;
+  }
   .rbx-toast-text {
-    flex: 1;
+    /* Wrap by intrinsic content size; a fixed basis also wraps short notices. */
+    flex: 1 1 auto;
+    max-width: 100%;
     min-width: 0;
     overflow-wrap: anywhere;
     padding-block: 4px;
@@ -123,6 +141,10 @@
     cursor: pointer;
   }
   .rbx-toast-action {
+    flex-shrink: 1;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
     padding: 4px 8px;
     font: var(--rbx-typography-body-small-font);
     font-weight: 700;
@@ -133,6 +155,9 @@
     width: 32px;
     padding: 0;
     color: var(--rbx-color-content-default);
+  }
+  .rbx-toast:focus-visible {
+    outline-offset: -3px;
   }
   :is(.rbx-toast-action, .rbx-toast-close):hover {
     background: var(--rbx-color-state-hover);

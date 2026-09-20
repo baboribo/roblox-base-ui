@@ -24,7 +24,7 @@
       "path": "src/components/ui/navigation-menu.css",
       "type": "registry:file",
       "target": "~/src/components/ui/navigation-menu.css",
-      "content": "@import \"./button.css\";\n@layer theme, base, components, utilities;\n@layer components.ply-base, components.ply;\n@import \"./button.css\";\n@layer components.ply {\n  /* NavigationMenu: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */\n  .rbx-nav-list {\n    display: flex;\n    list-style: none;\n    gap: 8px;\n    padding: 0;\n    margin: 0;\n    min-width: 0;\n    max-width: 100%;\n    flex-wrap: wrap;\n  }\n  .rbx-nav-content {\n    padding: 16px;\n    display: grid;\n    gap: 12px;\n    min-width: 0;\n    overflow-wrap: anywhere;\n  }\n\n  /* 링크를 버튼 표면으로 합성할 때 전경도 같은 action 역할을 사용합니다. */\n  .rbx-nav-link.rbx-button {\n    color: var(--rbx-color-action-standard-foreground);\n  }\n}\n"
+      "content": "@layer theme, base, components, utilities;\n@layer components.ply-base, components.ply;\n@import \"./button.css\";\n@layer components.ply {\n  /* NavigationMenu: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */\n  .rbx-nav-list {\n    display: flex;\n    list-style: none;\n    gap: 8px;\n    padding: 0;\n    margin: 0;\n    min-width: 0;\n    max-width: 100%;\n    flex-wrap: wrap;\n  }\n  .rbx-nav-content {\n    padding: 16px;\n    display: grid;\n    gap: 12px;\n    min-width: 0;\n    overflow-wrap: anywhere;\n  }\n\n  /* 링크를 버튼 표면으로 합성할 때 전경도 같은 action 역할을 사용합니다. */\n  .rbx-nav-link.rbx-button {\n    color: var(--rbx-color-action-standard-foreground);\n  }\n}\n"
     },
     {
       "path": "src/components/ui/navigation-menu.tsx",

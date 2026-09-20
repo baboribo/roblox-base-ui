@@ -23,6 +23,8 @@ export function Carousel({
   onItemClick?: (id: string) => void;
   className?: string;
 }) {
+  // Informational cards must not advertise an action that does not exist.
+  const Item = onItemClick ? Button : "div";
   const viewport = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const [edges, setEdges] = useState({ start: true, end: true });
@@ -72,10 +74,10 @@ export function Carousel({
         >
           <ScrollArea.Content className="rbx-carousel-content" ref={content}>
             {items.map((item) => (
-              <Button
+              <Item
                 key={item.id}
                 className="rbx-carousel-item"
-                onClick={() => onItemClick?.(item.id)}
+                onClick={onItemClick ? () => onItemClick(item.id) : undefined}
               >
                 <span className="rbx-carousel-media">{item.media}</span>
                 <span className="rbx-carousel-copy">
@@ -86,7 +88,7 @@ export function Carousel({
                     </span>
                   )}
                 </span>
-              </Button>
+              </Item>
             ))}
           </ScrollArea.Content>
         </ScrollArea.Viewport>

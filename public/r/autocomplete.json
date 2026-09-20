@@ -18,7 +18,7 @@
       "path": "src/components/ui/autocomplete.css",
       "type": "registry:file",
       "target": "~/src/components/ui/autocomplete.css",
-      "content": "@import \"./button.css\";\n@layer theme, base, components, utilities;\n@layer components.ply-base, components.ply;\n@import \"./button.css\";\n@layer components.ply {\n  /* Autocomplete uses shared input and popup styles in theme.css. */\n}\n"
+      "content": "@layer theme, base, components, utilities;\n@layer components.ply-base, components.ply;\n@import \"./button.css\";\n@layer components.ply {\n  /* Autocomplete uses shared input and popup styles in theme.css. */\n}\n"
     },
     {
       "path": "src/components/ui/autocomplete.tsx",
