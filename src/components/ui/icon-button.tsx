@@ -33,6 +33,7 @@ export function IconButton({
   selected = false,
   loading = false,
   disabled,
+  focusableWhenDisabled,
   className,
   ...props
 }: IconButtonProps) {
@@ -40,6 +41,8 @@ export function IconButton({
     <Primitive
       {...props}
       disabled={disabled || loading}
+      focusableWhenDisabled={focusableWhenDisabled ?? loading}
+      data-loading={loading || undefined}
       aria-busy={loading || props["aria-busy"]}
       data-size={size}
       data-variant={variant}

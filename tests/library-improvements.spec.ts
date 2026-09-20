@@ -125,6 +125,10 @@ test("Pagination changes real data, supports keyboard navigation and fits mobile
       .getByRole("listitem")
       .first(),
   ).toHaveText("프로젝트 6");
+  await expect(
+    navigation.getByRole("textbox", { name: "이동할 페이지" }),
+  ).toBeVisible();
+  await page.setViewportSize({ width: 800, height: 740 });
   await navigation
     .getByRole("button", { name: "20페이지", exact: true })
     .focus();

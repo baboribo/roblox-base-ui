@@ -5,6 +5,14 @@ import { Select } from "ply-ui/select";
 import { Dialog } from "ply-ui/dialog";
 import { Pagination } from "ply-ui/pagination";
 import { Textarea } from "ply-ui/textarea";
+import { Tooltip } from "ply-ui/tooltip";
+import {
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableCaption,
+} from "ply-ui/table";
 
 export default function Demo() {
   const [count, setCount] = useState(0);
@@ -46,10 +54,32 @@ export default function Demo() {
           </Dialog.Portal>
         </Dialog.Root>
       </section>
-      <Pagination pageCount={3} page={page} onPageChange={setPage} />
+      <Pagination pageCount={1000} page={page} onPageChange={setPage} />
       <p data-testid="page-result">{page}</p>
       <Textarea aria-label="설치 설명" rows={8} />
       <Button loading>처리 중인 버튼</Button>
+      <Button
+        loading
+        nativeButton={false}
+        render={<a href="#destination">설치 링크</a>}
+      />
+      <Tooltip.Root>
+        <Tooltip.Trigger delay={0}>설치 도움말</Tooltip.Trigger>
+        <Tooltip.Portal>
+          <Tooltip.Positioner>
+            <Tooltip.Popup>패키지 도움말 설명</Tooltip.Popup>
+          </Tooltip.Positioner>
+        </Tooltip.Portal>
+      </Tooltip.Root>
+      <Table>
+        <TableCaption>설치 표</TableCaption>
+        <TableBody>
+          <TableRow>
+            <TableCell>{"long-project-name".repeat(10)}</TableCell>
+            <TableCell>2026-09-20</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
     </main>
   );
 }

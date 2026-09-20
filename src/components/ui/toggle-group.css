@@ -5,4 +5,7 @@
   padding: 4px;
   border: 1px solid var(--rbx-color-stroke-default);
   border-radius: 12px;
+  max-width: 100%;
+  min-width: 0;
+  flex-wrap: wrap;
 }

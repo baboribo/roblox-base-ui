@@ -498,6 +498,11 @@ export const examples = {
   radio: lazy(() =>
     import("./radio").then((m) => ({ default: m.RadioExample })),
   ),
+  "responsive-layout": lazy(() =>
+    import("./responsive-layout").then((m) => ({
+      default: m.ResponsiveLayoutExample,
+    })),
+  ),
   "scroll-area": lazy(() =>
     import("./scroll-area").then((m) => ({ default: m.ScrollAreaExample })),
   ),

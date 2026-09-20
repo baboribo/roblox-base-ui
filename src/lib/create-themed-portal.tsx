@@ -14,6 +14,10 @@ export function createThemedPortal<Props extends PortalProps>(
     const sourceRef = useRef<HTMLTemplateElement>(null);
     const inherited = usePortalStyle(sourceRef, true);
     const { style } = props;
+    const attributes = props as Props & {
+      "data-theme"?: string;
+      "data-contrast"?: string;
+    };
     // 팝업 안에 래퍼를 추가하지 않고 Portal 자체에 토큰을 전달합니다.
     const merged = {
       "data-theme": inherited.theme,
@@ -25,7 +29,12 @@ export function createThemedPortal<Props extends PortalProps>(
     } as Props;
     return (
       <>
-        <template ref={sourceRef} />
+        <template
+          ref={sourceRef}
+          data-theme={attributes["data-theme"]}
+          data-contrast={attributes["data-contrast"]}
+          dir={props.dir}
+        />
         <Portal {...merged} />
       </>
     );

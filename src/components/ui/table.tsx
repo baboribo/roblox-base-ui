@@ -2,8 +2,22 @@ import type { ComponentProps } from "react";
 import { cx } from "../../lib/cx";
 import "./table.css";
 
-export function Table({ className, ...props }: ComponentProps<"table">) {
-  return <table {...props} className={cx("rbx-table", className)} />;
+export type TableProps = ComponentProps<"table"> & {
+  /** 표의 의미와 ref는 table에 남기고, 가로 스크롤 영역만 별도로 설정합니다. */
+  containerProps?: ComponentProps<"div">;
+};
+export function Table({ className, containerProps, ...props }: TableProps) {
+  return (
+    <div
+      role="region"
+      aria-label={props["aria-label"] ?? "표 가로 스크롤"}
+      tabIndex={0}
+      {...containerProps}
+      className={cx("rbx-table-container", containerProps?.className)}
+    >
+      <table {...props} className={cx("rbx-table", className)} />
+    </div>
+  );
 }
 
 export function TableHeader({ className, ...props }: ComponentProps<"thead">) {

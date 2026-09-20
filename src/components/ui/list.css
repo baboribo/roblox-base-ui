@@ -4,6 +4,8 @@
   margin: 0;
   padding: 0;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 .rbx-list-item {
   border-bottom: 1px solid var(--rbx-color-stroke-default);
@@ -15,8 +17,8 @@
   color: inherit;
   border: 0;
   padding: 0;
-  text-align: left;
   cursor: pointer;
+  text-align: start;
 }
 .rbx-list-action:hover {
   background: var(--rbx-color-state-hover);
@@ -69,4 +71,8 @@
   display: block;
   margin-inline: 56px 12px;
   border-bottom: 1px solid var(--rbx-color-stroke-default);
+}
+.rbx-list-title,
+.rbx-list-description {
+  overflow-wrap: anywhere;
 }

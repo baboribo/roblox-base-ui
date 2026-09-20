@@ -6,4 +6,17 @@
   padding: 4px;
   border: 1px solid var(--rbx-color-stroke-default);
   border-radius: 8px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.rbx-toolbar > * {
+  flex-shrink: 0;
+}
+.rbx-toolbar[data-orientation="vertical"] {
+  flex-direction: column;
+}
+.rbx-toolbar :focus-visible {
+  outline-offset: -3px;
 }

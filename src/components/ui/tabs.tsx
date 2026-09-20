@@ -1,6 +1,7 @@
 "use client";
 
-import type { ComponentProps } from "react";
+import { useRef, useLayoutEffect, type ComponentProps } from "react";
+import { useMergedRef } from "../../lib/use-merged-ref";
 import { Tabs as Primitive } from "@base-ui/react/tabs";
 import { withClassName } from "../../lib/cx";
 import "./tabs.css";
@@ -20,11 +21,55 @@ function TabsRoot({
 
 function TabsList({
   className,
+  ref,
   ...props
 }: ComponentProps<typeof Primitive.List>) {
+  const local = useRef<HTMLDivElement>(null);
+  const mergedRef = useMergedRef(local, ref);
+  useLayoutEffect(() => {
+    const list = local.current;
+    if (!list) return;
+    // 외부 상태나 URL로 선택이 바뀌어도 선택된 탭을 스크롤 영역 안에 둡니다.
+    const reveal = () => {
+      const active = list.querySelector<HTMLElement>(
+        '[role="tab"][aria-selected="true"]',
+      );
+      if (!active) return;
+      const box = active.getBoundingClientRect(),
+        viewport = list.getBoundingClientRect();
+      if (list.dataset.orientation === "vertical") {
+        if (box.top < viewport.top) list.scrollTop += box.top - viewport.top;
+        else if (box.bottom > viewport.bottom)
+          list.scrollTop += box.bottom - viewport.bottom;
+      } else {
+        if (box.left < viewport.left)
+          list.scrollLeft += box.left - viewport.left;
+        else if (box.right > viewport.right)
+          list.scrollLeft += box.right - viewport.right;
+      }
+    };
+    reveal();
+    const mutations = new MutationObserver(reveal);
+    mutations.observe(list, {
+      subtree: true,
+      childList: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ["aria-selected", "data-orientation"],
+    });
+    const resize = new ResizeObserver(reveal);
+    resize.observe(list);
+    list.ownerDocument.fonts.addEventListener("loadingdone", reveal);
+    return () => {
+      mutations.disconnect();
+      resize.disconnect();
+      list.ownerDocument.fonts.removeEventListener("loadingdone", reveal);
+    };
+  }, []);
   return (
     <Primitive.List
       {...props}
+      ref={mergedRef}
       className={withClassName("rbx-tabs-list", className)}
     />
   );

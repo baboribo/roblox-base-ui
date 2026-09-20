@@ -171,6 +171,8 @@ if (sourceMode) {
     "dialog",
     "pagination",
     "textarea",
+    "tooltip",
+    "table",
     "--entry",
     "main.tsx",
     "--src",
@@ -288,6 +290,21 @@ async function check(url) {
   await expect(
     page.getByRole("textbox", { name: "설치 설명" }),
   ).toHaveAttribute("rows", "8");
+  const pageInput = page.getByRole("textbox", { name: "이동할 페이지" });
+  await pageInput.fill("20");
+  await pageInput.press("Enter");
+  await expect(page.getByTestId("page-result")).toHaveText("20");
+  await expect(page.locator('a[href="#destination"]')).toHaveAccessibleName(
+    "설치 링크",
+  );
+  const help = page.getByRole("button", { name: "설치 도움말" });
+  await help.focus();
+  await expect(help).toHaveAccessibleDescription("패키지 도움말 설명");
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("table").locator("..")).toHaveCSS(
+    "overflow-x",
+    "auto",
+  );
   assert.deepEqual(errors, []);
   assert.deepEqual(
     fonts,

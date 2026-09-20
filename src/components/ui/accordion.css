@@ -4,6 +4,9 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 .rbx-accordion-item {
   border: 1px solid var(--rbx-color-stroke-default);
@@ -26,8 +29,8 @@
   background: transparent;
   color: var(--rbx-color-content-default);
   font: var(--rbx-typography-title-medium-font);
-  text-align: left;
   cursor: pointer;
+  text-align: start;
 }
 .rbx-accordion-panel {
   color: var(--rbx-color-content-default);
@@ -35,6 +38,11 @@
   font: var(--rbx-typography-body-medium-font);
   white-space: pre-wrap;
   padding-bottom: 12px;
+  height: var(--accordion-panel-height, var(--collapsible-panel-height, auto));
+  transition:
+    height var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
+    opacity var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
+    padding-bottom var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter);
 }
 .rbx-accordion-chevron {
   display: inline-flex;
@@ -54,14 +62,6 @@
   .rbx-accordion {
     gap: 16px;
   }
-}
-
-.rbx-accordion-panel {
-  height: var(--accordion-panel-height, var(--collapsible-panel-height, auto));
-  transition:
-    height var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
-    opacity var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter),
-    padding-bottom var(--rbx-motion-duration-enter) var(--rbx-motion-ease-enter);
 }
 .rbx-accordion-panel:is([data-starting-style], [data-ending-style]) {
   height: 0;

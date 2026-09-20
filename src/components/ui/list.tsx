@@ -1,4 +1,5 @@
 "use client";
+import { hasContent } from "../../lib/content";
 import type { ComponentProps, ReactNode } from "react";
 import { Button } from "@base-ui/react/button";
 import { cx, withClassName } from "../../lib/cx";
@@ -47,9 +48,13 @@ function ListContent({
 }: ListContentProps) {
   return (
     <div {...props} className={cx("rbx-list-content", className)}>
-      {leading && <span className="rbx-list-leading">{leading}</span>}
+      {hasContent(leading) && (
+        <span className="rbx-list-leading">{leading}</span>
+      )}
       <div className="rbx-list-body">{children}</div>
-      {trailing && <span className="rbx-list-trailing">{trailing}</span>}
+      {hasContent(trailing) && (
+        <span className="rbx-list-trailing">{trailing}</span>
+      )}
     </div>
   );
 }

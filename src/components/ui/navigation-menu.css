@@ -6,11 +6,16 @@
   gap: 8px;
   padding: 0;
   margin: 0;
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
 }
 .rbx-nav-content {
   padding: 16px;
   display: grid;
   gap: 12px;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 /* 링크를 버튼 표면으로 합성할 때 전경도 같은 action 역할을 사용합니다. */

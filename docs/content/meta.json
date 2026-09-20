@@ -3,6 +3,7 @@
   "pages": [
     "index",
     "installation",
+    "responsive",
     "components",
     "foundations",
     "motion",

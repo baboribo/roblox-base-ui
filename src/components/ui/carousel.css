@@ -1,6 +1,7 @@
 .rbx-carousel {
   width: 100%;
   min-width: 0;
+  container-type: inline-size;
   padding-bottom: 4px;
 }
 .rbx-carousel-viewport {
@@ -18,7 +19,8 @@
   flex-direction: column;
   flex-shrink: 0;
   gap: 8px;
-  width: 280px;
+  width: min(280px, 100cqw);
+  overflow-wrap: anywhere;
   padding: 0;
   border: 0;
   background: transparent;
@@ -54,4 +56,8 @@
   justify-content: flex-end;
   gap: 8px;
   margin-top: 8px;
+}
+
+.rbx-carousel-controls:dir(rtl) .rbx-icon {
+  transform: rotate(180deg);
 }

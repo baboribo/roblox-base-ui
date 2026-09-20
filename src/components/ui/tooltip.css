@@ -7,14 +7,12 @@
   color: var(--rbx-color-surface-0);
   font-size: 0.875rem;
   box-shadow: 0 4px 16px var(--rbx-color-common-shadow);
-  max-width: 280px;
-}
-
-.rbx-tooltip {
   transform-origin: var(--transform-origin);
   transition:
     opacity var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter),
     scale var(--rbx-motion-duration-feedback) var(--rbx-motion-ease-enter);
+  max-width: min(280px, var(--available-width, 100vw), calc(100vw - 16px));
+  overflow-wrap: anywhere;
 }
 .rbx-tooltip:is([data-starting-style], [data-ending-style]) {
   opacity: 0;
@@ -25,4 +23,9 @@
 }
 .rbx-tooltip-arrow {
   fill: var(--rbx-color-content-emphasis);
+}
+
+.rbx-tooltip-content {
+  max-height: max(32px, calc(var(--available-height, 100dvh) - 32px));
+  overflow: auto;
 }

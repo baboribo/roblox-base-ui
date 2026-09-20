@@ -11,8 +11,12 @@
   background: var(--rbx-color-surface-100);
   color: var(--rbx-color-content-emphasis);
   border-radius: 16px 16px 0 0;
-  padding: 32px;
   transform: translateY(var(--drawer-swipe-movement-y, 0));
+  transition: transform var(--rbx-motion-duration-panel)
+    var(--rbx-motion-ease-enter);
+  overflow-wrap: anywhere;
+  padding: clamp(16px, 4vw, 32px);
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
 }
 .rbx-drawer-content {
   max-width: 600px;
@@ -20,10 +24,6 @@
 }
 
 /* 스와이프 중에는 손가락을 바로 따라가고, 놓으면 전환합니다. */
-.rbx-drawer {
-  transition: transform var(--rbx-motion-duration-panel)
-    var(--rbx-motion-ease-enter);
-}
 .rbx-drawer:is([data-starting-style], [data-ending-style]) {
   transform: translateY(100%);
 }

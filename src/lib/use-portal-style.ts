@@ -40,13 +40,15 @@ export function usePortalStyle(
     const source = sourceRef.current;
     if (!active || !source) return;
     const update = () => {
-      const computed = getComputedStyle(source);
+      const computed =
+        source.ownerDocument.defaultView!.getComputedStyle(source);
       const theme =
         source
           .closest('[data-theme="light"], [data-theme="dark"]')
           ?.getAttribute("data-theme") ?? undefined;
       const style = {
         colorScheme: computed.colorScheme,
+        direction: computed.direction,
         ...Object.fromEntries(
           (
             tokens ??

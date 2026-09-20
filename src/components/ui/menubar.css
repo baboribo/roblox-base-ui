@@ -5,4 +5,16 @@
   padding: 4px;
   border: 1px solid var(--rbx-color-stroke-default);
   border-radius: 8px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.rbx-menubar > * {
+  flex-shrink: 0;
+}
+.rbx-menubar[data-orientation="vertical"] {
+  flex-direction: column;
+}
+.rbx-menubar :focus-visible {
+  outline-offset: -3px;
 }

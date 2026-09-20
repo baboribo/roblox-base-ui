@@ -2,18 +2,23 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  height: 24px;
   padding: 4px 8px;
   border-radius: 9999px;
   background: var(--rbx-color-shift-200);
   color: var(--rbx-color-content-emphasis);
   font: var(--rbx-typography-label-small-font);
-  white-space: nowrap;
+  max-width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 24px;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .rbx-badge[data-size="xs"] {
-  height: 16px;
   padding: 0 4px;
   font: var(--rbx-typography-caption-small-font);
+  height: auto;
+  min-height: 16px;
 }
 .rbx-badge[data-shape="box"] {
   border-radius: 4px;

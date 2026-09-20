@@ -10,5 +10,10 @@
 .rbx-breadcrumb-item + .rbx-breadcrumb-item::before {
   content: "/";
   color: var(--rbx-color-content-muted);
-  margin-right: 8px;
+  margin-right: 0;
+  margin-inline-end: 8px;
+}
+.rbx-breadcrumb-item {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }

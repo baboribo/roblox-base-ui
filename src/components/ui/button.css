@@ -46,26 +46,33 @@
 }
 /* Foundation Web size map: label line-height is 100%, not body text's 140%. */
 .rbx-button {
-  height: 48px;
+  height: auto;
   min-height: 48px;
   padding: 0 12px;
   font: var(--rbx-typography-label-large-font);
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+  min-width: 0;
+  max-width: 100%;
+  position: relative;
+  padding-block: 8px;
 }
 .rbx-button[data-size="md"] {
-  height: 40px;
+  height: auto;
   min-height: 40px;
   font: var(--rbx-typography-label-medium-font);
 }
 .rbx-button[data-size="sm"] {
-  height: 32px;
+  height: auto;
   min-height: 32px;
   padding: 0 8px;
   gap: 4px;
+  padding-block: 4px;
   font: var(--rbx-typography-label-small-font);
 }
 .rbx-button[data-size="xs"] {
-  height: 24px;
+  height: auto;
   min-height: 24px;
   padding: 0 8px;
   gap: 4px;
@@ -89,4 +96,24 @@
   ) {
   background-color: var(--rbx-color-action-standard-background);
   color: var(--rbx-color-action-standard-foreground);
+}
+
+/* 내용의 공간과 읽기 이름은 남기고 로딩 표시만 중앙에 겹칩니다. */
+.rbx-button-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: inherit;
+  gap: inherit;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.rbx-button[data-loading] > .rbx-button-label {
+  opacity: 0;
+}
+.rbx-button-loader {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
 }

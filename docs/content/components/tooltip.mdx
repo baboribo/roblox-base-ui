@@ -37,7 +37,7 @@ Provider.delay로 표시 지연을 정하고 Positioner로 위치를 지정합�
 
 ## 설명 연결
 
-Root 안의 Trigger는 열린 Popup을 `aria-describedby`로 연결합니다. Trigger에 이미 설명 ID가 있으면 함께 유지합니다. 별도 handle로 Root 바깥에 둔 Trigger는 Popup의 `id`와 Trigger의 `aria-describedby`를 직접 연결하세요.
+현재 도움말을 연 Trigger만 Popup을 `aria-describedby`로 연결합니다. 기존 설명 ID는 유지하며, 여러 Trigger가 하나의 Root를 공유하거나 handle로 외부 Trigger를 연결한 경우에도 자동으로 처리합니다.
 
 ## 구현 코드
 

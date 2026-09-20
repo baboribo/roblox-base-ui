@@ -1,4 +1,5 @@
 "use client";
+import { hasContent } from "../../lib/content";
 
 import type { ComponentProps, ReactNode } from "react";
 import { Button as Primitive } from "@base-ui/react/button";
@@ -32,9 +33,11 @@ function NavigationContent({
   const visual = leading ?? (icon ? <Icon name={icon} size={24} /> : null);
   return (
     <>
-      {visual && <span className="rbx-navigation-item-leading">{visual}</span>}
+      {hasContent(visual) && (
+        <span className="rbx-navigation-item-leading">{visual}</span>
+      )}
       <span className="rbx-navigation-item-label">{children}</span>
-      {trailing && (
+      {hasContent(trailing) && (
         <span className="rbx-navigation-item-trailing">{trailing}</span>
       )}
     </>
@@ -55,7 +58,7 @@ export function NavigationItem({
       aria-current={active ? "page" : undefined}
       {...props}
       data-active={active || undefined}
-      data-leading={icon || leading ? "true" : undefined}
+      data-leading={icon || hasContent(leading) ? "true" : undefined}
       className={withClassName("rbx-navigation-item", className)}
     >
       <NavigationContent icon={icon} leading={leading} trailing={trailing}>
@@ -84,7 +87,7 @@ export function NavigationLink({
     props: {
       "aria-current": active ? "page" : undefined,
       ...props,
-      "data-leading": icon || leading ? "true" : undefined,
+      "data-leading": icon || hasContent(leading) ? "true" : undefined,
       className: cx("rbx-navigation-item", className),
       children: (
         <NavigationContent icon={icon} leading={leading} trailing={trailing}>

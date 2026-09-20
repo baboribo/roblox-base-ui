@@ -42,6 +42,7 @@ test("replacement never stacks or resurrects the previous toast", async ({
   const outgoing = page.locator(".rbx-toast[data-ending-style]");
   await expect(outgoing).toHaveCount(1);
   await expect(outgoing).toHaveCSS("display", "block");
+  await expect(outgoing).toHaveAttribute("inert", "");
   await expect(outgoing).toHaveCSS("transition-duration", "0.2s");
   expect(
     await outgoing.evaluate((el) => el.getAnimations().length),

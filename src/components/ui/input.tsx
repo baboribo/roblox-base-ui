@@ -1,4 +1,5 @@
 "use client";
+import { hasContent } from "../../lib/content";
 import type { ComponentProps, ReactNode } from "react";
 import { Input as Primitive } from "@base-ui/react/input";
 import { withClassName } from "../../lib/cx";
@@ -31,10 +32,8 @@ export function Input({
       className={withClassName("rbx-input", className)}
     />
   );
-  const hasLeading =
-    leading !== undefined && leading !== null && leading !== false;
-  const hasTrailing =
-    trailing !== undefined && trailing !== null && trailing !== false;
+  const hasLeading = hasContent(leading);
+  const hasTrailing = hasContent(trailing);
   if (!hasLeading && !hasTrailing) return input;
   return (
     <div

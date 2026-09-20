@@ -1,5 +1,5 @@
 /* textarea — semantic HTML composition. */
-.rbx-textarea {
+.rbx-textarea.rbx-input {
   height: auto;
   padding-block: 12px;
   min-height: 100px;

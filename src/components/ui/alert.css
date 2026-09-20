@@ -4,4 +4,7 @@
   border-radius: 8px;
   padding: 16px;
   background: var(--rbx-color-surface-100);
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }

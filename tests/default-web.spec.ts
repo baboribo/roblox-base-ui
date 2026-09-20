@@ -13,6 +13,11 @@ test("Default Web matches measured Chat, input, dialog and menu properties", asy
   )) {
     const element = page.locator(sample.localSelector).first();
     for (const [property, value] of Object.entries(sample.css)) {
+      // 다중 행 버튼을 지원하며 세로 안쪽 여백만 추가했습니다. 원본 측정값은 보존합니다.
+      if (sample.component === "Chat small button" && property === "padding") {
+        await expect(element).toHaveCSS("padding", "4px 8px");
+        continue;
+      }
       await expect(element, `${sample.component}: ${property}`).toHaveCSS(
         property,
         value,
@@ -153,8 +158,23 @@ test("button size map and explicit enhanced alert contrast are verified", async 
       "background-color",
       theme === "light" ? "rgb(32, 34, 39)" : "rgb(247, 247, 248)",
     );
+    // over-media 배경은 이미 최종 색이어도 alert 글자색은 전환 중일 수 있습니다.
+    // 접근성 검사는 강화 대비 토큰으로 전환이 끝난 실제 상태에서 실행합니다.
+    for (const variant of ["alert", "link"]) {
+      const button = page.locator(`.rbx-button[data-variant="${variant}"]`);
+      await expect
+        .poll(() =>
+          button.evaluate((element) => element.getAnimations().length),
+        )
+        .toBe(0);
+    }
     const result = await new AxeBuilder({ page }).analyze();
-    expect(result.violations.map((v) => v.id)).toEqual([]);
+    expect(
+      result.violations.map((v) => ({
+        id: v.id,
+        nodes: v.nodes.map((n) => n.target),
+      })),
+    ).toEqual([]);
   }
 });
 

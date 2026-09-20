@@ -17,12 +17,15 @@
 }
 .rbx-dialog-body {
   padding: var(--rbx-dialog-inset);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .rbx-dialog-footer {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
   padding: 0 var(--rbx-dialog-inset) var(--rbx-dialog-inset);
+  flex-wrap: wrap;
 }
 
 .rbx-dialog-title {

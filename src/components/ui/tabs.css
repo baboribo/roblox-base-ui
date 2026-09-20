@@ -4,6 +4,11 @@
   gap: 24px;
   position: relative;
   border-bottom: 1px solid var(--rbx-color-stroke-default);
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
 }
 .rbx-tab {
   padding: 14px 0;
@@ -14,6 +19,7 @@
   font: 600 1rem var(--rbx-font-body);
   cursor: pointer;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .rbx-tab[data-active] {
   color: var(--rbx-color-content-emphasis);
@@ -100,4 +106,24 @@
   transform: translateX(var(--active-tab-left));
   width: var(--active-tab-width);
   pointer-events: none;
+}
+.rbx-tabs,
+.rbx-tab-panel {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.rbx-tab:focus-visible {
+  outline-offset: -3px;
+}
+.rbx-tabs-list[data-orientation="vertical"] {
+  flex-direction: column;
+}
+.rbx-tabs-list[data-orientation="vertical"] .rbx-tab-indicator {
+  top: 0;
+  bottom: auto;
+  inset-inline-start: 0;
+  width: 2px;
+  height: var(--active-tab-height);
+  transform: translateY(var(--active-tab-top));
 }

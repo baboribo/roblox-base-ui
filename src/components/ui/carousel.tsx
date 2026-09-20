@@ -45,8 +45,14 @@ export function Carousel({
     const el = viewport.current;
     if (!el) return;
     const rtl = getComputedStyle(el).direction === "rtl";
+    const card = content.current?.firstElementChild;
+    const gap = content.current
+      ? parseFloat(getComputedStyle(content.current).columnGap) || 0
+      : 0;
+    const distance =
+      (card?.getBoundingClientRect().width ?? el.clientWidth) + gap;
     el.scrollBy({
-      left: direction * (rtl ? -292 : 292),
+      left: direction * (rtl ? -distance : distance),
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
         ? "instant"
         : "smooth",

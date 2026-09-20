@@ -32,6 +32,10 @@ Caption으로 표의 목적을 설명하고 열 제목에 scope="col"을 지정�
 | `TableHead`               | 제목 셀입니다. `scope`로 행 또는 열 제목을 지정합니다. |
 | `TableCell`               | 데이터 셀입니다.                                       |
 
+## 좁은 영역에서의 동작
+
+Table은 가로 스크롤 영역을 기본으로 포함합니다. 넓은 표가 페이지 전체를 밀어내지 않고, 키보드로 스크롤 영역에 접근할 수 있습니다. `containerProps`는 바깥 영역, 나머지 속성과 ref는 실제 table에 전달합니다.
+
 ## 구현 코드
 
 <ComponentSource name="table" />
