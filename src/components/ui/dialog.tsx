@@ -90,7 +90,7 @@ function DialogCloseAffordance({
 }: ComponentProps<typeof Primitive.Close>) {
   return (
     <Primitive.Close
-      aria-label="Close"
+      aria-label="닫기"
       {...props}
       className={withClassName("rbx-dialog-close-affordance", className)}
     >

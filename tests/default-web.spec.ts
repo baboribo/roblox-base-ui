@@ -63,29 +63,23 @@ test("synthetic Chat search, collapse, group selection and keyboard focus remain
     if (request.method() !== "GET") requests.push(request.url());
   });
   await page.goto("/preview/settings?theme=dark");
-  await page
-    .getByRole("textbox", { name: "Search conversations" })
-    .fill("Pixel");
+  await page.getByRole("textbox", { name: "대화 검색" }).fill("Pixel");
   await expect(page.locator(".rbx-chat-row")).toHaveCount(1);
-  await page.getByRole("button", { name: "Collapse Chat" }).click();
+  await page.getByRole("button", { name: "채팅 접기" }).click();
   await expect(page.locator(".rbx-chat-panel").first()).toHaveCSS(
     "height",
     "48px",
   );
-  await page.getByRole("button", { name: "Expand Chat" }).click();
-  await page
-    .getByRole("textbox", { name: "Search for connections" })
-    .fill("Pixel");
+  await page.getByRole("button", { name: "채팅 펼치기" }).click();
+  await page.getByRole("textbox", { name: "친구 검색" }).fill("Pixel");
   await page.getByRole("checkbox", { name: /Pixel Builder/ }).check();
   await expect(page.locator(".rbx-chat-count")).toContainText("(1/5)");
   await expect(
-    page.getByRole("button", { name: "Create", exact: true }),
+    page.getByRole("button", { name: "만들기", exact: true }),
   ).toBeDisabled();
-  // Create is never clicked; this demo deliberately has no creation callback.
-  await page.getByRole("button", { name: "Close group panel" }).click();
-  await page
-    .getByRole("button", { name: "New Chat Group", exact: true })
-    .click();
+  // 만들기는 누르지 않습니다; this demo deliberately has no creation callback.
+  await page.getByRole("button", { name: "그룹 패널 닫기" }).click();
+  await page.getByRole("button", { name: "새 채팅 그룹", exact: true }).click();
   await expect(page.locator(".rbx-chat-count")).toContainText("(0/5)");
   expect(requests).toEqual([]);
 });
@@ -240,7 +234,7 @@ test("Account Status meter and card collection work with synthetic data", async 
     2,
   );
   await page.setViewportSize({ width: 900, height: 1000 });
-  const next = page.getByRole("button", { name: "Next cards", exact: true });
+  const next = page.getByRole("button", { name: "다음 카드", exact: true });
   await expect(next).toBeEnabled();
   await next.click();
   await expect
@@ -248,9 +242,7 @@ test("Account Status meter and card collection work with synthetic data", async 
       page.locator(".rbx-carousel-viewport").evaluate((el) => el.scrollLeft),
     )
     .toBeGreaterThan(0);
-  await page
-    .getByRole("button", { name: "Previous cards", exact: true })
-    .click();
+  await page.getByRole("button", { name: "이전 카드", exact: true }).click();
   await expect
     .poll(() =>
       page.locator(".rbx-carousel-viewport").evaluate((el) => el.scrollLeft),

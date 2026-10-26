@@ -285,7 +285,7 @@ test("carousel cards and the next-card distance follow their narrow container", 
   const viewport = page.locator(".rbx-carousel-viewport");
   const first = page.locator(".rbx-carousel-item").first();
   expect((await first.boundingBox())!.width).toBeLessThanOrEqual(200);
-  await page.getByRole("button", { name: "Next cards" }).click();
+  await page.getByRole("button", { name: "다음 카드" }).click();
   await expect
     .poll(() => viewport.evaluate((el) => el.scrollLeft))
     .toBeCloseTo(212, 0);
@@ -297,7 +297,7 @@ test("carousel keeps keyboard focus on the control that reaches the end", async 
   page,
 }) => {
   await page.goto("/?case=details&width=200");
-  const next = page.getByRole("button", { name: "Next cards" });
+  const next = page.getByRole("button", { name: "다음 카드" });
   await next.focus();
   for (let i = 0; i < 10 && !(await next.isDisabled()); i++)
     await page.keyboard.press("Enter");
@@ -306,9 +306,7 @@ test("carousel keeps keyboard focus on the control that reaches the end", async 
   await page.keyboard.press("Enter");
   await expect(next).toBeFocused();
   await page.keyboard.press("Shift+Tab");
-  await expect(
-    page.getByRole("button", { name: "Previous cards" }),
-  ).toBeFocused();
+  await expect(page.getByRole("button", { name: "이전 카드" })).toBeFocused();
 });
 test("tooltip render composition preserves the actual popup ID, children and existing description", async ({
   page,
@@ -334,4 +332,39 @@ test("component defaults survive consumers loading the base stylesheet last", as
   await page.getByRole("button", { name: "Load theme last" }).click();
   await expect(button).toHaveCSS("height", "48px");
   expect((await textarea.boundingBox())!.height).toBeCloseTo(height, 0);
+});
+test("built-in labels default to Korean and every one can be replaced", async ({
+  page,
+}) => {
+  await page.goto("/?case=labels&width=500");
+  const pages = page.getByRole("navigation", { name: "Pages" });
+  await expect(
+    pages.getByRole("button", { name: "Previous page" }),
+  ).toBeVisible();
+  await expect(pages.getByRole("button", { name: "Next page" })).toBeVisible();
+  await expect(pages.getByRole("button", { name: "Page 3" })).toHaveAttribute(
+    "aria-current",
+    "page",
+  );
+  const cards = page.getByRole("region", { name: "Cards" });
+  await expect(
+    cards.getByRole("button", { name: "Previous cards" }),
+  ).toBeVisible();
+  await expect(cards.getByRole("button", { name: "Next cards" })).toBeVisible();
+  // 일부만 지정하면 나머지는 기본 문구를 유지합니다.
+  await expect(page.getByRole("heading", { name: "Chat" })).toBeVisible();
+  await expect(
+    page.getByRole("textbox", { name: "Search conversations" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "새 채팅 그룹" }),
+  ).toBeVisible();
+  await expect(page.getByText("찾은 대화가 없습니다")).toBeVisible();
+  const defaults = page.getByRole("region", { name: "기본 카드" });
+  await expect(
+    defaults.getByRole("button", { name: "이전 카드" }),
+  ).toBeVisible();
+  await expect(
+    defaults.getByRole("button", { name: "다음 카드" }),
+  ).toBeVisible();
 });

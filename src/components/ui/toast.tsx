@@ -147,7 +147,12 @@ function StatusIcon({ type }: { type: string }) {
 }
 
 // 기본 구성을 한 곳에 두고, 사용하는 쪽에서는 메시지와 작업을 전달합니다.
-function ToastToaster() {
+function ToastToaster({
+  closeLabel = "알림 닫기",
+}: {
+  /** 닫기 버튼의 접근 가능한 이름입니다. @defaultValue "알림 닫기" */
+  closeLabel?: string;
+}) {
   const { toasts } = Primitive.useToastManager();
   return (
     <ThemedPortal>
@@ -164,7 +169,7 @@ function ToastToaster() {
               </div>
               <ToastAction />
               {Boolean(toast.description || toast.actionProps?.children) && (
-                <ToastClose aria-label="알림 닫기">
+                <ToastClose aria-label={closeLabel}>
                   <svg
                     width="16"
                     height="16"

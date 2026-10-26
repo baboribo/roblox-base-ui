@@ -9,12 +9,12 @@ import {
 } from "../src/components/ui/chat";
 
 export const people: ChatPerson[] = [
-  { id: "demo-1", name: "Studio Crew", presence: "Online" },
-  { id: "demo-2", name: "Pixel Builder", presence: "In Studio" },
-  { id: "demo-3", name: "Cloud Explorer", presence: "Offline" },
-  { id: "demo-4", name: "Orbit Maker", presence: "Online" },
-  { id: "demo-5", name: "Weekend Club", presence: "Offline" },
-  { id: "demo-6", name: "Nova", presence: "Offline" },
+  { id: "demo-1", name: "Studio Crew", presence: "온라인" },
+  { id: "demo-2", name: "Pixel Builder", presence: "Studio 작업 중" },
+  { id: "demo-3", name: "Cloud Explorer", presence: "오프라인" },
+  { id: "demo-4", name: "Orbit Maker", presence: "온라인" },
+  { id: "demo-5", name: "Weekend Club", presence: "오프라인" },
+  { id: "demo-6", name: "Nova", presence: "오프라인" },
 ];
 
 export const conversations: ChatConversation[] = people.map(
@@ -26,7 +26,7 @@ export const conversations: ChatConversation[] = people.map(
       "변경사항을 확인했습니다.",
       "일정을 확인했습니다.",
     ][index % 3],
-    updatedAt: ["Now", "2h", "Yesterday"][index % 3],
+    updatedAt: ["방금", "2시간 전", "어제"][index % 3],
     unread: index === 0,
   }),
 );

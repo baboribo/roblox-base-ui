@@ -23,6 +23,50 @@ export type ChatConversation = {
   unread?: boolean;
   avatar?: ReactNode;
 };
+/** ChatDock의 표시·읽기 문구입니다. 일부만 바꿔도 나머지는 기본값을 사용합니다. */
+export type ChatDockLabels = {
+  title: string;
+  newGroup: string;
+  collapse: string;
+  expand: string;
+  search: string;
+  searchPlaceholder: string;
+  empty: string;
+};
+export const defaultChatDockLabels: ChatDockLabels = {
+  title: "채팅",
+  newGroup: "새 채팅 그룹",
+  collapse: "채팅 접기",
+  expand: "채팅 펼치기",
+  search: "대화 검색",
+  searchPlaceholder: "검색",
+  empty: "찾은 대화가 없습니다",
+};
+/** ChatGroupPanel의 표시·읽기 문구입니다. 일부만 바꿔도 나머지는 기본값을 사용합니다. */
+export type ChatGroupLabels = {
+  title: string;
+  close: string;
+  name: string;
+  namePlaceholder: string;
+  search: string;
+  searchPlaceholder: string;
+  empty: string;
+  offline: string;
+  cancel: string;
+  create: string;
+};
+export const defaultChatGroupLabels: ChatGroupLabels = {
+  title: "새 채팅 그룹",
+  close: "그룹 패널 닫기",
+  name: "채팅 그룹 이름",
+  namePlaceholder: "채팅 그룹 이름",
+  search: "친구 검색",
+  searchPlaceholder: "친구 검색",
+  empty: "찾은 친구가 없습니다",
+  offline: "오프라인",
+  cancel: "취소",
+  create: "만들기",
+};
 /** 표시 데이터와 이벤트만 받습니다. 네트워크/인증/실제 계정 로직은 포함하지 않습니다. */
 export function ChatPanel({ className, ...props }: ComponentProps<"section">) {
   return <section {...props} className={cx("rbx-chat-panel", className)} />;
@@ -38,13 +82,17 @@ export function ChatDock({
   conversations,
   onOpenConversation,
   onNewGroup,
+  labels: customLabels,
   className,
 }: {
   conversations: ChatConversation[];
   onOpenConversation?: (id: string) => void;
   onNewGroup?: () => void;
+  /** 제목·버튼·검색·빈 상태 문구입니다. 지정한 항목만 바꿉니다. */
+  labels?: Partial<ChatDockLabels>;
   className?: string;
 }) {
+  const labels = { ...defaultChatDockLabels, ...customLabels };
   const id = useId();
   const [query, setQuery] = useState("");
   const [collapsed, setCollapsed] = useState(false);
@@ -58,13 +106,13 @@ export function ChatDock({
       data-collapsed={collapsed || undefined}
     >
       <header className="rbx-chat-header">
-        <h2 id={id}>Chat</h2>
+        <h2 id={id}>{labels.title}</h2>
         <IconButton
           icon="icon-regular-person-plus"
           size="sm"
           variant="utility"
           circular
-          aria-label="New Chat Group"
+          aria-label={labels.newGroup}
           disabled={!onNewGroup}
           onClick={onNewGroup}
         />
@@ -73,7 +121,7 @@ export function ChatDock({
           size="sm"
           variant="utility"
           circular
-          aria-label={collapsed ? "Expand Chat" : "Collapse Chat"}
+          aria-label={collapsed ? labels.expand : labels.collapse}
           aria-expanded={!collapsed}
           onClick={() => setCollapsed(!collapsed)}
         />
@@ -83,8 +131,8 @@ export function ChatDock({
           <div className="rbx-chat-search">
             <Input
               controlSize="sm"
-              aria-label="Search conversations"
-              placeholder="Search"
+              aria-label={labels.search}
+              placeholder={labels.searchPlaceholder}
               value={query}
               onValueChange={setQuery}
               leading={<Icon name="icon-filled-magnifying-glass" size={16} />}
@@ -109,7 +157,7 @@ export function ChatDock({
               </PrimitiveButton>
             ))}
             {!filtered.length && (
-              <p className="rbx-chat-empty">No conversations found</p>
+              <p className="rbx-chat-empty">{labels.empty}</p>
             )}
           </div>
         </>
@@ -121,13 +169,17 @@ export function ChatGroupPanel({
   people,
   onClose,
   onCreate,
+  labels: customLabels,
   className,
 }: {
   people: ChatPerson[];
   onClose?: () => void;
   onCreate?: (name: string, memberIds: string[]) => void;
+  /** 제목·입력·버튼·빈 상태 문구입니다. 지정한 항목만 바꿉니다. */
+  labels?: Partial<ChatGroupLabels>;
   className?: string;
 }) {
+  const labels = { ...defaultChatGroupLabels, ...customLabels };
   const id = useId();
   const [name, setName] = useState("");
   const [query, setQuery] = useState("");
@@ -138,21 +190,21 @@ export function ChatGroupPanel({
   return (
     <ChatPanel aria-labelledby={id} className={cx("rbx-chat-group", className)}>
       <header className="rbx-chat-header">
-        <h2 id={id}>New Chat Group</h2>
+        <h2 id={id}>{labels.title}</h2>
         <IconButton
           icon="icon-regular-x"
           size="sm"
           variant="utility"
           circular
-          aria-label="Close group panel"
+          aria-label={labels.close}
           onClick={onClose}
         />
       </header>
       <div className="rbx-chat-search">
         <Input
           controlSize="sm"
-          aria-label="Name your chat group"
-          placeholder="Name your chat group"
+          aria-label={labels.name}
+          placeholder={labels.namePlaceholder}
           value={name}
           onValueChange={setName}
           leading={<Icon name="icon-regular-person-plus" size={16} />}
@@ -161,8 +213,8 @@ export function ChatGroupPanel({
       <div className="rbx-chat-search">
         <Input
           controlSize="sm"
-          aria-label="Search for connections"
-          placeholder="Search for connections"
+          aria-label={labels.search}
+          placeholder={labels.searchPlaceholder}
           value={query}
           onValueChange={setQuery}
           leading={<Icon name="icon-filled-magnifying-glass" size={16} />}
@@ -178,7 +230,7 @@ export function ChatGroupPanel({
             <span className="rbx-chat-row-body">
               <span className="rbx-chat-person-name">{person.name}</span>
               <span className="rbx-chat-preview">
-                {person.presence ?? "Offline"}
+                {person.presence ?? labels.offline}
               </span>
             </span>
             <Checkbox.Root
@@ -199,20 +251,18 @@ export function ChatGroupPanel({
             </Checkbox.Root>
           </label>
         ))}
-        {!filtered.length && (
-          <p className="rbx-chat-empty">No connections found</p>
-        )}
+        {!filtered.length && <p className="rbx-chat-empty">{labels.empty}</p>}
       </div>
       <footer className="rbx-chat-footer">
         <Button size="sm" variant="standard" onClick={onClose}>
-          Cancel
+          {labels.cancel}
         </Button>
         <Button
           size="sm"
           disabled={selected.length < 2 || !onCreate}
           onClick={() => onCreate?.(name.trim(), selected)}
         >
-          Create
+          {labels.create}
         </Button>
       </footer>
     </ChatPanel>
