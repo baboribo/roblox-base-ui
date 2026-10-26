@@ -4,13 +4,6 @@ export default {
   title: "조합/게임 상세",
   component: GameDetailExample,
   parameters: { layout: "fullscreen" },
-  decorators: [
-    (Story) => (
-      <div style={{ padding: 16 }}>
-        <Story />
-      </div>
-    ),
-  ],
 } satisfies Meta<typeof GameDetailExample>;
 type Story = StoryObj<typeof GameDetailExample>;
 export const Default: Story = { name: "기본" };

@@ -4,13 +4,6 @@ export default {
   title: "조합/기억·설정",
   component: MemorySettingsExample,
   parameters: { layout: "fullscreen" },
-  decorators: [
-    (Story) => (
-      <div style={{ padding: 16 }}>
-        <Story />
-      </div>
-    ),
-  ],
 } satisfies Meta<typeof MemorySettingsExample>;
 type Story = StoryObj<typeof MemorySettingsExample>;
 export const Default: Story = { name: "기본" };

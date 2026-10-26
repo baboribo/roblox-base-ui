@@ -2,16 +2,17 @@
 import { useState } from "react";
 import {
   Card,
+  CardContent,
   CardHeader,
   CardImage,
+  CardLink,
   CardMedia,
   CardMeta,
   CardTitle,
 } from "../src/components/ui/card";
-import { Carousel } from "../src/components/ui/carousel";
-import { List } from "../src/components/ui/list";
 import { Badge } from "../src/components/ui/badge";
 import { Button } from "../src/components/ui/button";
+import { Toggle } from "../src/components/ui/toggle";
 import { Empty } from "../src/components/ui/empty";
 import { Skeleton } from "../src/components/ui/skeleton";
 import {
@@ -19,14 +20,11 @@ import {
   AlertDescription,
   AlertTitle,
 } from "../src/components/ui/alert";
-import { Toggle } from "../src/components/ui/toggle";
-import { ToggleGroup } from "../src/components/ui/toggle-group";
-import { Heading, Text } from "../src/components/ui/typography";
-import { Input } from "../src/components/ui/input";
-import "./game-discovery.css";
+import { Grid, Inline, Stack } from "../src/components/ui/layout";
+import { Heading } from "../src/components/ui/typography";
 
-// 2단계 점검용 조합입니다. 기존 컴포넌트만 사용하고, 빠진 부분은 화면 CSS로만 채웁니다.
-// 화면 CSS로 채운 곳은 docs/engineering/GAME-DISCOVERY-AUDIT.md에 문제로 기록했습니다.
+// 대표 화면 5번 게임 탐색입니다. 라이브러리 컴포넌트와 배치 컴포넌트만으로 조립합니다.
+// 화면 CSS 파일은 두지 않고, 라이브러리에 없어 생긴 한계는 docs/engineering/GAME-DISCOVERY-AUDIT.md에 기록합니다.
 
 type Game = {
   id: string;
@@ -37,93 +35,36 @@ type Game = {
   hue: number;
 };
 
-function thumbnail(hue: number, label: string) {
+function thumbnail(hue: number) {
   return (
     "data:image/svg+xml," +
     encodeURIComponent(
-      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180"><rect width="320" height="180" fill="hsl(${hue} 55% 62%)"/><path d="m0 150 90-70 70 50 70-90 90 110v30H0z" fill="hsl(${hue} 45% 38%)"/><text x="16" y="34" font-family="sans-serif" font-size="20" fill="#fff">${label}</text></svg>`,
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180"><rect width="320" height="180" fill="hsl(${hue} 55% 62%)"/><path d="m0 150 90-70 70 50 70-90 90 110v30H0z" fill="hsl(${hue} 45% 38%)"/></svg>`,
     )
   );
 }
 
+const genres = ["전체", "어드벤처", "롤플레이", "시뮬레이션", "장애물", "공포"];
 const charts = ["인기", "최고 수익", "급상승"];
 
-const genres = ["전체", "어드벤처", "롤플레이", "시뮬레이션", "장애물", "공포"];
-
 const shortGames: Game[] = [
-  {
-    id: "g1",
-    title: "하늘섬 탐험",
-    genre: "어드벤처",
-    likeRatio: 94,
-    playing: "3.2만",
-    hue: 205,
-  },
-  {
-    id: "g2",
-    title: "우리 동네 카페",
-    genre: "롤플레이",
-    likeRatio: 89,
-    playing: "1.8만",
-    hue: 25,
-  },
-  {
-    id: "g3",
-    title: "도시 건설왕",
-    genre: "시뮬레이션",
-    likeRatio: 91,
-    playing: "1.1만",
-    hue: 140,
-  },
-  {
-    id: "g4",
-    title: "무지개 장애물",
-    genre: "장애물",
-    likeRatio: 86,
-    playing: "9,400",
-    hue: 290,
-  },
-  {
-    id: "g5",
-    title: "폐교의 밤",
-    genre: "공포",
-    likeRatio: 82,
-    playing: "7,100",
-    hue: 0,
-  },
-  {
-    id: "g6",
-    title: "바다 낚시 대회",
-    genre: "시뮬레이션",
-    likeRatio: 90,
-    playing: "5,600",
-    hue: 180,
-  },
-  {
-    id: "g7",
-    title: "고양이 마을",
-    genre: "롤플레이",
-    likeRatio: 93,
-    playing: "4,800",
-    hue: 45,
-  },
-  {
-    id: "g8",
-    title: "우주 정거장 생존기",
-    genre: "어드벤처",
-    likeRatio: 88,
-    playing: "4,200",
-    hue: 250,
-  },
-  {
-    id: "g9",
-    title: "블록 쌓기 챔피언",
-    genre: "장애물",
-    likeRatio: 84,
-    playing: "3,900",
-    hue: 320,
-  },
-];
+  ["g1", "하늘섬 탐험", "어드벤처", 94, "3.2만", 205],
+  ["g2", "우리 동네 카페", "롤플레이", 89, "1.8만", 25],
+  ["g3", "도시 건설왕", "시뮬레이션", 91, "1.1만", 140],
+  ["g4", "무지개 장애물", "장애물", 86, "9,400", 290],
+  ["g5", "폐교의 밤", "공포", 82, "7,100", 0],
+  ["g6", "바다 낚시 대회", "시뮬레이션", 90, "5,600", 180],
+  ["g7", "고양이 마을", "롤플레이", 93, "4,800", 45],
+  ["g8", "우주 정거장 생존기", "어드벤처", 88, "4,200", 250],
+  ["g9", "블록 쌓기 챔피언", "장애물", 84, "3,900", 320],
+].map(([id, title, genre, likeRatio, playing, hue]) => ({
+  id,
+  title,
+  genre,
+  likeRatio,
+  playing,
+  hue,
+})) as Game[];
 
 // 긴 한국어 조건: 띄어쓰기 없는 긴 단어와 여러 줄로 넘어가는 제목을 함께 확인합니다.
 const longGames: Game[] = shortGames.map((game, index) => ({
@@ -136,6 +77,66 @@ const longGames: Game[] = shortGames.map((game, index) => ({
 
 export type GameDiscoveryState = "default" | "loading" | "empty" | "error";
 
+/** 게임 카드 하나입니다. 제목 링크가 카드 전체를 덮어 상세 화면으로 이동합니다. */
+function GameTile({ game }: { game: Game }) {
+  return (
+    <Card variant="plain">
+      <CardMedia ratio="square">
+        <CardImage src={thumbnail(game.hue)} alt="" />
+      </CardMedia>
+      <CardHeader>
+        <CardTitle>
+          <CardLink href={`#game-${game.id}`}>{game.title}</CardLink>
+        </CardTitle>
+        <CardMeta>
+          좋아요 {game.likeRatio}% · {game.playing}명
+        </CardMeta>
+      </CardHeader>
+    </Card>
+  );
+}
+
+/** 하나만 고르는 필터 칩 줄입니다. 칩 컴포넌트가 없어 Toggle을 나란히 둡니다(1차 M8). */
+function Chips({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  options: string[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <Inline role="group" aria-label={label} gap={8}>
+      {options.map((option) => (
+        <Toggle
+          key={option}
+          pressed={value === option}
+          onPressedChange={() => onChange(option)}
+        >
+          {option}
+        </Toggle>
+      ))}
+    </Inline>
+  );
+}
+
+function TileSkeletons({ count, min }: { count: number; min: string }) {
+  return (
+    <Grid minItemWidth={min} gap={16}>
+      {Array.from({ length: count }, (_, key) => (
+        <Stack key={key} gap={8}>
+          <Skeleton style={{ aspectRatio: "1", borderRadius: 8 }} />
+          <Skeleton style={{ height: 16, width: "80%" }} />
+          <Skeleton style={{ height: 12, width: "60%" }} />
+        </Stack>
+      ))}
+    </Grid>
+  );
+}
+
 export function GameDiscoveryExample({
   state = "default",
   longText = false,
@@ -145,15 +146,13 @@ export function GameDiscoveryExample({
   /** 긴 한국어 제목으로 바꿔 줄바꿈을 확인합니다. @defaultValue false */
   longText?: boolean;
 }) {
+  const [status, setStatus] = useState(state);
   const [genre, setGenre] = useState("전체");
   const [chartType, setChartType] = useState("인기");
-  const [opened, setOpened] = useState("");
-  const games = longText ? longGames : shortGames;
-  const filtered =
-    state === "empty"
-      ? []
-      : games.filter((game) => genre === "전체" || game.genre === genre);
-  const hero = games[0];
+  const games = status === "empty" ? [] : longText ? longGames : shortGames;
+  const filtered = games.filter(
+    (game) => genre === "전체" || game.genre === genre,
+  );
   // 예제 데이터라 차트 종류마다 정렬 기준만 바꿉니다.
   const chart = [...filtered].sort((a, b) =>
     chartType === "인기"
@@ -163,168 +162,168 @@ export function GameDiscoveryExample({
         : a.likeRatio - b.likeRatio,
   );
 
-  return (
-    <div className="gd-page">
-      <header className="gd-header">
-        <Heading>게임 탐색</Heading>
-        <Input
-          type="search"
-          aria-label="게임 검색"
-          placeholder="게임 이름으로 검색"
-          controlSize="md"
-        />
-      </header>
+  function retry() {
+    setStatus("loading");
+    setTimeout(() => setStatus("default"), 800);
+  }
 
-      <section className="gd-hero" aria-labelledby="gd-hero-title">
-        {state === "loading" ? (
-          <Skeleton className="gd-hero-skeleton" />
-        ) : (
-          <Card variant="plain" className="gd-hero-card">
-            <CardMedia ratio="wide">
-              <CardImage src={thumbnail(hero.hue, "")} alt="" />
-            </CardMedia>
-            <div className="gd-hero-overlay">
-              <Badge variant="over-media">이번 주 추천</Badge>
-              <CardTitle as="h2" id="gd-hero-title">
-                {hero.title}
-              </CardTitle>
-              <CardMeta>
-                좋아요 {hero.likeRatio}% · {hero.playing}명 플레이 중
-              </CardMeta>
-              <Button variant="over-media" size="md">
-                바로 플레이
-              </Button>
-            </div>
-          </Card>
-        )}
-      </section>
-
-      <ToggleGroup
-        aria-label="장르"
-        value={[genre]}
-        onValueChange={(value) => value[0] && setGenre(value[0])}
-        className="gd-genres"
-      >
-        {genres.map((name) => (
-          <Toggle key={name} value={name}>
-            {name}
-          </Toggle>
-        ))}
-      </ToggleGroup>
-
-      {state === "error" ? (
-        <Alert>
-          <AlertTitle>게임 목록을 불러오지 못했습니다</AlertTitle>
-          <AlertDescription>
-            네트워크 연결을 확인한 뒤 다시 시도해 주세요.
-          </AlertDescription>
-          <Button size="sm" variant="standard" className="gd-retry">
+  let content;
+  if (status === "error") {
+    content = (
+      <Alert>
+        <Stack gap={12} align="start">
+          <div>
+            <AlertTitle>게임 목록을 불러오지 못했습니다</AlertTitle>
+            <AlertDescription>
+              네트워크 연결을 확인한 뒤 다시 시도해 주세요.
+            </AlertDescription>
+          </div>
+          <Button size="sm" variant="standard" onClick={retry}>
             다시 시도
           </Button>
-        </Alert>
-      ) : (
-        <>
-          <section className="gd-section" aria-labelledby="gd-popular">
-            <h2 id="gd-popular" className="gd-section-title">
-              인기 게임
-            </h2>
-            {state === "loading" ? (
-              <div className="gd-row-skeleton">
-                {[0, 1, 2].map((key) => (
-                  <Skeleton key={key} className="gd-card-skeleton" />
+        </Stack>
+      </Alert>
+    );
+  } else if (status === "empty") {
+    content = (
+      <Empty>
+        <h2>아직 공개된 게임이 없습니다</h2>
+        <p>새 게임이 올라오면 여기에 보여 드릴게요.</p>
+      </Empty>
+    );
+  } else {
+    const loading = status === "loading";
+    content = (
+      <>
+        <section aria-labelledby="gd-featured" aria-busy={loading}>
+          <Stack gap={16}>
+            <Heading id="gd-featured">이번 주 추천</Heading>
+            {loading ? (
+              <Grid minItemWidth="20rem" gap={24}>
+                {[0, 1].map((key) => (
+                  <Skeleton
+                    key={key}
+                    style={{ aspectRatio: "16 / 9", borderRadius: 8 }}
+                  />
                 ))}
-              </div>
+              </Grid>
+            ) : (
+              <Grid minItemWidth="20rem" gap={24}>
+                {games.slice(0, 2).map((game) => (
+                  <Card key={game.id} variant="plain">
+                    <CardMedia>
+                      <CardImage src={thumbnail(game.hue)} alt="" />
+                    </CardMedia>
+                    <CardHeader>
+                      <Badge variant="emphasis" size="xs">
+                        {game.genre}
+                      </Badge>
+                      <CardTitle as="h3">
+                        <CardLink href={`#game-${game.id}`}>
+                          {game.title}
+                        </CardLink>
+                      </CardTitle>
+                      <CardMeta>
+                        좋아요 {game.likeRatio}% · {game.playing}명 플레이 중
+                      </CardMeta>
+                    </CardHeader>
+                  </Card>
+                ))}
+              </Grid>
+            )}
+          </Stack>
+        </section>
+
+        <section aria-labelledby="gd-popular" aria-busy={loading}>
+          <Stack gap={16}>
+            <Heading id="gd-popular">인기 게임</Heading>
+            <Chips
+              label="장르"
+              options={genres}
+              value={genre}
+              onChange={setGenre}
+            />
+            {loading ? (
+              <TileSkeletons count={6} min="9rem" />
             ) : filtered.length === 0 ? (
               <Empty>
-                <h3>이 장르의 게임이 아직 없습니다</h3>
-                <p>다른 장르를 선택하거나 전체 목록을 확인해 보세요.</p>
+                <h3>{genre} 게임이 아직 없습니다</h3>
+                <p>다른 장르를 골라 보세요.</p>
                 <Button
                   size="sm"
                   variant="standard"
                   onClick={() => setGenre("전체")}
                 >
-                  전체 보기
+                  모든 장르 보기
                 </Button>
               </Empty>
             ) : (
-              <Carousel
-                label="인기 게임"
-                items={filtered.map((game) => ({
-                  id: game.id,
-                  title: game.title,
-                  description: `좋아요 ${game.likeRatio}% · ${game.playing}명`,
-                  media: (
-                    <img
-                      className="gd-carousel-image"
-                      src={thumbnail(game.hue, "")}
-                      alt=""
-                    />
-                  ),
-                }))}
-                onItemClick={setOpened}
-              />
+              <Grid minItemWidth="9rem" gap={16}>
+                {filtered.slice(0, 6).map((game) => (
+                  <GameTile key={game.id} game={game} />
+                ))}
+              </Grid>
             )}
-          </section>
+          </Stack>
+        </section>
 
-          <section className="gd-section" aria-labelledby="gd-chart">
-            <h2 id="gd-chart" className="gd-section-title">
-              실시간 차트
-            </h2>
-            <ToggleGroup
-              aria-label="차트 종류"
-              value={[chartType]}
-              onValueChange={(value) => value[0] && setChartType(value[0])}
-            >
-              {charts.map((name) => (
-                <Toggle key={name} value={name}>
-                  {name}
-                </Toggle>
-              ))}
-            </ToggleGroup>
-            {state === "loading" ? (
-              <div className="gd-chart-skeleton">
-                {[0, 1, 2, 3, 4, 5].map((key) => (
-                  <Skeleton key={key} className="gd-row-skeleton-item" />
-                ))}
-              </div>
+        <section aria-labelledby="gd-chart" aria-busy={loading}>
+          <Stack gap={16}>
+            <Heading id="gd-chart">실시간 차트</Heading>
+            <Chips
+              label="차트 종류"
+              options={charts}
+              value={chartType}
+              onChange={setChartType}
+            />
+            {loading ? (
+              <TileSkeletons count={6} min="18rem" />
             ) : chart.length === 0 ? (
-              <Text>표시할 순위가 없습니다.</Text>
+              <Empty>
+                <h3>{genre} 게임 순위가 아직 없습니다</h3>
+                <p>위에서 다른 장르를 골라 보세요.</p>
+              </Empty>
             ) : (
-              // 순위는 순서가 의미라 ol이 맞지만 List.Root는 ul만 지원합니다(M6).
-              <List.Root className="gd-chart">
+              // 순위는 순서가 의미라 ol이 맞지만 Grid는 div만 만듭니다(1차 M6).
+              <Grid minItemWidth="18rem" gap={16}>
                 {chart.map((game, index) => (
-                  <List.Item key={game.id}>
-                    <List.Action
-                      nativeButton={false}
-                      render={<a href={`#${game.id}`} />}
-                    >
-                      <List.Content
-                        leading={
-                          <span className="gd-rank">
-                            <span className="gd-rank-number">{index + 1}</span>
-                            <img
-                              className="gd-rank-thumb"
-                              src={thumbnail(game.hue, "")}
-                              alt=""
-                            />
-                          </span>
-                        }
-                      >
-                        <List.Title>{game.title}</List.Title>
-                        <List.Description>{game.genre}</List.Description>
-                        <List.Description>
-                          좋아요 {game.likeRatio}%
-                        </List.Description>
-                      </List.Content>
-                    </List.Action>
-                  </List.Item>
+                  <Card
+                    key={game.id}
+                    variant="plain"
+                    layout="horizontal"
+                    density="compact"
+                  >
+                    <CardMedia ratio="square">
+                      <CardImage src={thumbnail(game.hue)} alt="" />
+                    </CardMedia>
+                    <CardContent>
+                      <CardMeta>{index + 1}위</CardMeta>
+                      <CardTitle>
+                        <CardLink href={`#game-${game.id}`}>
+                          {game.title}
+                        </CardLink>
+                      </CardTitle>
+                      <CardMeta>
+                        {game.genre} · 좋아요 {game.likeRatio}%
+                      </CardMeta>
+                    </CardContent>
+                  </Card>
                 ))}
-              </List.Root>
+              </Grid>
             )}
-          </section>
-        </>
-      )}
-      {opened && <p role="status">선택한 게임: {opened}</p>}
-    </div>
+          </Stack>
+        </section>
+      </>
+    );
+  }
+
+  return (
+    // 화면 폭과 바깥 여백은 앱 레이아웃의 몫이라 예제에서만 정합니다.
+    <Stack
+      gap={48}
+      style={{ maxWidth: 1040, marginInline: "auto", padding: "24px 16px" }}
+    >
+      {content}
+    </Stack>
   );
 }
