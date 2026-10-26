@@ -97,10 +97,7 @@ test("CLI rejects ambiguous entries and unsafe paths before writing", () => {
     symlinkSync(path.join(target, entry), path.join(target, "linked.tsx"));
     assert.equal(run("add", "button", "--entry", "linked.tsx").status, 1);
     assert.equal(readFileSync(path.join(target, entry), "utf8"), original);
-    symlinkSync(
-      path.join(target, "missing.tsx"),
-      path.join(target, "broken.tsx"),
-    );
+    symlinkSync(path.join(target, "missing.tsx"), path.join(target, "broken.tsx"));
     assert.equal(run("add", "button", "--entry", "broken.tsx").status, 1);
     assert.equal(existsSync(path.join(target, "missing.tsx")), false);
     assert.equal(run("add", "button", "--entry", entry).status, 0);

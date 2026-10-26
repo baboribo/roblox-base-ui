@@ -105,9 +105,7 @@ test("compound docs fit mobile and expose accessible code, APIs and overlays", a
     await card.getByRole("tab", { name: "코드", exact: true }).click();
     await expect(card.locator("pre")).toBeVisible();
     // 탭의 페이드가 끝난 실제 표시 색으로 대비를 검사합니다.
-    await expect(
-      card.getByRole("tabpanel", { name: "코드", exact: true }),
-    ).toHaveCSS("opacity", "1");
+    await expect(card.getByRole("tabpanel", { name: "코드", exact: true })).toHaveCSS("opacity", "1");
     await expect
       .poll(() =>
         page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
