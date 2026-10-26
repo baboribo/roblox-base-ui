@@ -18,6 +18,7 @@ export function Carousel({
   onItemClick,
   previousLabel = "이전 카드",
   nextLabel = "다음 카드",
+  roleDescription = "캐러셀",
   className,
 }: {
   /** 캐러셀 영역의 접근 가능한 이름입니다. */
@@ -28,6 +29,8 @@ export function Carousel({
   previousLabel?: string;
   /** 다음 카드로 이동하는 버튼의 이름입니다. @defaultValue "다음 카드" */
   nextLabel?: string;
+  /** 보조기기가 읽는 영역의 종류입니다. @defaultValue "캐러셀" */
+  roleDescription?: string;
   className?: string;
 }) {
   // Informational cards must not advertise an action that does not exist.
@@ -71,7 +74,7 @@ export function Carousel({
     <section
       className={cx("rbx-carousel", className)}
       aria-label={label}
-      aria-roledescription="carousel"
+      aria-roledescription={roleDescription}
     >
       <ScrollArea.Root>
         <ScrollArea.Viewport
