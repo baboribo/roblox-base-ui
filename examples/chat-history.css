@@ -17,40 +17,15 @@
   list-style: none;
 }
 
-/* 사이드바 머리: 서비스 이름과 접기·검색 */
+/* 사이드바 머리: 서비스 이름, 새 대화, 검색 */
 .cht-brand {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--rbx-gap-small);
-  margin-bottom: var(--rbx-gap-small);
-}
-.cht-brand strong {
+  padding: var(--rbx-padding-xsmall) var(--rbx-padding-small);
   font: var(--rbx-typography-title-large-font);
   color: var(--rbx-color-content-emphasis);
 }
 .cht-side-head {
   display: grid;
-  gap: var(--rbx-gap-xsmall);
-}
-.cht-group-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: var(--rbx-gap-small);
-}
-.cht-see-all {
-  padding: 2px 6px;
-  border: 0;
-  border-radius: var(--rbx-radius-small);
-  background: none;
-  color: var(--rbx-color-content-muted);
-  font: var(--rbx-typography-caption-medium-font);
-  cursor: pointer;
-}
-.cht-see-all:hover {
-  background: var(--rbx-color-state-hover);
-  color: var(--rbx-color-content-default);
 }
 .cht-side-state {
   display: grid;
@@ -61,37 +36,26 @@
   color: var(--rbx-color-content-muted);
 }
 
-/* 사이드바 바닥: 프로필 */
+/* 사이드바 바닥: 프로필과 설정 */
 .cht-profile {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--rbx-gap-medium);
-  width: 100%;
-  padding: var(--rbx-padding-small);
-  border: 0;
-  border-radius: var(--rbx-radius-medium);
-  background: none;
-  color: inherit;
-  text-align: start;
-  cursor: pointer;
-}
-.cht-profile:hover {
-  background: var(--rbx-color-state-hover);
+  padding: var(--rbx-padding-xsmall);
 }
 .cht-profile strong {
-  display: block;
   font: var(--rbx-typography-title-small-font);
   color: var(--rbx-color-content-emphasis);
-}
-.cht-profile span {
-  font: var(--rbx-typography-caption-medium-font);
-  font-weight: var(--rbx-font-weight-400);
-  color: var(--rbx-color-content-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 본문 */
 .cht-main {
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -119,6 +83,19 @@
   overflow-y: auto;
 }
 
+/* 채팅 시작 배경(Wallpaper): 위쪽에 깔고 아래로 갈수록 바탕색으로 사라집니다. */
+.cht-wall {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  opacity: 0.55;
+  mask-image: linear-gradient(to bottom, black 20%, transparent);
+  pointer-events: none;
+}
+
 /* 시작 화면 */
 .cht-start {
   display: grid;
@@ -139,10 +116,6 @@
   text-align: center;
   text-wrap: balance;
 }
-.cht-greeting svg {
-  color: var(--rbx-color-system-emphasis);
-  flex-shrink: 0;
-}
 
 /* 입력창 */
 .cht-composer {
@@ -152,7 +125,7 @@
   border: 1px solid var(--rbx-color-stroke-default);
   border-radius: var(--rbx-radius-large);
   background: var(--rbx-color-surface-0);
-  box-shadow: 0 2px 10px var(--rbx-color-common-shadow);
+  box-shadow: 0 1px 4px var(--rbx-color-common-shadow);
 }
 .cht-composer:focus-within {
   border-color: var(--rbx-color-stroke-emphasis);
@@ -160,86 +133,9 @@
 .cht-composer-tools {
   display: flex;
   align-items: center;
-  gap: var(--rbx-gap-small);
-}
-.cht-composer-tools .cht-spacer {
-  flex: 1;
-}
-.cht-composer-foot {
-  display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   gap: var(--rbx-gap-small);
-  font: var(--rbx-typography-caption-medium-font);
-  font-weight: var(--rbx-font-weight-400);
-  color: var(--rbx-color-content-muted);
 }
-
-/* 제안 */
-.cht-suggestions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--rbx-gap-small);
-}
-
-/* 최근 아티팩트 */
-.cht-recent-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--rbx-gap-medium);
-  margin-bottom: var(--rbx-gap-medium);
-}
-.cht-recent-head h2 {
-  font: var(--rbx-typography-title-medium-font);
-  color: var(--rbx-color-content-emphasis);
-}
-.cht-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: var(--rbx-gap-medium);
-}
-.cht-card {
-  position: relative;
-  display: grid;
-  gap: var(--rbx-gap-small);
-  padding: var(--rbx-padding-small);
-  border: 1px solid var(--rbx-color-stroke-muted);
-  border-radius: var(--rbx-radius-medium);
-  background: var(--rbx-color-surface-0);
-}
-.cht-card:hover {
-  background: var(--rbx-color-state-hover);
-}
-.cht-card:has(a:focus-visible) {
-  outline: 3px solid var(--rbx-focus-ring);
-}
-.cht-card-art {
-  display: grid;
-  place-items: center;
-  aspect-ratio: 16 / 10;
-  border-radius: var(--rbx-radius-small);
-  background: var(--rbx-color-shift-200);
-  color: var(--rbx-color-content-muted);
-}
-.cht-card a {
-  font: var(--rbx-typography-title-small-font);
-  color: var(--rbx-color-content-emphasis);
-  text-decoration: none;
-}
-.cht-card a::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-}
-.cht-card time {
-  font: var(--rbx-typography-caption-medium-font);
-  font-weight: var(--rbx-font-weight-400);
-  color: var(--rbx-color-content-muted);
-}
-
 /* 대화 보기 */
 .cht-thread {
   display: grid;
@@ -285,8 +181,5 @@
   }
   .cht-greeting {
     font: var(--rbx-typography-heading-medium-font);
-  }
-  .cht-cards {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
 }

@@ -1,14 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import {
-  ArrowUp,
-  ChevronRight,
-  Download,
-  ImageUp,
-  PencilLine,
-  Search,
-  Trash2,
-} from "lucide-react";
+import { ImageUp, PencilLine, Trash2 } from "lucide-react";
 import { NavigationItem } from "../src/components/ui/navigation-item";
 import { Switch } from "../src/components/ui/switch";
 import { Slider } from "../src/components/ui/slider";
@@ -18,7 +10,6 @@ import { Toast } from "../src/components/ui/toast";
 import { Field } from "../src/components/ui/field";
 import { Form } from "../src/components/ui/form";
 import { Select } from "../src/components/ui/select";
-import { Input } from "../src/components/ui/input";
 import { Textarea } from "../src/components/ui/textarea";
 import { Button } from "../src/components/ui/button";
 import { IconButton } from "../src/components/ui/icon-button";
@@ -26,34 +17,30 @@ import { Skeleton } from "../src/components/ui/skeleton";
 import { Inline, Stack } from "../src/components/ui/layout";
 import "./memory-settings.css";
 
-// 대표 화면 4번 기억·설정입니다. Claude 설정 메모리와 ChatGPT 개인 맞춤 설정(2026년 10월)의 구성을 따릅니다.
-// 왼쪽 설정 목록 + 오른쪽 묶음 상자(제목·설명·‘자세히 알아보기’·오른쪽 조작)입니다.
+// 대표 화면 4번 기억·설정입니다. 하늘 명세의 세 가지(기억, 채팅 시작 배경, 나에 대해)만 담습니다.
+// 왼쪽 설정 목록 + 오른쪽 묶음 상자(제목·설명·오른쪽 조작)입니다.
 // 화면 배치는 memory-settings.css에 토큰으로만 적습니다.
 
-type Memory = { id: string; topic: string; summary: string; date: string };
+type Memory = { id: string; summary: string; date: string };
 
 const shortMemories: Memory[] = [
   {
     id: "m1",
-    topic: "나",
     summary: "고양이 두 마리(보리, 쌀)와 함께 살고, 주말마다 공원을 걷는다",
     date: "10월 24일",
   },
   {
     id: "m2",
-    topic: "답변 방식",
     summary: "짧고 존댓말로, 결론을 먼저 말해 주기를 바란다",
     date: "10월 20일",
   },
   {
     id: "m3",
-    topic: "코딩",
     summary: "React와 TypeScript로 개인 프로젝트를 만든다",
     date: "10월 12일",
   },
   {
     id: "m4",
-    topic: "기기",
     summary: "갤럭시 Z 폴드와 맥북을 함께 쓴다",
     date: "10월 11일",
   },
@@ -62,8 +49,6 @@ const shortMemories: Memory[] = [
 // 긴 한국어 조건: 띄어쓰기 없는 긴 단어와 여러 줄 문장을 함께 확인합니다.
 const longMemories: Memory[] = shortMemories.map((memory, index) => ({
   ...memory,
-  topic:
-    index % 2 === 0 ? memory.topic : `${memory.topic}관련아주긴주제이름입니다`,
   summary:
     index % 2 === 0
       ? `${memory.summary}. 그리고 주말마다 동네 공원에서 산책을 하면서 그날 있었던 일을 정리하는 습관이 있어서 대화를 시작할 때 오늘 하루가 어땠는지 먼저 물어봐 주기를 바란다.`
@@ -75,12 +60,6 @@ const tones = [
   { value: "formal", label: "정중하게" },
   { value: "brief", label: "짧게" },
 ];
-
-const traits = [
-  ["따뜻함", ["기본값", "조금 더", "많이"]],
-  ["열정", ["기본값", "차분하게", "들뜨게"]],
-  ["이모지 사용", ["기본값", "쓰지 않기", "자주"]],
-] as const;
 
 function wallpaper(hue: number) {
   return (
@@ -98,23 +77,17 @@ export type MemorySettingsState = "default" | "loading" | "empty" | "error";
 function Row({
   title,
   description,
-  learnMore,
   children,
 }: {
   title: string;
   description?: string;
-  learnMore?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <div className="mst-row">
       <div className="mst-row-copy">
         <strong>{title}</strong>
-        {description && (
-          <p>
-            {description} {learnMore && <a href="#help">자세히 알아보기</a>}
-          </p>
-        )}
+        {description && <p>{description}</p>}
       </div>
       <div className="mst-row-control">{children}</div>
     </div>
@@ -154,12 +127,9 @@ function MemoryPanel({
   const toast = Toast.useToastManager();
   const [status, setStatus] = useState(state);
   const [enabled, setEnabled] = useState(true);
-  const [search, setSearch] = useState(true);
-  const [sensitive, setSensitive] = useState(false);
   const [memories, setMemories] = useState(() =>
     state === "empty" ? [] : longText ? longMemories : shortMemories,
   );
-  const [draft, setDraft] = useState("");
   const [editing, setEditing] = useState<Memory>();
   const [deleting, setDeleting] = useState<Memory | "all">();
   const editInput = useRef<HTMLTextAreaElement>(null);
@@ -200,55 +170,49 @@ function MemoryPanel({
     body = (
       <div className="mst-state">
         <p>
-          아직 기억한 내용이 없습니다. 대화 중에 “이걸 기억해 줘”라고 말하거나,
-          아래에 직접 적어 보세요.
+          아직 기억한 내용이 없습니다. 대화 중에 “이걸 기억해 줘”라고 말하면
+          여기에 쌓입니다.
         </p>
       </div>
     );
   } else {
     body = (
-      <div className="mst-topics">
-        {memories.map((memory) => (
-          <div className="mst-topic" key={memory.id}>
-            <strong>{memory.topic}</strong>
-            <span className="mst-topic-summary">{memory.summary}</span>
-            <time>{memory.date} 업데이트됨</time>
-            <span className="mst-topic-actions">
+      <ul className="mst-memories">
+        {memories.map((memory, index) => (
+          <li className="mst-memory" key={memory.id}>
+            <div className="mst-memory-copy">
+              <p>{memory.summary}</p>
+              <time>{memory.date}</time>
+            </div>
+            <span className="mst-memory-actions">
               <IconButton
                 icon={<PencilLine />}
                 size="sm"
                 variant="utility"
-                aria-label={`${memory.topic} 기억 고치기`}
+                aria-label={`기억 ${index + 1} 고치기`}
                 onClick={() => setEditing(memory)}
               />
               <IconButton
                 icon={<Trash2 />}
                 size="sm"
                 variant="utility"
-                aria-label={`${memory.topic} 기억 지우기`}
+                aria-label={`기억 ${index + 1} 지우기`}
                 onClick={() => setDeleting(memory)}
               />
             </span>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     );
   }
 
   return (
     <Stack gap={48}>
-      <section className="mst-group" aria-labelledby="mst-memory-group">
-        <h2 className="mst-group-title" id="mst-memory-group">
-          기억
-        </h2>
-        <p className="mst-group-note">
-          기억을 어떻게 만들고 활용할지 정합니다.
-        </p>
+      <div className="mst-group">
         <div className="mst-rows">
           <Row
             title="기억 사용"
-            description="대화에서 알게 된 내용을 다음 대화에 활용합니다."
-            learnMore
+            description="대화에서 알게 된 내용을 다음 대화에서도 이어서 씁니다."
           >
             <SettingSwitch
               ref={toggle}
@@ -256,40 +220,6 @@ function MemoryPanel({
               checked={enabled}
               onCheckedChange={setEnabled}
             />
-          </Row>
-          <Row
-            title="지난 대화 검색"
-            description="필요할 때 이전 대화에서 관련 내용을 찾아 참고합니다."
-          >
-            <SettingSwitch
-              label="지난 대화 검색"
-              checked={search}
-              onCheckedChange={setSearch}
-            />
-          </Row>
-          <Row
-            title="민감한 주제도 기억"
-            description="건강·신념처럼 민감한 내용까지 저장할지 정합니다."
-            learnMore
-          >
-            <SettingSwitch
-              label="민감한 주제도 기억"
-              checked={sensitive}
-              onCheckedChange={setSensitive}
-            />
-          </Row>
-          <Row
-            title="기억 내보내기"
-            description="저장된 기억을 Markdown 파일이 담긴 .zip으로 내려받습니다."
-          >
-            <Button
-              size="sm"
-              variant="standard"
-              onClick={() => toast.add({ title: "내보내기를 시작했습니다" })}
-            >
-              <Download size={16} aria-hidden="true" />
-              내보내기
-            </Button>
           </Row>
           <Row title="모든 기억 지우기" description="되돌릴 수 없습니다.">
             <Button
@@ -302,51 +232,13 @@ function MemoryPanel({
             </Button>
           </Row>
         </div>
-      </section>
+      </div>
 
       <section className="mst-group" aria-labelledby="mst-topics-group">
         <h2 className="mst-group-title" id="mst-topics-group">
-          저장된 기억 {memories.length > 0 && `${memories.length}개`}
+          기억한 내용 {memories.length > 0 && `${memories.length}개`}
         </h2>
-        <div className="mst-rows">
-          {body}
-          <form
-            className="mst-add"
-            onSubmit={(event) => {
-              event.preventDefault();
-              const text = draft.trim();
-              if (!text) return;
-              setMemories((list) => [
-                {
-                  id: `n${list.length}`,
-                  topic: "나",
-                  summary: text,
-                  date: "오늘",
-                },
-                ...list,
-              ]);
-              setDraft("");
-              toast.add({ title: "기억을 추가했습니다" });
-            }}
-          >
-            <Input
-              aria-label="기억할 내용"
-              placeholder="예: 제 강아지 이름은 콩이에요"
-              controlSize="md"
-              variant="utility"
-              value={draft}
-              onValueChange={setDraft}
-            />
-            <IconButton
-              icon={<ArrowUp />}
-              size="sm"
-              circular
-              type="submit"
-              disabled={!draft.trim()}
-              aria-label="기억 추가"
-            />
-          </form>
-        </div>
+        <div className="mst-rows">{body}</div>
       </section>
 
       <Dialog.Root
@@ -374,9 +266,6 @@ function MemoryPanel({
               <Dialog.Body>
                 <Stack gap={16}>
                   <Dialog.Title>기억 고치기</Dialog.Title>
-                  <Dialog.Description>
-                    주제: {editing?.topic}
-                  </Dialog.Description>
                   {/* Textarea는 Field.Control render로 연결합니다(2차 2-M5). */}
                   <Field.Root name="memory">
                     <Field.Label>내용</Field.Label>
@@ -458,7 +347,7 @@ function WallpaperPanel() {
   const [src, setSrc] = useState(() => wallpaper(210));
   const [blur, setBlur] = useState(8);
   const [opacity, setOpacity] = useState(60);
-  const [dim, setDim] = useState(true);
+  const [fade, setFade] = useState(true);
   const file = useRef<HTMLInputElement>(null);
   // 올린 파일의 미리보기 주소를 정리합니다.
   useEffect(
@@ -469,25 +358,26 @@ function WallpaperPanel() {
   );
   return (
     <Stack gap={48}>
-      <section className="mst-group" aria-labelledby="mst-wall-group">
-        <h2 className="mst-group-title" id="mst-wall-group">
-          채팅 배경
-        </h2>
-        <p className="mst-group-note">
-          대화 화면 뒤에 보이는 배경입니다. 글자가 잘 보이는지 미리보기에서
-          확인하세요.
-        </p>
+      <div className="mst-group">
         {/* Wallpaper 컴포넌트(6단계)가 없어 미리보기를 화면에서 만듭니다(2차 2-M14). */}
-        <div className="mst-wall">
+        <div
+          className="mst-wall"
+          aria-label="채팅 시작 화면 미리보기"
+          role="img"
+        >
           <img
             src={src}
-            alt="채팅 배경 미리보기"
+            alt=""
+            data-fade={fade}
+            // 흐림을 주면 가장자리가 비치므로 조금 키워 덮습니다.
             style={{
               filter: `blur(${blur}px)`,
               opacity: opacity / 100,
+              scale: blur ? "1.08" : undefined,
             }}
           />
-          <p className="mst-wall-bubble">이렇게 보여요</p>
+          <p className="mst-wall-greeting">오늘은 어떤 이야기를 할까요?</p>
+          <span className="mst-wall-composer" />
         </div>
         <div className="mst-rows">
           <div className="mst-presets" role="group" aria-label="기본 배경">
@@ -509,7 +399,7 @@ function WallpaperPanel() {
           </div>
           <Row
             title="내 사진 사용"
-            description="이미지, GIF, MP4 파일을 20MB까지 올릴 수 있습니다."
+            description="이미지·GIF·MP4 파일을 20MB까지 올릴 수 있습니다."
           >
             {/* 파일 올리기 컴포넌트(5단계)가 없어 숨긴 input을 버튼으로 엽니다(2차 2-M13). */}
             <Button
@@ -522,13 +412,13 @@ function WallpaperPanel() {
             </Button>
           </Row>
           <Row
-            title="글자 뒤 어둡게"
-            description="밝은 배경에서도 글자가 읽히도록 뒤를 조금 어둡게 합니다."
+            title="아래로 흐려지게"
+            description="입력창 쪽으로 갈수록 배경이 바탕색으로 사라져 글자가 잘 보입니다."
           >
             <SettingSwitch
-              label="글자 뒤 어둡게"
-              checked={dim}
-              onCheckedChange={setDim}
+              label="아래로 흐려지게"
+              checked={fade}
+              onCheckedChange={setFade}
             />
           </Row>
           <div className="mst-sliders">
@@ -582,7 +472,7 @@ function WallpaperPanel() {
             setSrc(URL.createObjectURL(picked));
           }}
         />
-      </section>
+      </div>
     </Stack>
   );
 }
@@ -597,16 +487,9 @@ function ProfilePanel({ state }: { state: MemorySettingsState }) {
         }
       : {},
   );
-  const [trait, setTrait] = useState<Record<string, string>>({});
   return (
     <Stack gap={48}>
-      <section className="mst-group" aria-labelledby="mst-about-group">
-        <h2 className="mst-group-title" id="mst-about-group">
-          나에 대해
-        </h2>
-        <p className="mst-group-note">
-          모든 대화에 적용할 지침과 맥락을 알려 주세요.
-        </p>
+      <div className="mst-group">
         <div className="mst-rows">
           <Form
             className="mst-form"
@@ -618,15 +501,11 @@ function ProfilePanel({ state }: { state: MemorySettingsState }) {
             }}
           >
             <Field.Root name="nickname">
-              <Field.Label>AI가 부를 이름</Field.Label>
+              <Field.Label>하늘이 부를 이름</Field.Label>
               <Field.Control defaultValue="바보리보" required maxLength={20} />
               <Field.Description>20자까지 쓸 수 있습니다.</Field.Description>
               <Field.Error match="valueMissing">이름을 입력하세요.</Field.Error>
               <Field.Error />
-            </Field.Root>
-            <Field.Root name="job">
-              <Field.Label>하는 일</Field.Label>
-              <Field.Control placeholder="예: 개인 프로젝트를 만드는 학생" />
             </Field.Root>
             <Select
               label="기본 말투"
@@ -635,7 +514,7 @@ function ProfilePanel({ state }: { state: MemorySettingsState }) {
               defaultValue="friendly"
             />
             <Field.Root name="about">
-              <Field.Label>AI에게 알려 줄 내 소개</Field.Label>
+              <Field.Label>하늘에게 알려 줄 내 소개</Field.Label>
               <Field.Control
                 render={<Textarea rows={4} />}
                 placeholder="관심사, 하는 일, 원하는 답변 방식 등을 적어 주세요."
@@ -650,61 +529,7 @@ function ProfilePanel({ state }: { state: MemorySettingsState }) {
             </div>
           </Form>
         </div>
-      </section>
-
-      <section className="mst-group" aria-labelledby="mst-style-group">
-        <h2 className="mst-group-title" id="mst-style-group">
-          성격 다듬기
-        </h2>
-        <div className="mst-rows">
-          {traits.map(([label, options]) => (
-            <Row key={label} title={label}>
-              <Select
-                label={label}
-                options={options.map((option) => ({
-                  value: option,
-                  label: option,
-                }))}
-                size="sm"
-                value={trait[label] ?? options[0]}
-                onValueChange={(value) =>
-                  setTrait({ ...trait, [label]: value as string })
-                }
-              />
-            </Row>
-          ))}
-        </div>
-      </section>
-
-      <section className="mst-group" aria-labelledby="mst-data-group">
-        <h2 className="mst-group-title" id="mst-data-group">
-          데이터 관리
-        </h2>
-        <div className="mst-rows">
-          {[
-            ["참고 사진", "내 모습을 담은 이미지를 만들 때 참고합니다"],
-            ["연결된 앱", "캘린더·메일에서 맥락을 가져옵니다"],
-            ["내 데이터 내려받기", "대화와 기억을 한 번에 내려받습니다"],
-          ].map(([title, description]) => (
-            <button
-              key={title}
-              type="button"
-              className="mst-row-link"
-              onClick={() => toast.add({ title: `${title} 화면으로 이동` })}
-            >
-              <span className="mst-row-copy">
-                <strong>{title}</strong>
-                <span>{description}</span>
-              </span>
-              <ChevronRight
-                className="mst-chevron"
-                size={20}
-                aria-hidden="true"
-              />
-            </button>
-          ))}
-        </div>
-      </section>
+      </div>
     </Stack>
   );
 }
@@ -713,20 +538,17 @@ const sections = [
   {
     value: "memory",
     label: "기억",
-    group: "환경설정",
-    note: "AI가 나에 대해 무엇을 기억하고 어떻게 쓸지 정합니다.",
+    note: "하늘이 나에 대해 무엇을 기억할지 정합니다.",
   },
   {
     value: "wallpaper",
-    label: "배경",
-    group: "환경설정",
-    note: "대화 화면의 배경과 글자가 보이는 방식을 정합니다.",
+    label: "채팅 배경",
+    note: "채팅 시작 화면 뒤에 깔리는 배경을 정합니다.",
   },
   {
     value: "profile",
     label: "나에 대해",
-    group: "사용자 지정",
-    note: "모든 대화에 적용할 지침과 말투를 정합니다.",
+    note: "하늘이 나를 부르는 이름과 말투를 정합니다.",
   },
 ] as const;
 
@@ -743,51 +565,25 @@ export function MemorySettingsExample({
   longText?: boolean;
 }) {
   const [section, setSection] = useState<string>(tab);
-  const [query, setQuery] = useState("");
-  const found = sections.filter((item) => item.label.includes(query.trim()));
   const current = sections.find((item) => item.value === section);
   return (
     <Toast.Provider>
       <div className="mst" key={`${state}-${longText}-${tab}`}>
         <div className="mst-nav">
-          <div className="mst-nav-head">
-            <p className="mst-nav-title">설정</p>
-            <Input
-              type="search"
-              aria-label="설정 검색"
-              placeholder="검색"
-              controlSize="md"
-              value={query}
-              onValueChange={setQuery}
-              leading={<Search size={16} aria-hidden="true" />}
-            />
-          </div>
-          {/* Tabs의 세로 탭은 글자가 가운데로 모여 설정 목록처럼 보이지 않아, 탐색 항목으로 만듭니다(3.5단계 N10). */}
+          <p className="mst-nav-title">설정</p>
           <nav aria-label="설정 항목">
-            {["환경설정", "사용자 지정"].map((group) => {
-              const items = found.filter((item) => item.group === group);
-              if (items.length === 0) return null;
-              return (
-                <div className="mst-nav-section" key={group}>
-                  <p className="mst-nav-group">{group}</p>
-                  <ul>
-                    {items.map((item) => (
-                      <li key={item.value}>
-                        <NavigationItem
-                          active={item.value === section}
-                          onClick={() => setSection(item.value)}
-                        >
-                          {item.label}
-                        </NavigationItem>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-            {found.length === 0 && (
-              <p className="mst-nav-group">‘{query}’와 맞는 설정이 없습니다.</p>
-            )}
+            <ul>
+              {sections.map((item) => (
+                <li key={item.value}>
+                  <NavigationItem
+                    active={item.value === section}
+                    onClick={() => setSection(item.value)}
+                  >
+                    {item.label}
+                  </NavigationItem>
+                </li>
+              ))}
+            </ul>
           </nav>
         </div>
 

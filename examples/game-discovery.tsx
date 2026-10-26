@@ -1,28 +1,15 @@
 "use client";
 import { useState } from "react";
-import {
-  ArrowRight,
-  Minus,
-  Play,
-  Plus,
-  TrendingDown,
-  TrendingUp,
-} from "lucide-react";
+import { Minus, Play, Plus, TrendingDown, TrendingUp } from "lucide-react";
 import { Button } from "../src/components/ui/button";
 import { Badge } from "../src/components/ui/badge";
 import { Toggle } from "../src/components/ui/toggle";
 import { Skeleton } from "../src/components/ui/skeleton";
 import { Toast } from "../src/components/ui/toast";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "../src/components/ui/alert";
-import { Inline } from "../src/components/ui/layout";
 import "./game-discovery.css";
 
-// 대표 화면 5번 게임 탐색입니다. 구글 플레이 게임 탭과 Roblox 홈(2026년 10월)의 구성을 따릅니다.
-// 히어로 배너 → 장르 칩 → 추천 선반 → 인기 격자 → 실시간 차트 → 장르 바로가기 순입니다.
+// 대표 화면 5번 게임 탐색입니다.
+// 구성은 대표 화면 명세(히어로 배너 → 인기 게임 → 실시간 차트)를 따르고, 참고 제품에서는 여백·글자·톤만 가져옵니다.
 // 화면 배치는 game-discovery.css에 토큰으로만 적습니다.
 
 /** 예제용 게임 그림입니다. 하늘·섬·캐릭터를 그립니다. */
@@ -68,7 +55,7 @@ const genres = [
   "격투",
   "두뇌",
 ];
-const charts = ["인기", "급상승", "신작", "친구들이 하는 중"];
+const charts = ["인기", "최고 수익", "급상승"];
 
 const base: Game[] = [
   {
@@ -228,15 +215,6 @@ const banners = [
   },
 ];
 
-const genreCards = [
-  ["어드벤처", 205],
-  ["롤플레이", 45],
-  ["시뮬레이션", 140],
-  ["장애물", 290],
-  ["공포", 320],
-  ["두뇌", 100],
-] as const;
-
 export type GameDiscoveryState = "default" | "loading" | "empty" | "error";
 
 function Tile({ game }: { game: Game }) {
@@ -257,7 +235,6 @@ function Tile({ game }: { game: Game }) {
         <span className="gdv-meta">{game.creator}</span>
         <span className="gdv-meta-row">
           <span>추천 {game.like}%</span>
-          <span aria-hidden="true">·</span>
           <span className="gdv-live">
             <span className="gdv-dot" aria-hidden="true" />
             {game.playing}명
@@ -326,9 +303,7 @@ function Discovery({
       ? b.like - a.like
       : chart === "급상승"
         ? b.change - a.change
-        : chart === "신작"
-          ? a.hue - b.hue
-          : b.like - a.like,
+        : a.hue - b.hue,
   );
 
   function retry() {
@@ -357,33 +332,18 @@ function Discovery({
       </div>
 
       {status === "error" ? (
-        <Alert>
-          <Inline gap={12} align="start" justify="space-between">
-            <div>
-              <AlertTitle>게임 목록을 불러오지 못했습니다</AlertTitle>
-              <AlertDescription>
-                네트워크 연결을 확인한 뒤 다시 시도해 주세요.
-              </AlertDescription>
-            </div>
-            <Button size="sm" variant="standard" onClick={retry}>
-              다시 시도
-            </Button>
-          </Inline>
-        </Alert>
+        // Alert는 제목이 h3로 고정되고 상자가 둘러져 페이지 상태로 쓰기 어렵습니다(3.5단계 N7·N8).
+        <div className="gdv-state" role="alert">
+          <h2>게임 목록을 불러오지 못했습니다</h2>
+          <p>네트워크 연결을 확인한 뒤 다시 시도해 주세요.</p>
+          <Button size="sm" variant="standard" onClick={retry}>
+            다시 시도
+          </Button>
+        </div>
       ) : status === "empty" ? (
         <div className="gdv-state">
           <h2>아직 공개된 게임이 없습니다</h2>
-          <p>
-            새 게임이 올라오면 여기에 보여 드릴게요. 직접 만든 게임을 먼저 올려
-            볼 수도 있어요.
-          </p>
-          <Button
-            size="md"
-            variant="standard"
-            onClick={() => toast.add({ title: "게임 만들기로 이동합니다" })}
-          >
-            <Plus size={18} aria-hidden="true" />내 게임 올리기
-          </Button>
+          <p>새 게임이 올라오면 여기에 보여 드릴게요.</p>
         </div>
       ) : loading ? (
         <>
@@ -454,54 +414,11 @@ function Discovery({
             </div>
           ) : (
             <>
-              <section className="gdv-shelf" aria-labelledby="gdv-pick">
-                <div className="gdv-shelf-head">
-                  <div>
-                    <h2 id="gdv-pick" className="gdv-h2">
-                      에디터 추천
-                    </h2>
-                    <p>이번 주에 직접 해 보고 고른 게임이에요.</p>
-                  </div>
-                  <a className="gdv-more" href="#picks">
-                    더보기
-                    <ArrowRight size={16} aria-hidden="true" />
-                  </a>
-                </div>
-                <ul className="gdv-rail">
-                  {filtered.slice(0, 6).map((game) => (
-                    <li key={game.id}>
-                      <article className="gdv-feature">
-                        <img src={art(game.hue)} alt="" />
-                        <div className="gdv-feature-copy">
-                          <img
-                            src={art(game.hue, { ratio: "square" })}
-                            alt=""
-                          />
-                          <a className="gdv-title" href={`#game-${game.id}`}>
-                            {game.title}
-                          </a>
-                          <span className="gdv-meta">{game.creator}</span>
-                          <span className="gdv-meta-row">
-                            <span>추천 {game.like}%</span>
-                            <span aria-hidden="true">·</span>
-                            <span>{game.genre}</span>
-                          </span>
-                        </div>
-                      </article>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-
               <section className="gdv-shelf" aria-labelledby="gdv-popular">
                 <div className="gdv-shelf-head">
                   <h2 id="gdv-popular" className="gdv-h2">
                     지금 인기 있는 게임
                   </h2>
-                  <a className="gdv-more" href="#popular">
-                    더보기
-                    <ArrowRight size={16} aria-hidden="true" />
-                  </a>
                 </div>
                 <ul className="gdv-grid">
                   {filtered.map((game) => (
@@ -535,20 +452,6 @@ function Discovery({
                     <Rank key={game.id} game={game} place={index + 1} />
                   ))}
                 </ol>
-              </section>
-
-              <section className="gdv-shelf" aria-labelledby="gdv-genres">
-                <h2 id="gdv-genres" className="gdv-h2">
-                  장르로 둘러보기
-                </h2>
-                <ul className="gdv-genres">
-                  {genreCards.map(([name, hue]) => (
-                    <li className="gdv-genre" key={name}>
-                      <img src={art(hue, { ratio: "square" })} alt="" />
-                      <a href={`#genre-${name}`}>{name}</a>
-                    </li>
-                  ))}
-                </ul>
               </section>
             </>
           )}

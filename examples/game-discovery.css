@@ -138,63 +138,7 @@
   font: var(--rbx-typography-body-small-font);
   color: var(--rbx-color-content-muted);
 }
-.gdv-more {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  margin: -4px -8px;
-  border: 0;
-  border-radius: var(--rbx-radius-medium);
-  background: none;
-  color: var(--rbx-color-content-link);
-  font: var(--rbx-typography-label-medium-font);
-  text-decoration: none;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.gdv-more:hover {
-  background: var(--rbx-color-state-hover);
-}
 
-/* 가로 스크롤 선반 */
-.gdv-rail {
-  display: flex;
-  gap: var(--rbx-gap-large);
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  scrollbar-width: none;
-  padding-block: 2px;
-}
-.gdv-rail > li {
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-}
-
-/* 큰 추천 카드 */
-.gdv-feature {
-  position: relative;
-  display: grid;
-  gap: var(--rbx-gap-medium);
-  width: min(380px, 78vw);
-}
-.gdv-feature img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: var(--rbx-radius-medium);
-  object-fit: cover;
-  background: var(--rbx-color-shift-200);
-}
-.gdv-feature-copy {
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
-  gap: 2px var(--rbx-gap-medium);
-}
-.gdv-feature-copy img {
-  grid-row: span 3;
-  width: 56px;
-  aspect-ratio: 1;
-}
 .gdv-title {
   font: var(--rbx-typography-title-medium-font);
   color: var(--rbx-color-content-emphasis);
@@ -209,7 +153,6 @@
 .gdv-title:focus-visible {
   outline: none;
 }
-.gdv-feature:has(a:focus-visible),
 .gdv-tile:has(a:focus-visible),
 .gdv-rank:has(a:focus-visible) {
   outline: 3px solid var(--rbx-focus-ring);
@@ -224,7 +167,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 4px;
+  gap: 2px var(--rbx-gap-small);
   font: var(--rbx-typography-body-small-font);
   color: var(--rbx-color-content-muted);
 }
@@ -319,46 +262,6 @@
 }
 .gdv-change[data-dir="down"] {
   color: var(--rbx-color-system-alert);
-}
-
-/* 장르 바로가기 */
-.gdv-genres {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: var(--rbx-gap-medium);
-}
-.gdv-genre {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: var(--rbx-gap-medium);
-  min-height: 88px;
-  padding: var(--rbx-padding-medium);
-  border-radius: var(--rbx-radius-medium);
-  background: var(--rbx-color-surface-200);
-  overflow: hidden;
-}
-.gdv-genre:hover {
-  background: var(--rbx-color-state-hover);
-}
-.gdv-genre img {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--rbx-radius-medium);
-  object-fit: cover;
-}
-.gdv-genre a {
-  font: var(--rbx-typography-title-small-font);
-  color: var(--rbx-color-content-emphasis);
-  text-decoration: none;
-}
-.gdv-genre a::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-.gdv-genre:has(a:focus-visible) {
-  outline: 3px solid var(--rbx-focus-ring);
 }
 
 /* 빈 상태·오류 */

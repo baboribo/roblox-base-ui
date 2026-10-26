@@ -2,25 +2,14 @@
 import { useRef, useState } from "react";
 import {
   ArrowUp,
-  Check,
-  ChevronDown,
   Copy,
-  FileText,
-  Folder,
-  Image as ImageIcon,
-  Library,
-  Mic,
   MoreHorizontal,
   PanelLeft,
   PencilLine,
-  Pin,
   Plus,
   RefreshCw,
   Search,
-  Share2,
-  Sparkles,
-  ThumbsDown,
-  ThumbsUp,
+  Settings,
   Trash2,
 } from "lucide-react";
 import { Sidebar } from "../src/components/ui/sidebar";
@@ -33,22 +22,27 @@ import { Form } from "../src/components/ui/form";
 import { Button } from "../src/components/ui/button";
 import { IconButton } from "../src/components/ui/icon-button";
 import { Avatar } from "../src/components/ui/avatar";
-import { Badge } from "../src/components/ui/badge";
 import { Input } from "../src/components/ui/input";
 import { Textarea } from "../src/components/ui/textarea";
 import { Skeleton } from "../src/components/ui/skeleton";
 import { Inline, Stack } from "../src/components/ui/layout";
 import "./chat-history.css";
 
-// 대표 화면 3번 대화 기록입니다. ChatGPT·Gemini·Claude 홈(2026년 10월)의 구성을 따릅니다.
-// 사이드바(서비스 이름 → 주요 이동 → 고정됨 → 최근 → 프로필)와, 본문(시작 화면 또는 대화 보기)입니다.
+// 대표 화면 1·3번(채팅 시작, 대화 기록)입니다. 구성은 하늘 대표 화면 명세를 따릅니다.
+// 사이드바(새 대화·검색·날짜 묶음·프로필)와 본문(배경이 깔린 시작 화면 또는 대화 보기)입니다.
 // 화면 배치는 chat-history.css에 토큰으로만 적습니다.
+
+/** 예제용 채팅 배경입니다. 실제 앱에서는 사용자가 올린 이미지·GIF·MP4가 들어갑니다. */
+const wallpaper =
+  "data:image/svg+xml," +
+  encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720"><defs><linearGradient id="g" x2="0" y2="1"><stop offset="0" stop-color="hsl(215 70% 72%)"/><stop offset="1" stop-color="hsl(265 60% 80%)"/></linearGradient></defs><rect width="1280" height="720" fill="url(#g)"/><circle cx="960" cy="180" r="90" fill="white" opacity=".7"/><g fill="white" opacity=".6"><ellipse cx="260" cy="160" rx="150" ry="34"/><ellipse cx="620" cy="110" rx="110" ry="26"/></g><path d="m0 600 260-150 220 110 260-200 540 260v100H0z" fill="hsl(250 35% 45%)" opacity=".55"/></svg>`,
+  );
 
 type Conversation = {
   id: string;
   title: string;
   group: string;
-  pinned?: boolean;
   messages: { from: "user" | "assistant"; text: string }[];
 };
 
@@ -57,7 +51,6 @@ const shortConversations: Conversation[] = [
     id: "c1",
     title: "여름방학 여행 계획 세우기",
     group: "오늘",
-    pinned: true,
     messages: [
       { from: "user", text: "8월에 제주 3박 4일 가려는데 일정 좀 짜 줘." },
       {
@@ -123,7 +116,6 @@ const shortConversations: Conversation[] = [
     id: "c6",
     title: "하늘 프로젝트 기억 구조 정리",
     group: "이전",
-    pinned: true,
     messages: [
       { from: "user", text: "기억을 어떻게 나눠 저장하면 좋을까?" },
       {
@@ -159,39 +151,10 @@ const longConversations: Conversation[] = shortConversations.map(
 
 const groups = ["오늘", "지난 7일", "이전"];
 
-const suggestions = [
-  "여행 일정 짜기",
-  "글 다듬기",
-  "코드 설명",
-  "이미지 만들기",
-  "표로 정리",
-];
-
-const artifacts = [
-  ["a1", "제주 3박 4일 일정표", "2시간 전", FileText],
-  ["a2", "하늘섬 탐험 소개 이미지", "어제", ImageIcon],
-  ["a3", "기억 구조 정리 문서", "10월 23일", FileText],
-] as const;
-
-const models = {
-  fast: { name: "빠른 답변", note: "일상 질문에 빠르게 답해요" },
-  deep: { name: "깊은 생각", note: "복잡한 문제를 오래 생각해요" },
-} as const;
-type ModelKey = keyof typeof models;
-
 export type ChatHistoryState = "default" | "loading" | "empty" | "error";
 
-function Composer({
-  model,
-  onModelChange,
-  onSend,
-  compact,
-}: {
-  model: ModelKey;
-  onModelChange: (model: ModelKey) => void;
-  onSend: (text: string) => void;
-  compact?: boolean;
-}) {
+// 입력창 컴포넌트(5단계 Composer)가 없어 Textarea와 버튼으로 만듭니다(2차 2-M14).
+function Composer({ onSend }: { onSend: (text: string) => void }) {
   const [text, setText] = useState("");
   return (
     <form
@@ -204,7 +167,7 @@ function Composer({
       }}
     >
       <Textarea
-        rows={compact ? 2 : 3}
+        rows={2}
         variant="utility"
         aria-label="메시지"
         placeholder="무엇이든 물어보세요"
@@ -219,42 +182,6 @@ function Composer({
           circular
           aria-label="파일 올리기"
         />
-        <Menu.Root>
-          <Menu.Trigger
-            render={<Button size="sm" variant="utility" />}
-            aria-label={`답변 방식: ${models[model].name}`}
-          >
-            {models[model].name}
-            <ChevronDown size={16} aria-hidden="true" />
-          </Menu.Trigger>
-          <Menu.Portal>
-            <Menu.Positioner sideOffset={4} align="start">
-              <Menu.Popup size="sm">
-                <Menu.RadioGroup
-                  value={model}
-                  onValueChange={(value) => onModelChange(value as ModelKey)}
-                >
-                  {(Object.keys(models) as ModelKey[]).map((key) => (
-                    <Menu.RadioItem key={key} value={key}>
-                      {models[key].name}
-                      <Menu.RadioItemIndicator>
-                        <Check size={16} aria-hidden="true" />
-                      </Menu.RadioItemIndicator>
-                    </Menu.RadioItem>
-                  ))}
-                </Menu.RadioGroup>
-              </Menu.Popup>
-            </Menu.Positioner>
-          </Menu.Portal>
-        </Menu.Root>
-        <span className="cht-spacer" />
-        <IconButton
-          icon={<Mic />}
-          size="sm"
-          variant="utility"
-          circular
-          aria-label="음성으로 말하기"
-        />
         <IconButton
           icon={<ArrowUp />}
           size="sm"
@@ -264,12 +191,6 @@ function Composer({
           aria-label="보내기"
         />
       </div>
-      {!compact && (
-        <p className="cht-composer-foot">
-          <span>{models[model].note}</span>
-          <span>Enter로 보내고, Shift+Enter로 줄을 바꿔요.</span>
-        </p>
-      )}
     </form>
   );
 }
@@ -295,8 +216,6 @@ function History({
   const [selected, setSelected] = useState(state === "default" ? "c1" : "");
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(sidebarOpen);
-  const [model, setModel] = useState<ModelKey>("fast");
-  const [showAll, setShowAll] = useState(false);
   const [renaming, setRenaming] = useState<Conversation>();
   const [deleting, setDeleting] = useState<Conversation>();
   const newChat = useRef<HTMLButtonElement>(null);
@@ -304,7 +223,6 @@ function History({
   const visible = conversations.filter((conversation) =>
     conversation.title.includes(query.trim()),
   );
-  const pinned = visible.filter((conversation) => conversation.pinned);
   const current = conversations.find(
     (conversation) => conversation.id === selected,
   );
@@ -342,24 +260,6 @@ function History({
     toast.add({ title: "메시지를 보냈습니다", description: text });
   }
 
-  function conversationItem(conversation: Conversation) {
-    return (
-      <Sidebar.Item key={conversation.id}>
-        <Sidebar.Link
-          href={`#chat-${conversation.id}`}
-          active={conversation.id === selected}
-          onClick={(event) => {
-            event.preventDefault();
-            setSelected(conversation.id);
-            setOpen(false);
-          }}
-        >
-          {conversation.title}
-        </Sidebar.Link>
-      </Sidebar.Item>
-    );
-  }
-
   let list;
   if (status === "loading") {
     list = (
@@ -386,7 +286,7 @@ function History({
   } else if (conversations.length === 0) {
     list = (
       <div className="cht-side-state">
-        <p>아직 대화가 없습니다. 아래 입력창에서 첫 대화를 시작해 보세요.</p>
+        <p>아직 대화가 없습니다. 첫 대화를 시작해 보세요.</p>
       </div>
     );
   } else if (visible.length === 0) {
@@ -402,34 +302,31 @@ function History({
     // 행마다 더보기 버튼을 둘 자리가 없어(2차 2-M1), 열린 대화의 머리에서 이름 바꾸기·삭제를 합니다.
     list = (
       <nav aria-label="대화 목록">
-        {pinned.length > 0 && (
-          <Sidebar.Group>
-            <Sidebar.GroupLabel>고정됨</Sidebar.GroupLabel>
-            <Sidebar.Menu>{pinned.map(conversationItem)}</Sidebar.Menu>
-          </Sidebar.Group>
-        )}
         {groups.map((group) => {
           const items = visible.filter(
-            (conversation) =>
-              conversation.group === group && !conversation.pinned,
+            (conversation) => conversation.group === group,
           );
           if (items.length === 0) return null;
-          const shown = showAll || group !== "이전" ? items : items.slice(0, 1);
           return (
             <Sidebar.Group key={group}>
-              <div className="cht-group-head">
-                <Sidebar.GroupLabel>{group}</Sidebar.GroupLabel>
-                {group === "이전" && items.length > shown.length && (
-                  <button
-                    type="button"
-                    className="cht-see-all"
-                    onClick={() => setShowAll(true)}
-                  >
-                    모두 보기
-                  </button>
-                )}
-              </div>
-              <Sidebar.Menu>{shown.map(conversationItem)}</Sidebar.Menu>
+              <Sidebar.GroupLabel>{group}</Sidebar.GroupLabel>
+              <Sidebar.Menu>
+                {items.map((conversation) => (
+                  <Sidebar.Item key={conversation.id}>
+                    <Sidebar.Link
+                      href={`#chat-${conversation.id}`}
+                      active={conversation.id === selected}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        setSelected(conversation.id);
+                        setOpen(false);
+                      }}
+                    >
+                      {conversation.title}
+                    </Sidebar.Link>
+                  </Sidebar.Item>
+                ))}
+              </Sidebar.Menu>
             </Sidebar.Group>
           );
         })}
@@ -443,16 +340,7 @@ function History({
         <Sidebar.Panel title="대화 기록" closeLabel="대화 기록 닫기">
           <Sidebar.Header>
             <div className="cht-side-head">
-              <p className="cht-brand">
-                <strong>하늘</strong>
-                <IconButton
-                  icon={<PanelLeft />}
-                  size="sm"
-                  variant="utility"
-                  aria-label="사이드바 접기"
-                  onClick={() => setOpen(false)}
-                />
-              </p>
+              <p className="cht-brand">하늘</p>
               <Sidebar.Action
                 ref={newChat}
                 icon="icon-regular-plus-large"
@@ -474,61 +362,31 @@ function History({
                 leading={<Search size={16} aria-hidden="true" />}
                 disabled={conversations.length === 0}
               />
-              <Sidebar.Menu>
-                <Sidebar.Item>
-                  <Sidebar.Action leading={<Library size={20} />}>
-                    라이브러리
-                  </Sidebar.Action>
-                </Sidebar.Item>
-                <Sidebar.Item>
-                  <Sidebar.Action
-                    leading={<Folder size={20} />}
-                    trailing={
-                      <Badge size="xs" variant="emphasis">
-                        신규
-                      </Badge>
-                    }
-                  >
-                    프로젝트
-                  </Sidebar.Action>
-                </Sidebar.Item>
-              </Sidebar.Menu>
             </div>
           </Sidebar.Header>
           <Sidebar.Content>{list}</Sidebar.Content>
           <Sidebar.Footer>
-            <Menu.Root>
-              <Menu.Trigger
-                render={<button type="button" className="cht-profile" />}
-              >
-                <Avatar.Root>
-                  <Avatar.Fallback>바</Avatar.Fallback>
-                </Avatar.Root>
-                <span>
-                  <strong>바보리보</strong>
-                  <span>무료 요금제</span>
-                </span>
-                <ChevronDown size={16} aria-hidden="true" />
-              </Menu.Trigger>
-              <Menu.Portal>
-                <Menu.Positioner sideOffset={4} align="start">
-                  <Menu.Popup size="sm">
-                    <Menu.Item>설정</Menu.Item>
-                    <Menu.Item>기억 관리</Menu.Item>
-                    <Menu.Separator />
-                    <Menu.Item>
-                      <Sparkles size={16} aria-hidden="true" />
-                      요금제 올리기
-                    </Menu.Item>
-                    <Menu.Item>로그아웃</Menu.Item>
-                  </Menu.Popup>
-                </Menu.Positioner>
-              </Menu.Portal>
-            </Menu.Root>
+            <div className="cht-profile">
+              <Avatar.Root>
+                <Avatar.Fallback>바</Avatar.Fallback>
+              </Avatar.Root>
+              <strong>바보리보</strong>
+              <IconButton
+                icon={<Settings />}
+                size="sm"
+                variant="utility"
+                aria-label="기억·설정 열기"
+                onClick={() => toast.add({ title: "기억·설정으로 이동합니다" })}
+              />
+            </div>
           </Sidebar.Footer>
         </Sidebar.Panel>
 
         <div className="cht-main">
+          {!current && (
+            // Wallpaper 컴포넌트(6단계)가 없어 배경과 아래로 사라지는 마스크를 화면에서 만듭니다(2차 2-M14).
+            <img className="cht-wall" src={wallpaper} alt="" />
+          )}
           <div className="cht-topbar">
             <Sidebar.Trigger
               render={
@@ -541,61 +399,37 @@ function History({
             />
             <h1 className="cht-topbar-title">{current?.title ?? "새 대화"}</h1>
             {current && (
-              <>
-                <Button
-                  size="sm"
-                  variant="utility"
-                  onClick={() =>
-                    toast.add({ title: "공유 링크를 만들었습니다" })
+              <Menu.Root>
+                <Menu.Trigger
+                  render={
+                    <IconButton
+                      icon={<MoreHorizontal />}
+                      variant="utility"
+                      aria-label="대화 옵션"
+                    />
                   }
-                >
-                  <Share2 size={16} aria-hidden="true" />
-                  공유
-                </Button>
-                <Menu.Root>
-                  <Menu.Trigger
-                    render={
-                      <IconButton
-                        icon={<MoreHorizontal />}
-                        variant="utility"
-                        aria-label="대화 옵션"
-                      />
-                    }
-                  />
-                  <Menu.Portal>
-                    <Menu.Positioner sideOffset={4} align="end">
-                      <Menu.Popup size="sm">
-                        <Menu.Item onClick={() => setRenaming(current)}>
-                          <PencilLine size={16} aria-hidden="true" />
-                          이름 바꾸기
-                        </Menu.Item>
-                        <Menu.Item
-                          onClick={() =>
-                            toast.add({
-                              title: current.pinned
-                                ? "고정을 해제했습니다"
-                                : "대화를 고정했습니다",
-                            })
-                          }
-                        >
-                          <Pin size={16} aria-hidden="true" />
-                          {current.pinned ? "고정 해제" : "고정하기"}
-                        </Menu.Item>
-                        <Menu.Separator />
-                        <Menu.Item onClick={() => setDeleting(current)}>
-                          <Trash2 size={16} aria-hidden="true" />
-                          삭제
-                        </Menu.Item>
-                      </Menu.Popup>
-                    </Menu.Positioner>
-                  </Menu.Portal>
-                </Menu.Root>
-              </>
+                />
+                <Menu.Portal>
+                  <Menu.Positioner sideOffset={4} align="end">
+                    <Menu.Popup size="sm">
+                      <Menu.Item onClick={() => setRenaming(current)}>
+                        <PencilLine size={16} aria-hidden="true" />
+                        이름 바꾸기
+                      </Menu.Item>
+                      <Menu.Item onClick={() => setDeleting(current)}>
+                        <Trash2 size={16} aria-hidden="true" />
+                        삭제
+                      </Menu.Item>
+                    </Menu.Popup>
+                  </Menu.Positioner>
+                </Menu.Portal>
+              </Menu.Root>
             )}
           </div>
 
           <div className="cht-scroll">
             {current ? (
+              // 메시지 부품(6단계)이 없어 말풍선을 화면에서 만듭니다.
               <div className="cht-thread">
                 {current.messages.map((message, index) => (
                   <article
@@ -622,18 +456,6 @@ function History({
                           variant="utility"
                           aria-label="다시 답변 받기"
                         />
-                        <IconButton
-                          icon={<ThumbsUp />}
-                          size="xs"
-                          variant="utility"
-                          aria-label="좋은 답변"
-                        />
-                        <IconButton
-                          icon={<ThumbsDown />}
-                          size="xs"
-                          variant="utility"
-                          aria-label="아쉬운 답변"
-                        />
                       </div>
                     )}
                   </article>
@@ -642,57 +464,16 @@ function History({
             ) : (
               <div className="cht-start">
                 <p className="cht-greeting">
-                  <Sparkles size={28} aria-hidden="true" />
-                  오늘은 무엇을 해 볼까요?
+                  바보리보님, 오늘은 어떤 이야기를 할까요?
                 </p>
-                <Composer
-                  model={model}
-                  onModelChange={setModel}
-                  onSend={send}
-                />
-                <div className="cht-suggestions">
-                  {suggestions.map((item) => (
-                    <Button
-                      key={item}
-                      size="sm"
-                      variant="standard"
-                      onClick={() => send(item)}
-                    >
-                      {item}
-                    </Button>
-                  ))}
-                </div>
-                <section aria-labelledby="cht-recent">
-                  <div className="cht-recent-head">
-                    <h2 id="cht-recent">최근 만든 것</h2>
-                    <Button size="sm" variant="utility">
-                      모두 보기
-                    </Button>
-                  </div>
-                  <ul className="cht-cards">
-                    {artifacts.map(([id, title, when, ArtIcon]) => (
-                      <li className="cht-card" key={id}>
-                        <span className="cht-card-art">
-                          <ArtIcon size={24} aria-hidden="true" />
-                        </span>
-                        <a href={`#artifact-${id}`}>{title}</a>
-                        <time>{when}</time>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
+                <Composer onSend={send} />
               </div>
             )}
           </div>
 
           {current && (
             <div className="cht-composer-dock">
-              <Composer
-                model={model}
-                onModelChange={setModel}
-                onSend={send}
-                compact
-              />
+              <Composer onSend={send} />
             </div>
           )}
         </div>

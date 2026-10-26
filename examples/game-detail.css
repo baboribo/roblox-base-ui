@@ -2,213 +2,158 @@
    색·글자·간격·모서리는 모두 토큰을 씁니다. 라이브러리 클래스(.rbx-*)는 덮어쓰지 않습니다. */
 
 .gdt {
-  --gdt-width: 1040px;
-  --gdt-gutter: var(--rbx-padding-large);
+  display: grid;
+  gap: 48px;
+  max-width: 1080px;
+  margin-inline: auto;
+  padding: var(--rbx-padding-large) var(--rbx-padding-large) 64px;
   color: var(--rbx-color-content-default);
   font: var(--rbx-typography-body-large-font);
   overflow-wrap: anywhere;
 }
-.gdt :where(h1, h2, h3, p, ul, ol, dl, dd, figure) {
+.gdt :where(h1, h2, h3, p, ul, ol, dl, dd) {
   margin: 0;
 }
 .gdt :where(ul, ol) {
   padding: 0;
   list-style: none;
 }
-.gdt a {
-  color: inherit;
+.gdt > * {
+  min-width: 0;
 }
 
-/* 히어로: 대표 이미지가 오른쪽에서 깔리고 왼쪽으로 어두워집니다(구글 플레이 큰 화면 머리). */
-.gdt-hero {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  background: var(--rbx-color-extended-gray-1200);
-  /* 히어로는 대표 이미지를 깔아서 항상 어둡습니다. 테마와 무관하게 밝은 글자를 씁니다. */
-  color: var(--rbx-color-extended-gray-100);
+/* 위: 왼쪽 갤러리, 오른쪽 게임 정보 */
+.gdt-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: var(--rbx-gap-xxlarge);
+  align-items: start;
 }
-.gdt-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(
-      to right,
-      var(--rbx-color-extended-gray-1200) 28%,
-      transparent 70%
-    ),
-    linear-gradient(
-      to top,
-      var(--rbx-color-extended-gray-1200) 8%,
-      transparent 60%
-    );
+.gdt-gallery {
+  display: grid;
+  gap: var(--rbx-gap-medium);
+  min-width: 0;
 }
-.gdt-hero-art {
-  position: absolute;
-  inset: 0 0 0 auto;
-  z-index: -1;
-  width: min(72%, 900px);
-  height: 100%;
+.gdt-stage {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--rbx-radius-large);
   object-fit: cover;
-  mask-image:
-    linear-gradient(to right, transparent, black 40%),
-    linear-gradient(to top, transparent, black 30%);
-  mask-composite: intersect;
+  background: var(--rbx-color-shift-200);
 }
-.gdt-hero-inner {
-  display: grid;
-  gap: var(--rbx-gap-xlarge);
-  max-width: var(--gdt-width);
-  margin-inline: auto;
-  padding: 160px var(--gdt-gutter) var(--rbx-padding-xlarge);
-}
-.gdt-title {
-  font: var(--rbx-typography-display-large-font);
-  letter-spacing: var(--rbx-typography-display-large-letter-spacing);
-  color: inherit;
-  max-width: 18em;
-}
-.gdt-byline {
-  display: grid;
-  gap: var(--rbx-gap-xsmall);
-}
-.gdt .gdt-developer {
-  font: var(--rbx-typography-title-medium-font);
-  color: var(--rbx-color-extended-green-400);
-  text-decoration: none;
-  inline-size: fit-content;
-}
-.gdt-developer:hover {
-  text-decoration: underline;
-}
-.gdt-fine {
-  font: var(--rbx-typography-caption-large-font);
-  font-weight: var(--rbx-font-weight-400);
-  opacity: 0.8;
-}
-
-/* 숫자 요약: 값이 위, 이름이 아래입니다. dt를 먼저 두고 보이는 순서만 뒤집습니다. */
-.gdt-stats {
+.gdt-thumbs {
   display: flex;
-  align-items: center;
+  gap: var(--rbx-gap-small);
   overflow-x: auto;
   scrollbar-width: none;
+  padding: 3px;
+}
+.gdt-thumb {
+  flex: 0 0 auto;
+  width: 96px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: var(--rbx-radius-medium);
+  background: none;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.7;
+}
+.gdt-thumb[aria-pressed="true"] {
+  border-color: var(--rbx-color-stroke-emphasis);
+  opacity: 1;
+}
+.gdt-thumb:hover {
+  opacity: 1;
+}
+.gdt-thumb img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.gdt-info {
+  display: grid;
+  gap: var(--rbx-gap-large);
+  min-width: 0;
+}
+.gdt-title {
+  font: var(--rbx-typography-heading-large-font);
+  color: var(--rbx-color-content-emphasis);
+  text-wrap: pretty;
+}
+.gdt-creator {
+  font: var(--rbx-typography-body-medium-font);
+  color: var(--rbx-color-content-muted);
+}
+.gdt-creator a {
+  color: var(--rbx-color-content-link);
+  text-decoration: none;
+}
+.gdt-creator a:hover {
+  text-decoration: underline;
+}
+.gdt-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rbx-gap-small);
+}
+.gdt-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--rbx-gap-small);
+}
+/* 주 작업 버튼은 남은 폭을 채웁니다. 라이브러리에 폭 옵션이 없어 화면에서 정합니다(3.5단계 N6). */
+.gdt-play {
+  flex: 1;
+  max-inline-size: none;
+}
+.gdt-quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rbx-gap-xsmall) var(--rbx-gap-large);
+  font: var(--rbx-typography-body-small-font);
+  color: var(--rbx-color-content-muted);
+}
+.gdt-quick span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rbx-gap-xsmall);
+}
+
+/* 통계: 묶음 상자 안에 값과 이름 */
+.gdt-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  border: 1px solid var(--rbx-color-stroke-muted);
+  border-radius: var(--rbx-radius-large);
+  overflow: hidden;
 }
 .gdt-stats > div {
   display: flex;
   flex-direction: column-reverse;
-  align-items: center;
-  flex-shrink: 0;
   gap: 2px;
-  min-width: 88px;
-  padding-inline: var(--rbx-padding-medium);
-  text-align: center;
-}
-.gdt-stats > div + div {
-  border-inline-start: 1px solid currentColor;
-  border-image: linear-gradient(
-      transparent 20%,
-      currentColor 20% 80%,
-      transparent 80%
-    )
-    1;
-  border-color: color-mix(in srgb, currentColor 30%, transparent);
-}
-.gdt-stats > :first-child {
-  padding-inline-start: 0;
-}
-.gdt-summary {
-  display: flex;
-  align-items: center;
-  gap: var(--rbx-gap-large);
-  min-width: 0;
-}
-.gdt-summary .gdt-stats {
-  min-width: 0;
+  padding: var(--rbx-padding-medium) var(--rbx-padding-large);
+  box-shadow: -1px -1px 0 var(--rbx-color-stroke-muted);
 }
 .gdt-stats dt {
-  font: var(--rbx-typography-caption-medium-font);
-  font-weight: var(--rbx-font-weight-400);
-  opacity: 0.8;
-  white-space: nowrap;
+  font: var(--rbx-typography-body-small-font);
+  color: var(--rbx-color-content-muted);
 }
 .gdt-stats dd {
-  display: flex;
-  align-items: center;
-  gap: 4px;
   font: var(--rbx-typography-title-medium-font);
-  white-space: nowrap;
-}
-.gdt-icon {
-  flex-shrink: 0;
-  width: 56px;
-  height: 56px;
-  border-radius: var(--rbx-radius-medium);
-  box-shadow: 0 2px 8px var(--rbx-color-common-shadow);
-}
-.gdt-age {
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: var(--rbx-radius-xsmall);
-  background: var(--rbx-color-extended-orange-1000);
-  color: var(--rbx-color-extended-gray-100);
-  font: var(--rbx-typography-caption-small-font);
+  color: var(--rbx-color-content-emphasis);
 }
 
-.gdt-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--rbx-gap-small) var(--rbx-gap-large);
-}
-/* 주 작업 버튼은 넓게 둡니다. 라이브러리에 폭 옵션이 없어 화면에서 정합니다(3.5단계 N6). */
-.gdt-play {
-  min-inline-size: 200px;
-}
-.gdt-trailer {
-  margin-inline-start: auto;
-}
-.gdt-note {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--rbx-gap-xsmall) var(--rbx-gap-xlarge);
-  font: var(--rbx-typography-body-small-font);
-  opacity: 0.85;
-}
-.gdt-note span {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--rbx-gap-small);
-}
-
-/* 본문 2단: 왼쪽 내용, 오른쪽 등급·지원·비슷한 게임 */
-.gdt-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 280px;
-  gap: var(--rbx-gap-xxlarge) 56px;
-  max-width: var(--gdt-width);
-  margin-inline: auto;
-  padding: var(--rbx-padding-xlarge) var(--gdt-gutter) 64px;
-}
-.gdt-main,
-.gdt-aside {
-  display: grid;
-  align-content: start;
-  gap: 40px;
-  min-width: 0;
-}
-.gdt-main > *,
-.gdt-aside > *,
-.gdt-section > * {
-  min-width: 0;
-}
+/* 구역 */
 .gdt-section {
   display: grid;
   gap: var(--rbx-gap-large);
+  max-width: 720px;
+}
+.gdt-section > * {
+  min-width: 0;
 }
 .gdt-section-head {
   display: flex;
@@ -218,547 +163,140 @@
 }
 .gdt-h2 {
   font: var(--rbx-typography-heading-small-font);
-  text-wrap: pretty;
   color: var(--rbx-color-content-emphasis);
 }
-/* 제목 자체가 자세히 보기 버튼입니다(구글 플레이 "게임 소개 →"). */
-.gdt-h2-button {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--rbx-gap-small);
-  padding: 4px 8px;
-  margin: -4px -8px;
-  border: 0;
-  border-radius: var(--rbx-radius-medium);
-  background: none;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-}
-.gdt-h2-button:hover {
-  background: var(--rbx-color-state-hover);
-}
-.gdt-h2-button:focus-visible {
-  outline: 3px solid var(--rbx-focus-ring);
-  outline-offset: 2px;
-}
-.gdt-muted {
-  color: var(--rbx-color-content-muted);
-  font: var(--rbx-typography-body-small-font);
-}
-
-/* 스크린샷 줄 */
-.gdt-gallery {
-  position: relative;
-}
-.gdt-shots {
-  display: flex;
-  gap: var(--rbx-gap-medium);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  border-radius: var(--rbx-radius-medium);
-}
-.gdt-shots li {
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-}
-.gdt-shot {
-  display: block;
-  padding: 0;
-  border: 0;
-  border-radius: var(--rbx-radius-medium);
-  overflow: hidden;
-  background: var(--rbx-color-shift-200);
-  cursor: zoom-in;
-}
-.gdt-shot img {
-  display: block;
-  height: 200px;
-  width: auto;
-  aspect-ratio: 16 / 9;
-}
-.gdt-shot:focus-visible {
-  outline: 3px solid var(--rbx-focus-ring);
-  outline-offset: 2px;
-}
-.gdt-gallery-nav {
-  position: absolute;
-  inset-block-start: 50%;
-  translate: 0 -50%;
-}
-.gdt-gallery-nav[data-side="start"] {
-  inset-inline-start: -20px;
-}
-.gdt-gallery-nav[data-side="end"] {
-  inset-inline-end: -20px;
-}
-
-/* 소개 */
-.gdt-clamp {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
-  white-space: pre-line;
-}
-.gdt-pre {
-  white-space: pre-line;
-}
-.gdt-fact {
+.gdt-about {
   display: grid;
-  gap: 2px;
-}
-.gdt-fact dt {
-  font: var(--rbx-typography-title-small-font);
-  color: var(--rbx-color-content-emphasis);
-}
-.gdt-fact dd {
-  font: var(--rbx-typography-body-medium-font);
-  color: var(--rbx-color-content-muted);
-}
-/* 장르 태그는 탐색 화면으로 가는 링크입니다. 칩 컴포넌트가 없어 화면에서 만듭니다(1차 M8). */
-.gdt-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--rbx-gap-small);
-}
-.gdt-tags a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 32px;
-  padding-inline: var(--rbx-padding-medium);
-  border: 1px solid var(--rbx-color-stroke-default);
-  border-radius: var(--rbx-radius-circle);
-  font: var(--rbx-typography-label-medium-font);
-  text-decoration: none;
+  gap: var(--rbx-gap-medium);
   color: var(--rbx-color-content-default);
 }
-.gdt-tags a:hover {
-  background: var(--rbx-color-state-hover);
-}
 
-/* 이벤트 카드 */
-.gdt-event {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  min-height: 160px;
-  overflow: hidden;
-  border-radius: var(--rbx-radius-large);
-  background: var(--rbx-color-surface-200);
-}
-.gdt-event-copy {
-  display: grid;
-  align-content: space-between;
-  gap: var(--rbx-gap-medium);
-  padding: var(--rbx-padding-large);
-}
-.gdt-event-copy h3 {
-  font: var(--rbx-typography-title-large-font);
-  color: var(--rbx-color-content-emphasis);
-}
-.gdt-event-copy a {
-  text-decoration: none;
-}
-.gdt-event-copy a::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-.gdt-event:has(a:focus-visible) {
-  outline: 3px solid var(--rbx-focus-ring);
-  outline-offset: 2px;
-}
-.gdt-event img {
-  width: 100%;
-  height: 100%;
-  max-height: 220px;
-  object-fit: cover;
-}
-
-/* 평가 요약: 큰 숫자 + 막대 */
+/* 평가: 큰 비율 + 나뉜 막대 + 내 표 */
 .gdt-rating {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: var(--rbx-gap-xxlarge);
+  gap: var(--rbx-gap-medium) var(--rbx-gap-xxlarge);
 }
 .gdt-score {
   display: grid;
-  justify-items: start;
-  gap: var(--rbx-gap-xsmall);
+  gap: 2px;
 }
 .gdt-score strong {
-  font: var(--rbx-typography-display-large-font);
-  font-size: 56px;
+  font: var(--rbx-typography-display-medium-font);
+  color: var(--rbx-color-content-emphasis);
   line-height: 1;
-  color: var(--rbx-color-content-emphasis);
 }
-.gdt-score-verdict {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--rbx-gap-xsmall);
-  font: var(--rbx-typography-title-small-font);
-  color: var(--rbx-color-content-emphasis);
+.gdt-score span {
+  font: var(--rbx-typography-body-small-font);
+  color: var(--rbx-color-content-muted);
 }
-.gdt-score-verdict svg,
-.gdt-verdict svg {
-  color: var(--rbx-color-system-success);
-}
-.gdt-bars {
+.gdt-split {
   display: grid;
-  gap: var(--rbx-gap-medium);
+  gap: var(--rbx-gap-small);
 }
-.gdt-bar {
-  display: grid;
-  grid-template-columns: 5.5em minmax(0, 1fr) auto;
-  align-items: center;
-  gap: var(--rbx-gap-medium);
-}
-.gdt-bar-track {
+.gdt-split-track {
+  display: flex;
   height: 8px;
   border-radius: var(--rbx-radius-circle);
-  background: var(--rbx-color-shift-300);
   overflow: hidden;
+  background: var(--rbx-color-shift-300);
 }
-.gdt-bar-fill {
-  height: 100%;
-  border-radius: inherit;
+.gdt-split-up {
   background: var(--rbx-color-system-success);
 }
-.gdt-bar-fill[data-tone="down"] {
-  background: var(--rbx-color-content-muted);
-}
-.gdt-bar dt,
-.gdt-bar dd {
+.gdt-split-legend {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--rbx-gap-medium);
   font: var(--rbx-typography-body-small-font);
   color: var(--rbx-color-content-muted);
-  white-space: nowrap;
 }
-
-/* 내 평가 */
-.gdt-mine {
-  display: grid;
-  gap: var(--rbx-gap-medium);
-  padding-block: var(--rbx-padding-large);
-  border-block: 1px solid var(--rbx-color-stroke-muted);
-}
-.gdt-mine-row {
+.gdt-vote {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: var(--rbx-gap-small);
+  grid-column: 1 / -1;
+}
+.gdt-vote p {
+  margin-inline-end: var(--rbx-gap-small);
+  font: var(--rbx-typography-body-medium-font);
 }
 
-/* 리뷰 */
-.gdt-reviews {
-  display: grid;
-  gap: 40px;
-}
-.gdt-review {
+/* 댓글 */
+.gdt-write {
   display: grid;
   gap: var(--rbx-gap-small);
 }
-.gdt-review-head {
+.gdt-write-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.gdt-comments {
+  display: grid;
+}
+.gdt-comment {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
   gap: var(--rbx-gap-medium);
+  padding-block: var(--rbx-padding-large);
 }
-.gdt-review-author {
-  font: var(--rbx-typography-title-small-font);
-  color: var(--rbx-color-content-emphasis);
+.gdt-comment + .gdt-comment {
+  border-top: 1px solid var(--rbx-color-stroke-muted);
 }
-.gdt-review-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--rbx-gap-xsmall) var(--rbx-gap-small);
-  font: var(--rbx-typography-body-small-font);
-  color: var(--rbx-color-content-muted);
-}
-.gdt-verdict {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font: var(--rbx-typography-label-medium-font);
-}
-.gdt-verdict[data-up="false"] svg {
-  color: var(--rbx-color-content-muted);
-}
-.gdt-review-text {
-  font: var(--rbx-typography-body-medium-font);
-  color: var(--rbx-color-content-default);
-  white-space: pre-line;
-}
-.gdt-helpful {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--rbx-gap-small) var(--rbx-gap-medium);
-  font: var(--rbx-typography-body-small-font);
-  color: var(--rbx-color-content-muted);
-}
-.gdt-helpful-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--rbx-gap-small) var(--rbx-gap-medium);
-}
-.gdt-helpful-buttons {
-  display: inline-flex;
-  gap: var(--rbx-gap-small);
-}
-.gdt-reply {
-  display: grid;
-  gap: var(--rbx-gap-small);
-  margin-inline-start: var(--rbx-padding-large);
-  padding: var(--rbx-padding-medium) var(--rbx-padding-large);
-  border-radius: var(--rbx-radius-medium);
-  background: var(--rbx-color-surface-200);
-}
-.gdt-reply-head {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--rbx-gap-small);
-  font: var(--rbx-typography-title-small-font);
-  color: var(--rbx-color-content-emphasis);
-}
-.gdt-reply-head time {
-  font: var(--rbx-typography-body-small-font);
-  color: var(--rbx-color-content-muted);
-}
-.gdt-reply p {
-  font: var(--rbx-typography-body-medium-font);
-}
-
-.gdt-changes {
+.gdt-comment-body {
   display: grid;
   gap: var(--rbx-gap-xsmall);
-  padding-inline-start: 1.4em;
-  list-style: decimal;
+  min-width: 0;
+}
+.gdt-comment-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--rbx-gap-small);
+}
+.gdt-comment-head strong {
+  font: var(--rbx-typography-title-small-font);
+  color: var(--rbx-color-content-emphasis);
+}
+.gdt-comment-head time {
+  font: var(--rbx-typography-body-small-font);
+  color: var(--rbx-color-content-muted);
+}
+.gdt-comment-text {
   font: var(--rbx-typography-body-medium-font);
 }
-
-/* 오른쪽 열 */
-.gdt-age-card {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--rbx-gap-xsmall) var(--rbx-gap-medium);
-  padding: var(--rbx-padding-large);
-  border: 1px solid var(--rbx-color-stroke-default);
-  border-radius: var(--rbx-radius-large);
-}
-.gdt-age-card .gdt-age {
-  grid-row: span 3;
-  width: 36px;
-  height: 36px;
-  font: var(--rbx-typography-title-medium-font);
-}
-.gdt-age-card strong {
-  font: var(--rbx-typography-title-large-font);
-  color: var(--rbx-color-content-emphasis);
-}
-.gdt-age-card a {
-  color: var(--rbx-color-content-link);
-  font: var(--rbx-typography-label-medium-font);
-  inline-size: fit-content;
-}
-.gdt-support {
-  display: grid;
-  gap: var(--rbx-gap-medium);
-}
-.gdt-support-trigger {
+.gdt-comment-like {
   display: flex;
   align-items: center;
-  gap: var(--rbx-gap-small);
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--rbx-color-content-emphasis);
-  font: var(--rbx-typography-heading-small-font);
-  cursor: pointer;
-}
-.gdt-support-trigger svg {
-  transition: rotate 200ms var(--rbx-ease-standard-out);
-}
-.gdt-support-trigger[data-panel-open] svg {
-  rotate: 180deg;
-}
-.gdt-support-list {
-  display: grid;
-  gap: var(--rbx-gap-large);
-}
-.gdt-support-list a {
-  display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
-  gap: 2px var(--rbx-gap-medium);
-  text-decoration: none;
-}
-.gdt-support-list svg {
-  grid-row: span 2;
-  margin-top: 2px;
-  color: var(--rbx-color-content-muted);
-}
-.gdt-support-list strong {
-  font: var(--rbx-typography-title-small-font);
-  color: var(--rbx-color-content-emphasis);
-}
-.gdt-support-list span {
+  gap: 2px;
+  margin-inline-start: -8px;
   font: var(--rbx-typography-body-small-font);
   color: var(--rbx-color-content-muted);
 }
-
-/* 게임 목록(비슷한 게임, 제작자의 다른 게임) */
-.gdt-mini-list {
-  display: grid;
-  gap: var(--rbx-gap-small);
-}
-.gdt-mini {
-  position: relative;
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
-  align-items: center;
-  gap: var(--rbx-gap-medium);
-  padding: var(--rbx-padding-xsmall);
-  margin-inline: calc(var(--rbx-padding-xsmall) * -1);
-  border-radius: var(--rbx-radius-medium);
-}
-.gdt-mini:hover {
-  background: var(--rbx-color-state-hover);
-}
-.gdt-mini img {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--rbx-radius-medium);
-}
-.gdt-mini a {
-  font: var(--rbx-typography-title-small-font);
-  color: var(--rbx-color-content-emphasis);
-  text-decoration: none;
-}
-.gdt-mini a::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-}
-.gdt-mini a:focus-visible {
-  outline: none;
-}
-.gdt-mini:has(a:focus-visible) {
-  outline: 3px solid var(--rbx-focus-ring);
-}
-.gdt-mini-meta {
-  display: block;
-  font: var(--rbx-typography-body-small-font);
+.gdt-muted {
+  font: var(--rbx-typography-body-medium-font);
   color: var(--rbx-color-content-muted);
 }
 
-/* 큰 이미지 보기 */
-.gdt-lightbox {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: var(--rbx-radius-medium);
-}
-.gdt-dialog-scroll {
-  display: grid;
-  gap: var(--rbx-gap-xlarge);
-  max-height: min(60vh, 560px);
-  overflow-y: auto;
-  padding-inline-end: var(--rbx-padding-small);
-}
-.gdt-info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  gap: var(--rbx-gap-large);
-}
-.gdt-report {
-  display: grid;
-  gap: var(--rbx-gap-medium);
-}
-.gdt-report label {
-  display: flex;
-  align-items: center;
-  gap: var(--rbx-gap-medium);
-}
-
-/* 불러오는 중 */
-.gdt-skeleton-hero {
-  display: grid;
-  gap: var(--rbx-gap-large);
-  max-width: var(--gdt-width);
-  margin-inline: auto;
-  padding: 160px var(--gdt-gutter) var(--rbx-padding-xlarge);
-}
-
-/* 오류 */
-.gdt-error {
-  max-width: 560px;
-  margin: 96px auto;
-  padding-inline: var(--gdt-gutter);
-}
-
-@media (max-width: 900px) {
-  .gdt-body {
+@media (max-width: 860px) {
+  .gdt-top {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .gdt-aside {
-    border-top: 1px solid var(--rbx-color-stroke-muted);
-    padding-top: var(--rbx-padding-xlarge);
-  }
-  .gdt-gallery-nav {
-    display: none;
+    gap: var(--rbx-gap-xlarge);
   }
 }
 @media (max-width: 600px) {
-  .gdt-hero::before {
-    background: linear-gradient(
-      to top,
-      var(--rbx-color-extended-gray-1200) 42%,
-      transparent 78%
-    );
-  }
   .gdt {
-    --gdt-gutter: var(--rbx-padding-medium);
-  }
-  .gdt-hero-art {
-    width: 100%;
-    height: 220px;
-    mask-image: linear-gradient(to top, transparent, black 60%);
-  }
-  .gdt-hero-inner,
-  .gdt-skeleton-hero {
-    padding-top: 168px;
+    gap: 40px;
+    padding-inline: var(--rbx-padding-medium);
   }
   .gdt-title {
-    font: var(--rbx-typography-heading-large-font);
+    font: var(--rbx-typography-heading-medium-font);
   }
-  .gdt-play {
-    flex: 1 1 100%;
-  }
-  .gdt-trailer {
-    margin-inline-start: 0;
-  }
-  .gdt-shot img {
-    height: 160px;
-  }
-  .gdt-event {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .gdt-event img {
-    aspect-ratio: 16 / 9;
-    order: -1;
+  .gdt-thumb {
+    width: 76px;
   }
   .gdt-rating {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--rbx-gap-large);
-  }
-  .gdt-reply {
-    margin-inline-start: 0;
   }
 }
