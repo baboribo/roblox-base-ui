@@ -43,47 +43,52 @@ test("Storybook deep links, controls and document links work below a subpath", a
   await expect(page).toHaveURL(/\/docs$/);
 });
 
-test("every story loads its assets from the deployed subpath", async ({
-  page,
-  request,
-}) => {
-  test.setTimeout(120000);
-  const response = await request.get("/storybook/index.json");
-  expect(response.ok()).toBe(true);
-  const { entries } = await response.json();
-  const stories = Object.values(entries).filter(
-    (entry: any) => entry.type === "story",
-  ) as { id: string }[];
-  const errors: string[] = [];
-  page.on("pageerror", (error) => errors.push(error.message));
-  page.on("response", (response) => {
-    if (
-      new URL(response.url()).pathname.startsWith("/storybook/") &&
-      response.status() >= 400
-    )
-      errors.push(response.url());
-  });
-  expect(stories.length).toBeGreaterThan(100);
-  for (const story of stories) {
+// 100개가 넘는 스토리를 차례로 여는 무거운 검사라 다른 검사와 동시에 돌리지 않습니다(playwright.config.ts의 isolated 프로젝트).
+test(
+  "every story loads its assets from the deployed subpath",
+  {
+    tag: "@isolated",
+  },
+  async ({ page, request }) => {
+    test.setTimeout(120000);
+    const response = await request.get("/storybook/index.json");
+    expect(response.ok()).toBe(true);
+    const { entries } = await response.json();
+    const stories = Object.values(entries).filter(
+      (entry: any) => entry.type === "story",
+    ) as { id: string }[];
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    page.on("response", (response) => {
+      if (
+        new URL(response.url()).pathname.startsWith("/storybook/") &&
+        response.status() >= 400
+      )
+        errors.push(response.url());
+    });
+    expect(stories.length).toBeGreaterThan(100);
+    for (const story of stories) {
+      await page.goto(
+        "/storybook/iframe.html?id=" +
+          encodeURIComponent(story.id) +
+          "&viewMode=story",
+      );
+      await expect(
+        page.locator('#storybook-root [class*="rbx-"]').first(),
+        story.id,
+      ).toBeAttached({ timeout: 15000 });
+    }
+    expect(errors).toEqual([]);
     await page.goto(
       "/storybook/iframe.html?id=" +
-        encodeURIComponent(story.id) +
-        "&viewMode=story",
+        encodeURIComponent("입력-button--default") +
+        "&viewMode=story&args=disabled:true;size:sm&globals=theme:dark",
     );
     await expect(
-      page.locator('#storybook-root [class*="rbx-"]').first(),
-    ).toBeAttached();
-  }
-  expect(errors).toEqual([]);
-  await page.goto(
-    "/storybook/iframe.html?id=" +
-      encodeURIComponent("입력-button--default") +
-      "&viewMode=story&args=disabled:true;size:sm&globals=theme:dark",
-  );
-  await expect(
-    page.getByRole("button", { name: "저장", exact: true }),
-  ).toBeDisabled();
-  await expect(
-    page.getByRole("button", { name: "저장", exact: true }),
-  ).toHaveCSS("height", "32px");
-});
+      page.getByRole("button", { name: "저장", exact: true }),
+    ).toBeDisabled();
+    await expect(
+      page.getByRole("button", { name: "저장", exact: true }),
+    ).toHaveCSS("height", "32px");
+  },
+);
