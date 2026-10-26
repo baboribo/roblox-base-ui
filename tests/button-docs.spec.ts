@@ -92,6 +92,10 @@ test("example card and code remain accessible on mobile in both themes", async (
           ),
         )
         .toBe(true);
+      // 패널 전환 중의 반투명 글자는 실제 대비가 아니므로 전환이 끝난 뒤 검사합니다.
+      await page.waitForFunction(() =>
+        document.getAnimations().every((item) => item.playState !== "running"),
+      );
       const result = await new AxeBuilder({ page })
         .include('[data-example="button"]')
         .analyze();

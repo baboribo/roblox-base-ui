@@ -100,6 +100,8 @@ export function Carousel({
           size="sm"
           variant="utility"
           circular
+          // 끝에 도달해도 키보드 포커스가 body로 사라지지 않게 합니다.
+          focusableWhenDisabled
           disabled={edges.start}
           onClick={() => scroll(-1)}
         />
@@ -109,6 +111,7 @@ export function Carousel({
           size="sm"
           variant="utility"
           circular
+          focusableWhenDisabled
           disabled={edges.end}
           onClick={() => scroll(1)}
         />
