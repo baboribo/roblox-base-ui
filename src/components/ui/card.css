@@ -142,9 +142,11 @@
     grid-template-columns: minmax(80px, 30%) minmax(0, 1fr);
     align-items: stretch;
   }
+  /* 열 너비 기준 정사각형을 최소 높이로 두고, 본문이 더 길면 행 높이만큼 늘어납니다.
+     너비를 열에 고정하지 않으면 늘어난 높이로 너비가 다시 계산되어 열을 넘고 본문을 덮습니다. */
   .rbx-card[data-layout="horizontal"] > .rbx-card-media {
     aspect-ratio: 1;
-    min-height: 100%;
+    width: 100%;
   }
   .rbx-card[data-layout="horizontal"] > .rbx-card-content {
     align-content: center;

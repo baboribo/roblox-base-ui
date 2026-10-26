@@ -1,84 +1,192 @@
-/* 대화 기록 점검용 화면 배치입니다. 컴포넌트에 없는 부분을 여기서 채운 곳은 점검 문서에 기록합니다. */
-.ch-layout {
+/* 대표 화면 3번 대화 기록의 화면 배치입니다.
+   색·글자·간격·모서리는 모두 토큰을 씁니다. 라이브러리 클래스(.rbx-*)는 덮어쓰지 않습니다. */
+
+/* 너비 100%에 안쪽 여백을 더해도 화면을 넘지 않게 합니다. */
+.cht-start,
+.cht-thread,
+.cht-composer-dock {
+  box-sizing: border-box;
+}
+
+/* 사이드바와 본문을 나란히 두는 앱 셸이 라이브러리에 없어 화면에서 만듭니다(2차 2-M3). */
+.cht {
   display: flex;
-  height: min(720px, 100dvh);
-  min-width: 0;
-  border: 1px solid var(--rbx-color-stroke-default);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--rbx-color-surface-0);
+  height: 100dvh;
+  color: var(--rbx-color-content-default);
+  font: var(--rbx-typography-body-large-font);
+  overflow-wrap: anywhere;
 }
-.ch-sidebar {
-  height: 100%;
-}
-.ch-sidebar-header {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-/* Button 안 아이콘과 글자 간격, 왼쪽 정렬을 직접 맞춥니다. */
-.ch-new {
-  justify-content: flex-start;
-  gap: 8px;
-}
-/* Sidebar.Item에 행 옆 작업 버튼 자리가 없어 직접 배치합니다. */
-.ch-item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.ch-item > .rbx-navigation-item {
-  flex: 1;
-}
-.ch-skeleton {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.ch-skeleton-row {
-  height: 40px;
-}
-.ch-empty {
-  margin-top: 24px;
-}
-.ch-retry {
-  margin-top: 12px;
-}
-.ch-main {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 16px 24px;
-}
-.ch-main-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.ch-title {
+.cht :where(h1, h2, h3, p, ul, ol) {
   margin: 0;
-  min-width: 0;
-  font: 700 20px/1.4 var(--rbx-font-body);
 }
-.ch-placeholder {
+.cht :where(ul, ol) {
+  padding: 0;
+  list-style: none;
+}
+
+/* 사이드바 머리: 서비스 이름, 새 대화, 검색 */
+.cht-brand {
+  padding: var(--rbx-padding-xsmall) var(--rbx-padding-small);
+  font: var(--rbx-typography-title-large-font);
+  color: var(--rbx-color-content-emphasis);
+}
+.cht-side-head {
+  display: grid;
+  gap: var(--rbx-gap-small);
+}
+.cht-side-state {
+  display: grid;
+  justify-items: start;
+  gap: var(--rbx-gap-small);
+  padding: var(--rbx-padding-small);
+  font: var(--rbx-typography-body-medium-font);
   color: var(--rbx-color-content-muted);
 }
-.ch-rename-field {
-  margin-top: 16px;
+
+/* 사이드바 바닥: 프로필과 설정 */
+.cht-profile {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--rbx-gap-medium);
+  padding: var(--rbx-padding-xsmall);
 }
-/* AlertDialog에 작업 영역 파트가 없어 직접 배치합니다. */
-.ch-alert-actions {
+.cht-profile strong {
+  font: var(--rbx-typography-title-small-font);
+  color: var(--rbx-color-content-emphasis);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 본문 */
+.cht-main {
+  position: relative;
+  isolation: isolate;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 24px;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--rbx-color-surface-0);
 }
-/* 화면에서 직접 만든 글자 요소의 줄바꿈입니다(라이브러리 공통 규칙은 1차 점검 H4). */
-.ch-title {
-  word-break: keep-all;
-  overflow-wrap: anywhere;
+.cht-topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--rbx-gap-small);
+  padding: var(--rbx-padding-small) var(--rbx-padding-large);
+  min-height: 56px;
+}
+.cht-topbar-title {
+  flex: 1;
+  min-width: 0;
+  font: var(--rbx-typography-title-medium-font);
+  color: var(--rbx-color-content-emphasis);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cht-scroll {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* 채팅 시작 배경(Wallpaper): 위쪽에 깔고 아래로 갈수록 바탕색으로 사라집니다. */
+.cht-wall {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  opacity: 0.55;
+  mask-image: linear-gradient(to bottom, black 20%, transparent);
+  pointer-events: none;
+}
+
+/* 시작 화면 */
+.cht-start {
+  display: grid;
+  align-content: center;
+  gap: var(--rbx-gap-xlarge);
+  width: min(760px, 100%);
+  min-height: 100%;
+  margin-inline: auto;
+  padding: var(--rbx-padding-xlarge) var(--rbx-padding-large) 48px;
+}
+.cht-greeting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rbx-gap-medium);
+  font: var(--rbx-typography-heading-large-font);
+  color: var(--rbx-color-content-emphasis);
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* 입력창 */
+.cht-composer {
+  display: grid;
+  gap: var(--rbx-gap-small);
+  padding: var(--rbx-padding-medium);
+  border: 1px solid var(--rbx-color-stroke-default);
+  border-radius: var(--rbx-radius-large);
+  background: var(--rbx-color-surface-0);
+  box-shadow: 0 1px 4px var(--rbx-color-common-shadow);
+}
+.cht-composer:focus-within {
+  border-color: var(--rbx-color-stroke-emphasis);
+}
+.cht-composer-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rbx-gap-small);
+}
+/* 대화 보기 */
+.cht-thread {
+  display: grid;
+  gap: 32px;
+  width: min(760px, 100%);
+  margin-inline: auto;
+  padding: var(--rbx-padding-large) var(--rbx-padding-large) 32px;
+}
+.cht-msg[data-from="user"] {
+  justify-self: end;
+  max-width: 80%;
+  padding: var(--rbx-padding-medium) var(--rbx-padding-large);
+  border-radius: var(--rbx-radius-large);
+  background: var(--rbx-color-shift-200);
+}
+.cht-msg[data-from="assistant"] {
+  display: grid;
+  gap: var(--rbx-gap-medium);
+  white-space: pre-line;
+}
+.cht-msg-actions {
+  display: flex;
+  gap: var(--rbx-gap-xsmall);
+}
+.cht-composer-dock {
+  position: sticky;
+  bottom: 0;
+  width: min(760px, 100%);
+  margin-inline: auto;
+  padding: var(--rbx-padding-medium) var(--rbx-padding-large)
+    var(--rbx-padding-large);
+  background: var(--rbx-color-surface-0);
+}
+
+@media (max-width: 600px) {
+  .cht-topbar {
+    padding-inline: var(--rbx-padding-medium);
+  }
+  .cht-start,
+  .cht-thread,
+  .cht-composer-dock {
+    padding-inline: var(--rbx-padding-medium);
+  }
+  .cht-greeting {
+    font: var(--rbx-typography-heading-medium-font);
+  }
 }

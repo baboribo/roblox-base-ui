@@ -1,124 +1,315 @@
-/* 게임 탐색 점검용 화면 배치입니다. 컴포넌트에 없는 부분을 여기서 채운 곳은 점검 문서에 기록합니다. */
-.gd-page {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
-  max-width: 960px;
-  min-width: 0;
-  margin: 0 auto;
+/* 대표 화면 5번 게임 탐색의 화면 배치입니다.
+   색·글자·간격·모서리는 모두 토큰을 씁니다. 라이브러리 클래스(.rbx-*)는 덮어쓰지 않습니다. */
+
+/* 너비 100%에 안쪽 여백을 더해도 화면을 넘지 않게 합니다. */
+.gdv-page {
+  box-sizing: border-box;
 }
-.gd-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+
+.gdv {
+  --gdv-width: 1160px;
+  --gdv-gutter: var(--rbx-padding-large);
+  color: var(--rbx-color-content-default);
+  font: var(--rbx-typography-body-large-font);
+  overflow-wrap: anywhere;
 }
-.gd-header > .rbx-heading {
+.gdv :where(h1, h2, h3, p, ul, ol, dl, dd, figure) {
   margin: 0;
 }
-/* 히어로 배너: Card에 이미지 위 글자 배치가 없어 화면 CSS로 겹칩니다. */
-.gd-hero-card {
+.gdv :where(ul, ol) {
+  padding: 0;
+  list-style: none;
+}
+.gdv-page {
+  display: grid;
+  gap: 56px;
+  max-width: var(--gdv-width);
+  margin-inline: auto;
+  padding: var(--rbx-padding-xlarge) var(--gdv-gutter) 64px;
+}
+
+/* 머리: 페이지 제목과 장르 칩 줄 */
+.gdv-top {
+  display: grid;
+  gap: var(--rbx-gap-large);
+}
+.gdv-h1 {
+  font: var(--rbx-typography-heading-large-font);
+  color: var(--rbx-color-content-emphasis);
+}
+.gdv-chips {
+  display: flex;
+  gap: var(--rbx-gap-small);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: 2px;
+}
+
+/* 히어로 배너: 큰 그림 위에 제목과 플레이 */
+.gdv-hero {
   position: relative;
+  isolation: isolate;
+  display: grid;
+  align-content: end;
+  gap: var(--rbx-gap-medium);
+  min-height: 320px;
+  padding: var(--rbx-padding-xlarge);
+  border-radius: var(--rbx-radius-large);
+  overflow: hidden;
+  background: var(--rbx-color-extended-gray-1200);
+  color: var(--rbx-color-extended-gray-100);
 }
-.gd-hero-overlay {
+.gdv-hero img {
   position: absolute;
-  inset: auto 0 0 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 24px;
-  color: #fff;
-  background: linear-gradient(to top, rgb(0 0 0 / 0.65), transparent);
-  border-radius: 0 0 8px 8px;
-}
-.gd-hero-overlay .rbx-card-meta {
-  color: rgb(255 255 255 / 0.85);
-}
-.gd-hero-skeleton {
-  aspect-ratio: 21 / 9;
-  border-radius: 8px;
-}
-.gd-section {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-width: 0;
-}
-.gd-section-title {
-  margin: 0;
-  font: var(--rbx-typography-heading-small-font);
-}
-.gd-carousel-image {
+  inset: 0;
+  z-index: -2;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: inherit;
 }
-.gd-row-skeleton {
-  display: flex;
-  gap: 12px;
-  overflow: hidden;
+.gdv-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to top,
+    var(--rbx-color-extended-gray-1200) 5%,
+    transparent 70%
+  );
 }
-.gd-card-skeleton {
-  flex: 0 0 min(280px, 80%);
-  height: 160px;
-  border-radius: 8px;
-}
-.gd-row-skeleton-item {
-  height: 56px;
-  border-radius: 8px;
-}
-.gd-rank {
+.gdv-hero-label {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--rbx-gap-xsmall);
+  font: var(--rbx-typography-label-medium-font);
+  text-transform: none;
 }
-.gd-rank-number {
-  min-width: 1.5em;
-  text-align: center;
+.gdv-hero h2 {
+  font: var(--rbx-typography-display-small-font);
+  max-width: 16em;
+}
+.gdv-hero p {
   font: var(--rbx-typography-body-medium-font);
-  color: var(--rbx-color-content-default);
+  max-width: 40em;
+  opacity: 0.9;
 }
-.gd-rank-thumb {
-  width: 56px;
-  height: 56px;
-  object-fit: cover;
-  border-radius: 8px;
+.gdv-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rbx-gap-medium);
+  margin-top: var(--rbx-gap-small);
 }
-.gd-retry {
-  margin-top: 12px;
+.gdv-hero-dots {
+  position: absolute;
+  inset-block-end: var(--rbx-padding-medium);
+  inset-inline-end: var(--rbx-padding-large);
+  display: flex;
+  gap: var(--rbx-gap-small);
 }
-/* 실시간 차트: 넓은 화면에서는 세 줄씩 옆 열로 이어지는 목록입니다.
-   List에 여러 열 배치와 구분선 없는 변형이 없어 화면 CSS로 바꿉니다. */
-.gd-section {
-  container-type: inline-size;
+.gdv-hero-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--rbx-radius-circle);
+  background: currentColor;
+  opacity: 0.4;
+  cursor: pointer;
 }
-.gd-chart,
-.gd-chart-skeleton {
+.gdv-hero-dots button[aria-current="true"] {
+  opacity: 1;
+  width: 24px;
+}
+
+/* 구역 */
+.gdv-shelf {
   display: grid;
-  gap: 4px 24px;
+  gap: var(--rbx-gap-large);
+  min-width: 0;
 }
-.gd-chart .rbx-list-item {
-  border-bottom: 0;
+.gdv-shelf-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--rbx-gap-medium);
 }
-.gd-chart .rbx-list-action {
-  border-radius: 8px;
+.gdv-h2 {
+  font: var(--rbx-typography-heading-small-font);
+  color: var(--rbx-color-content-emphasis);
 }
-.gd-chart .rbx-list-content {
-  padding: 8px;
-}
-.gd-chart .rbx-list-description {
-  margin-top: 2px;
+.gdv-shelf-head p {
   font: var(--rbx-typography-body-small-font);
+  color: var(--rbx-color-content-muted);
 }
-@container (min-width: 640px) {
-  .gd-chart,
-  .gd-chart-skeleton {
-    grid-template-rows: repeat(3, auto);
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(0, 1fr);
+
+.gdv-title {
+  font: var(--rbx-typography-title-medium-font);
+  color: var(--rbx-color-content-emphasis);
+  text-decoration: none;
+}
+.gdv-title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--rbx-radius-medium);
+}
+.gdv-title:focus-visible {
+  outline: none;
+}
+.gdv-tile:has(a:focus-visible),
+.gdv-rank:has(a:focus-visible) {
+  outline: 3px solid var(--rbx-focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--rbx-radius-medium);
+}
+.gdv-meta {
+  font: var(--rbx-typography-body-small-font);
+  color: var(--rbx-color-content-muted);
+}
+.gdv-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px var(--rbx-gap-small);
+  font: var(--rbx-typography-body-small-font);
+  color: var(--rbx-color-content-muted);
+}
+.gdv-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.gdv-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--rbx-radius-circle);
+  background: var(--rbx-color-system-success);
+}
+
+/* 정사각 타일 격자 */
+.gdv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--rbx-gap-large) var(--rbx-gap-medium);
+}
+.gdv-tile {
+  position: relative;
+  display: grid;
+  gap: var(--rbx-gap-small);
+  min-width: 0;
+}
+.gdv-tile-media {
+  position: relative;
+}
+.gdv-tile img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--rbx-radius-medium);
+  object-fit: cover;
+  background: var(--rbx-color-shift-200);
+}
+.gdv-badge {
+  position: absolute;
+  inset-block-start: var(--rbx-padding-xsmall);
+  inset-inline-start: var(--rbx-padding-xsmall);
+}
+.gdv-tile-copy {
+  display: grid;
+  gap: 2px;
+}
+
+/* 순위 목록 */
+.gdv-ranks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--rbx-gap-xsmall) var(--rbx-gap-xxlarge);
+  counter-reset: rank;
+}
+.gdv-rank {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.2em 64px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--rbx-gap-medium);
+  padding: var(--rbx-padding-xsmall);
+  border-radius: var(--rbx-radius-medium);
+}
+.gdv-rank:hover {
+  background: var(--rbx-color-state-hover);
+}
+.gdv-rank-number {
+  font: var(--rbx-typography-title-large-font);
+  color: var(--rbx-color-content-muted);
+  text-align: center;
+}
+.gdv-rank img {
+  width: 64px;
+  aspect-ratio: 1;
+  border-radius: var(--rbx-radius-medium);
+  object-fit: cover;
+}
+.gdv-rank-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.gdv-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font: var(--rbx-typography-caption-medium-font);
+  color: var(--rbx-color-content-muted);
+}
+.gdv-change[data-dir="up"] {
+  color: var(--rbx-color-system-success);
+}
+.gdv-change[data-dir="down"] {
+  color: var(--rbx-color-system-alert);
+}
+
+/* 빈 상태·오류 */
+.gdv-state {
+  display: grid;
+  justify-items: center;
+  gap: var(--rbx-gap-medium);
+  padding-block: 64px;
+  text-align: center;
+}
+.gdv-state h2 {
+  font: var(--rbx-typography-heading-small-font);
+  color: var(--rbx-color-content-emphasis);
+}
+.gdv-state p {
+  color: var(--rbx-color-content-muted);
+}
+
+@media (max-width: 600px) {
+  .gdv {
+    --gdv-gutter: var(--rbx-padding-medium);
+  }
+  .gdv-page {
+    gap: 40px;
+    padding-top: var(--rbx-padding-medium);
+  }
+  .gdv-hero {
+    min-height: 260px;
+    padding: var(--rbx-padding-large);
+  }
+  .gdv-hero h2 {
+    font: var(--rbx-typography-heading-medium-font);
+  }
+  .gdv-grid {
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  }
+  .gdv-ranks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .gdv-rank {
+    grid-template-columns: 1.6em 56px minmax(0, 1fr) auto;
+  }
+  .gdv-rank img {
+    width: 56px;
   }
 }
