@@ -2,6 +2,13 @@
 
 ## 미출시
 
+- 글꼴 토큰에 시스템 산세리프와 한글 글꼴(Apple SD Gothic Neo, Malgun Gothic, Noto Sans KR) 대체 목록을 둡니다. Builder Sans를 받지 못해도 숫자·영문이 명조로 바뀌지 않습니다. `--rbx-font-body`를 바꾸면 typography 토큰도 따라 바뀝니다.
+- 한국어가 어절 중간에서 끊기지 않도록 `word-break: keep-all`을 기본으로 둡니다(`:root`와 컴포넌트, 우선순위 0). 공간이 모자란 긴 단어만 끊습니다.
+- Alert에 `tone`(neutral·success·warning·error)을 추가합니다. 기본 `role`은 error일 때 alert, 나머지는 status입니다. `AlertTitle`은 `as`로 제목 수준을 고르고, Card 클래스 대신 전용 클래스를 씁니다.
+- **기본 색 변경:** `Button variant="alert"` 글자, 오류 문구(`Field.Error` 등), 다크 테마 `variant="link"` 글자를 WCAG AA 대비(4.5:1)를 넘게 보정합니다. 이전에 `data-contrast="enhanced"`로만 켜던 보정이 기본값이 되었고, 이 속성은 더 이상 필요하지 않습니다. 새 토큰 `--rbx-color-content-alert`를 오류 글자에 씁니다.
+- Carousel 항목에 `href`를 지정하면 링크가 됩니다. `label` 대신 `aria-labelledby`로 화면의 제목을 연결할 수 있습니다. 항목이 버튼·링크이면 스크롤 영역이 이름 없는 Tab 정지점이 되지 않습니다.
+- Button의 `render`에 `href`가 있는 요소를 넘기면 `role="button"`과 Space 실행을 붙이지 않고 링크로 둡니다. `nativeButton={false}`는 지정하지 않아도 됩니다.
+- Dialog·Alert Dialog 문서에 첫 포커스(`initialFocus`)와 삭제 뒤 복귀 포커스(`finalFocus`) 안내와 예제를 추가합니다.
 - Carousel의 보조기기 영역 설명을 "캐러셀"로 바꾸고 `roleDescription`으로 변경할 수 있게 합니다. NumberField 증감 버튼과 입력의 Base UI 영어 기본 이름을 "늘리기"·"줄이기"·"숫자 입력"으로 바꿉니다. 지정한 속성은 그대로 우선합니다.
 - Combobox `modal`에서 Base UI가 추가하는 숨은 닫기 버튼 이름("Dismiss")을 바꿀 수 없다는 제한을 문서에 기록합니다.
 - 디자인 원칙에 대상 사용자·범위·배포 방식·대표 화면과 시맨틱 HTML, 한국어 기본 문구 원칙을 추가합니다.

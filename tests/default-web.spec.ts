@@ -117,7 +117,7 @@ test("Default demo is accessible in both modes and fits mobile", async ({
   });
 });
 
-test("button size map and explicit enhanced alert contrast are verified", async ({
+test("button size map and default alert contrast are verified", async ({
   page,
 }) => {
   await page.goto("/preview/button-overview?theme=dark");
@@ -139,9 +139,6 @@ test("button size map and explicit enhanced alert contrast are verified", async 
   await focus.focus();
   await expect(focus).toHaveCSS("outline-width", "3px");
   await expect(focus).toHaveCSS("outline-color", "rgb(255, 255, 255)");
-  await page.evaluate(() => {
-    document.documentElement.dataset.contrast = "enhanced";
-  });
   for (const theme of ["dark", "light"]) {
     if (theme === "light")
       await page.evaluate(() => {
@@ -153,7 +150,7 @@ test("button size map and explicit enhanced alert contrast are verified", async 
       theme === "light" ? "rgb(32, 34, 39)" : "rgb(247, 247, 248)",
     );
     // over-media 배경은 이미 최종 색이어도 alert 글자색은 전환 중일 수 있습니다.
-    // 접근성 검사는 강화 대비 토큰으로 전환이 끝난 실제 상태에서 실행합니다.
+    // 접근성 검사는 전환이 끝난 실제 상태에서 실행합니다.
     for (const variant of ["alert", "link"]) {
       const button = page.locator(`.rbx-button[data-variant="${variant}"]`);
       await expect

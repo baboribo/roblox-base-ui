@@ -34,11 +34,7 @@ export function CardActionsExample() {
           >
             {favorite ? "즐겨찾기 해제" : "즐겨찾기"}
           </Button>
-          <Button
-            size="sm"
-            nativeButton={false}
-            render={<a href="/docs" target="_top" />}
-          >
+          <Button size="sm" render={<a href="/docs" target="_top" />}>
             열기
           </Button>
         </CardFooter>

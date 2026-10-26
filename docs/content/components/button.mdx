@@ -84,7 +84,7 @@ title="Over media"
 
 ### Alert
 
-`variant="alert"`는 삭제와 같은 위험한 작업을 경고 색상으로 표시합니다.
+`variant="alert"`는 삭제와 같은 위험한 작업을 경고 색상으로 표시합니다. 글자색은 작은 크기(`sm`·`xs`)에서도 WCAG AA 대비(4.5:1)를 넘도록 원본 Roblox 색보다 조금 짙게 보정했습니다.
 확인 대화상자는 별도로 구성해야 합니다.
 
 <ComponentExample name="button-alert" title="Alert" />
@@ -94,6 +94,14 @@ title="Over media"
 `variant="link"`는 링크 색상의 글자를 사용합니다. 이 속성은 외형만 바꾸며, 버튼에 페이지 이동 기능을 추가하지 않습니다.
 
 <ComponentExample name="button-link" title="Link" />
+
+## 링크로 쓰기
+
+다른 페이지로 이동하는 작업은 버튼 모양이어도 링크여야 합니다. `render`에 `href`가 있는 요소를 넘기면 Button은 버튼 동작(`role="button"`, Space 키 실행)을 붙이지 않고 링크로 둡니다. `nativeButton={false}`는 지정하지 않아도 됩니다. Next.js의 `Link`처럼 `href`를 받는 컴포넌트도 같습니다.
+
+링크는 비활성 상태가 없으므로 `disabled`는 적용되지 않습니다. 갈 수 없는 상태라면 링크 대신 비활성 버튼을 보여 줍니다.
+
+<ComponentExample name="button-as-link" title="링크로 쓰기" />
 
 ## 크기
 

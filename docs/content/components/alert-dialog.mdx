@@ -14,7 +14,7 @@ Dialog와 같은 확대 모션을 사용합니다. 등장은 300ms, 퇴장은 20
 ## 설치
 
 ```sh
-pnpm dlx ply-ui add alert-dialog button
+pnpm dlx ply-ui add alert-dialog button layout
 ```
 
 [공통 설치 설정](/docs/installation)을 먼저 적용합니다.
@@ -36,6 +36,17 @@ pnpm dlx ply-ui add alert-dialog button
 | `Title`             | 확인이 필요한 작업을 설명하는 제목입니다.                              |
 | `Description`       | 작업 결과나 영향을 설명합니다.                                         |
 | `Close`             | 취소 또는 확인 후 창을 닫습니다. 확인 동작 자체는 콜백으로 연결합니다. |
+
+## 첫 포커스와 복귀 포커스
+
+Alert Dialog는 열리면 첫 번째 버튼으로 포커스가 갑니다. "취소"를 앞에 두면 Enter를 잘못 눌러도 삭제되지 않습니다.
+
+삭제처럼 대상이 사라지는 작업은 확인창을 연 버튼도 함께 사라집니다. 이때 그대로 두면 닫힌 뒤 포커스가 페이지 처음(`body`)으로 빠져 키보드·스크린 리더 사용자가 위치를 잃습니다. `Popup`의 `finalFocus`에 작업 뒤에도 남아 있는 요소(목록 위의 버튼, 다음 항목 등)의 ref를 넘깁니다.
+
+<ComponentExample
+  name="alert-dialog-final-focus"
+  title="삭제 뒤 포커스 보내기"
+/>
 
 ## 구현 코드
 

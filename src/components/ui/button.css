@@ -89,7 +89,7 @@
   }
   .rbx-button[data-variant="link"] {
     text-decoration: none;
-    color: var(--rbx-color-system-emphasis);
+    color: var(--rbx-color-content-link-action);
   }
   /* 원본은 비활성 강조 버튼을 standard 역할로 바꾼 뒤 opacity 0.5를 적용합니다. */
   .rbx-button:is(:disabled, [data-disabled]):is(
@@ -125,9 +125,5 @@
   .rbx-button {
     inline-size: fit-content;
     flex-shrink: 0;
-  }
-  [data-contrast="enhanced"][data-theme="dark"]
-    .rbx-button[data-variant="link"] {
-    color: var(--rbx-color-extended-blue-500);
   }
 }

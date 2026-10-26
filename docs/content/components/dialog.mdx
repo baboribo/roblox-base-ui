@@ -14,7 +14,7 @@ group: "피드백"
 ## 설치
 
 ```sh
-pnpm dlx ply-ui add dialog button input
+pnpm dlx ply-ui add dialog button input field form layout
 ```
 
 [공통 설치 설정](/docs/installation)을 먼저 적용합니다.
@@ -62,6 +62,14 @@ pnpm dlx ply-ui add dialog button input
 `CloseAffordance`는 오른쪽 위 닫기 버튼입니다. 기본 이름은 "닫기"입니다. 여러 단계가 있는 대화상자처럼 결과가 다를 수 있으면 `aria-label`로 구체적인 작업 이름을 지정합니다.
 
 <ComponentExample name="dialog-close" title="닫기 아이콘" />
+
+## 첫 포커스와 복귀 포커스
+
+대화상자가 열리면 기본으로 안의 첫 번째 포커스 가능한 요소(대개 오른쪽 위 닫기 버튼)로 포커스가 갑니다. 이름 바꾸기처럼 입력이 목적이면 `Popup`의 `initialFocus`에 입력칸의 ref를 넘겨 바로 입력할 수 있게 합니다. 긴 본문을 읽어야 하는 대화상자는 제목 같은 읽기 시작점을 지정합니다.
+
+닫힌 뒤에는 연 버튼으로 포커스가 돌아갑니다. 작업 결과로 그 버튼이 사라지거나 비활성이 되면 포커스가 페이지 처음(`body`)으로 빠지므로, `finalFocus`에 남아 있는 요소의 ref를 넘깁니다. 삭제 확인의 예는 [Alert Dialog](/docs/components/alert-dialog#첫-포커스와-복귀-포커스)를 봅니다.
+
+<ComponentExample name="dialog-initial-focus" title="입력칸에 첫 포커스" />
 
 ## 속성
 

@@ -4,6 +4,7 @@ import { DialogSmExample as Example0 } from "../../examples/dialog-sm";
 import { DialogMdExample as Example1 } from "../../examples/dialog-md";
 import { DialogLgExample as Example2 } from "../../examples/dialog-lg";
 import { DialogCloseExample as Example3 } from "../../examples/dialog-close";
+import { DialogInitialFocusExample as Example4 } from "../../examples/dialog-initial-focus";
 export default {
   title: "피드백/Dialog",
   parameters: { controls: { disable: true } },
@@ -23,4 +24,8 @@ export const CaseDialogLg: StoryObj = {
 export const CaseDialogClose: StoryObj = {
   name: "예제 · 닫기 아이콘",
   render: () => <Example3 />,
+};
+export const CaseDialogInitialFocus: StoryObj = {
+  name: "예제 · 입력칸에 첫 포커스",
+  render: () => <Example4 />,
 };

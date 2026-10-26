@@ -138,11 +138,8 @@ test("input labels, ARIA relationships and control navigation remain accessible"
     "Toast",
   ]) {
     await choose(page, name);
-    // Exact source alert foreground is retained; explicit enhanced contrast is tested separately.
-    const result = await new AxeBuilder({ page })
-      .exclude('[data-variant="alert"]')
-      .exclude('[data-variant="link"]')
-      .analyze();
+    // alert 글자색은 기본값에서 AA 대비를 넘도록 보정했으므로 제외하지 않습니다.
+    const result = await new AxeBuilder({ page }).analyze();
     expect(
       result.violations.map((v) => ({
         name,
