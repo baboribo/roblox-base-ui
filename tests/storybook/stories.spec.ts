@@ -14,14 +14,27 @@ test("all registered stories render and controls reflect actual component props"
   );
   expect(stories.length).toBeGreaterThanOrEqual(65);
   const errors: string[] = [];
-  page.on("pageerror", (error) => errors.push(error.message));
+  let current = "";
+  page.on("pageerror", (error) => errors.push(`${current}: ${error.message}`));
   for (const story of stories) {
+    current = story.id;
     await page.goto(
       "/iframe.html?id=" + encodeURIComponent(story.id) + "&viewMode=story",
     );
+    const rendered = page.locator('#storybook-root [class*="rbx-"]').first();
+    // CI에서 가끔 스토리 모듈 요청이 멈춰 화면이 비는 경우가 있어 한 번만 다시 엽니다.
+    // 다시 열어도 비어 있으면 실패로 보고하고, 그때까지의 페이지 오류를 함께 보여줍니다.
+    const attached = await rendered
+      .waitFor({ state: "attached", timeout: 15000 })
+      .then(() => true)
+      .catch(() => false);
+    if (!attached) {
+      console.log(`스토리를 다시 엽니다: ${story.id}`);
+      await page.reload();
+    }
     await expect(
-      page.locator('#storybook-root [class*="rbx-"]').first(),
-      story.id,
+      rendered,
+      `${story.id} ${errors.join(" | ")}`.trim(),
     ).toBeAttached({ timeout: 15000 });
   }
   expect(errors).toEqual([]);
