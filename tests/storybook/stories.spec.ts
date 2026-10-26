@@ -4,6 +4,8 @@ test("all registered stories render and controls reflect actual component props"
   page,
   request,
 }) => {
+  // 100개가 넘는 스토리를 차례로 엽니다. 느린 CI 실행기에서도 끝까지 검사합니다.
+  test.setTimeout(240000);
   const response = await request.get("/index.json");
   expect(response.ok()).toBe(true);
   const { entries } = await response.json();
@@ -18,10 +20,9 @@ test("all registered stories render and controls reflect actual component props"
       "/iframe.html?id=" + encodeURIComponent(story.id) + "&viewMode=story",
     );
     await expect(
-      page.locator(
-        '#storybook-root .rbx-button, #storybook-root [class*="rbx-"]',
-      ),
-    ).not.toHaveCount(0);
+      page.locator('#storybook-root [class*="rbx-"]').first(),
+      story.id,
+    ).toBeAttached({ timeout: 15000 });
   }
   expect(errors).toEqual([]);
   const button = stories.find(
