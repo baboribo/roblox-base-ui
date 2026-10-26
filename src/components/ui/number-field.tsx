@@ -30,12 +30,14 @@ function NumberFieldGroup({
   );
 }
 
+// Base UI의 영어 기본 문구를 한국어로 바꿉니다. 같은 속성을 넘기면 그 값을 사용합니다.
 function NumberFieldInput({
   className,
   ...props
 }: ComponentProps<typeof Primitive.Input>) {
   return (
     <Primitive.Input
+      aria-roledescription="숫자 입력"
       {...props}
       className={withClassName("rbx-input", className)}
     />
@@ -48,6 +50,7 @@ function NumberFieldIncrement({
 }: ComponentProps<typeof Primitive.Increment>) {
   return (
     <Primitive.Increment
+      aria-label="늘리기"
       {...props}
       className={withClassName("rbx-icon-button", className)}
     />
@@ -60,6 +63,7 @@ function NumberFieldDecrement({
 }: ComponentProps<typeof Primitive.Decrement>) {
   return (
     <Primitive.Decrement
+      aria-label="줄이기"
       {...props}
       className={withClassName("rbx-icon-button", className)}
     />

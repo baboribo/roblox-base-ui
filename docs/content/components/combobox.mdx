@@ -50,6 +50,10 @@ value/onValueChange는 선택값, inputValue/onInputValueChange는 검색 문자
 
 <ComponentExample name="combobox-clear" title="선택 지우기" />
 
+## 알려진 제한
+
+`Root`에 `modal`을 지정하면 Base UI가 목록을 닫는 숨은 버튼을 추가합니다. 이 버튼의 이름은 영어 "Dismiss"로 고정되어 있으며 현재 Base UI에서 바꿀 수 없습니다. 화면에는 보이지 않고 보조기기에서만 읽힙니다. 모달이 필요하지 않으면 기본값(비모달)을 사용합니다.
+
 ## 구현 코드
 
 <ComponentSource name="combobox" />

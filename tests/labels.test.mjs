@@ -6,7 +6,7 @@ import { readdirSync, readFileSync } from "node:fs";
 test("component sources do not hardcode English user-facing labels", () => {
   const directory = new URL("../src/components/ui/", import.meta.url);
   const pattern =
-    /(?:aria-label|placeholder|[lL]abel)\s*[=:]\s*["'`]([A-Za-z][A-Za-z ]+)["'`]|^\s*([A-Z][a-z]+(?: [a-z]+)*)\s*$/gm;
+    /(?:aria-label|aria-roledescription|placeholder|[lL]abel|roleDescription)\s*[=:]\s*["'`]([A-Za-z][A-Za-z ]+)["'`]|^\s*([A-Z][a-z]+(?: [a-z]+)*)\s*$/gm;
   const found = [];
   for (const name of readdirSync(directory).filter((file) =>
     file.endsWith(".tsx"),
