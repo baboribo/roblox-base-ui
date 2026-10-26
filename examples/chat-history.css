@@ -1,0 +1,84 @@
+/* 대화 기록 점검용 화면 배치입니다. 컴포넌트에 없는 부분을 여기서 채운 곳은 점검 문서에 기록합니다. */
+.ch-layout {
+  display: flex;
+  height: min(720px, 100dvh);
+  min-width: 0;
+  border: 1px solid var(--rbx-color-stroke-default);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--rbx-color-surface-0);
+}
+.ch-sidebar {
+  height: 100%;
+}
+.ch-sidebar-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+/* Button 안 아이콘과 글자 간격, 왼쪽 정렬을 직접 맞춥니다. */
+.ch-new {
+  justify-content: flex-start;
+  gap: 8px;
+}
+/* Sidebar.Item에 행 옆 작업 버튼 자리가 없어 직접 배치합니다. */
+.ch-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ch-item > .rbx-navigation-item {
+  flex: 1;
+}
+.ch-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ch-skeleton-row {
+  height: 40px;
+}
+.ch-empty {
+  margin-top: 24px;
+}
+.ch-retry {
+  margin-top: 12px;
+}
+.ch-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 24px;
+}
+.ch-main-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ch-title {
+  margin: 0;
+  min-width: 0;
+  font: 700 20px/1.4 var(--rbx-font-body);
+}
+.ch-placeholder {
+  color: var(--rbx-color-content-muted);
+}
+.ch-rename-field {
+  margin-top: 16px;
+}
+/* AlertDialog에 작업 영역 파트가 없어 직접 배치합니다. */
+.ch-alert-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+/* 화면에서 직접 만든 글자 요소의 줄바꿈입니다(라이브러리 공통 규칙은 1차 점검 H4). */
+.ch-title {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}

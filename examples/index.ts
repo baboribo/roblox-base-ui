@@ -176,6 +176,9 @@ export const examples = {
   "chat-group": lazy(() =>
     import("./chat-group").then((m) => ({ default: m.ChatGroupExample })),
   ),
+  "chat-history": lazy(() =>
+    import("./chat-history").then((m) => ({ default: m.ChatHistoryExample })),
+  ),
   chat: lazy(() => import("./chat").then((m) => ({ default: m.ChatExample }))),
   "checkbox-checked": lazy(() =>
     import("./checkbox-checked").then((m) => ({
@@ -257,6 +260,9 @@ export const examples = {
     import("./fieldset").then((m) => ({ default: m.FieldsetExample })),
   ),
   form: lazy(() => import("./form").then((m) => ({ default: m.FormExample }))),
+  "game-detail": lazy(() =>
+    import("./game-detail").then((m) => ({ default: m.GameDetailExample })),
+  ),
   "game-discovery": lazy(() =>
     import("./game-discovery").then((m) => ({
       default: m.GameDiscoveryExample,
@@ -380,6 +386,11 @@ export const examples = {
     import("./list-standard").then((m) => ({ default: m.ListStandardExample })),
   ),
   list: lazy(() => import("./list").then((m) => ({ default: m.ListExample }))),
+  "memory-settings": lazy(() =>
+    import("./memory-settings").then((m) => ({
+      default: m.MemorySettingsExample,
+    })),
+  ),
   "menu-checkbox": lazy(() =>
     import("./menu-checkbox").then((m) => ({ default: m.MenuCheckboxExample })),
   ),

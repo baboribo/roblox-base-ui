@@ -1,0 +1,200 @@
+/* 게임 상세 점검용 화면 배치입니다. 컴포넌트에 없는 부분을 여기서 채운 곳은 점검 문서에 기록합니다. */
+.gdd-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 960px;
+  min-width: 0;
+  margin: 0 auto;
+}
+.gdd-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.gdd-icon {
+  flex: 0 0 96px;
+  width: 96px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.gdd-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.gdd-title {
+  margin: 0;
+  font: 700 28px/1.3 var(--rbx-font-body);
+}
+.gdd-creator {
+  color: var(--rbx-color-content-link, var(--rbx-color-content-emphasis));
+  font-weight: 600;
+}
+.gdd-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+/* 통계 설명 목록: dl 스타일이 없어 직접 만듭니다. */
+.gdd-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  margin: 0;
+}
+.gdd-stats > div {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.gdd-stats dt {
+  color: var(--rbx-color-content-muted);
+  font-size: 12px;
+}
+.gdd-stats dd {
+  margin: 0;
+  font-weight: 700;
+  font-size: 18px;
+}
+.gdd-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.gdd-play {
+  flex: 0 1 240px;
+}
+.gdd-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.gdd-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.gdd-section-title {
+  margin: 0;
+  font: 700 20px/1.4 var(--rbx-font-body);
+}
+.gdd-shot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.gdd-description {
+  margin: 0;
+}
+.gdd-more {
+  margin-top: 8px;
+}
+.gdd-rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px 24px;
+}
+.gdd-rating > .rbx-meter {
+  flex: 1 1 280px;
+}
+.gdd-rating-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-bottom: 8px;
+}
+.gdd-rating-value {
+  font: 700 32px/1.2 var(--rbx-font-body);
+}
+.gdd-rating-count {
+  color: var(--rbx-color-content-muted);
+  font-size: 14px;
+}
+.gdd-vote {
+  display: flex;
+  gap: 8px;
+}
+.gdd-sort {
+  width: 160px;
+}
+.gdd-comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.gdd-comment-submit {
+  align-self: flex-end;
+}
+.gdd-comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.gdd-comment {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.gdd-comment-avatar {
+  flex-shrink: 0;
+}
+.gdd-comment-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.gdd-comment-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  min-width: 0;
+}
+.gdd-comment-meta time {
+  color: var(--rbx-color-content-muted);
+  font-size: 12px;
+}
+.gdd-comment-text {
+  margin: 0;
+}
+.gdd-comment-like {
+  gap: 4px;
+}
+.gdd-more-comments {
+  align-self: center;
+}
+.gdd-status:empty {
+  display: none;
+}
+.gdd-skeleton-title {
+  height: 96px;
+}
+.gdd-skeleton-media {
+  height: 200px;
+}
+.gdd-skeleton-line {
+  height: 20px;
+}
+.gdd-retry {
+  margin-top: 12px;
+}
+/* 화면에서 직접 만든 글자 요소의 줄바꿈입니다(라이브러리 공통 규칙은 1차 점검 H4). */
+.gdd-title,
+.gdd-description,
+.gdd-comment-text,
+.gdd-comment-meta strong {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
