@@ -85,6 +85,42 @@ test("an explicit portal theme wins and direction follows its source", async ({
     await dialog.evaluate((el) => el.scrollWidth <= el.clientWidth + 1),
   ).toBe(true);
 });
+test("closed portals do not read theme tokens until they open", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const original = window.getComputedStyle.bind(window);
+    (window as unknown as { styleReads: number }).styleReads = 0;
+    window.getComputedStyle = (...args) => {
+      (window as unknown as { styleReads: number }).styleReads++;
+      return original(...args);
+    };
+  });
+  await page.goto("/?case=portals&width=500");
+  const reads = () =>
+    page.evaluate(
+      () => (window as unknown as { styleReads: number }).styleReads,
+    );
+  const before = await reads();
+  await page.evaluate(() => window.dispatchEvent(new Event("resize")));
+  await page.getByRole("button", { name: "Override theme" }).click();
+  expect(await reads()).toBe(before);
+  await page.getByRole("button", { name: "Open dialog" }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toHaveCSS("background-color", "rgb(25, 26, 31)");
+  expect(await reads()).toBeGreaterThan(before);
+  // 열린 동안의 테마 변경은 계속 반영합니다.
+  await page.evaluate(() =>
+    document.querySelector("section")!.setAttribute("data-theme", "dark"),
+  );
+  await dialog.getByRole("button", { name: "Close dialog" }).click();
+  await expect(dialog).toHaveCount(0);
+  await page.getByRole("button", { name: "Open menu" }).click();
+  await expect(page.getByRole("menu")).toHaveCSS(
+    "background-color",
+    "rgb(25, 26, 31)",
+  );
+});
 test("a wide anchor and long unbroken menu text respect the viewport", async ({
   page,
 }) => {
@@ -256,6 +292,23 @@ test("carousel cards and the next-card distance follow their narrow container", 
   expect(
     await first.evaluate((el) => el.scrollWidth <= el.clientWidth + 1),
   ).toBe(true);
+});
+test("carousel keeps keyboard focus on the control that reaches the end", async ({
+  page,
+}) => {
+  await page.goto("/?case=details&width=200");
+  const next = page.getByRole("button", { name: "Next cards" });
+  await next.focus();
+  for (let i = 0; i < 10 && !(await next.isDisabled()); i++)
+    await page.keyboard.press("Enter");
+  await expect(next).toBeDisabled();
+  await expect(next).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(next).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(
+    page.getByRole("button", { name: "Previous cards" }),
+  ).toBeFocused();
 });
 test("tooltip render composition preserves the actual popup ID, children and existing description", async ({
   page,
