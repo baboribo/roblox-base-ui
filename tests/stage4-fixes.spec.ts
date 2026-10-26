@@ -6,14 +6,14 @@ test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
 });
 
-test("typography tokens fall back to system sans-serif and Korean fonts", async ({
+test("typography tokens use Pretendard JP Variable with sans-serif and Korean fallbacks", async ({
   page,
 }) => {
   await page.goto("/preview/alert");
   const family = await page
     .locator(".rbx-alert-title")
     .evaluate((element) => getComputedStyle(element).fontFamily);
-  expect(family).toContain("Builder Sans");
+  expect(family).toMatch(/^"Pretendard JP Variable"/);
   expect(family).toContain("Malgun Gothic");
   expect(family).toMatch(/sans-serif$/);
   expect(family).not.toMatch(/(^|,)\s*serif/);
@@ -53,12 +53,32 @@ test("Alert role follows tone and the title level can change", async ({
   }
 });
 
-test("alert buttons and field errors meet AA contrast in both themes", async ({
+test("alert red stays the original Roblox color by default", async ({
   page,
 }) => {
+  for (const [theme, color] of [
+    ["light", "rgb(217, 28, 21)"],
+    ["dark", "rgb(240, 68, 51)"],
+  ]) {
+    await page.goto(`/preview/button-alert?theme=${theme}`);
+    await expect(page.locator('.rbx-button[data-variant="alert"]')).toHaveCSS(
+      "color",
+      color,
+    );
+  }
+});
+
+test("enhanced contrast makes alert buttons and field errors meet AA in both themes", async ({
+  page,
+}) => {
+  const enhance = () =>
+    page.evaluate(() => {
+      document.documentElement.dataset.contrast = "enhanced";
+    });
   for (const name of ["button-alert", "alert-dialog-final-focus"])
     for (const theme of ["light", "dark"]) {
       await page.goto(`/preview/${name}?theme=${theme}`);
+      await enhance();
       const result = await new AxeBuilder({ page })
         .withRules(["color-contrast"])
         .analyze();
@@ -71,6 +91,7 @@ test("alert buttons and field errors meet AA contrast in both themes", async ({
       ).toEqual([]);
     }
   await page.goto("/preview/dialog-initial-focus?theme=light");
+  await enhance();
   await page.getByRole("button", { name: "이름 바꾸기" }).click();
   const input = page.getByRole("textbox", { name: "새 이름" });
   // 입력 대화상자는 닫기 버튼이 아니라 입력칸에 첫 포커스가 갑니다.

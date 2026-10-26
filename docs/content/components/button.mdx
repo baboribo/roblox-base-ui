@@ -84,7 +84,7 @@ title="Over media"
 
 ### Alert
 
-`variant="alert"`는 삭제와 같은 위험한 작업을 경고 색상으로 표시합니다. 글자색은 작은 크기(`sm`·`xs`)에서도 WCAG AA 대비(4.5:1)를 넘도록 원본 Roblox 색보다 조금 짙게 보정했습니다.
+`variant="alert"`는 삭제와 같은 위험한 작업을 경고 색상으로 표시합니다. 기본 글자색은 원본 Roblox 빨강입니다. 이 색은 작은 크기(`sm`·`xs`)에서 WCAG AA 대비(4.5:1)에 조금 못 미칩니다. 대비 기준을 지켜야 하면 `html`에 `data-contrast="enhanced"`를 넣어 더 짙은 빨강으로 바꿉니다. 오류 문구(`Field.Error`)도 함께 바뀝니다.
 확인 대화상자는 별도로 구성해야 합니다.
 
 <ComponentExample name="button-alert" title="Alert" />

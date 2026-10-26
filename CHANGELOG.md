@@ -2,10 +2,10 @@
 
 ## 미출시
 
-- 글꼴 토큰에 시스템 산세리프와 한글 글꼴(Apple SD Gothic Neo, Malgun Gothic, Noto Sans KR) 대체 목록을 둡니다. Builder Sans를 받지 못해도 숫자·영문이 명조로 바뀌지 않습니다. `--rbx-font-body`를 바꾸면 typography 토큰도 따라 바뀝니다.
+- 기본 글꼴을 Pretendard JP Variable로 바꿉니다. `fonts.css`가 `pretendard-jp` 패키지(선택 peer 의존성)에서 불러오며 Builder Sans는 더 이상 쓰지 않습니다. 불러오지 않으면 설치된 Pretendard, 시스템 산세리프·한글 글꼴(Apple SD Gothic Neo, Malgun Gothic, Noto Sans KR) 순으로 씁니다. `--rbx-font-body`를 바꾸면 typography 토큰도 따라 바뀝니다.
 - 한국어가 어절 중간에서 끊기지 않도록 `word-break: keep-all`을 기본으로 둡니다(`:root`와 컴포넌트, 우선순위 0). 공간이 모자란 긴 단어만 끊습니다.
 - Alert에 `tone`(neutral·success·warning·error)을 추가합니다. 기본 `role`은 error일 때 alert, 나머지는 status입니다. `AlertTitle`은 `as`로 제목 수준을 고르고, Card 클래스 대신 전용 클래스를 씁니다.
-- **기본 색 변경:** `Button variant="alert"` 글자, 오류 문구(`Field.Error` 등), 다크 테마 `variant="link"` 글자를 WCAG AA 대비(4.5:1)를 넘게 보정합니다. 이전에 `data-contrast="enhanced"`로만 켜던 보정이 기본값이 되었고, 이 속성은 더 이상 필요하지 않습니다. 새 토큰 `--rbx-color-content-alert`를 오류 글자에 씁니다.
+- `Button variant="alert"`와 오류 문구는 원본 Roblox 빨강을 기본으로 유지합니다. `data-contrast="enhanced"`를 켜면 alert 버튼과 함께 오류 문구(`Field.Error` 등, 새 토큰 `--rbx-color-content-alert`)도 AA 대비를 넘는 짙은 빨강으로 바뀝니다. 다크 테마 `variant="link"` 글자는 기본값에서 AA를 넘게 보정합니다.
 - Carousel 항목에 `href`를 지정하면 링크가 됩니다. `label` 대신 `aria-labelledby`로 화면의 제목을 연결할 수 있습니다. 항목이 버튼·링크이면 스크롤 영역이 이름 없는 Tab 정지점이 되지 않습니다.
 - Button의 `render`에 `href`가 있는 요소를 넘기면 `role="button"`과 Space 실행을 붙이지 않고 링크로 둡니다. `nativeButton={false}`는 지정하지 않아도 됩니다.
 - Dialog·Alert Dialog 문서에 첫 포커스(`initialFocus`)와 삭제 뒤 복귀 포커스(`finalFocus`) 안내와 예제를 추가합니다.

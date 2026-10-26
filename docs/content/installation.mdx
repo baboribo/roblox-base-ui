@@ -35,7 +35,7 @@ Next.js에서 상태나 이벤트를 다루는 화면에는 `"use client"`를 �
 pnpm update ply-ui
 ```
 
-기본 설치는 외부 폰트를 요청하지 않습니다. 기존 Builder Sans 연결이 필요할 때만 `import "ply-ui/fonts.css"`를 추가합니다. 사용자 토큰은 패키지 스타일 다음에 불러오는 CSS에서 덮어씁니다.
+기본 글꼴은 Pretendard JP Variable입니다. `pnpm add pretendard-jp`로 글꼴을 설치하고 `import "ply-ui/fonts.css"`를 추가합니다. 생략하면 설치된 Pretendard나 시스템 글꼴을 씁니다. 사용자 토큰은 패키지 스타일 다음에 불러오는 CSS에서 덮어씁니다.
 
 ## 소스 자동 추가
 
@@ -86,7 +86,7 @@ Vite에서는 `src/main.tsx`, Next.js에서는 `src/app/layout.tsx`에서 공통
 ```tsx
 // src/main.tsx
 import "./styles/theme.css";
-// 선택 사항: Builder Sans. 생략하면 시스템 글꼴을 사용합니다.
+// 선택 사항: Pretendard JP Variable(pnpm add pretendard-jp). 생략하면 시스템 글꼴을 사용합니다.
 import "./styles/fonts.css";
 ```
 

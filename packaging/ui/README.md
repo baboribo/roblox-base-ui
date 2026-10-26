@@ -64,7 +64,7 @@ Next.js App Router에서는 `app/layout.tsx`에서 `styles.css`를 불러옵니�
 }
 ```
 
-폰트 파일은 포함하지 않으며 기본적으로 외부 폰트를 요청하지 않습니다. 기존 Roblox CDN 폰트 연결이 필요한 경우에만 `ply-ui/fonts.css`를 따로 불러옵니다.
+기본 글꼴은 Pretendard JP Variable입니다. 글꼴 파일은 포함하지 않으므로 `pnpm add pretendard-jp`로 설치하고 `ply-ui/fonts.css`를 불러옵니다. 불러오지 않으면 설치된 Pretendard나 시스템 글꼴을 씁니다.
 
 ## 구성과 출처
 

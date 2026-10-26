@@ -67,6 +67,6 @@ export function makeItem(name, names = [name]) {
       target: `~/${file}`,
       content: readFileSync(path.join(kitRoot, file), "utf8"),
     })),
-    docs: 'Import src/styles/theme.css in the app entry. Set data-theme="dark" or "light" on html. Optional fonts: src/styles/fonts.css. These are independent components, not an official Roblox package.',
+    docs: 'Import src/styles/theme.css in the app entry. Set data-theme="dark" or "light" on html. Optional fonts: src/styles/fonts.css (Pretendard JP Variable; install pretendard-jp first). These are independent components, not an official Roblox package.',
   };
 }
