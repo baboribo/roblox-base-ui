@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 type Entry = { id: string; type: string; title: string; name: string };
 test("all registered stories render and controls reflect actual component props", async ({
   page,
+  context,
   request,
 }) => {
   // 100개가 넘는 스토리를 차례로 엽니다. 느린 CI 실행기에서도 끝까지 검사합니다.
@@ -15,28 +16,48 @@ test("all registered stories render and controls reflect actual component props"
   expect(stories.length).toBeGreaterThanOrEqual(65);
   const errors: string[] = [];
   let current = "";
-  page.on("pageerror", (error) => errors.push(`${current}: ${error.message}`));
-  for (const story of stories) {
-    current = story.id;
-    await page.goto(
-      "/iframe.html?id=" + encodeURIComponent(story.id) + "&viewMode=story",
+  // 한 페이지에서 스토리 200개 가까이를 계속 열면 CI에서 렌더러가 멈추거나 죽는 경우가 있습니다.
+  // 스토리 40개마다 새 페이지를 쓰고, 화면이 비면 새 페이지에서 한 번만 다시 엽니다.
+  // 다시 열어도 비어 있으면 실패로 보고하고, 그때까지의 페이지 오류를 함께 보여줍니다.
+  async function openPage() {
+    const view = await context.newPage();
+    view.on("pageerror", (error) =>
+      errors.push(`${current}: ${error.message}`),
     );
-    const rendered = page.locator('#storybook-root [class*="rbx-"]').first();
-    // CI에서 가끔 스토리 모듈 요청이 멈춰 화면이 비는 경우가 있어 한 번만 다시 엽니다.
-    // 다시 열어도 비어 있으면 실패로 보고하고, 그때까지의 페이지 오류를 함께 보여줍니다.
-    const attached = await rendered
-      .waitFor({ state: "attached", timeout: 15000 })
+    return view;
+  }
+  const storyRoot = '#storybook-root [class*="rbx-"]';
+  let view = await openPage();
+  for (const [index, story] of stories.entries()) {
+    current = story.id;
+    if (index > 0 && index % 40 === 0) {
+      await view.close();
+      view = await openPage();
+    }
+    const url =
+      "/iframe.html?id=" + encodeURIComponent(story.id) + "&viewMode=story";
+    const attached = await view
+      .goto(url)
+      .then(() =>
+        view.locator(storyRoot).first().waitFor({
+          state: "attached",
+          timeout: 15000,
+        }),
+      )
       .then(() => true)
       .catch(() => false);
     if (!attached) {
-      console.log(`스토리를 다시 엽니다: ${story.id}`);
-      await page.reload();
+      console.log(`스토리를 새 페이지에서 다시 엽니다: ${story.id}`);
+      await view.close().catch(() => {});
+      view = await openPage();
+      await view.goto(url);
     }
     await expect(
-      rendered,
+      view.locator(storyRoot).first(),
       `${story.id} ${errors.join(" | ")}`.trim(),
     ).toBeAttached({ timeout: 15000 });
   }
+  await view.close();
   expect(errors).toEqual([]);
   const button = stories.find(
     (x) => x.title === "입력/Button" && x.id.endsWith("--default"),
