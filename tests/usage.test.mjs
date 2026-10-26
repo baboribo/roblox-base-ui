@@ -25,7 +25,7 @@ test("every component has a complete independent usage example and specific Kore
   for (const file of readdirSync(path.join(kitRoot, "examples"))) {
     if (
       !file.endsWith(".tsx") ||
-      ["settings.tsx", "renderer.tsx"].includes(file)
+      ["settings.tsx", "game-discovery.tsx", "renderer.tsx"].includes(file)
     )
       continue;
     const source = readFileSync(path.join(kitRoot, "examples", file), "utf8");

@@ -69,6 +69,7 @@ export const exampleNames = new Set([
   "field",
   "fieldset",
   "form",
+  "game-discovery",
   "icon-button-alert",
   "icon-button-circular",
   "icon-button-disabled",
