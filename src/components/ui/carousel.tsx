@@ -16,11 +16,18 @@ export function Carousel({
   label,
   items,
   onItemClick,
+  previousLabel = "이전 카드",
+  nextLabel = "다음 카드",
   className,
 }: {
+  /** 캐러셀 영역의 접근 가능한 이름입니다. */
   label: string;
   items: CollectionItem[];
   onItemClick?: (id: string) => void;
+  /** 이전 카드로 이동하는 버튼의 이름입니다. @defaultValue "이전 카드" */
+  previousLabel?: string;
+  /** 다음 카드로 이동하는 버튼의 이름입니다. @defaultValue "다음 카드" */
+  nextLabel?: string;
   className?: string;
 }) {
   // Informational cards must not advertise an action that does not exist.
@@ -96,7 +103,7 @@ export function Carousel({
       <div className="rbx-carousel-controls">
         <IconButton
           icon="icon-regular-chevron-large-left"
-          aria-label="Previous cards"
+          aria-label={previousLabel}
           size="sm"
           variant="utility"
           circular
@@ -107,7 +114,7 @@ export function Carousel({
         />
         <IconButton
           icon="icon-regular-chevron-large-right"
-          aria-label="Next cards"
+          aria-label={nextLabel}
           size="sm"
           variant="utility"
           circular

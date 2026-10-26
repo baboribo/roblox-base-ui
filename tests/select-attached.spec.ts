@@ -137,7 +137,9 @@ test("dialog selection preserves dialog focus and accessible semantics", async (
   await expect(trigger).toContainText("친구만");
   await expect(trigger).toBeFocused();
   await trigger.click();
+  await expect(page.getByRole("listbox")).toBeVisible();
   await page.keyboard.press("Escape");
+  await expect(page.getByRole("listbox")).toHaveCount(0);
   await expect(page.getByRole("dialog")).toBeVisible();
   await expect(trigger).toBeFocused();
   await page.keyboard.press("Escape");

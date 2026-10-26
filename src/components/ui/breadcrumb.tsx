@@ -5,7 +5,7 @@ import "./breadcrumb.css";
 export function Breadcrumb({ className, ...props }: ComponentProps<"nav">) {
   return (
     <nav
-      aria-label="Breadcrumb"
+      aria-label="이동 경로"
       {...props}
       className={cx("rbx-breadcrumb", className)}
     />

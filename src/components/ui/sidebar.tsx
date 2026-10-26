@@ -104,11 +104,15 @@ function SidebarRoot({ className, ...props }: ComponentProps<"aside">) {
 /** 단일 children 트리만 렌더합니다. 검색 input/id가 desktop/mobile에 중복되지 않습니다. */
 function SidebarPanel({
   title,
-  closeLabel = "Close navigation",
+  closeLabel = "탐색 닫기",
   children,
   className,
   ...props
-}: ComponentProps<"aside"> & { title: string; closeLabel?: string }) {
+}: ComponentProps<"aside"> & {
+  title: string;
+  /** 모바일 패널 닫기 버튼의 이름입니다. @defaultValue "탐색 닫기" */
+  closeLabel?: string;
+}) {
   const { mobile, open, setOpen, handle, actionsRef } = useSidebar();
   return (
     <Dialog.Root

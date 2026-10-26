@@ -27,6 +27,21 @@ pnpm dlx ply-ui add chat
 | `ChatDock`       | 대화 목록, 검색, 접기를 제공합니다. `conversations`와 선택 콜백을 받습니다.    |
 | `ChatGroupPanel` | 그룹 이름과 멤버를 입력받습니다. `people`, `onClose`, `onCreate`를 연결합니다. |
 
+## 문구 바꾸기
+
+제목, 버튼 이름, 검색 안내, 빈 상태 문구의 기본값은 한국어입니다. `labels`에 바꿀 항목만 지정하면 나머지는 기본값을 유지합니다. 기본값은 `defaultChatDockLabels`, `defaultChatGroupLabels`로 확인할 수 있습니다.
+
+```tsx
+<ChatDock
+  conversations={conversations}
+  labels={{
+    title: "Chat",
+    search: "Search conversations",
+    empty: "No conversations found",
+  }}
+/>
+```
+
 ## 그룹 만들기
 
 `ChatGroupPanel`은 이름과 멤버를 입력받습니다. 2명 이상 선택하면 만들기 버튼이 활성화되고, 최대 5명까지 선택할 수 있습니다. `onCreate`가 받는 이름과 ID 배열을 서버 요청에 연결합니다.

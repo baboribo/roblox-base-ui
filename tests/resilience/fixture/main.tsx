@@ -13,6 +13,7 @@ import { Combobox } from "../../../src/components/ui/combobox";
 import { Carousel } from "../../../src/components/ui/carousel";
 import { NavigationItem } from "../../../src/components/ui/navigation-item";
 import { Textarea } from "../../../src/components/ui/textarea";
+import { ChatDock } from "../../../src/components/ui/chat";
 import themeSource from "../../../src/styles/theme.css?raw";
 import { Badge } from "../../../src/components/ui/badge";
 import { List } from "../../../src/components/ui/list";
@@ -290,7 +291,41 @@ function StyleOrder() {
     </>
   );
 }
+// 기본 문구는 한국어입니다. 다른 언어는 label props로 바꿉니다.
+function Labels() {
+  return (
+    <>
+      <Pagination
+        aria-label="Pages"
+        pageCount={5}
+        defaultPage={3}
+        previousLabel="Previous page"
+        nextLabel="Next page"
+        getPageLabel={(page) => `Page ${page}`}
+      />
+      <Carousel
+        label="Cards"
+        previousLabel="Previous cards"
+        nextLabel="Next cards"
+        items={[0, 1].map((id) => ({
+          id: String(id),
+          title: "Card " + id,
+          media: <span>Image {id}</span>,
+        }))}
+      />
+      <ChatDock
+        conversations={[]}
+        labels={{ title: "Chat", search: "Search conversations" }}
+      />
+      <Carousel
+        label="기본 카드"
+        items={[{ id: "a", title: "A", media: <span>A</span> }]}
+      />
+    </>
+  );
+}
 const cases = {
+  labels: Labels,
   order: StyleOrder,
   details: Details,
   loading: Loading,

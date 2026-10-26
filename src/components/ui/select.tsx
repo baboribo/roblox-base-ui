@@ -62,6 +62,12 @@ export type SelectProps<Multiple extends boolean = false> = Omit<
   collisionBoundary?: Primitive.Positioner.Props["collisionBoundary"];
   /** 모션 비교용 배속입니다. 기본값은 1입니다. */
   motionScale?: number;
+  /** 다중 선택에서 처음 두 항목 뒤에 생략한 개수를 읽는 문구입니다. @defaultValue (count) => `외 ${count}개` */
+  getOverflowLabel?: (count: number) => string;
+  /** 목록 위쪽 스크롤 버튼의 이름입니다. @defaultValue "목록 위로 스크롤" */
+  scrollUpLabel?: string;
+  /** 목록 아래쪽 스크롤 버튼의 이름입니다. @defaultValue "목록 아래로 스크롤" */
+  scrollDownLabel?: string;
 };
 
 /** Base UI의 값·폼·키보드 처리를 사용하는 연결형 Select입니다. */
@@ -76,6 +82,9 @@ export function Select<Multiple extends boolean = false>({
   className,
   collisionBoundary,
   motionScale = 1,
+  getOverflowLabel = (count) => `외 ${count}개`,
+  scrollUpLabel = "목록 위로 스크롤",
+  scrollDownLabel = "목록 아래로 스크롤",
   value: controlledValue,
   defaultValue,
   onValueChange,
@@ -122,9 +131,10 @@ export function Select<Multiple extends boolean = false>({
   const labels = values.map(
     (entry) => options.find((option) => option.value === entry)?.label ?? entry,
   );
+  const overflowLabel =
+    labels.length > 2 ? getOverflowLabel(labels.length - 2) : undefined;
   const summaryLabel = labels.length
-    ? labels.slice(0, 2).join(", ") +
-      (labels.length > 2 ? ` 외 ${labels.length - 2}개` : "")
+    ? labels.slice(0, 2).join(", ") + (overflowLabel ? ` ${overflowLabel}` : "")
     : placeholder;
 
   function measureEdges() {
@@ -246,9 +256,9 @@ export function Select<Multiple extends boolean = false>({
           <span className="rbx-attached-name">{placeholder}</span>
         )}
       </span>
-      {labels.length > 2 && (
+      {overflowLabel && (
         <Badge size="sm" className="rbx-attached-count">
-          외 {labels.length - 2}개
+          {overflowLabel}
         </Badge>
       )}
     </span>
@@ -397,7 +407,7 @@ export function Select<Multiple extends boolean = false>({
                       aria-hidden={edges.up === 0}
                       disabled={edges.up === 0}
                       tabIndex={-1}
-                      aria-label="목록 위로 스크롤"
+                      aria-label={scrollUpLabel}
                       onClick={() => scrollBy(-1)}
                     >
                       <Icon name="icon-regular-chevron-large-up" size={16} />
@@ -409,7 +419,7 @@ export function Select<Multiple extends boolean = false>({
                       aria-hidden={edges.down === 0}
                       disabled={edges.down === 0}
                       tabIndex={-1}
-                      aria-label="목록 아래로 스크롤"
+                      aria-label={scrollDownLabel}
                       onClick={() => scrollBy(1)}
                     >
                       <Icon name="icon-regular-chevron-large-down" size={16} />

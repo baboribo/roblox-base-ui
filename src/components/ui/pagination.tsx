@@ -24,8 +24,14 @@ export type PaginationProps = Omit<ComponentProps<"nav">, "children"> & {
   onPageChange?: (page: number) => void;
   /** 데이터를 불러오는 동안 이동을 막을 때 사용합니다. @defaultValue false */
   disabled?: boolean;
-  /** 페이지 버튼의 접근 가능한 이름입니다. */
+  /** 페이지 버튼의 접근 가능한 이름입니다. @defaultValue (page) => `${page}페이지` */
   getPageLabel?: (page: number) => string;
+  /** 이전 페이지 버튼의 접근 가능한 이름입니다. @defaultValue "이전 페이지" */
+  previousLabel?: string;
+  /** 다음 페이지 버튼의 접근 가능한 이름입니다. @defaultValue "다음 페이지" */
+  nextLabel?: string;
+  /** 좁은 영역에서 표시하는 페이지 입력칸의 이름입니다. @defaultValue "이동할 페이지" */
+  pageInputLabel?: string;
 };
 
 /** 페이지 선택만 담당합니다. 데이터 요청과 URL 갱신은 onPageChange에서 처리합니다. */
@@ -36,6 +42,9 @@ export function Pagination({
   onPageChange,
   disabled = false,
   getPageLabel = (value) => `${value}페이지`,
+  previousLabel = "이전 페이지",
+  nextLabel = "다음 페이지",
+  pageInputLabel = "이동할 페이지",
   className,
   ref,
   ...props
@@ -142,7 +151,7 @@ export function Pagination({
       <Button
         size="sm"
         variant="utility"
-        aria-label="이전 페이지"
+        aria-label={previousLabel}
         disabled={disabled || current === 1}
         onClick={() => select(current - 1)}
       >
@@ -174,13 +183,14 @@ export function Pagination({
           page={current}
           count={count}
           disabled={disabled}
+          label={pageInputLabel}
           onCommit={select}
         />
       )}
       <Button
         size="sm"
         variant="utility"
-        aria-label="다음 페이지"
+        aria-label={nextLabel}
         disabled={disabled || current === count}
         onClick={() => select(current + 1)}
       >
@@ -195,11 +205,13 @@ function PageInput({
   page,
   count,
   disabled,
+  label,
   onCommit,
 }: {
   page: number;
   count: number;
   disabled: boolean;
+  label: string;
   onCommit: (page: number) => void;
 }) {
   const [draft, setDraft] = useState(String(page));
@@ -215,7 +227,7 @@ function PageInput({
   return (
     <span className="rbx-pagination-summary">
       <input
-        aria-label="이동할 페이지"
+        aria-label={label}
         aria-current="page"
         inputMode="numeric"
         value={draft}

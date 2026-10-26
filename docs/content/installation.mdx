@@ -130,3 +130,29 @@ export function SubmitButton() {
 <ComponentExample name="portal-theme" title="영역별 테마와 팝업" />
 
 개별 영역에 직접 작성한 CSS 선택자는 DOM 밖으로 이동한 팝업에 적용되지 않습니다. 색상·글자·그림자는 `--rbx-*` 의미 토큰으로 변경하고, 팝업 자체의 레이아웃은 Popup의 `className` 또는 `style`로 조정합니다.
+
+## 기본 문구
+
+컴포넌트가 직접 표시하거나 스크린 리더에 전달하는 기본 문구는 한국어입니다. 아이콘 버튼의 이름, 빈 상태 안내, 입력칸 안내 등이 해당합니다. 다른 언어로 서비스하면 각 컴포넌트의 label 속성으로 바꿉니다.
+
+| 컴포넌트                                           | 속성                                                                         |
+| -------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Pagination                                         | `previousLabel`, `nextLabel`, `pageInputLabel`, `getPageLabel`, `aria-label` |
+| Select                                             | `placeholder`, `getOverflowLabel`, `scrollUpLabel`, `scrollDownLabel`        |
+| Carousel                                           | `previousLabel`, `nextLabel`                                                 |
+| Toast.Toaster                                      | `closeLabel`                                                                 |
+| Sidebar.Panel                                      | `closeLabel`                                                                 |
+| Dialog.CloseAffordance, Breadcrumb, Spinner, Table | `aria-label` 또는 `label`                                                    |
+| ChatDock, ChatGroupPanel                           | `labels` (바꿀 항목만 지정)                                                  |
+
+```tsx
+<Pagination
+  aria-label="Pages"
+  previousLabel="Previous page"
+  nextLabel="Next page"
+  getPageLabel={(page) => `Page ${page}`}
+  pageCount={10}
+/>
+```
+
+앱 데이터에서 오는 문구(옵션 이름, 알림 내용 등)는 컴포넌트가 번역하지 않습니다.
