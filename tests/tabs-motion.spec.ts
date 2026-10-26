@@ -62,17 +62,38 @@ test("panels exit opposite the selected direction, pause, then enter", async ({
     ["활동", "활동 내역이 없습니다.", -1],
     ["개요", "프로젝트의 기본 정보입니다.", 1],
   ] as const) {
+    // 느린 러너에서도 짧은 퇴장 애니메이션을 놓치지 않도록 페이지 안에서 매 프레임 기록합니다.
+    await page.evaluate((text) => {
+      (window as any).panelExit = new Promise((resolve) => {
+        const xs: number[] = [];
+        const entering: string[] = [];
+        let seen = false;
+        const tick = () => {
+          const el = document.querySelector(
+            ".rbx-tab-panel[data-ending-style]",
+          );
+          if (el) {
+            seen = true;
+            xs.push(new DOMMatrix(getComputedStyle(el).transform).m41);
+            const next = [
+              ...document.querySelectorAll(".rbx-tab-panels > .rbx-tab-panel"),
+            ].find((panel) => panel.textContent?.includes(text));
+            entering.push(next ? getComputedStyle(next).visibility : "missing");
+          } else if (seen) return resolve({ xs, entering });
+          requestAnimationFrame(tick);
+        };
+        tick();
+      });
+    }, text);
     await page.getByRole("tab", { name: label, exact: true }).click();
     const exiting = page.locator(".rbx-tab-panel[data-ending-style]");
     const entering = panels.filter({ hasText: text });
-    await expect(exiting).toHaveCount(1);
-    await page.waitForTimeout(80);
-    const x = await exiting.evaluate(
-      (el) => new DOMMatrix(getComputedStyle(el).transform).m41,
+    const exit = await page.evaluate(() => (window as any).panelExit);
+    expect(Math.max(...exit.xs.map((x: number) => x * sign))).toBeGreaterThan(
+      0,
     );
-    expect(x * sign).toBeGreaterThan(0);
-    await expect(entering).toHaveCSS("visibility", "hidden");
-    await expect.poll(() => exiting.count(), { intervals: [10] }).toBe(0);
+    expect(new Set(exit.entering)).toEqual(new Set(["hidden"]));
+    await expect(exiting).toHaveCount(0);
     // With the optional gap token omitted, only the 200ms exit is awaited.
     await expect(entering).toHaveCSS("transition-delay", "0.2s");
     await expect(entering).toHaveCSS("opacity", "1");

@@ -180,8 +180,14 @@ test("a failing preview keeps the document usable and can reload successfully", 
     .getByRole("tab", { name: "미리보기" })
     .click();
   failPreview = false;
-  await frame.getByRole("button", { name: "예제 다시 불러오기" }).click();
-  await expect(frame.getByRole("textbox").first()).toBeVisible();
+  // 오류 화면이 보인 직후에는 React가 아직 버튼 핸들러를 연결하지 않았을 수 있어, 다시 불러올 때까지 재시도합니다.
+  await expect(async () => {
+    const reload = frame.getByRole("button", { name: "예제 다시 불러오기" });
+    if (await reload.isVisible()) await reload.click({ timeout: 1000 });
+    await expect(frame.getByRole("textbox").first()).toBeVisible({
+      timeout: 1000,
+    });
+  }).toPass({ timeout: 15000 });
   await expect(frame.getByRole("alert", { name: "예제 오류" })).toHaveCount(0);
   await frame.getByRole("textbox").first().fill("복구 확인");
   await expect(frame.getByRole("textbox").first()).toHaveValue("복구 확인");

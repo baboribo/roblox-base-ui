@@ -16,5 +16,10 @@ export default defineConfig({
     reuseExistingServer: false,
     timeout: 60000,
   },
+  projects: [
+    { name: "ui", grepInvert: /@isolated/ },
+    // 무거운 검사는 다른 검사가 모두 끝난 뒤 혼자 실행해 서로의 시간 제한을 침범하지 않게 합니다.
+    { name: "isolated", grep: /@isolated/, dependencies: ["ui"] },
+  ],
   reporter: "list",
 });
