@@ -1,0 +1,337 @@
+/* 대표 화면 4번 기억·설정의 화면 배치입니다.
+   색·글자·간격·모서리는 모두 토큰을 씁니다. 라이브러리 클래스(.rbx-*)는 덮어쓰지 않습니다. */
+
+.mst {
+  display: flex;
+  gap: var(--rbx-gap-xlarge);
+  height: 100dvh;
+  color: var(--rbx-color-content-default);
+  font: var(--rbx-typography-body-large-font);
+  overflow-wrap: anywhere;
+}
+.mst :where(h1, h2, h3, p, ul, ol, dl, dd) {
+  margin: 0;
+}
+.mst :where(ul, ol) {
+  padding: 0;
+  list-style: none;
+}
+
+/* 왼쪽 설정 목록 */
+.mst-nav {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: var(--rbx-gap-medium);
+  width: 240px;
+  flex-shrink: 0;
+  padding: var(--rbx-padding-large) var(--rbx-padding-medium);
+  border-inline-end: 1px solid var(--rbx-color-stroke-muted);
+  background: var(--rbx-color-surface-100);
+  overflow-y: auto;
+}
+.mst-nav-title {
+  font: var(--rbx-typography-title-large-font);
+  color: var(--rbx-color-content-emphasis);
+  padding-inline: var(--rbx-padding-xsmall);
+}
+.mst-nav-head {
+  display: grid;
+  gap: var(--rbx-gap-medium);
+}
+.mst-nav-section {
+  display: grid;
+  gap: 2px;
+}
+.mst-nav-section ul {
+  display: grid;
+  gap: 2px;
+}
+.mst-nav-group {
+  font: var(--rbx-typography-caption-medium-font);
+  color: var(--rbx-color-content-muted);
+  padding: var(--rbx-padding-small) var(--rbx-padding-xsmall) 2px;
+}
+
+/* 오른쪽 내용 */
+.mst-content {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+}
+.mst-inner {
+  display: grid;
+  gap: 40px;
+  max-width: 720px;
+  margin-inline: auto;
+  padding: var(--rbx-padding-xlarge) var(--rbx-padding-large) 64px;
+}
+.mst-head {
+  display: grid;
+  gap: var(--rbx-gap-xsmall);
+}
+.mst-h1 {
+  font: var(--rbx-typography-heading-medium-font);
+  color: var(--rbx-color-content-emphasis);
+}
+.mst-head p {
+  color: var(--rbx-color-content-muted);
+  font: var(--rbx-typography-body-medium-font);
+}
+
+/* 설정 묶음: 둥근 상자 한 개 안에 줄을 나란히 둡니다(Claude 설정·ChatGPT 개인 맞춤 설정). */
+.mst-group {
+  display: grid;
+  gap: var(--rbx-gap-medium);
+}
+.mst-group-title {
+  font: var(--rbx-typography-title-medium-font);
+  color: var(--rbx-color-content-emphasis);
+}
+.mst-group-note {
+  font: var(--rbx-typography-body-small-font);
+  color: var(--rbx-color-content-muted);
+  margin-top: -6px;
+}
+.mst-rows {
+  display: grid;
+  border: 1px solid var(--rbx-color-stroke-muted);
+  border-radius: var(--rbx-radius-large);
+  background: var(--rbx-color-surface-0);
+  overflow: hidden;
+}
+.mst-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--rbx-gap-small) var(--rbx-gap-large);
+  padding: var(--rbx-padding-medium) var(--rbx-padding-large);
+}
+.mst-row + .mst-row {
+  border-top: 1px solid var(--rbx-color-stroke-muted);
+}
+.mst-row-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.mst-row-copy strong {
+  font: var(--rbx-typography-title-small-font);
+  color: var(--rbx-color-content-emphasis);
+}
+.mst-row-copy span,
+.mst-row-copy p {
+  font: var(--rbx-typography-body-small-font);
+  color: var(--rbx-color-content-muted);
+}
+.mst-row-copy a {
+  color: var(--rbx-color-content-link);
+}
+.mst-row-control {
+  display: flex;
+  align-items: center;
+  gap: var(--rbx-gap-small);
+  justify-self: end;
+}
+/* 줄 전체가 하나의 이동 버튼인 경우 */
+.mst-row-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--rbx-gap-large);
+  width: 100%;
+  padding: var(--rbx-padding-medium) var(--rbx-padding-large);
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.mst-row-link:hover {
+  background: var(--rbx-color-state-hover);
+}
+.mst-row-link + .mst-row-link,
+.mst-row + .mst-row-link,
+.mst-row-link + .mst-row {
+  border-top: 1px solid var(--rbx-color-stroke-muted);
+}
+.mst-chevron {
+  color: var(--rbx-color-content-muted);
+}
+
+/* 기억 주제 표 */
+.mst-topics {
+  display: grid;
+}
+.mst-topic {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--rbx-gap-medium);
+  padding: var(--rbx-padding-medium) var(--rbx-padding-large);
+}
+.mst-topic + .mst-topic {
+  border-top: 1px solid var(--rbx-color-stroke-muted);
+}
+.mst-topic strong {
+  font: var(--rbx-typography-title-small-font);
+  color: var(--rbx-color-content-emphasis);
+}
+.mst-topic-summary {
+  font: var(--rbx-typography-body-small-font);
+  color: var(--rbx-color-content-default);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mst-topic time {
+  font: var(--rbx-typography-body-small-font);
+  color: var(--rbx-color-content-muted);
+  white-space: nowrap;
+}
+.mst-topic-actions {
+  display: flex;
+  gap: var(--rbx-gap-xsmall);
+}
+
+/* 기억 추가 입력줄 */
+.mst-add {
+  display: flex;
+  align-items: center;
+  gap: var(--rbx-gap-small);
+  padding: var(--rbx-padding-small) var(--rbx-padding-medium);
+  border-top: 1px solid var(--rbx-color-stroke-muted);
+  background: var(--rbx-color-surface-100);
+}
+.mst-add input {
+  flex: 1;
+  min-width: 0;
+}
+.mst-state {
+  display: grid;
+  justify-items: start;
+  gap: var(--rbx-gap-small);
+  padding: var(--rbx-padding-large);
+  font: var(--rbx-typography-body-medium-font);
+  color: var(--rbx-color-content-muted);
+}
+.mst-skeletons {
+  display: grid;
+  gap: var(--rbx-gap-medium);
+  padding: var(--rbx-padding-large);
+}
+
+/* 배경 미리보기 */
+.mst-wall {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--rbx-radius-large);
+  overflow: hidden;
+  background: var(--rbx-color-shift-200);
+}
+.mst-wall img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.mst-wall-bubble {
+  position: relative;
+  padding: var(--rbx-padding-small) var(--rbx-padding-medium);
+  border-radius: var(--rbx-radius-large);
+  background: var(--rbx-color-surface-0);
+  color: var(--rbx-color-content-default);
+  font: var(--rbx-typography-body-medium-font);
+  box-shadow: 0 2px 10px var(--rbx-color-common-shadow);
+}
+.mst-sliders {
+  display: grid;
+  gap: var(--rbx-gap-xlarge);
+  padding: var(--rbx-padding-large);
+}
+.mst-presets {
+  display: flex;
+  gap: var(--rbx-gap-small);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: var(--rbx-padding-medium) var(--rbx-padding-large);
+}
+.mst-preset {
+  flex-shrink: 0;
+  width: 88px;
+  aspect-ratio: 16 / 10;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: var(--rbx-radius-medium);
+  overflow: hidden;
+  cursor: pointer;
+}
+.mst-preset[aria-pressed="true"] {
+  border-color: var(--rbx-color-stroke-emphasis);
+}
+.mst-preset img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.mst-form {
+  display: grid;
+  gap: var(--rbx-gap-large);
+  padding: var(--rbx-padding-large);
+}
+.mst-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--rbx-gap-medium);
+}
+
+@media (max-width: 860px) {
+  .mst {
+    flex-direction: column;
+    gap: 0;
+    height: auto;
+    min-height: 100dvh;
+  }
+  .mst-nav {
+    width: 100%;
+    height: auto;
+    grid-template-rows: auto;
+    border-inline-end: 0;
+    border-block-end: 1px solid var(--rbx-color-stroke-muted);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  .mst-nav-section {
+    display: grid;
+    gap: 2px;
+  }
+  .mst-nav-section ul {
+    display: grid;
+    gap: 2px;
+  }
+  .mst-nav-group {
+    display: none;
+  }
+  .mst-content {
+    overflow: visible;
+  }
+  .mst-inner {
+    padding-inline: var(--rbx-padding-medium);
+  }
+  .mst-topic {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .mst-topic-summary,
+  .mst-topic time {
+    grid-column: 1 / -1;
+    white-space: normal;
+  }
+  .mst-row,
+  .mst-row-link {
+    padding-inline: var(--rbx-padding-medium);
+  }
+}
