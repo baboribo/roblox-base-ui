@@ -257,6 +257,11 @@ export const examples = {
     import("./fieldset").then((m) => ({ default: m.FieldsetExample })),
   ),
   form: lazy(() => import("./form").then((m) => ({ default: m.FormExample }))),
+  "game-discovery": lazy(() =>
+    import("./game-discovery").then((m) => ({
+      default: m.GameDiscoveryExample,
+    })),
+  ),
   "icon-button-alert": lazy(() =>
     import("./icon-button-alert").then((m) => ({
       default: m.IconButtonAlertExample,
