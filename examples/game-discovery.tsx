@@ -34,7 +34,6 @@ type Game = {
   genre: string;
   likeRatio: number;
   playing: string;
-  change: number;
   hue: number;
 };
 
@@ -47,6 +46,8 @@ function thumbnail(hue: number, label: string) {
   );
 }
 
+const charts = ["인기", "최고 수익", "급상승"];
+
 const genres = ["전체", "어드벤처", "롤플레이", "시뮬레이션", "장애물", "공포"];
 
 const shortGames: Game[] = [
@@ -56,7 +57,6 @@ const shortGames: Game[] = [
     genre: "어드벤처",
     likeRatio: 94,
     playing: "3.2만",
-    change: 2,
     hue: 205,
   },
   {
@@ -65,7 +65,6 @@ const shortGames: Game[] = [
     genre: "롤플레이",
     likeRatio: 89,
     playing: "1.8만",
-    change: 0,
     hue: 25,
   },
   {
@@ -74,7 +73,6 @@ const shortGames: Game[] = [
     genre: "시뮬레이션",
     likeRatio: 91,
     playing: "1.1만",
-    change: -1,
     hue: 140,
   },
   {
@@ -83,7 +81,6 @@ const shortGames: Game[] = [
     genre: "장애물",
     likeRatio: 86,
     playing: "9,400",
-    change: 5,
     hue: 290,
   },
   {
@@ -92,7 +89,6 @@ const shortGames: Game[] = [
     genre: "공포",
     likeRatio: 82,
     playing: "7,100",
-    change: -3,
     hue: 0,
   },
   {
@@ -101,8 +97,31 @@ const shortGames: Game[] = [
     genre: "시뮬레이션",
     likeRatio: 90,
     playing: "5,600",
-    change: 1,
     hue: 180,
+  },
+  {
+    id: "g7",
+    title: "고양이 마을",
+    genre: "롤플레이",
+    likeRatio: 93,
+    playing: "4,800",
+    hue: 45,
+  },
+  {
+    id: "g8",
+    title: "우주 정거장 생존기",
+    genre: "어드벤처",
+    likeRatio: 88,
+    playing: "4,200",
+    hue: 250,
+  },
+  {
+    id: "g9",
+    title: "블록 쌓기 챔피언",
+    genre: "장애물",
+    likeRatio: 84,
+    playing: "3,900",
+    hue: 320,
   },
 ];
 
@@ -127,6 +146,7 @@ export function GameDiscoveryExample({
   longText?: boolean;
 }) {
   const [genre, setGenre] = useState("전체");
+  const [chartType, setChartType] = useState("인기");
   const [opened, setOpened] = useState("");
   const games = longText ? longGames : shortGames;
   const filtered =
@@ -134,7 +154,14 @@ export function GameDiscoveryExample({
       ? []
       : games.filter((game) => genre === "전체" || game.genre === genre);
   const hero = games[0];
-  const chart = [...filtered].sort((a, b) => b.likeRatio - a.likeRatio);
+  // 예제 데이터라 차트 종류마다 정렬 기준만 바꿉니다.
+  const chart = [...filtered].sort((a, b) =>
+    chartType === "인기"
+      ? b.likeRatio - a.likeRatio
+      : chartType === "최고 수익"
+        ? a.hue - b.hue
+        : a.likeRatio - b.likeRatio,
+  );
 
   return (
     <div className="gd-page">
@@ -243,23 +270,38 @@ export function GameDiscoveryExample({
             <h2 id="gd-chart" className="gd-section-title">
               실시간 차트
             </h2>
+            <ToggleGroup
+              aria-label="차트 종류"
+              value={[chartType]}
+              onValueChange={(value) => value[0] && setChartType(value[0])}
+            >
+              {charts.map((name) => (
+                <Toggle key={name} value={name}>
+                  {name}
+                </Toggle>
+              ))}
+            </ToggleGroup>
             {state === "loading" ? (
-              <div className="gd-list-skeleton">
-                {[0, 1, 2, 3].map((key) => (
+              <div className="gd-chart-skeleton">
+                {[0, 1, 2, 3, 4, 5].map((key) => (
                   <Skeleton key={key} className="gd-row-skeleton-item" />
                 ))}
               </div>
             ) : chart.length === 0 ? (
               <Text>표시할 순위가 없습니다.</Text>
             ) : (
-              <List.Root variant="boxed">
+              // 순위는 순서가 의미라 ol이 맞지만 List.Root는 ul만 지원합니다(M6).
+              <List.Root className="gd-chart">
                 {chart.map((game, index) => (
                   <List.Item key={game.id}>
-                    <List.Action onClick={() => setOpened(game.id)}>
+                    <List.Action
+                      nativeButton={false}
+                      render={<a href={`#${game.id}`} />}
+                    >
                       <List.Content
                         leading={
                           <span className="gd-rank">
-                            <strong>{index + 1}</strong>
+                            <span className="gd-rank-number">{index + 1}</span>
                             <img
                               className="gd-rank-thumb"
                               src={thumbnail(game.hue, "")}
@@ -267,29 +309,11 @@ export function GameDiscoveryExample({
                             />
                           </span>
                         }
-                        trailing={
-                          <Badge
-                            size="xs"
-                            variant={
-                              game.change > 0
-                                ? "success"
-                                : game.change < 0
-                                  ? "alert"
-                                  : "standard"
-                            }
-                          >
-                            {game.change > 0
-                              ? `▲ ${game.change}`
-                              : game.change < 0
-                                ? `▼ ${-game.change}`
-                                : "-"}
-                          </Badge>
-                        }
                       >
                         <List.Title>{game.title}</List.Title>
+                        <List.Description>{game.genre}</List.Description>
                         <List.Description>
-                          {game.genre} · 좋아요 {game.likeRatio}% ·{" "}
-                          {game.playing}명
+                          좋아요 {game.likeRatio}%
                         </List.Description>
                       </List.Content>
                     </List.Action>

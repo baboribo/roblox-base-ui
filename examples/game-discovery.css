@@ -67,11 +67,6 @@
   height: 160px;
   border-radius: 8px;
 }
-.gd-list-skeleton {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
 .gd-row-skeleton-item {
   height: 56px;
   border-radius: 8px;
@@ -81,17 +76,49 @@
   align-items: center;
   gap: 12px;
 }
-.gd-rank strong {
+.gd-rank-number {
   min-width: 1.5em;
   text-align: center;
-  font: var(--rbx-typography-title-large-font);
+  font: var(--rbx-typography-body-medium-font);
+  color: var(--rbx-color-content-default);
 }
 .gd-rank-thumb {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   object-fit: cover;
   border-radius: 8px;
 }
 .gd-retry {
   margin-top: 12px;
+}
+/* 실시간 차트: 넓은 화면에서는 세 줄씩 옆 열로 이어지는 목록입니다.
+   List에 여러 열 배치와 구분선 없는 변형이 없어 화면 CSS로 바꿉니다. */
+.gd-section {
+  container-type: inline-size;
+}
+.gd-chart,
+.gd-chart-skeleton {
+  display: grid;
+  gap: 4px 24px;
+}
+.gd-chart .rbx-list-item {
+  border-bottom: 0;
+}
+.gd-chart .rbx-list-action {
+  border-radius: 8px;
+}
+.gd-chart .rbx-list-content {
+  padding: 8px;
+}
+.gd-chart .rbx-list-description {
+  margin-top: 2px;
+  font: var(--rbx-typography-body-small-font);
+}
+@container (min-width: 640px) {
+  .gd-chart,
+  .gd-chart-skeleton {
+    grid-template-rows: repeat(3, auto);
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+  }
 }
