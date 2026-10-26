@@ -1,6 +1,11 @@
 /* 대표 화면 5번 게임 탐색의 화면 배치입니다.
    색·글자·간격·모서리는 모두 토큰을 씁니다. 라이브러리 클래스(.rbx-*)는 덮어쓰지 않습니다. */
 
+/* 너비 100%에 안쪽 여백을 더해도 화면을 넘지 않게 합니다. */
+.gdv-page {
+  box-sizing: border-box;
+}
+
 .gdv {
   --gdv-width: 1160px;
   --gdv-gutter: var(--rbx-padding-large);
