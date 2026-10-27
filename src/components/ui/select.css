@@ -107,7 +107,7 @@
     color: var(--rbx-color-content-default);
   }
   .rbx-attached-error {
-    color: var(--rbx-color-system-alert);
+    color: var(--rbx-color-content-alert);
   }
   .rbx-attached-positioner {
     z-index: var(--rbx-layer-popup);

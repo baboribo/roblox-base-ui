@@ -9,9 +9,10 @@ import { ButtonUtilityExample as Example5 } from "../../examples/button-utility"
 import { ButtonOverMediaExample as Example6 } from "../../examples/button-over-media";
 import { ButtonAlertExample as Example7 } from "../../examples/button-alert";
 import { ButtonLinkExample as Example8 } from "../../examples/button-link";
-import { ButtonSizesExample as Example9 } from "../../examples/button-sizes";
-import { ButtonDisabledExample as Example10 } from "../../examples/button-disabled";
-import { ButtonLoadingExample as Example11 } from "../../examples/button-loading";
+import { ButtonAsLinkExample as Example9 } from "../../examples/button-as-link";
+import { ButtonSizesExample as Example10 } from "../../examples/button-sizes";
+import { ButtonDisabledExample as Example11 } from "../../examples/button-disabled";
+import { ButtonLoadingExample as Example12 } from "../../examples/button-loading";
 export default {
   title: "입력/Button",
   parameters: { controls: { disable: true } },
@@ -52,15 +53,19 @@ export const CaseButtonLink: StoryObj = {
   name: "예제 · Link",
   render: () => <Example8 />,
 };
+export const CaseButtonAsLink: StoryObj = {
+  name: "예제 · 링크로 쓰기",
+  render: () => <Example9 />,
+};
 export const CaseButtonSizes: StoryObj = {
   name: "예제 · 크기",
-  render: () => <Example9 />,
+  render: () => <Example10 />,
 };
 export const CaseButtonDisabled: StoryObj = {
   name: "예제 · 비활성",
-  render: () => <Example10 />,
+  render: () => <Example11 />,
 };
 export const CaseButtonLoading: StoryObj = {
   name: "예제 · 로딩",
-  render: () => <Example11 />,
+  render: () => <Example12 />,
 };

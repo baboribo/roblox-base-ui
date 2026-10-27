@@ -1,6 +1,14 @@
 "use client";
 import { useState } from "react";
-import { Minus, Play, Plus, TrendingDown, TrendingUp } from "lucide-react";
+import {
+  Minus,
+  Play,
+  Plus,
+  ThumbsUp,
+  TrendingDown,
+  TrendingUp,
+  Users,
+} from "lucide-react";
 import { Button } from "../src/components/ui/button";
 import { Badge } from "../src/components/ui/badge";
 import { Toggle } from "../src/components/ui/toggle";
@@ -55,7 +63,7 @@ const genres = [
   "격투",
   "두뇌",
 ];
-const charts = ["인기", "최고 수익", "급상승"];
+const charts = ["급상승", "추천 상위", "최고 수익"];
 
 const base: Game[] = [
   {
@@ -217,7 +225,14 @@ const banners = [
 
 export type GameDiscoveryState = "default" | "loading" | "empty" | "error";
 
-function Tile({ game }: { game: Game }) {
+/** 탐색 카드는 그림·제목·추천·접속자만 보여 줍니다. 제작자는 탐색에서 고르는 기준이 아니라 기본으로 끄고, 필요한 화면에서만 켭니다. */
+function Tile({
+  game,
+  showCreator = false,
+}: {
+  game: Game;
+  showCreator?: boolean;
+}) {
   return (
     <li className="gdv-tile">
       <div className="gdv-tile-media">
@@ -232,20 +247,40 @@ function Tile({ game }: { game: Game }) {
         <a className="gdv-title" href={`#game-${game.id}`}>
           {game.title}
         </a>
-        <span className="gdv-meta">{game.creator}</span>
-        <span className="gdv-meta-row">
-          <span>추천 {game.like}%</span>
-          <span className="gdv-live">
-            <span className="gdv-dot" aria-hidden="true" />
-            {game.playing}명
-          </span>
-        </span>
+        {showCreator && <span className="gdv-meta">{game.creator}</span>}
+        <Stats game={game} />
       </div>
     </li>
   );
 }
 
-function Rank({ game, place }: { game: Game; place: number }) {
+/** 추천과 접속자는 격자·차트 모두 같은 모양(아이콘 + 숫자)으로 두고, 뜻은 숨긴 글자로 읽게 합니다. */
+function Stats({ game }: { game: Game }) {
+  return (
+    <span className="gdv-meta-row">
+      <span className="gdv-stat">
+        <ThumbsUp size={14} aria-hidden="true" />
+        <span className="gdv-sr">추천 </span>
+        {game.like}%
+      </span>
+      <span className="gdv-stat">
+        <Users size={14} aria-hidden="true" />
+        {game.playing}
+        <span className="gdv-sr">명 플레이 중</span>
+      </span>
+    </span>
+  );
+}
+
+function Rank({
+  game,
+  place,
+  showCreator = false,
+}: {
+  game: Game;
+  place: number;
+  showCreator?: boolean;
+}) {
   const dir = game.change > 0 ? "up" : game.change < 0 ? "down" : "same";
   const Arrow =
     dir === "up" ? TrendingUp : dir === "down" ? TrendingDown : Minus;
@@ -259,24 +294,20 @@ function Rank({ game, place }: { game: Game; place: number }) {
         <a className="gdv-title" href={`#game-${game.id}`}>
           {game.title}
         </a>
-        <span className="gdv-meta">{game.creator}</span>
-        <span className="gdv-meta-row">
-          <span>추천 {game.like}%</span>
-          <span aria-hidden="true">·</span>
-          <span>{game.playing}명 플레이 중</span>
-        </span>
+        {showCreator && <span className="gdv-meta">{game.creator}</span>}
+        <Stats game={game} />
       </span>
-      <span
-        className="gdv-change"
-        data-dir={dir}
-        aria-label={
-          dir === "same"
-            ? "순위 변화 없음"
-            : `어제보다 ${Math.abs(game.change)}계단 ${dir === "up" ? "상승" : "하락"}`
-        }
-      >
+      {/* 변화는 화살표와 숫자로 보이고, 뜻은 숨긴 글자로 읽습니다. 변화가 없으면 숫자 없이 줄표 아이콘만 둡니다. */}
+      <span className="gdv-change" data-dir={dir}>
         <Arrow size={14} aria-hidden="true" />
-        {dir === "same" ? "–" : Math.abs(game.change)}
+        <span aria-hidden="true">
+          {dir !== "same" && Math.abs(game.change)}
+        </span>
+        <span className="gdv-sr">
+          {dir === "same"
+            ? "순위 변화 없음"
+            : `어제보다 ${Math.abs(game.change)}계단 ${dir === "up" ? "상승" : "하락"}`}
+        </span>
       </span>
     </li>
   );
@@ -292,19 +323,24 @@ function Discovery({
   const toast = Toast.useToastManager();
   const [status, setStatus] = useState(state);
   const [genre, setGenre] = useState("전체");
-  const [chart, setChart] = useState("인기");
+  const [chart, setChart] = useState("급상승");
   const [banner, setBanner] = useState(0);
   const games = status === "empty" ? [] : longText ? longGames : base;
   const filtered = games.filter(
     (game) => genre === "전체" || game.genre === genre,
   );
-  const ranked = [...filtered].sort((a, b) =>
-    chart === "인기"
-      ? b.like - a.like
-      : chart === "급상승"
+  // 장르는 "장르별 게임" 구역만 거릅니다. 배너·인기 게임·실시간 차트는 전체 게임 기준입니다.
+  // 인기 게임은 지금 접속자가 많은 순(예제 데이터 순서)이고, 차트는 다른 기준으로만 줄 세워 두 구역이 같은 목록이 되지 않게 합니다.
+  const popular = games.slice(0, 6);
+  const ranked = [...games]
+    .sort((a, b) =>
+      chart === "급상승"
         ? b.change - a.change
-        : a.hue - b.hue,
-  );
+        : chart === "추천 상위"
+          ? b.like - a.like
+          : a.hue - b.hue,
+    )
+    .slice(0, 10);
 
   function retry() {
     setStatus("loading");
@@ -316,20 +352,7 @@ function Discovery({
 
   return (
     <div className="gdv-page">
-      <div className="gdv-top">
-        <h1 className="gdv-h1">게임 탐색</h1>
-        <div className="gdv-chips" role="group" aria-label="장르">
-          {genres.map((name) => (
-            <Toggle
-              key={name}
-              pressed={genre === name}
-              onPressedChange={() => setGenre(name)}
-            >
-              {name}
-            </Toggle>
-          ))}
-        </div>
-      </div>
+      <h1 className="gdv-h1">게임 탐색</h1>
 
       {status === "error" ? (
         // Alert는 제목이 h3로 고정되고 상자가 둘러져 페이지 상태로 쓰기 어렵습니다(3.5단계 N7·N8).
@@ -344,6 +367,9 @@ function Discovery({
         <div className="gdv-state">
           <h2>아직 공개된 게임이 없습니다</h2>
           <p>새 게임이 올라오면 여기에 보여 드릴게요.</p>
+          <Button size="sm" variant="standard" onClick={retry}>
+            새로 고침
+          </Button>
         </div>
       ) : loading ? (
         <>
@@ -374,16 +400,19 @@ function Discovery({
             <h2 id="gdv-banner">{current.title}</h2>
             <p>{current.body}</p>
             <div className="gdv-hero-actions">
+              {/* 플레이는 채운 재생 아이콘만으로 뜻이 통해 글자를 두지 않습니다. 이름은 aria-label로 줍니다. */}
               <Button
+                className="gdv-play"
                 size="lg"
+                aria-label="바로 플레이"
                 onClick={() =>
                   toast.add({ title: `${current.title}을(를) 엽니다` })
                 }
               >
-                <Play size={18} aria-hidden="true" />
-                바로 플레이
+                <Play size={24} fill="currentColor" aria-hidden="true" />
               </Button>
-              <Button size="md" variant="over-media">
+              {/* 같은 줄의 작업 버튼은 중요도를 색으로 나누고 크기는 같게 둡니다. */}
+              <Button size="lg" variant="over-media">
                 자세히 보기
               </Button>
             </div>
@@ -400,61 +429,85 @@ function Discovery({
             </div>
           </section>
 
-          {filtered.length === 0 ? (
-            <div className="gdv-state">
-              <h2>{genre} 게임이 아직 없습니다</h2>
-              <p>다른 장르를 골라 보세요.</p>
-              <Button
-                size="md"
-                variant="standard"
-                onClick={() => setGenre("전체")}
-              >
-                모든 장르 보기
-              </Button>
+          <section className="gdv-shelf" aria-labelledby="gdv-popular">
+            <div className="gdv-shelf-head">
+              <h2 id="gdv-popular" className="gdv-h2">
+                지금 인기 있는 게임
+              </h2>
             </div>
-          ) : (
-            <>
-              <section className="gdv-shelf" aria-labelledby="gdv-popular">
-                <div className="gdv-shelf-head">
-                  <h2 id="gdv-popular" className="gdv-h2">
-                    지금 인기 있는 게임
-                  </h2>
-                </div>
-                <ul className="gdv-grid">
-                  {filtered.map((game) => (
-                    <Tile key={game.id} game={game} />
-                  ))}
-                </ul>
-              </section>
+            {/* 장르별 구역과 겹치지 않게 지금 많이 하는 게임 한 줄만 보여 줍니다. */}
+            <ul className="gdv-grid" data-layout="row">
+              {popular.map((game) => (
+                <Tile key={game.id} game={game} />
+              ))}
+            </ul>
+          </section>
 
-              <section className="gdv-shelf" aria-labelledby="gdv-chart">
-                <div className="gdv-shelf-head">
-                  <div>
-                    <h2 id="gdv-chart" className="gdv-h2">
-                      실시간 차트
-                    </h2>
-                    <p>10분마다 새로 계산해요. 오늘 오후 3시 기준.</p>
-                  </div>
-                </div>
-                <div className="gdv-chips" role="group" aria-label="차트 종류">
-                  {charts.map((name) => (
-                    <Toggle
-                      key={name}
-                      pressed={chart === name}
-                      onPressedChange={() => setChart(name)}
-                    >
-                      {name}
-                    </Toggle>
-                  ))}
-                </div>
-                <ol className="gdv-ranks">
-                  {ranked.map((game, index) => (
-                    <Rank key={game.id} game={game} place={index + 1} />
-                  ))}
-                </ol>
-              </section>
-            </>
-          )}
+          <section className="gdv-shelf" aria-labelledby="gdv-chart">
+            <div className="gdv-shelf-head">
+              <div>
+                <h2 id="gdv-chart" className="gdv-h2">
+                  실시간 차트
+                </h2>
+                <p>10분마다 새로 계산해요. 오늘 오후 3시 기준.</p>
+              </div>
+            </div>
+            <div className="gdv-chips" role="group" aria-label="차트 종류">
+              {charts.map((name) => (
+                <Toggle
+                  key={name}
+                  pressed={chart === name}
+                  onPressedChange={() => setChart(name)}
+                >
+                  {name}
+                </Toggle>
+              ))}
+            </div>
+            <ol className="gdv-ranks">
+              {ranked.map((game, index) => (
+                <Rank key={game.id} game={game} place={index + 1} />
+              ))}
+            </ol>
+          </section>
+
+          {/* 장르는 이 구역만 거릅니다. 구역 제목 아래에 두어 거르는 범위를 분명히 합니다. */}
+          <section className="gdv-shelf" aria-labelledby="gdv-genre">
+            <div className="gdv-shelf-head">
+              <h2 id="gdv-genre" className="gdv-h2">
+                장르별 게임
+              </h2>
+            </div>
+            <div className="gdv-chips" role="group" aria-label="장르">
+              {genres.map((name) => (
+                <Toggle
+                  key={name}
+                  pressed={genre === name}
+                  onPressedChange={() => setGenre(name)}
+                >
+                  {name}
+                </Toggle>
+              ))}
+            </div>
+            {filtered.length === 0 ? (
+              <div className="gdv-state">
+                <h3>{genre} 게임이 아직 없습니다</h3>
+                <p>다른 장르를 골라 보세요.</p>
+                <Button
+                  size="md"
+                  variant="standard"
+                  onClick={() => setGenre("전체")}
+                >
+                  모든 장르 보기
+                </Button>
+              </div>
+            ) : (
+              <ul className="gdv-grid">
+                {filtered.map((game) => (
+                  <Tile key={game.id} game={game} />
+                ))}
+              </ul>
+            )}
+          </section>
         </>
       )}
     </div>

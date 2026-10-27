@@ -32,8 +32,11 @@
     text-align: start;
     scroll-snap-align: start;
   }
-  button.rbx-carousel-item {
+  :is(button, a).rbx-carousel-item {
     cursor: pointer;
+  }
+  a.rbx-carousel-item {
+    text-decoration: none;
   }
   .rbx-carousel-media {
     width: 100%;

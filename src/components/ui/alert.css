@@ -4,12 +4,42 @@
 @layer components.ply {
   /* alert — semantic HTML composition. */
   .rbx-alert {
-    border: 1px solid var(--rbx-color-stroke-emphasis);
+    --rbx-alert-accent: var(--rbx-color-stroke-emphasis);
+    display: grid;
+    gap: 4px;
+    border: 1px solid var(--rbx-alert-accent);
     border-radius: 8px;
     padding: 16px;
     background: var(--rbx-color-surface-100);
     min-width: 0;
     max-width: 100%;
     overflow-wrap: anywhere;
+  }
+  /* 종류는 테두리와 옅은 바탕으로 구분합니다. 글자색은 대비를 위해 바꾸지 않습니다. */
+  .rbx-alert:not([data-tone="neutral"]) {
+    background: color-mix(
+      in srgb,
+      var(--rbx-alert-accent) 8%,
+      var(--rbx-color-surface-100)
+    );
+  }
+  .rbx-alert[data-tone="success"] {
+    --rbx-alert-accent: var(--rbx-color-system-success);
+  }
+  .rbx-alert[data-tone="warning"] {
+    --rbx-alert-accent: var(--rbx-color-system-warning);
+  }
+  .rbx-alert[data-tone="error"] {
+    --rbx-alert-accent: var(--rbx-color-system-alert);
+  }
+  .rbx-alert-title {
+    margin: 0;
+    color: var(--rbx-color-content-emphasis);
+    font: var(--rbx-typography-title-large-font);
+  }
+  .rbx-alert-description {
+    margin: 0;
+    color: var(--rbx-color-content-default);
+    font: var(--rbx-typography-body-medium-font);
   }
 }

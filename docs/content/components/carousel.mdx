@@ -1,7 +1,7 @@
 ---
 title: "Carousel"
 description: "여러 항목을 가로로 탐색합니다."
-keywords: ["캐러셀", "캐러셀"]
+keywords: ["캐러셀", "가로 목록", "카드 목록"]
 group: "콘텐츠"
 ---
 
@@ -10,7 +10,7 @@ group: "콘텐츠"
 ## 설치
 
 ```sh
-pnpm dlx ply-ui add carousel icon
+pnpm dlx ply-ui add carousel icon typography
 ```
 
 [공통 설치 설정](/docs/installation)을 먼저 적용합니다.
@@ -20,6 +20,18 @@ pnpm dlx ply-ui add carousel icon
 `items`의 고유 ID, 제목, 설명, 미디어를 가로 목록으로 표시합니다. `onItemClick`은 선택한 ID를 전달합니다. 앞뒤 이동 버튼과 직접 스크롤을 사용할 수 있습니다.
 
 `onItemClick`을 지정하면 항목이 버튼으로 동작합니다. 생략하면 내용을 읽는 일반 항목으로 표시하고 클릭 동작이나 버튼 의미를 부여하지 않습니다.
+
+## 링크 항목과 제목 연결
+
+다른 화면으로 가는 항목은 `href`를 지정해 링크로 만듭니다. 링크여야 새 탭에서 열기, 주소 복사, 가운데 클릭이 됩니다. `onItemClick`을 함께 지정하면 링크를 누를 때도 불립니다.
+
+화면에 제목이 이미 있으면 `label` 대신 `aria-labelledby`로 그 제목을 연결합니다. 이때 Carousel 바깥을 같은 제목의 `section`으로 다시 감싸지 않습니다. 같은 이름의 영역이 두 번 생기기 때문입니다. `label`과 `aria-labelledby` 중 하나는 꼭 지정합니다.
+
+<ComponentExample name="carousel-links" title="링크와 제목 연결" />
+
+항목이 버튼이나 링크이면 스크롤 영역 자체는 Tab 정지점이 되지 않습니다. 항목에 포커스가 가면 스크롤이 따라갑니다.
+
+## 이동 버튼
 
 이동 버튼의 기본 이름은 "이전 카드"·"다음 카드"이며 `previousLabel`·`nextLabel`로 바꿉니다. 끝에 도달한 버튼은 비활성 상태가 되지만 키보드 포커스는 유지합니다.
 

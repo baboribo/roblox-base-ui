@@ -70,7 +70,7 @@ export function SubmitButton() {
 }
 ```
 
-`fonts.css`는 선택 사항입니다. Roblox 공개 글꼴 URL을 참조하며 글꼴 파일을 포함하지 않습니다. Lucide를 사용하는 예제는 `pnpm add lucide-react`가 추가로 필요합니다.
+`fonts.css`는 선택 사항입니다. 기본 글꼴 Pretendard JP Variable을 `pretendard-jp` 패키지에서 불러오므로 `pnpm add pretendard-jp`가 필요합니다. Lucide를 사용하는 예제는 `pnpm add lucide-react`가 추가로 필요합니다.
 
 복사 CLI는 내부 의존 파일을 함께 복사합니다. 변경된 파일이 이미 있으면 쓰기 전에 중단합니다. `--overwrite`를 지정하면 기존 수정본도 교체하므로 변경 사항을 먼저 비교합니다.
 

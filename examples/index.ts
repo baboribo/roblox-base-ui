@@ -10,8 +10,16 @@ export const examples = {
   accordion: lazy(() =>
     import("./accordion").then((m) => ({ default: m.AccordionExample })),
   ),
+  "alert-dialog-final-focus": lazy(() =>
+    import("./alert-dialog-final-focus").then((m) => ({
+      default: m.AlertDialogFinalFocusExample,
+    })),
+  ),
   "alert-dialog": lazy(() =>
     import("./alert-dialog").then((m) => ({ default: m.AlertDialogExample })),
+  ),
+  "alert-tones": lazy(() =>
+    import("./alert-tones").then((m) => ({ default: m.AlertTonesExample })),
   ),
   alert: lazy(() =>
     import("./alert").then((m) => ({ default: m.AlertExample })),
@@ -75,6 +83,11 @@ export const examples = {
   ),
   "button-alert": lazy(() =>
     import("./button-alert").then((m) => ({ default: m.ButtonAlertExample })),
+  ),
+  "button-as-link": lazy(() =>
+    import("./button-as-link").then((m) => ({
+      default: m.ButtonAsLinkExample,
+    })),
   ),
   "button-disabled": lazy(() =>
     import("./button-disabled").then((m) => ({
@@ -170,6 +183,11 @@ export const examples = {
     import("./card-wide").then((m) => ({ default: m.CardWideExample })),
   ),
   card: lazy(() => import("./card").then((m) => ({ default: m.CardExample }))),
+  "carousel-links": lazy(() =>
+    import("./carousel-links").then((m) => ({
+      default: m.CarouselLinksExample,
+    })),
+  ),
   carousel: lazy(() =>
     import("./carousel").then((m) => ({ default: m.CarouselExample })),
   ),
@@ -234,6 +252,11 @@ export const examples = {
   ),
   "dialog-close": lazy(() =>
     import("./dialog-close").then((m) => ({ default: m.DialogCloseExample })),
+  ),
+  "dialog-initial-focus": lazy(() =>
+    import("./dialog-initial-focus").then((m) => ({
+      default: m.DialogInitialFocusExample,
+    })),
   ),
   "dialog-lg": lazy(() =>
     import("./dialog-lg").then((m) => ({ default: m.DialogLgExample })),

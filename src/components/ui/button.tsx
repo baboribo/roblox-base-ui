@@ -1,5 +1,10 @@
 "use client";
-import { cloneElement, type ComponentProps, type ReactNode } from "react";
+import {
+  cloneElement,
+  isValidElement,
+  type ComponentProps,
+  type ReactNode,
+} from "react";
 import { useRender } from "@base-ui/react/use-render";
 import { Button as Primitive } from "@base-ui/react/button";
 import { withClassName } from "../../lib/cx";
@@ -36,6 +41,25 @@ export function Button({
   focusableWhenDisabled,
   ...props
 }: ButtonProps) {
+  // href가 있는 요소는 버튼 동작(role="button", Space 실행)을 붙이지 않고 링크로 남깁니다.
+  if (isValidElement<{ href?: unknown }>(render) && render.props.href != null) {
+    const { nativeButton: _native, ...linkProps } = props;
+    return (
+      <ButtonLink
+        props={{
+          ...(linkProps as ComponentProps<"a">),
+          "aria-busy": loading || props["aria-busy"] || undefined,
+          "data-loading": loading || undefined,
+          "data-variant": variant,
+          "data-size": size,
+          className: withClassName("rbx-button", className)({} as never),
+          children,
+        }}
+        render={render}
+        loading={loading}
+      />
+    );
+  }
   return (
     <Primitive
       {...props}
@@ -93,4 +117,34 @@ function ButtonSurface({
       )}
     </>,
   );
+}
+
+function ButtonLink({
+  props,
+  render,
+  loading,
+}: {
+  props: ComponentProps<"a"> & Record<`data-${string}`, unknown>;
+  render: ButtonProps["render"];
+  loading: boolean;
+}) {
+  const { children, ref, ...rest } = props;
+  return useRender({
+    defaultTagName: "a",
+    render: render as Parameters<typeof useRender>[0]["render"],
+    ref,
+    props: {
+      ...rest,
+      children: (
+        <>
+          <span className="rbx-button-label">{children}</span>
+          {loading && (
+            <span className="rbx-button-loader" aria-hidden="true">
+              <Spinner size="sm" aria-hidden="true" />
+            </span>
+          )}
+        </>
+      ),
+    },
+  });
 }
