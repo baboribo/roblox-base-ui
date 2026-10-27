@@ -4,6 +4,7 @@ import {
   ChevronDown,
   Heart,
   MoreHorizontal,
+  Play,
   Share2,
   ThumbsDown,
   ThumbsUp,
@@ -268,9 +269,11 @@ function Detail({
             <Button
               className="gdt-play"
               size="lg"
+              aria-label="플레이"
               onClick={() => toast.add({ title: "게임을 시작합니다" })}
             >
-              플레이
+              {/* 채운 재생 아이콘만 둡니다. 이름은 aria-label로 줍니다. */}
+              <Play size={28} fill="currentColor" aria-hidden="true" />
             </Button>
             <IconButton
               icon={<Heart fill={favorite ? "currentColor" : "none"} />}
