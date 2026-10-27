@@ -108,21 +108,34 @@
   inset-block-end: var(--rbx-padding-medium);
   inset-inline-end: var(--rbx-padding-large);
   display: flex;
-  gap: var(--rbx-gap-small);
 }
+/* 점은 작게 보이되 누르는 영역은 24px로 둡니다(WCAG 2.5.8). */
 .gdv-hero-dots button {
-  width: 8px;
-  height: 8px;
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
   padding: 0;
   border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+.gdv-hero-dots button::before {
+  content: "";
+  width: 8px;
+  height: 8px;
   border-radius: var(--rbx-radius-circle);
   background: currentColor;
   opacity: 0.4;
-  cursor: pointer;
 }
-.gdv-hero-dots button[aria-current="true"] {
-  opacity: 1;
+.gdv-hero-dots button[aria-current="true"]::before {
   width: 24px;
+  opacity: 1;
+}
+.gdv-hero-dots button:focus-visible {
+  outline: 3px solid var(--rbx-focus-ring);
+  border-radius: var(--rbx-radius-circle);
 }
 
 /* 구역 */

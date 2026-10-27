@@ -63,7 +63,7 @@ const genres = [
   "격투",
   "두뇌",
 ];
-const charts = ["인기", "최고 수익", "급상승"];
+const charts = ["급상승", "추천 상위", "최고 수익"];
 
 const base: Game[] = [
   {
@@ -225,7 +225,14 @@ const banners = [
 
 export type GameDiscoveryState = "default" | "loading" | "empty" | "error";
 
-function Tile({ game }: { game: Game }) {
+/** 탐색 카드는 그림·제목·추천·접속자만 보여 줍니다. 제작자는 탐색에서 고르는 기준이 아니라 기본으로 끄고, 필요한 화면에서만 켭니다. */
+function Tile({
+  game,
+  showCreator = false,
+}: {
+  game: Game;
+  showCreator?: boolean;
+}) {
   return (
     <li className="gdv-tile">
       <div className="gdv-tile-media">
@@ -240,7 +247,7 @@ function Tile({ game }: { game: Game }) {
         <a className="gdv-title" href={`#game-${game.id}`}>
           {game.title}
         </a>
-        <span className="gdv-meta">{game.creator}</span>
+        {showCreator && <span className="gdv-meta">{game.creator}</span>}
         <Stats game={game} />
       </div>
     </li>
@@ -265,7 +272,15 @@ function Stats({ game }: { game: Game }) {
   );
 }
 
-function Rank({ game, place }: { game: Game; place: number }) {
+function Rank({
+  game,
+  place,
+  showCreator = false,
+}: {
+  game: Game;
+  place: number;
+  showCreator?: boolean;
+}) {
   const dir = game.change > 0 ? "up" : game.change < 0 ? "down" : "same";
   const Arrow =
     dir === "up" ? TrendingUp : dir === "down" ? TrendingDown : Minus;
@@ -279,20 +294,20 @@ function Rank({ game, place }: { game: Game; place: number }) {
         <a className="gdv-title" href={`#game-${game.id}`}>
           {game.title}
         </a>
-        <span className="gdv-meta">{game.creator}</span>
+        {showCreator && <span className="gdv-meta">{game.creator}</span>}
         <Stats game={game} />
       </span>
-      <span
-        className="gdv-change"
-        data-dir={dir}
-        aria-label={
-          dir === "same"
-            ? "순위 변화 없음"
-            : `어제보다 ${Math.abs(game.change)}계단 ${dir === "up" ? "상승" : "하락"}`
-        }
-      >
+      {/* 변화는 화살표와 숫자로 보이고, 뜻은 숨긴 글자로 읽습니다. 변화가 없으면 숫자 없이 줄표 아이콘만 둡니다. */}
+      <span className="gdv-change" data-dir={dir}>
         <Arrow size={14} aria-hidden="true" />
-        {dir === "same" ? "–" : Math.abs(game.change)}
+        <span aria-hidden="true">
+          {dir !== "same" && Math.abs(game.change)}
+        </span>
+        <span className="gdv-sr">
+          {dir === "same"
+            ? "순위 변화 없음"
+            : `어제보다 ${Math.abs(game.change)}계단 ${dir === "up" ? "상승" : "하락"}`}
+        </span>
       </span>
     </li>
   );
@@ -308,21 +323,24 @@ function Discovery({
   const toast = Toast.useToastManager();
   const [status, setStatus] = useState(state);
   const [genre, setGenre] = useState("전체");
-  const [chart, setChart] = useState("인기");
+  const [chart, setChart] = useState("급상승");
   const [banner, setBanner] = useState(0);
   const games = status === "empty" ? [] : longText ? longGames : base;
   const filtered = games.filter(
     (game) => genre === "전체" || game.genre === genre,
   );
   // 장르는 "장르별 게임" 구역만 거릅니다. 배너·인기 게임·실시간 차트는 전체 게임 기준입니다.
-  const popular = [...games].sort((a, b) => b.like - a.like).slice(0, 6);
-  const ranked = [...games].sort((a, b) =>
-    chart === "인기"
-      ? b.like - a.like
-      : chart === "급상승"
+  // 인기 게임은 지금 접속자가 많은 순(예제 데이터 순서)이고, 차트는 다른 기준으로만 줄 세워 두 구역이 같은 목록이 되지 않게 합니다.
+  const popular = games.slice(0, 6);
+  const ranked = [...games]
+    .sort((a, b) =>
+      chart === "급상승"
         ? b.change - a.change
-        : a.hue - b.hue,
-  );
+        : chart === "추천 상위"
+          ? b.like - a.like
+          : a.hue - b.hue,
+    )
+    .slice(0, 10);
 
   function retry() {
     setStatus("loading");
@@ -417,7 +435,7 @@ function Discovery({
                 지금 인기 있는 게임
               </h2>
             </div>
-            {/* 장르별 구역과 겹치지 않게 추천이 높은 게임 한 줄만 보여 줍니다. */}
+            {/* 장르별 구역과 겹치지 않게 지금 많이 하는 게임 한 줄만 보여 줍니다. */}
             <ul className="gdv-grid" data-layout="row">
               {popular.map((game) => (
                 <Tile key={game.id} game={game} />
