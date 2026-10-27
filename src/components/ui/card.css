@@ -8,7 +8,7 @@
     position: relative;
     min-width: 0;
     border: 1px solid var(--rbx-color-stroke-default);
-    border-radius: 8px;
+    border-radius: var(--rbx-radius-medium);
     background: var(--rbx-color-surface-0);
     color: var(--rbx-color-content-emphasis);
     overflow: hidden;
@@ -49,11 +49,11 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 4px;
+    gap: var(--rbx-gap-xsmall);
   }
   .rbx-card-content {
     display: grid;
-    gap: 12px;
+    gap: var(--rbx-gap-medium);
     font: var(--rbx-typography-body-medium-font);
   }
   .rbx-card-header + .rbx-card-content {
@@ -83,11 +83,11 @@
     align-items: center;
     justify-content: flex-end;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: var(--rbx-gap-small);
     padding-top: 0;
   }
   .rbx-card-footer[data-divider] {
-    padding-top: 12px;
+    padding-top: var(--rbx-padding-medium);
     border-top: 1px solid var(--rbx-color-stroke-default);
   }
   .rbx-card-media {
@@ -112,30 +112,30 @@
   }
   .rbx-card-image[data-fit="contain"] {
     object-fit: contain;
-    padding: 12px;
+    padding: var(--rbx-padding-medium);
   }
   .rbx-card-image-fallback {
     position: absolute;
     inset: 0;
     display: grid;
     place-items: center;
-    padding: 16px;
+    padding: var(--rbx-padding-large);
     color: var(--rbx-color-content-default);
     font: var(--rbx-typography-body-small-font);
   }
   .rbx-card[data-variant="plain"] > .rbx-card-media {
-    border-radius: 8px;
+    border-radius: var(--rbx-radius-medium);
   }
   .rbx-card[data-variant="plain"]
     > :is(.rbx-card-header, .rbx-card-content, .rbx-card-footer) {
     padding-inline: 0;
   }
   .rbx-card[data-variant="plain"] > .rbx-card-header {
-    padding-top: 8px;
+    padding-top: var(--rbx-padding-small);
     padding-bottom: 0;
   }
   .rbx-card[data-variant="plain"] > .rbx-card-header + .rbx-card-footer {
-    padding-top: 12px;
+    padding-top: var(--rbx-padding-medium);
   }
   .rbx-card[data-layout="horizontal"] {
     display: grid;
@@ -150,10 +150,10 @@
   }
   .rbx-card[data-layout="horizontal"] > .rbx-card-content {
     align-content: center;
-    gap: 4px;
+    gap: var(--rbx-gap-xsmall);
   }
   .rbx-card[data-layout="horizontal"][data-variant="plain"] {
-    gap: 12px;
+    gap: var(--rbx-gap-medium);
   }
   .rbx-card-link,
   .rbx-card-action {
@@ -174,7 +174,7 @@
     position: absolute;
     inset: 0;
     z-index: 1;
-    border-radius: 8px;
+    border-radius: var(--rbx-radius-medium);
   }
   :is(.rbx-card-link, .rbx-card-action)[data-stretch]:focus-visible::after {
     outline: 2px solid var(--rbx-color-system-emphasis);

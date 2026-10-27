@@ -6,10 +6,10 @@
   .rbx-alert {
     --rbx-alert-accent: var(--rbx-color-stroke-emphasis);
     display: grid;
-    gap: 4px;
+    gap: var(--rbx-gap-xsmall);
     border: 1px solid var(--rbx-alert-accent);
-    border-radius: 8px;
-    padding: 16px;
+    border-radius: var(--rbx-radius-medium);
+    padding: var(--rbx-padding-large);
     background: var(--rbx-color-surface-100);
     min-width: 0;
     max-width: 100%;

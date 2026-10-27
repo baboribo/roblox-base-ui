@@ -27,7 +27,7 @@
   .rbx-scroll-thumb {
     flex: 1;
     background: var(--rbx-color-content-muted);
-    border-radius: 99px;
+    border-radius: var(--rbx-radius-circle);
   }
   .rbx-scrollbar[data-orientation="horizontal"] {
     width: auto;

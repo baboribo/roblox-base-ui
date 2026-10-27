@@ -5,8 +5,8 @@
   /* ContextMenu: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
   .rbx-context-trigger {
     border: 1px dashed var(--rbx-color-stroke-emphasis);
-    border-radius: 8px;
-    padding: 32px;
+    border-radius: var(--rbx-radius-medium);
+    padding: var(--rbx-size-800);
     text-align: center;
   }
 }

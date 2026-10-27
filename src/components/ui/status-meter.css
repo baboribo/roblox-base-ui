@@ -6,10 +6,10 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
-    padding: 24px;
+    gap: var(--rbx-gap-xlarge);
+    padding: var(--rbx-padding-xxlarge);
     border: 0;
-    border-radius: 16px;
+    border-radius: var(--rbx-radius-large);
     background: var(--rbx-color-surface-100);
     color: var(--rbx-color-content-emphasis);
   }
@@ -23,7 +23,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--rbx-gap-xsmall);
   }
   .rbx-status-meter[data-tone="warning"] {
     --rbx-status-color: var(--rbx-color-system-warning);
@@ -36,7 +36,7 @@
   }
   .rbx-status-segments {
     display: flex;
-    gap: 2px;
+    gap: var(--rbx-gap-xxsmall);
     height: 8px;
   }
   .rbx-status-segments > span {
@@ -47,10 +47,10 @@
     background: var(--rbx-status-color);
   }
   .rbx-status-segments > span:first-child {
-    border-radius: 4px 0 0 4px;
+    border-radius: var(--rbx-radius-small) 0 0 var(--rbx-radius-small);
   }
   .rbx-status-segments > span:last-child {
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 var(--rbx-radius-small) var(--rbx-radius-small) 0;
   }
   .rbx-status-labels {
     display: flex;

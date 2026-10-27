@@ -26,7 +26,8 @@
     overflow: auto;
     overscroll-behavior: contain;
     min-width: 0;
-    padding: 8px 8px 8px 16px;
+    padding: var(--rbx-padding-small) var(--rbx-padding-small)
+      var(--rbx-padding-small) var(--rbx-padding-large);
     border: 1px solid var(--rbx-color-stroke-default);
     border-radius: var(--rbx-radius-medium);
     background: var(--rbx-color-surface-300);
@@ -47,7 +48,7 @@
       transform var(--rbx-motion-duration-panel) var(--rbx-motion-ease-enter);
   }
   .rbx-toast:not(:has(.rbx-toast-close)) {
-    padding-inline-end: 16px;
+    padding-inline-end: var(--rbx-padding-large);
   }
   .rbx-toast[data-starting-style] {
     opacity: 0;
@@ -88,12 +89,12 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 12px;
+    gap: var(--rbx-gap-medium);
     min-height: 32px;
   }
   .rbx-toast-content:has(> .rbx-toast-close) {
     position: relative;
-    padding-inline-end: 36px;
+    padding-inline-end: var(--rbx-size-900);
   }
   .rbx-toast-content > .rbx-toast-close {
     position: absolute;
@@ -106,7 +107,7 @@
     max-width: 100%;
     min-width: 0;
     overflow-wrap: anywhere;
-    padding-block: 4px;
+    padding-block: var(--rbx-padding-xsmall);
   }
   .rbx-toast-title {
     margin: 0;
@@ -145,7 +146,7 @@
     min-width: 0;
     max-width: 100%;
     overflow-wrap: anywhere;
-    padding: 4px 8px;
+    padding: var(--rbx-padding-xsmall) var(--rbx-padding-small);
     font: var(--rbx-typography-body-small-font);
     font-weight: 700;
     text-decoration: underline;
@@ -167,7 +168,7 @@
   }
   @media (max-width: 400px) {
     .rbx-toast-content {
-      gap: 8px;
+      gap: var(--rbx-gap-small);
     }
   }
   @media (prefers-reduced-motion: reduce) {

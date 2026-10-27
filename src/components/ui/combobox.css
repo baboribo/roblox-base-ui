@@ -7,10 +7,10 @@
   .rbx-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    padding: 6px;
+    gap: var(--rbx-size-150);
+    padding: var(--rbx-size-150);
     border: 1px solid var(--rbx-color-stroke-default);
-    border-radius: 8px;
+    border-radius: var(--rbx-radius-medium);
     min-width: 0;
     max-width: 100%;
   }
@@ -20,13 +20,13 @@
     min-width: 40px;
     height: 32px;
     border: 0;
-    padding-inline: 4px;
+    padding-inline: var(--rbx-padding-xsmall);
   }
   .rbx-chips .rbx-badge > .rbx-icon-button {
     width: 20px;
     height: 20px;
     min-height: 20px;
-    padding: 2px;
+    padding: var(--rbx-padding-xxsmall);
     background: transparent;
   }
 }

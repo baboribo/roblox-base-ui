@@ -11,7 +11,7 @@
   .rbx-table-head,
   .rbx-table-cell {
     white-space: nowrap;
-    padding: 14px 16px;
+    padding: var(--rbx-size-350) var(--rbx-padding-large);
     border-bottom: 1px solid var(--rbx-color-stroke-default);
   }
   .rbx-table-head {
@@ -23,7 +23,7 @@
   }
   .rbx-table-caption {
     text-align: start;
-    padding: 12px;
+    padding: var(--rbx-padding-medium);
     color: var(--rbx-color-content-default);
     font-size: 0.875rem;
   }

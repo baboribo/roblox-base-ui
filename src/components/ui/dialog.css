@@ -26,7 +26,7 @@
   .rbx-dialog-footer {
     display: flex;
     justify-content: flex-end;
-    gap: 8px;
+    gap: var(--rbx-gap-small);
     padding: 0 var(--rbx-dialog-inset) var(--rbx-dialog-inset);
     flex-wrap: wrap;
   }
@@ -44,9 +44,9 @@
     justify-content: center;
     width: 36px;
     height: 36px;
-    padding: 8px;
+    padding: var(--rbx-padding-small);
     border: 0;
-    border-radius: 9999px;
+    border-radius: var(--rbx-radius-circle);
     background: var(--rbx-color-over-media-100);
     color: var(--rbx-color-content-emphasis);
     cursor: pointer;
@@ -58,6 +58,6 @@
     );
   }
   .rbx-dialog:has(.rbx-dialog-close-affordance) .rbx-dialog-title {
-    padding-inline-end: 36px;
+    padding-inline-end: var(--rbx-size-900);
   }
 }

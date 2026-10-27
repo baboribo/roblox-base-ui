@@ -324,7 +324,37 @@ function Labels() {
     </>
   );
 }
+// 링크로 렌더한 Button도 disabled·loading이면 이동과 클릭 처리를 막아야 합니다.
+function Links() {
+  const [clicks, setClicks] = useState(0);
+  return (
+    <>
+      <Button
+        render={<a href="#active" />}
+        onClick={() => setClicks((n) => n + 1)}
+      >
+        Active link
+      </Button>
+      <Button
+        disabled
+        render={<a href="#disabled" />}
+        onClick={() => setClicks((n) => n + 1)}
+      >
+        Disabled link
+      </Button>
+      <Button
+        loading
+        render={<a href="#loading" />}
+        onClick={() => setClicks((n) => n + 1)}
+      >
+        Loading link
+      </Button>
+      <output>{clicks}</output>
+    </>
+  );
+}
 const cases = {
+  links: Links,
   labels: Labels,
   order: StyleOrder,
   details: Details,

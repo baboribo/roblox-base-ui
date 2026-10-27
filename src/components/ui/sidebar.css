@@ -20,11 +20,11 @@
   }
   .rbx-sidebar-viewport {
     box-sizing: border-box;
-    padding: 12px 16px;
+    padding: var(--rbx-padding-medium) var(--rbx-padding-large);
   }
   .rbx-sidebar-header,
   .rbx-sidebar-footer {
-    padding: 12px 16px;
+    padding: var(--rbx-padding-medium) var(--rbx-padding-large);
     flex-shrink: 0;
   }
   .rbx-sidebar-footer {
@@ -36,14 +36,14 @@
   }
   .rbx-sidebar-group-label {
     margin: 0 0 12px;
-    padding-inline: 12px;
+    padding-inline: var(--rbx-padding-medium);
     color: var(--rbx-color-content-muted);
     font: 600 12px/1.4 var(--rbx-font-body);
   }
   .rbx-sidebar-menu {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--rbx-gap-small);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -58,7 +58,8 @@
     position: fixed;
     inset: 0;
     z-index: 50;
-    background: rgb(0 0 0 / 0.5);
+    /* Dialog·Drawer와 같은 배경 막 토큰을 씁니다. */
+    background: var(--rbx-color-common-backdrop);
     transition: opacity var(--rbx-motion-duration-sidebar)
       var(--rbx-motion-ease-enter);
   }
@@ -99,8 +100,8 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 12px;
-    padding: 12px 16px;
+    gap: var(--rbx-gap-medium);
+    padding: var(--rbx-padding-medium) var(--rbx-padding-large);
     flex-shrink: 0;
     max-height: 40%;
     overflow: auto;

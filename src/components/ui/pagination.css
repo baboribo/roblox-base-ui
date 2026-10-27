@@ -8,12 +8,12 @@
     max-width: 100%;
     min-width: 0;
     align-items: center;
-    gap: 4px;
+    gap: var(--rbx-gap-xsmall);
   }
   .rbx-pagination > .rbx-button,
   .rbx-pagination-gap {
     min-width: 32px;
-    padding-inline: 6px;
+    padding-inline: var(--rbx-size-150);
     text-align: center;
   }
   .rbx-pagination .rbx-button[aria-current="page"] {
@@ -42,15 +42,15 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: var(--rbx-gap-xxsmall);
   }
   .rbx-pagination-summary input {
     min-width: 2ch;
     max-width: 100%;
     min-height: 32px;
-    padding: 2px;
+    padding: var(--rbx-padding-xxsmall);
     border: 1px solid var(--rbx-color-stroke-default);
-    border-radius: 4px;
+    border-radius: var(--rbx-radius-small);
     background: transparent;
     color: inherit;
     font: inherit;

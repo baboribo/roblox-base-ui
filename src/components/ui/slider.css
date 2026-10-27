@@ -5,7 +5,7 @@
   /* Slider: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
   .rbx-slider {
     display: grid;
-    gap: 8px;
+    gap: var(--rbx-gap-small);
     width: 100%;
   }
   .rbx-slider-control {
@@ -17,7 +17,7 @@
   .rbx-slider-track {
     position: relative;
     height: 6px;
-    border-radius: 99px;
+    border-radius: var(--rbx-radius-circle);
     background: var(--rbx-color-shift-300);
     width: 100%;
   }

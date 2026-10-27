@@ -368,3 +368,30 @@ test("built-in labels default to Korean and every one can be replaced", async ({
     defaults.getByRole("button", { name: "다음 카드" }),
   ).toBeVisible();
 });
+test("a Button rendered as a link honors disabled and loading", async ({
+  page,
+}) => {
+  await page.goto("/?case=links&width=500");
+  const disabled = page.getByRole("link", { name: "Disabled link" });
+  const loading = page.getByRole("link", { name: "Loading link" });
+  await expect(disabled).toHaveAttribute("aria-disabled", "true");
+  await expect(disabled).toHaveAttribute("data-disabled", "");
+  await expect(loading).toHaveAttribute("aria-disabled", "true");
+  await expect(loading).toHaveAttribute("aria-busy", "true");
+  // aria-disabled 요소는 Playwright가 기다리므로 실제 사용자 클릭처럼 강제로 누릅니다.
+  await disabled.click({ force: true });
+  await loading.click({ force: true });
+  await loading.click({ force: true, modifiers: ["ControlOrMeta"] });
+  await loading.click({ force: true, button: "middle" });
+  expect(new URL(page.url()).hash).toBe("");
+  await expect(page.locator("output")).toHaveText("0");
+  // 비활성 링크는 Tab 순서에서 빠지고, 로딩 링크는 포커스를 유지합니다.
+  await page.getByRole("link", { name: "Active link" }).focus();
+  await page.keyboard.press("Tab");
+  await expect(loading).toBeFocused();
+  await page.keyboard.press("Enter");
+  expect(new URL(page.url()).hash).toBe("");
+  await page.getByRole("link", { name: "Active link" }).click();
+  expect(new URL(page.url()).hash).toBe("#active");
+  await expect(page.locator("output")).toHaveText("1");
+});

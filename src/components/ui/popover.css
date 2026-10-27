@@ -4,9 +4,9 @@
 @layer components.ply {
   /* Community educational tooltip variant. Standard popovers retain the shared surface. */
   .rbx-popup[data-variant="inverse"] {
-    padding: 12px;
+    padding: var(--rbx-padding-medium);
     border: 0;
-    border-radius: 8px;
+    border-radius: var(--rbx-radius-medium);
     background: var(--rbx-inverse-surface-0);
     color: var(--rbx-inverse-content-emphasis);
     box-shadow: none;
