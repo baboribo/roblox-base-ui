@@ -5,7 +5,7 @@
   /* Tabs: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
   .rbx-tabs-list {
     display: flex;
-    gap: 24px;
+    gap: var(--rbx-gap-xxlarge);
     position: relative;
     border-bottom: 1px solid var(--rbx-color-stroke-default);
     max-width: 100%;
@@ -15,7 +15,7 @@
     scrollbar-width: thin;
   }
   .rbx-tab {
-    padding: 14px 0;
+    padding: var(--rbx-size-350) 0;
     border: 0;
     border-bottom: 2px solid transparent;
     background: transparent;
@@ -33,7 +33,7 @@
     border-bottom-color: var(--rbx-color-content-emphasis);
   }
   .rbx-tab-panel {
-    padding: 24px 0;
+    padding: var(--rbx-padding-xxlarge) 0;
   }
   .rbx-tab-panels {
     display: grid;

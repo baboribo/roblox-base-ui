@@ -43,11 +43,24 @@ export function Button({
 }: ButtonProps) {
   // href가 있는 요소는 버튼 동작(role="button", Space 실행)을 붙이지 않고 링크로 남깁니다.
   if (isValidElement<{ href?: unknown }>(render) && render.props.href != null) {
-    const { nativeButton: _native, ...linkProps } = props;
+    const { nativeButton: _native, onClick, ...linkProps } = props;
+    // 링크에는 disabled 속성이 없으므로 이동과 클릭 처리를 직접 막고 상태를 알립니다.
+    // 요소 자체의 onClick을 바꿔야 Next.js Link처럼 내부에서 이동하는 컴포넌트도 멈춥니다.
+    const inactive = Boolean(disabled || loading);
+    const block = (event: { preventDefault(): void }) => event.preventDefault();
     return (
       <ButtonLink
         props={{
           ...(linkProps as ComponentProps<"a">),
+          onClick: inactive
+            ? undefined
+            : (onClick as ComponentProps<"a">["onClick"]),
+          "aria-disabled": inactive || undefined,
+          "data-disabled": inactive ? "" : undefined,
+          tabIndex:
+            inactive && !(focusableWhenDisabled ?? loading)
+              ? -1
+              : linkProps.tabIndex,
           "aria-busy": loading || props["aria-busy"] || undefined,
           "data-loading": loading || undefined,
           "data-variant": variant,
@@ -55,7 +68,11 @@ export function Button({
           className: withClassName("rbx-button", className)({} as never),
           children,
         }}
-        render={render}
+        render={
+          inactive
+            ? cloneElement(render, { onClick: block, onAuxClick: block } as {})
+            : render
+        }
         loading={loading}
       />
     );

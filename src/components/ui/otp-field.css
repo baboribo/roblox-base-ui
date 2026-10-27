@@ -7,7 +7,7 @@
     display: flex;
     min-width: 0;
     max-width: 100%;
-    gap: clamp(2px, 2%, 8px);
+    gap: clamp(var(--rbx-gap-xxsmall), 2%, var(--rbx-gap-small));
   }
   .rbx-otp-input {
     width: 40px;
@@ -16,7 +16,7 @@
     background: var(--rbx-color-surface-0);
     color: var(--rbx-color-content-emphasis);
     text-align: center;
-    border-radius: 8px;
+    border-radius: var(--rbx-radius-medium);
     font-size: 1.25rem;
     flex: 1 1 40px;
     min-width: 0;

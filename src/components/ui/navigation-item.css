@@ -9,12 +9,12 @@
     isolation: isolate;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--rbx-gap-small);
     width: 100%;
     min-width: 0;
     height: 40px;
     padding-block: 0;
-    padding-inline: 4px 2px;
+    padding-inline: var(--rbx-padding-xsmall) var(--rbx-padding-xxsmall);
     border: 0;
     border-radius: var(--rbx-radius-medium);
     background: transparent;
@@ -75,7 +75,7 @@
   }
   /* Text-only catalog rows are a BLOCK/UI extension. */
   .rbx-navigation-item:not([data-leading]) {
-    padding-inline: 12px;
+    padding-inline: var(--rbx-padding-medium);
   }
   @media (prefers-reduced-motion: reduce) {
     .rbx-navigation-item::before {

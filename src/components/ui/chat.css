@@ -11,7 +11,7 @@
     max-width: 100%;
     overflow: hidden;
     border: 1px solid var(--rbx-color-stroke-muted);
-    border-radius: 16px 16px 0 0;
+    border-radius: var(--rbx-radius-large) var(--rbx-radius-large) 0 0;
     background: var(--rbx-color-surface-100);
     color: var(--rbx-color-content-emphasis);
     box-shadow: var(--rbx-shadow-transient-low);
@@ -28,8 +28,8 @@
     flex-shrink: 0;
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px;
+    gap: var(--rbx-gap-small);
+    padding: var(--rbx-padding-small);
   }
   .rbx-chat-header h2 {
     flex: 1;
@@ -41,7 +41,7 @@
     font: var(--rbx-typography-title-medium-font);
   }
   .rbx-chat-search {
-    padding: 0 8px 8px;
+    padding: 0 var(--rbx-padding-small) var(--rbx-padding-small);
     flex-shrink: 0;
   }
   .rbx-chat-list {
@@ -68,8 +68,8 @@
     flex-shrink: 0;
     width: 100%;
     align-items: center;
-    gap: 12px;
-    padding: 4px 12px;
+    gap: var(--rbx-gap-medium);
+    padding: var(--rbx-padding-xsmall) var(--rbx-padding-medium);
     border: 0;
     background: transparent;
     color: inherit;
@@ -85,14 +85,14 @@
     flex-direction: column;
     flex: 1;
     min-width: 0;
-    gap: 2px;
+    gap: var(--rbx-gap-xxsmall);
   }
   .rbx-chat-title-line {
     display: flex;
     align-items: center;
     justify-content: space-between;
     min-width: 0;
-    gap: 8px;
+    gap: var(--rbx-gap-small);
   }
   .rbx-chat-row-title,
   .rbx-chat-person-name {
@@ -124,8 +124,8 @@
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    gap: 8px;
-    padding: 4px 8px;
+    gap: var(--rbx-gap-small);
+    padding: var(--rbx-padding-xsmall) var(--rbx-padding-small);
     cursor: pointer;
   }
   .rbx-chat-person .rbx-chat-row-body {
@@ -134,14 +134,14 @@
   .rbx-chat-footer {
     display: flex;
     flex-shrink: 0;
-    gap: 8px;
-    padding: 12px;
+    gap: var(--rbx-gap-small);
+    padding: var(--rbx-padding-medium);
   }
   .rbx-chat-footer > .rbx-button {
     flex: 1;
   }
   .rbx-chat-empty {
-    padding: 12px;
+    padding: var(--rbx-padding-medium);
     font: var(--rbx-typography-body-small-font);
     color: var(--rbx-color-content-default);
   }

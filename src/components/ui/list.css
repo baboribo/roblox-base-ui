@@ -33,8 +33,8 @@
   .rbx-list-content {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px 12px;
+    gap: var(--rbx-gap-medium);
+    padding: var(--rbx-padding-large) var(--rbx-padding-medium);
   }
   .rbx-list-body {
     flex: 1;
@@ -57,11 +57,11 @@
 
   .rbx-list[data-variant="boxed"] {
     border: 1px solid var(--rbx-color-stroke-default);
-    border-radius: 16px;
+    border-radius: var(--rbx-radius-large);
     overflow: hidden;
   }
   .rbx-list[data-variant="boxed"] .rbx-list-content {
-    padding-inline: 20px;
+    padding-inline: var(--rbx-padding-xlarge);
   }
   .rbx-list[data-variant="boxed"] .rbx-list-item:last-child {
     border-bottom: 0;

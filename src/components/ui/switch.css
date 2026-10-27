@@ -11,9 +11,9 @@
     align-items: center;
     width: 40px;
     height: 24px;
-    padding: 2px;
+    padding: var(--rbx-padding-xxsmall);
     border: 0;
-    border-radius: 9999px;
+    border-radius: var(--rbx-radius-circle);
     background: var(--rbx-color-action-standard-background);
     cursor: pointer;
     transition: background-color var(--rbx-motion-duration-feedback)
@@ -57,7 +57,7 @@
     flex-shrink: 0;
     width: var(--rbx-switch-thumb-size);
     height: var(--rbx-switch-thumb-size);
-    border-radius: 9999px;
+    border-radius: var(--rbx-radius-circle);
     background: var(--rbx-color-content-emphasis);
     color: var(--rbx-color-content-emphasis);
     transition: background-color var(--rbx-motion-duration-feedback)

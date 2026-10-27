@@ -4,7 +4,7 @@
   :where(.rbx-stack, .rbx-inline, .rbx-grid, .rbx-control-group) {
     min-inline-size: 0;
     max-inline-size: 100%;
-    gap: var(--rbx-layout-gap, 16px);
+    gap: var(--rbx-layout-gap, var(--rbx-gap-large));
   }
   /* 간격은 gap이 맡습니다. 제목·문단의 브라우저 기본 바깥 여백이 gap에 더해지지 않게 합니다. */
   :where(.rbx-stack, .rbx-inline, .rbx-grid, .rbx-control-group) > :where(*) {

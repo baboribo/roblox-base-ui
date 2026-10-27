@@ -6,7 +6,7 @@
     width: 100%;
     min-width: 0;
     container-type: inline-size;
-    padding-bottom: 4px;
+    padding-bottom: var(--rbx-padding-xsmall);
   }
   .rbx-carousel-viewport {
     overflow-x: auto;
@@ -15,14 +15,14 @@
   }
   .rbx-carousel-content {
     display: flex;
-    gap: 12px;
+    gap: var(--rbx-gap-medium);
     width: max-content;
   }
   .rbx-carousel-item {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    gap: 8px;
+    gap: var(--rbx-gap-small);
     width: min(280px, 100cqw);
     overflow-wrap: anywhere;
     padding: 0;
@@ -44,7 +44,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: var(--rbx-radius-medium);
     background: var(--rbx-color-shift-200);
   }
   .rbx-carousel-copy {
@@ -63,7 +63,7 @@
   .rbx-carousel-controls {
     display: flex;
     justify-content: flex-end;
-    gap: 8px;
+    gap: var(--rbx-gap-small);
     margin-top: 8px;
   }
 

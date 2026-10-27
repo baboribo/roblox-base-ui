@@ -5,14 +5,14 @@
   /* Progress: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
   .rbx-progress {
     display: grid;
-    gap: 8px;
+    gap: var(--rbx-gap-small);
     width: 100%;
   }
   .rbx-progress-track {
     height: 6px;
     width: 100%;
     overflow: hidden;
-    border-radius: 99px;
+    border-radius: var(--rbx-radius-circle);
     background: var(--rbx-color-shift-300);
   }
   .rbx-progress-indicator {

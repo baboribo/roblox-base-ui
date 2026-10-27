@@ -5,10 +5,10 @@
   /* Menubar: 공통 구조는 theme.css, 컴포넌트 전용 조정은 아래에 작성합니다. */
   .rbx-menubar {
     display: flex;
-    gap: 4px;
-    padding: 4px;
+    gap: var(--rbx-gap-xsmall);
+    padding: var(--rbx-padding-xsmall);
     border: 1px solid var(--rbx-color-stroke-default);
-    border-radius: 8px;
+    border-radius: var(--rbx-radius-medium);
     min-width: 0;
     max-width: 100%;
     overflow-x: auto;

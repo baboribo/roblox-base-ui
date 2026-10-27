@@ -52,7 +52,7 @@
   .rbx-button {
     height: auto;
     min-height: 48px;
-    padding: 0 12px;
+    padding: 0 var(--rbx-padding-medium);
     font: var(--rbx-typography-label-large-font);
     white-space: normal;
     overflow-wrap: anywhere;
@@ -60,7 +60,7 @@
     min-width: 0;
     max-width: 100%;
     position: relative;
-    padding-block: 8px;
+    padding-block: var(--rbx-padding-small);
   }
   .rbx-button[data-size="md"] {
     height: auto;
@@ -70,18 +70,18 @@
   .rbx-button[data-size="sm"] {
     height: auto;
     min-height: 32px;
-    padding: 0 8px;
-    gap: 4px;
-    padding-block: 4px;
+    padding: 0 var(--rbx-padding-small);
+    gap: var(--rbx-gap-xsmall);
+    padding-block: var(--rbx-padding-xsmall);
     font: var(--rbx-typography-label-small-font);
   }
   .rbx-button[data-size="xs"] {
     height: auto;
     min-height: 24px;
-    padding: 0 8px;
-    gap: 4px;
+    padding: 0 var(--rbx-padding-small);
+    gap: var(--rbx-gap-xsmall);
     font: var(--rbx-typography-label-small-font);
-    border-radius: 4px;
+    border-radius: var(--rbx-radius-small);
   }
   .rbx-button[data-variant="utility"] {
     background-color: var(--rbx-color-action-subtle-background);

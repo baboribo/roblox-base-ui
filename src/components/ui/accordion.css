@@ -7,16 +7,16 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: var(--rbx-gap-medium);
     min-width: 0;
     max-width: 100%;
     overflow-wrap: anywhere;
   }
   .rbx-accordion-item {
     border: 1px solid var(--rbx-color-stroke-default);
-    border-radius: 8px;
+    border-radius: var(--rbx-radius-medium);
     overflow: hidden;
-    padding: 8px 12px;
+    padding: var(--rbx-padding-small) var(--rbx-padding-medium);
   }
   .rbx-accordion-header {
     margin: 0;
@@ -28,7 +28,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: var(--rbx-gap-medium);
     border: 0;
     background: transparent;
     color: var(--rbx-color-content-default);
@@ -41,7 +41,7 @@
     overflow: hidden;
     font: var(--rbx-typography-body-medium-font);
     white-space: pre-wrap;
-    padding-bottom: 12px;
+    padding-bottom: var(--rbx-padding-medium);
     height: var(
       --accordion-panel-height,
       var(--collapsible-panel-height, auto)
@@ -70,7 +70,7 @@
   }
   @media (min-width: 1141px) {
     .rbx-accordion {
-      gap: 16px;
+      gap: var(--rbx-gap-large);
     }
   }
   .rbx-accordion-panel:is([data-starting-style], [data-ending-style]) {
